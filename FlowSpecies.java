@@ -8,8 +8,9 @@ public class FlowSpecies extends Species {
   private double gasMoleFraction = 0.0;
   private double vapourFraction = 0.0;
   
-  public boolean FlowSpecies() {
-    return true;
+  public FlowSpecies() {
+    super();
+    //return true;
   }
   
   // Setters

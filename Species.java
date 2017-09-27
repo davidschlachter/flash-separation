@@ -23,8 +23,8 @@ public class Species {
   private double activityCoefficient = 1;
   
   // default constructor method
-  public boolean Species() {
-    return true;
+  public  Species() {
+    //return true;
   }
   
   
