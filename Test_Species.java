@@ -74,6 +74,8 @@ public class Test_Species extends TestCase {
     
     double activityCoefficient = 0.5;
     assertEquals("Species.setActivityCoefficient(0)", true, testSpecies.setActivityCoefficient(activityCoefficient));
+    assertEquals("Species.setActivityCoefficient(-2.0)", false, testSpecies.setActivityCoefficient(-2.0));
+    assertEquals("Species.setActivityCoefficient(2.0)",  false,  testSpecies.setActivityCoefficient(2.0));
     assertEquals("Species.getActivityCoefficient()", activityCoefficient, testSpecies.getActivityCoefficient());
     
   }
