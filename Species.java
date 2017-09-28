@@ -5,6 +5,9 @@
 
 public class Species {
   
+  // Species name
+  private String speciesName;
+  
   // Heat capacity constants
   private double heatCapacityA = 0;
   private double heatCapacityB = 0;
@@ -29,6 +32,10 @@ public class Species {
   
   
   // Setters
+  public void setSpeciesName(String speciesName) {
+    this.speciesName = speciesName;
+  }
+  
   public void setHeatCapacityConstants(double heatCapacityA, double heatCapacityB, double heatCapacityC, double heatCapacityD) {
     this.heatCapacityA = heatCapacityA;
     this.heatCapacityB = heatCapacityB;
@@ -81,6 +88,10 @@ public class Species {
   
   public double getActivityCoefficient() {
     return this.activityCoefficient;
+  }
+  
+  public String getSpeciesName() {
+    return this.speciesName;
   }
   
 }

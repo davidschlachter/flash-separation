@@ -80,4 +80,17 @@ public class Test_Species extends TestCase {
     
   }
   
+  /**
+   * Test the getter and setter for the species name
+   */
+  public void testSpeciesName() {
+    Species testSpecies = new Species();
+    
+    String speciesName = "ethanol";
+    testSpecies.setSpeciesName(speciesName);
+    
+    assertEquals("Species.getSpeciesName()", true, speciesName.equals(testSpecies.getSpeciesName()));
+    
+  }
+  
 }
