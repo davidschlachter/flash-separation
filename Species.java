@@ -65,16 +65,16 @@ public class Species {
     }
   }
 
-  public boolean setCondensability (string Condensability) {
+  public boolean setCondensability (String Condensability) {
     String Str1 = "yes";
-    String Str2 = Condensability
+    String Str2 = Condensability;
     if (Str1.equalsIgnoreCase(Str2)) {
       return true;
     } else {
       return false;
     }
     }
-  }
+  
   // Getters
   public double[] getHeatCapacityConstants() {
     double[] heatCapacityConstants = new double[4];
