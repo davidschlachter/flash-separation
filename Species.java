@@ -24,7 +24,10 @@ public class Species {
   
   // Activity coefficient (default value is 1 for an ideal solution)
   private double activityCoefficient = 1;
-  
+
+  // Is this species condensable?
+  private boolean Condensability = false;
+
   // default constructor method
   public  Species() {
     //return true;
@@ -61,7 +64,17 @@ public class Species {
       return false;
     }
   }
-  
+
+  public boolean setCondensability (string Condensability) {
+    String Str1 = "yes";
+    String Str2 = Condensability
+    if (Str1.equalsIgnoreCase(Str2)) {
+      return true;
+    } else {
+      return false;
+    }
+    }
+  }
   // Getters
   public double[] getHeatCapacityConstants() {
     double[] heatCapacityConstants = new double[4];
@@ -93,5 +106,7 @@ public class Species {
   public String getSpeciesName() {
     return this.speciesName;
   }
+
+  public boolean getCondensability() { return this.Condensability; }
   
 }
