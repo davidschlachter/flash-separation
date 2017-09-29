@@ -14,7 +14,7 @@ public class Main {
       
         System.out.println("Enter the name of species "+i);
         String speciesName = scanner.nextLine();
-        Species.setSpeciesName(speciesName);
+        //Species.setSpeciesName(speciesName);
         
         
       }

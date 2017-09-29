@@ -25,8 +25,8 @@ public class Species {
   // Activity coefficient (default value is 1 for an ideal solution)
   private double activityCoefficient = 1;
 
-  // Is this species condensable?
-  private boolean Condensability = false;
+  // Critical temperature (to determine condensability)
+  private double criticalTemperature = 0;
 
   // default constructor method
   public  Species() {
@@ -65,15 +65,14 @@ public class Species {
     }
   }
 
-  public boolean setCondensability (String Condensability) {
-    String Str1 = "yes";
-    String Str2 = Condensability;
-    if (Str1.equalsIgnoreCase(Str2)) {
+  public boolean setCriticalTemperature (double criticalTemperature) {
+    if (criticalTemperature > 0.0) {
+      this.criticalTemperature = criticalTemperature;
       return true;
     } else {
       return false;
     }
-    }
+  }
   
   // Getters
   public double[] getHeatCapacityConstants() {
@@ -107,6 +106,8 @@ public class Species {
     return this.speciesName;
   }
 
-  public boolean getCondensability() { return this.Condensability; }
+  public double getCriticalTemperature() {
+    return this.criticalTemperature;
+  }
   
 }

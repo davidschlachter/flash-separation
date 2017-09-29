@@ -93,4 +93,19 @@ public class Test_Species extends TestCase {
     
   }
   
+  /**
+   * Test the getter and setter for the critical temperature
+   */
+  public void testCriticalTemperature() {
+    Species testSpecies = new Species();
+    
+    double criticalTemperature = 45.0;
+    //testSpecies.setCriticalTemperature(criticalTemperature);
+    
+    assertEquals("Species.setCriticalTemperature(-1.0)", false, testSpecies.setCriticalTemperature(-1.0));
+    assertEquals("Species.setCriticalTemperature(1.0)",   true,  testSpecies.setCriticalTemperature(criticalTemperature));
+    assertEquals("Species.getCriticalTemperature()", true, testSpecies.getCriticalTemperature() == criticalTemperature);
+    
+  }
+  
 }
