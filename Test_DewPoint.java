@@ -65,7 +65,6 @@ public class Test_DewPoint extends TestCase {
     
     DewPoint testDewPoint = new DewPoint(testStream);
     double dewPoint = testDewPoint.calc();
-    System.out.println(dewPoint);
     
     assertEquals("DewPoint.calc()", true,  dewPoint > 359.9 && dewPoint < 360.0);
 
