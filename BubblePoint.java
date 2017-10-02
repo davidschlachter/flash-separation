@@ -3,7 +3,7 @@
  */
 public class BubblePoint implements Function {
   
-  FlowStream flowStream;
+  private FlowStream flowStream;
   
   // Constructor -- requires a FlowStream with pressure specified 
   public BubblePoint(FlowStream flowStream) {

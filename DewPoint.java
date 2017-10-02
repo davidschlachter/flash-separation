@@ -3,7 +3,7 @@
  */
 public class DewPoint implements Function {
   
-  FlowStream flowStream;
+  private FlowStream flowStream;
   
   // Constructor -- requires a FlowStream with pressure specified 
   public DewPoint(FlowStream flowStream) {
