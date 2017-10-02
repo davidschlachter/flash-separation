@@ -37,14 +37,14 @@ public class Test_FlowSpecies extends TestCase {
   /**
   * Test the getter and setter for the gas mole fraction
   */
-  public void testGasMoleFraction() {
+  public void testVapourMoleFraction() {
     FlowSpecies testSpecies = new FlowSpecies();
     
-    double gasMoleFraction = 0.5;
-    assertEquals("Species.setGasMoleFraction(0.5)", true, testSpecies.setGasMoleFraction(gasMoleFraction));
-    assertEquals("Species.setGasMoleFraction(2.0)",  false,  testSpecies.setGasMoleFraction(2.0));
-    assertEquals("Species.setGasMoleFraction(-2.0)", false, testSpecies.setGasMoleFraction(-2.0));
-    assertEquals("Species.getGasMoleFraction()", gasMoleFraction, testSpecies.getGasMoleFraction());
+    double vapourMoleFraction = 0.5;
+    assertEquals("Species.setVapourMoleFraction(0.5)", true, testSpecies.setVapourMoleFraction(vapourMoleFraction));
+    assertEquals("Species.setVapourMoleFraction(2.0)",  false,  testSpecies.setVapourMoleFraction(2.0));
+    assertEquals("Species.setVapourMoleFraction(-2.0)", false, testSpecies.setVapourMoleFraction(-2.0));
+    assertEquals("Species.getVapourMoleFraction()", vapourMoleFraction, testSpecies.getVapourMoleFraction());
     
   }
   

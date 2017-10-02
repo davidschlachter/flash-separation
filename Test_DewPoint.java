@@ -41,7 +41,7 @@ public class Test_DewPoint extends TestCase {
     
     DewPoint testDewPoint = new DewPoint(testStream);
     double testFunction = testDewPoint.testFunction(temperature);
-    System.out.println(testFunction);
+
     assertEquals("DewPoint.testFunction()", true,  testFunction > -0.700 && testFunction < -0.690);
 
   }

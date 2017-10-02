@@ -5,7 +5,7 @@ public class FlowSpecies extends Species {
   
   private double overallMoleFraction = 0.0;
   private double liquidMoleFraction = 0.0;
-  private double gasMoleFraction = 0.0;
+  private double vapourMoleFraction = 0.0;
   private double vapourFraction = 0.0;
   
   public FlowSpecies() {
@@ -32,9 +32,9 @@ public class FlowSpecies extends Species {
     }
   };
   
-  public boolean setGasMoleFraction(double gasMoleFraction) {
-    if (gasMoleFraction >= 0.0 && gasMoleFraction <= 1.0) {
-      this.gasMoleFraction = gasMoleFraction;
+  public boolean setVapourMoleFraction(double vapourMoleFraction) {
+    if (vapourMoleFraction >= 0.0 && vapourMoleFraction <= 1.0) {
+      this.vapourMoleFraction = vapourMoleFraction;
       return true;
     } else {
       return false;
@@ -60,8 +60,8 @@ public class FlowSpecies extends Species {
     return this.liquidMoleFraction;
   }
   
-  public double getGasMoleFraction() {
-    return this.gasMoleFraction;
+  public double getVapourMoleFraction() {
+    return this.vapourMoleFraction;
   }
   
   public double getVapourFraction() {
