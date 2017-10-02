@@ -35,7 +35,7 @@ public class DewPoint implements Function {
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
       
-      result = result + ((saturationPressure / pressure)*overallMoleFraction);
+      result = result + (overallMoleFraction / (saturationPressure / pressure));
 
     }
     
