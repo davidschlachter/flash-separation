@@ -16,9 +16,9 @@ public class DewPoint implements Function {
   }
   
   // Return the dew point for the given flowStream components at the given pressure
-  public double calc() {
-    return RootFinder.calc(this, 0, 1000.0, 0.001);
-  }
+ // public double calc() {
+    //return RootFinder.calc(this, 0, 1000.0, 0.001);
+  //}
   
   // Test function for the root finder
   public double testFunction(double x) {
