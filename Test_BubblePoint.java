@@ -5,7 +5,7 @@ import junit.framework.TestCase;
  * Every method starting with the word "test" will be called when running
  * the test with JUnit.
  */
-public class Test_DewPoint extends TestCase {
+public class Test_BubblePoint extends TestCase {
 
   // Test the constructor
   public void testConstructor() {
@@ -15,10 +15,10 @@ public class Test_DewPoint extends TestCase {
     testStream.addFlowSpecies(new FlowSpecies());
     testStream.setPressure(101325.0);
     
-    DewPoint testDewPoint = new DewPoint(testStream);
+    BubblePoint testBubblePoint = new BubblePoint(testStream);
     
-    assertEquals("new DewPoint(testStream)", true,  testDewPoint != null);
-    assertEquals("new DewPoint(testStream)", false, testDewPoint == null);
+    assertEquals("new BubblePoint(testStream)", true,  testBubblePoint != null);
+    assertEquals("new BubblePoint(testStream)", false, testBubblePoint == null);
   }
   
   // Test the testFunction
@@ -39,14 +39,14 @@ public class Test_DewPoint extends TestCase {
     testStream.setPressure(101325.0);
     double temperature = 400.0;
     
-    DewPoint testDewPoint = new DewPoint(testStream);
-    double testFunction = testDewPoint.testFunction(temperature);
-    System.out.println(testFunction);
-    assertEquals("DewPoint.testFunction()", true,  testFunction > -0.700 && testFunction < -0.690);
+    BubblePoint testBubblePoint = new BubblePoint(testStream);
+    double testFunction = testBubblePoint.testFunction(temperature);
+    
+    assertEquals("BubblePoint.testFunction()", true,  testFunction > 2.80 && testFunction < 2.82);
 
   }
   
-  // Test the DewPoint calculation
+  // Test the BubblePoint calculation
   public void testCalc() {
     FlowStream testStream = new FlowStream();
     
@@ -63,20 +63,10 @@ public class Test_DewPoint extends TestCase {
     testStream.addFlowSpecies(ethanol);
     testStream.setPressure(101325.0);
     
-    DewPoint testDewPoint = new DewPoint(testStream);
-<<<<<<< HEAD
-    //double dewPoint = testDewPoint.calc();
-    System.out.println(dewPoint);
-=======
-    double dewPoint = testDewPoint.calc();
-<<<<<<< HEAD
->>>>>>> b19404eaa1d8f9945962f3cd2e775eb0cd1681ee
+    BubblePoint testBubblePoint = new BubblePoint(testStream);
+    double dewPoint = testBubblePoint.calc();
     
-    assertEquals("DewPoint.calc()", true,  dewPoint > 359.9 && dewPoint < 360.0);
-=======
-
-    assertEquals("DewPoint.calc()", true,  dewPoint > 364.25 && dewPoint < 364.28);
->>>>>>> 500acc429d2dbdf1ff17012896d9a0a738d6352c
+    assertEquals("BubblePoint.calc()", true,  dewPoint > 359.9 && dewPoint < 360.0);
 
   }
   

@@ -1,12 +1,12 @@
 /**
  * Class that returns the dew point of a stream of given composition at a given pressure
  */
-public class DewPoint implements Function {
+public class BubblePoint implements Function {
   
   FlowStream flowStream;
   
   // Constructor -- requires a FlowStream with pressure specified 
-  public DewPoint(FlowStream flowStream) {
+  public BubblePoint(FlowStream flowStream) {
     if (flowStream.getPressure() > 0 && flowStream.getNumberOfSpecies() > 0) {
       this.flowStream = flowStream;
     } else {
@@ -15,17 +15,11 @@ public class DewPoint implements Function {
     } 
   }
   
-  // Return the dew point for the given flowStream components at the given pressure
-<<<<<<< HEAD
- // public double calc() {
-    //return RootFinder.calc(this, 0, 1000.0, 0.001);
-  //}
-=======
+  // Return the bubble point for the given flowStream components at the given pressure
   public double calc() {
     // TODO: Need to find the bounds automatically before calling RootFinder.calc!
     return RootFinder.calc(this, 100.0, 1000.0, 0.001);
   }
->>>>>>> b19404eaa1d8f9945962f3cd2e775eb0cd1681ee
   
   // Test function for the root finder
   public double testFunction(double x) {
@@ -41,7 +35,7 @@ public class DewPoint implements Function {
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
       
-      result = result + (overallMoleFraction / (saturationPressure / pressure));
+      result = result + ((saturationPressure / pressure)*overallMoleFraction);
 
     }
     
