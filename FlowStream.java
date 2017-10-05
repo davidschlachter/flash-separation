@@ -11,9 +11,9 @@ public class FlowStream {
   private List<FlowSpecies> flowSpecies;
   
   // Stream properties
-  private double molarFlowRate;
-  private double temperature;
-  private double pressure;
+  private double molarFlowRate = 0.0;
+  private double temperature = 0.0;
+  private double pressure = 0.0;
   
   
   // Default constructor
