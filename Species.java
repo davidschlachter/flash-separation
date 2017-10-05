@@ -1,3 +1,5 @@
+
+
 /*
  * Species stores the physical properties of a given species
  * 
@@ -109,5 +111,7 @@ public class Species {
   public double getCriticalTemperature() {
     return this.criticalTemperature;
   }
+  
+  
   
 }
