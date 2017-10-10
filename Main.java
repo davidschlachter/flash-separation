@@ -32,7 +32,7 @@ public class Main {
         System.out.println("the size of the list is "+speciesNames.size());
         
 
-        
+        scan.close();
       }//end of main method
      
       
