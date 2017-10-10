@@ -15,11 +15,27 @@ public class DewPoint implements Function {
     } 
   }
   
+  
   // Return the dew point for the given flowStream components at the given pressure
   public double calc() {
+    //
     // TODO: Need to find the bounds automatically before calling RootFinder.calc!
-    return RootFinder.calc(this, 100.0, 1000.0, 0.001);
+    //
+    double lowerTemperatureBound = 200.0;
+    double upperTemperatureBound = 1000.0;
+    double accuracy = 0.0001;
+    
+    // Determine if any of the species is likely to be non-condensable, and if so, ignore it
+    int i;
+    for (i = 0; i < flowStream.getNumberOfSpecies(); i++) {
+      if (lowerTemperatureBound > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
+        this.flowStream.getFlowSpecies().get(i).setOverallMoleFraction(0.0);
+    }
+    
+    // Calculate the dew point
+    return RootFinder.calc(this, lowerTemperatureBound, upperTemperatureBound, accuracy);
   }
+  
   
   // Test function for the root finder
   public double testFunction(double x) {

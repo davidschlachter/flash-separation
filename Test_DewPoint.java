@@ -54,10 +54,12 @@ public class Test_DewPoint extends TestCase {
     FlowSpecies water = new FlowSpecies();
     water.setAntoineConstants(10.19621302, 1730.63, -39.724);
     water.setOverallMoleFraction(0.5);
+    water.setCriticalTemperature(647.0);
     
     FlowSpecies ethanol = new FlowSpecies();
     ethanol.setAntoineConstants(9.80607302, 1332.04, -73.95);
     ethanol.setOverallMoleFraction(0.5);
+    ethanol.setCriticalTemperature(514.0);
     
     testStream.addFlowSpecies(water);
     testStream.addFlowSpecies(ethanol);
@@ -67,6 +69,41 @@ public class Test_DewPoint extends TestCase {
     double dewPoint = testDewPoint.calc();
 
     assertEquals("DewPoint.calc()", true,  dewPoint > 364.25 && dewPoint < 364.28);
+
+  }
+  
+  // Test the DewPoint calculation with a non-condensing species included
+  // Problem is example 7.21 from  CHEMICAL AND ENERGY PROCESS ENGINEERING
+  // by Sigurd Skogestad, Published by CRC Press (2009)
+
+  public void testCalcNonCondensing() {
+    FlowStream testStream = new FlowStream();
+    
+    // All Antoine coefficients converted into Pa, K
+    FlowSpecies pentane = new FlowSpecies();
+    pentane.setAntoineConstants(8.983576612, 1064.840, -41.136);
+    pentane.setOverallMoleFraction(0.1);
+    pentane.setCriticalTemperature(469.6);
+
+    FlowSpecies hexane = new FlowSpecies();
+    hexane.setAntoineConstants(9.007106612, 1170.875, -48.833);
+    hexane.setOverallMoleFraction(0.1);
+    hexane.setCriticalTemperature(507.6);
+   
+    FlowSpecies nitrogen = new FlowSpecies();
+    nitrogen.setAntoineConstants(3.74192, 264.651, -6.788);
+    nitrogen.setOverallMoleFraction(0.8);
+    nitrogen.setCriticalTemperature(126.192);
+    
+    testStream.addFlowSpecies(pentane);
+    testStream.addFlowSpecies(hexane);
+    testStream.addFlowSpecies(nitrogen);
+    testStream.setPressure(300000.0);
+    
+    DewPoint testDewPoint = new DewPoint(testStream);
+    double dewPoint = testDewPoint.calc();
+    
+    assertEquals("DewPoint.calc()", true,  dewPoint > 314.0 && dewPoint < 315.0);
 
   }
   
