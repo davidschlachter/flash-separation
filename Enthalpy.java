@@ -20,8 +20,6 @@ public class Enthalpy implements Function {
     
     double overallMoleFraction, vapourMoleFraction, heatOfVapourization, result = 0.0;
     
-    System.out.println("Inside: " + this.inlet.getTemperature() + " " + this.outlet.getTemperature());
-    
     if (this.inlet.getTemperature() < 0.01) {
       initialTemperature = testTemp;
       finalTemperature = this.outlet.getTemperature();
