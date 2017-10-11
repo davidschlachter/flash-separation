@@ -18,8 +18,8 @@ public class Test_RachfordRice extends TestCase {
     
     RachfordRice testRachfordRice = new RachfordRice(testStream);
     
-    assertEquals("new RachfordRice(testStream)", true,  testRachfordRice != null);
-    assertEquals("new RachfordRice(testStream)", false, testRachfordRice == null);
+    assertTrue("new RachfordRice(testStream)", testRachfordRice != null);
+    assertFalse("new RachfordRice(testStream)", testRachfordRice == null);
   }
   
   // Test the testFunction
@@ -45,7 +45,7 @@ public class Test_RachfordRice extends TestCase {
     RachfordRice testRachfordRice = new RachfordRice(testStream);
     double testFunction = testRachfordRice.testFunction(0.5);
     
-    assertEquals("RachfordRice.testFunction()", true,  testFunction > 0.207 && testFunction < 0.209);
+    assertTrue("RachfordRice.testFunction()", testFunction > 0.207 && testFunction < 0.209);
 
   }
   

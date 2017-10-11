@@ -16,7 +16,7 @@ public class Test_FlowStream extends TestCase {
     FlowStream testStream = new FlowStream();
     FlowSpecies testSpecies = new FlowSpecies();
     
-    assertEquals("FlowStream.addFlowSpecies(testSpecies)", true, testStream.addFlowSpecies(testSpecies));
+    assertTrue("FlowStream.addFlowSpecies(testSpecies)", testStream.addFlowSpecies(testSpecies));
     
   }
   
@@ -38,10 +38,10 @@ public class Test_FlowStream extends TestCase {
     double fetchedHeatOfVapourization1 = testStream.getFlowSpecies().get(0).getHeatOfVapourization();
     double fetchedHeatOfVapourization2 = testStream.getFlowSpecies().get(1).getHeatOfVapourization();
     
-    assertEquals("FlowStream.getFlowSpecies(testSpecies1)", true,  fetchedHeatOfVapourization1 == 1.0);
-    assertEquals("FlowStream.getFlowSpecies(testSpecies1)", false, fetchedHeatOfVapourization1 == 0.0);
-    assertEquals("FlowStream.getFlowSpecies(testSpecies2)", true,  fetchedHeatOfVapourization2 == 2.0);
-    assertEquals("FlowStream.getFlowSpecies(testSpecies2)", false, fetchedHeatOfVapourization2 == 0.0);
+    assertTrue("FlowStream.getFlowSpecies(testSpecies1)", fetchedHeatOfVapourization1 == 1.0);
+    assertFalse("FlowStream.getFlowSpecies(testSpecies1)", fetchedHeatOfVapourization1 == 0.0);
+    assertTrue("FlowStream.getFlowSpecies(testSpecies2)", fetchedHeatOfVapourization2 == 2.0);
+    assertFalse("FlowStream.getFlowSpecies(testSpecies2)", fetchedHeatOfVapourization2 == 0.0);
     
   }
   
@@ -61,10 +61,10 @@ public class Test_FlowStream extends TestCase {
     double fetchedHeatOfVapourization1 = testStream.getFlowSpecies().get(0).getHeatOfVapourization();
     double fetchedHeatOfVapourization2 = testStream.getFlowSpecies().get(1).getHeatOfVapourization();
     
-    assertEquals("FlowStream.getFlowSpecies(testSpecies1)", true,  fetchedHeatOfVapourization1 == 1.0);
-    assertEquals("FlowStream.getFlowSpecies(testSpecies1)", false, fetchedHeatOfVapourization1 == 0.0);
-    assertEquals("FlowStream.getFlowSpecies(testSpecies2)", true,  fetchedHeatOfVapourization2 == 2.0);
-    assertEquals("FlowStream.getFlowSpecies(testSpecies2)", false, fetchedHeatOfVapourization2 == 0.0);
+    assertTrue("FlowStream.getFlowSpecies(testSpecies1)", fetchedHeatOfVapourization1 == 1.0);
+    assertFalse("FlowStream.getFlowSpecies(testSpecies1)", fetchedHeatOfVapourization1 == 0.0);
+    assertTrue("FlowStream.getFlowSpecies(testSpecies2)", fetchedHeatOfVapourization2 == 2.0);
+    assertFalse("FlowStream.getFlowSpecies(testSpecies2)", fetchedHeatOfVapourization2 == 0.0);
     
   }
   
@@ -77,7 +77,7 @@ public class Test_FlowStream extends TestCase {
     testStream.addFlowSpecies(testSpecies);
     
     assertEquals("FlowStream.getNumberOfSpecies()", 1, testStream.getNumberOfSpecies());
-    assertEquals("FlowStream.getNumberOfSpecies()", false, testStream.getNumberOfSpecies() == 0);
+    assertFalse("FlowStream.getNumberOfSpecies()", testStream.getNumberOfSpecies() == 0);
   }
   
   /**
@@ -87,8 +87,8 @@ public class Test_FlowStream extends TestCase {
     FlowStream testStream = new FlowStream();
     testStream.setMolarFlowRate(1.0);
     
-    assertEquals("FlowStream.getMolarFlowRate()", 1.0,   testStream.getMolarFlowRate());
-    assertEquals("FlowStream.getMolarFlowRate()", false, testStream.getMolarFlowRate() == 0.0);
+    assertEquals("FlowStream.getMolarFlowRate()", 1.0,  testStream.getMolarFlowRate());
+    assertFalse("FlowStream.getMolarFlowRate()", testStream.getMolarFlowRate() == 0.0);
   }
   
   /**
@@ -98,8 +98,8 @@ public class Test_FlowStream extends TestCase {
     FlowStream testStream = new FlowStream();
     testStream.setTemperature(1.0);
     
-    assertEquals("FlowStream.getTemperature()", 1.0,   testStream.getTemperature());
-    assertEquals("FlowStream.getTemperature()", false, testStream.getTemperature() == 0.0);
+    assertEquals("FlowStream.getTemperature()", 1.0,  testStream.getTemperature());
+    assertFalse("FlowStream.getTemperature()", testStream.getTemperature() == 0.0);
   }
   
   /**
@@ -109,8 +109,8 @@ public class Test_FlowStream extends TestCase {
     FlowStream testStream = new FlowStream();
     testStream.setPressure(1.0);
     
-    assertEquals("FlowStream.getPressure()", 1.0,   testStream.getPressure());
-    assertEquals("FlowStream.getPressure()", false, testStream.getPressure() == 0.0);
+    assertEquals("FlowStream.getPressure()", 1.0,  testStream.getPressure());
+    assertFalse("FlowStream.getPressure()", testStream.getPressure() == 0.0);
   }
   
   

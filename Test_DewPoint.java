@@ -17,8 +17,8 @@ public class Test_DewPoint extends TestCase {
     
     DewPoint testDewPoint = new DewPoint(testStream);
     
-    assertEquals("new DewPoint(testStream)", true,  testDewPoint != null);
-    assertEquals("new DewPoint(testStream)", false, testDewPoint == null);
+    assertTrue("new DewPoint(testStream)", testDewPoint != null);
+    assertFalse("new DewPoint(testStream)", testDewPoint == null);
   }
   
   // Test the testFunction
@@ -42,7 +42,7 @@ public class Test_DewPoint extends TestCase {
     DewPoint testDewPoint = new DewPoint(testStream);
     double testFunction = testDewPoint.testFunction(temperature);
 
-    assertEquals("DewPoint.testFunction()", true,  testFunction > -0.700 && testFunction < -0.690);
+    assertTrue("DewPoint.testFunction()", testFunction > -0.700 && testFunction < -0.690);
 
   }
   
@@ -68,7 +68,7 @@ public class Test_DewPoint extends TestCase {
     DewPoint testDewPoint = new DewPoint(testStream);
     double dewPoint = testDewPoint.calc();
 
-    assertEquals("DewPoint.calc()", true,  dewPoint > 364.25 && dewPoint < 364.28);
+    assertTrue("DewPoint.calc()", dewPoint > 364.25 && dewPoint < 364.28);
 
   }
   
@@ -103,7 +103,7 @@ public class Test_DewPoint extends TestCase {
     DewPoint testDewPoint = new DewPoint(testStream);
     double dewPoint = testDewPoint.calc();
     
-    assertEquals("DewPoint.calc()", true,  dewPoint > 314.0 && dewPoint < 315.0);
+    assertTrue("DewPoint.calc()", dewPoint > 314.0 && dewPoint < 315.0);
 
   }
   

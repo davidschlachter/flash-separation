@@ -21,8 +21,8 @@ public class Test_SaturationPressure extends TestCase {
     double saturationPressure = SaturationPressure.calc(testSpecies, temperature);
     
     // Account for rounding errors in floating point arithmetic
-    assertEquals("SaturationPressure.calc(water, 298.15)", true, (saturationPressure > 3157.9  && saturationPressure < 3158.0));
-    assertEquals("SaturationPressure.calc(water, 298.15)", false, (saturationPressure < 3157.9 || saturationPressure > 3158.0));
+    assertTrue("SaturationPressure.calc(water, 298.15)", (saturationPressure > 3157.9  && saturationPressure < 3158.0));
+    assertFalse("SaturationPressure.calc(water, 298.15)", (saturationPressure < 3157.9 || saturationPressure > 3158.0));
     
   }
   

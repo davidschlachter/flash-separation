@@ -73,9 +73,9 @@ public class Test_Species extends TestCase {
     Species testSpecies = new Species();
     
     double activityCoefficient = 0.5;
-    assertEquals("Species.setActivityCoefficient(0)", true, testSpecies.setActivityCoefficient(activityCoefficient));
-    assertEquals("Species.setActivityCoefficient(-2.0)", false, testSpecies.setActivityCoefficient(-2.0));
-    assertEquals("Species.setActivityCoefficient(2.0)",  false,  testSpecies.setActivityCoefficient(2.0));
+    assertTrue("Species.setActivityCoefficient(0)", testSpecies.setActivityCoefficient(activityCoefficient));
+    assertFalse("Species.setActivityCoefficient(-2.0)", testSpecies.setActivityCoefficient(-2.0));
+    assertFalse("Species.setActivityCoefficient(2.0)", testSpecies.setActivityCoefficient(2.0));
     assertEquals("Species.getActivityCoefficient()", activityCoefficient, testSpecies.getActivityCoefficient());
     
   }
@@ -89,7 +89,7 @@ public class Test_Species extends TestCase {
     String speciesName = "ethanol";
     testSpecies.setSpeciesName(speciesName);
     
-    assertEquals("Species.getSpeciesName()", true, speciesName.equals(testSpecies.getSpeciesName()));
+    assertTrue("Species.getSpeciesName()", speciesName.equals(testSpecies.getSpeciesName()));
     
   }
   
@@ -102,9 +102,9 @@ public class Test_Species extends TestCase {
     double criticalTemperature = 45.0;
     //testSpecies.setCriticalTemperature(criticalTemperature);
     
-    assertEquals("Species.setCriticalTemperature(-1.0)", false, testSpecies.setCriticalTemperature(-1.0));
-    assertEquals("Species.setCriticalTemperature(1.0)",   true,  testSpecies.setCriticalTemperature(criticalTemperature));
-    assertEquals("Species.getCriticalTemperature()", true, testSpecies.getCriticalTemperature() == criticalTemperature);
+    assertFalse("Species.setCriticalTemperature(-1.0)", testSpecies.setCriticalTemperature(-1.0));
+    assertEquals("Species.setCriticalTemperature(1.0)",  true, testSpecies.setCriticalTemperature(criticalTemperature));
+    assertTrue("Species.getCriticalTemperature()", testSpecies.getCriticalTemperature() == criticalTemperature);
     
   }
   

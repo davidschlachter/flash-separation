@@ -14,9 +14,9 @@ public class Test_FlowSpecies extends TestCase {
     FlowSpecies testSpecies = new FlowSpecies();
     
     double overallMoleFraction = 0.5;
-    assertEquals("Species.setOverallMoleFraction(0.5)", true, testSpecies.setOverallMoleFraction(overallMoleFraction));
-    assertEquals("Species.setOverallMoleFraction(2.0)",  false,  testSpecies.setOverallMoleFraction(2.0));
-    assertEquals("Species.setOverallMoleFraction(-2.0)", false, testSpecies.setOverallMoleFraction(-2.0));
+    assertTrue("Species.setOverallMoleFraction(0.5)", testSpecies.setOverallMoleFraction(overallMoleFraction));
+    assertFalse("Species.setOverallMoleFraction(2.0)", testSpecies.setOverallMoleFraction(2.0));
+    assertFalse("Species.setOverallMoleFraction(-2.0)", testSpecies.setOverallMoleFraction(-2.0));
     assertEquals("Species.getOverallMoleFraction()", overallMoleFraction, testSpecies.getOverallMoleFraction());
   }
   
@@ -27,9 +27,9 @@ public class Test_FlowSpecies extends TestCase {
     FlowSpecies testSpecies = new FlowSpecies();
     
     double liquidMoleFraction = 0.5;
-    assertEquals("Species.setLiquidMoleFraction(0.5)", true, testSpecies.setLiquidMoleFraction(liquidMoleFraction));
-    assertEquals("Species.setLiquidMoleFraction(2.0)",  false,  testSpecies.setLiquidMoleFraction(2.0));
-    assertEquals("Species.setLiquidMoleFraction(-2.0)", false, testSpecies.setLiquidMoleFraction(-2.0));
+    assertTrue("Species.setLiquidMoleFraction(0.5)", testSpecies.setLiquidMoleFraction(liquidMoleFraction));
+    assertFalse("Species.setLiquidMoleFraction(2.0)", testSpecies.setLiquidMoleFraction(2.0));
+    assertFalse("Species.setLiquidMoleFraction(-2.0)", testSpecies.setLiquidMoleFraction(-2.0));
     assertEquals("Species.getLiquidMoleFraction()", liquidMoleFraction, testSpecies.getLiquidMoleFraction());
     
   }
@@ -41,9 +41,9 @@ public class Test_FlowSpecies extends TestCase {
     FlowSpecies testSpecies = new FlowSpecies();
     
     double vapourMoleFraction = 0.5;
-    assertEquals("Species.setVapourMoleFraction(0.5)", true, testSpecies.setVapourMoleFraction(vapourMoleFraction));
-    assertEquals("Species.setVapourMoleFraction(2.0)",  false,  testSpecies.setVapourMoleFraction(2.0));
-    assertEquals("Species.setVapourMoleFraction(-2.0)", false, testSpecies.setVapourMoleFraction(-2.0));
+    assertTrue("Species.setVapourMoleFraction(0.5)", testSpecies.setVapourMoleFraction(vapourMoleFraction));
+    assertFalse("Species.setVapourMoleFraction(2.0)", testSpecies.setVapourMoleFraction(2.0));
+    assertFalse("Species.setVapourMoleFraction(-2.0)", testSpecies.setVapourMoleFraction(-2.0));
     assertEquals("Species.getVapourMoleFraction()", vapourMoleFraction, testSpecies.getVapourMoleFraction());
     
   }
@@ -55,9 +55,9 @@ public class Test_FlowSpecies extends TestCase {
     FlowSpecies testSpecies = new FlowSpecies();
     
     double vapourFraction = 0.5;
-    assertEquals("Species.setVapourFraction(0.5)", true, testSpecies.setVapourFraction(vapourFraction));
-    assertEquals("Species.setVapourFraction(2.0)",  false,  testSpecies.setVapourFraction(2.0));
-    assertEquals("Species.setVapourFraction(-2.0)", false, testSpecies.setVapourFraction(-2.0));
+    assertTrue("Species.setVapourFraction(0.5)", testSpecies.setVapourFraction(vapourFraction));
+    assertFalse("Species.setVapourFraction(2.0)", testSpecies.setVapourFraction(2.0));
+    assertFalse("Species.setVapourFraction(-2.0)", testSpecies.setVapourFraction(-2.0));
     assertEquals("Species.getVapourFraction()", vapourFraction, testSpecies.getVapourFraction());
     
   }

@@ -17,8 +17,8 @@ public class Test_BubblePoint extends TestCase {
     
     BubblePoint testBubblePoint = new BubblePoint(testStream);
     
-    assertEquals("new BubblePoint(testStream)", true,  testBubblePoint != null);
-    assertEquals("new BubblePoint(testStream)", false, testBubblePoint == null);
+    assertTrue("new BubblePoint(testStream)", testBubblePoint != null);
+    assertFalse("new BubblePoint(testStream)", testBubblePoint == null);
   }
   
   // Test the testFunction
@@ -42,7 +42,7 @@ public class Test_BubblePoint extends TestCase {
     BubblePoint testBubblePoint = new BubblePoint(testStream);
     double testFunction = testBubblePoint.testFunction(temperature);
     
-    assertEquals("BubblePoint.testFunction()", true,  testFunction > 2.80 && testFunction < 2.82);
+    assertTrue("BubblePoint.testFunction()", testFunction > 2.80 && testFunction < 2.82);
 
   }
   
@@ -66,7 +66,7 @@ public class Test_BubblePoint extends TestCase {
     BubblePoint testBubblePoint = new BubblePoint(testStream);
     double dewPoint = testBubblePoint.calc();
     
-    assertEquals("BubblePoint.calc()", true,  dewPoint > 359.9 && dewPoint < 360.0);
+    assertTrue("BubblePoint.calc()", dewPoint > 359.9 && dewPoint < 360.0);
 
   }
   
