@@ -113,5 +113,19 @@ public class Test_FlowStream extends TestCase {
     assertFalse("FlowStream.getPressure()", testStream.getPressure() == 0.0);
   }
   
+  /**
+   * Test the getter and setter for the vapour fraction
+   */
+  public void testVapourFraction() {
+    FlowStream testStream = new FlowStream();
+    
+    double vapourFraction = 0.5;
+    assertTrue("FlowStream.setVapourFraction(0.5)", testStream.setVapourFraction(vapourFraction));
+    assertFalse("FlowStream.setVapourFraction(2.0)", testStream.setVapourFraction(2.0));
+    assertFalse("FlowStream.setVapourFraction(-2.0)", testStream.setVapourFraction(-2.0));
+    assertEquals("FlowStream.getVapourFraction()", vapourFraction, testStream.getVapourFraction());
+    
+  }
+  
   
 }

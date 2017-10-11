@@ -14,6 +14,7 @@ public class FlowStream {
   private double molarFlowRate = 0.0;
   private double temperature = 0.0;
   private double pressure = 0.0;
+  private double vapourFraction = 0.0;
   
   
   // Default constructor
@@ -39,6 +40,15 @@ public class FlowStream {
       return false;
     }
   }
+  
+  public boolean setVapourFraction(double vapourFraction) {
+    if (vapourFraction >= 0.0 && vapourFraction <= 1.0) {
+      this.vapourFraction = vapourFraction;
+      return true;
+    } else {
+      return false;
+    }
+  };
   
   public boolean setTemperature(double temperature) {
     if (temperature >= 0) {
@@ -78,6 +88,10 @@ public class FlowStream {
   
   public double getPressure() {
     return this.pressure;
+  }
+  
+  public double getVapourFraction() {
+    return this.vapourFraction;
   }
     
     

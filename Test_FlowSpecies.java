@@ -48,18 +48,4 @@ public class Test_FlowSpecies extends TestCase {
     
   }
   
-  /**
-  * Test the getter and setter for the vapour fraction
-  */
-  public void testVapourFraction() {
-    FlowSpecies testSpecies = new FlowSpecies();
-    
-    double vapourFraction = 0.5;
-    assertTrue("Species.setVapourFraction(0.5)", testSpecies.setVapourFraction(vapourFraction));
-    assertFalse("Species.setVapourFraction(2.0)", testSpecies.setVapourFraction(2.0));
-    assertFalse("Species.setVapourFraction(-2.0)", testSpecies.setVapourFraction(-2.0));
-    assertEquals("Species.getVapourFraction()", vapourFraction, testSpecies.getVapourFraction());
-    
-  }
-  
 }

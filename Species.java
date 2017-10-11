@@ -112,6 +112,21 @@ public class Species {
     return this.criticalTemperature;
   }
   
+  // Clone method
+  public Species (Species source) {
+    this.speciesName = source.speciesName;
+    this.heatCapacityA = source.heatCapacityA;
+    this.heatCapacityB = source.heatCapacityB;
+    this.heatCapacityC = source.heatCapacityC;
+    this.heatCapacityD = source.heatCapacityD;
+    this.antoineA = source.antoineA;
+    this.antoineB = source.antoineB;
+    this.antoineC = source.antoineC;
+    this.heatOfVapourization = source.heatOfVapourization;
+    this.activityCoefficient = source.activityCoefficient;
+    this.criticalTemperature = source.criticalTemperature;
+   }
+  
   
   
 }

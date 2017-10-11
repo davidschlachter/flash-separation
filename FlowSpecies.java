@@ -6,7 +6,6 @@ public class FlowSpecies extends Species {
   private double overallMoleFraction = 0.0;
   private double liquidMoleFraction = 0.0;
   private double vapourMoleFraction = 0.0;
-  private double vapourFraction = 0.0;
   
   public FlowSpecies() {
     super();
@@ -41,15 +40,6 @@ public class FlowSpecies extends Species {
     }
   };
   
-  public boolean setVapourFraction(double vapourFraction) {
-    if (vapourFraction >= 0.0 && vapourFraction <= 1.0) {
-      this.vapourFraction = vapourFraction;
-      return true;
-    } else {
-      return false;
-    }
-  };
-  
   
   // Getters
   public double getOverallMoleFraction() {
@@ -64,8 +54,12 @@ public class FlowSpecies extends Species {
     return this.vapourMoleFraction;
   }
   
-  public double getVapourFraction() {
-    return this.vapourFraction;
-  }
+  // Clone method
+  public FlowSpecies (FlowSpecies source) {
+    super(source);
+    this.overallMoleFraction = source.overallMoleFraction;
+    this.liquidMoleFraction = source.liquidMoleFraction;
+    this.vapourMoleFraction = source.vapourMoleFraction;
+   }
   
 }
