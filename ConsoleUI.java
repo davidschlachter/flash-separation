@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.io.PrintWriter;
 
 public class ConsoleUI {
   
@@ -14,30 +15,37 @@ public class ConsoleUI {
   }
   
   // Run the ConsoleUI
-  public void run(Scanner scan) {
+  public void run(Scanner scan, PrintWriter output) {
     
     int i;
     char choice;
+    boolean firstRun = true;
     
-    System.out.println("\nSelect species for the simulation:");
+    output.println("\nSelect species for the simulation:");
     
-    while (0 == 0) {
+    while (true) {
      
-      System.out.println("Current species selected:\n");
+      output.println("Current species selected:\n");
       if (this.theseSpecies.size() == 0) {
-        System.out.println("  [ No species selected ]\n");
+        output.println("  [ No species selected ]\n");
       } else {
         for (i = 0; i < this.theseSpecies.size(); i++) {
-          System.out.println("  " + this.theseSpecies.get(i).getSpeciesName());
+          output.println("  " + this.theseSpecies.get(i).getSpeciesName());
         }
-        System.out.print("\n");
+        output.print("\n");
       }
-      System.out.println("Select an action: [a]dd species   [r]emove species   [d]one\n");
+      output.println("Select an action: [a]dd species   [r]emove species   [d]one\n");
 
+      if (firstRun == false) {
+        scan.nextLine();
+      } else {
+        firstRun = false;
+      }
       choice = scan.nextLine().charAt(0);
       
-      if (choice == 'a') this.addSpecies(new Scanner(System.in));
-      if (choice == 'r') this.removeSpecies(new Scanner(System.in));
+      if (choice == 'a') this.addSpecies(scan, output);
+      if (choice == 'r') this.removeSpecies(scan, output);
+      if (choice == 'q') return;  // Exit option for testing
       if (choice == 'd') break;
     }
     
@@ -50,17 +58,17 @@ public class ConsoleUI {
   
   }
   
-  private void addSpecies(Scanner scan) {
+  private void addSpecies(Scanner scan, PrintWriter output) {
     int i, choice;
     
-    while (0 == 0) {
-      System.out.println("\nPlease select a species to add from the list, or specify a new species:\n");
+    while (true) {
+      output.println("\nPlease select a species to add from the list, or specify a new species:\n");
       
       for (i = 0; i < this.presetSpecies.size(); i++) {
-        System.out.println("  " + i + " " + this.presetSpecies.get(i).getSpeciesName());
+        output.println("  " + i + " " + this.presetSpecies.get(i).getSpeciesName());
       }
-      System.out.println("------------------------");
-      System.out.println("  " + i + " New species...\n");
+      output.println("------------------------");
+      output.println("  " + i + " New species...\n");
       
       choice = scan.nextInt();
       
@@ -71,23 +79,22 @@ public class ConsoleUI {
     if (choice != this.presetSpecies.size()) {
       this.theseSpecies.add(this.presetSpecies.get(choice));
     } else {
-      this.addCustomSpecies(new Scanner(System.in));
+      this.addCustomSpecies(scan, output);
     }
     
 
-    scan.close();
   };
   
-  private void removeSpecies(Scanner scan) {
+  private void removeSpecies(Scanner scan, PrintWriter output) {
     int i, choice;
     
-    while (0 == 0) {
-      System.out.println("\nPlease select a species to remove from the list:\n");
+    while (true) {
+      output.println("\nPlease select a species to remove from the list:\n");
       
       for (i = 0; i < this.theseSpecies.size(); i++) {
-        System.out.println("  " + i + " " + this.theseSpecies.get(i).getSpeciesName());
+        output.println("  " + i + " " + this.theseSpecies.get(i).getSpeciesName());
       }
-      System.out.print("\n");
+      output.print("\n");
       
       choice = scan.nextInt();
       
@@ -97,12 +104,10 @@ public class ConsoleUI {
     
     this.theseSpecies.remove(choice);
     
-
-    scan.close();
   };
   
-  private void addCustomSpecies(Scanner scan) {
-    System.out.println("\nAdding a custom species\n");
+  private void addCustomSpecies(Scanner scan, PrintWriter output) {
+    output.println("\nAdding a custom species\n");
   }
   
   
