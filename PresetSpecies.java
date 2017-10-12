@@ -16,56 +16,62 @@ public class PresetSpecies {
     
     FlowSpecies ethane = new FlowSpecies();
     ethane.setSpeciesName("Ethane");
-    ethane.setHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    ethane.setHeatCapacityConstants(1.131, 19.225, -5.561, 0.0);
+    ethane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
     ethane.setAntoineConstants(1.0, 1.0, 1.0);
     ethane.setHeatOfVapourization(1.0);
     ethane.setActivityCoefficient(1.0);
-    ethane.setCriticalTemperature (300.0);
+    ethane.setCriticalTemperature (305.3);
     flowSpecies.add(ethane);
     
     FlowSpecies pentane = new FlowSpecies();
     pentane.setSpeciesName("Pentane");
-    pentane.setHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    pentane.setAntoineConstants(1.0, 1.0, 1.0);
+    pentane.setHeatCapacityConstants(2.464, 45.351, 14.111, 0.0);
+    pentane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    pentane.setAntoineConstants(13.7667, 2451.88, 232.014);
     pentane.setHeatOfVapourization(1.0);
     pentane.setActivityCoefficient(1.0);
-    pentane.setCriticalTemperature (300.0);
+    pentane.setCriticalTemperature (469.6);
     flowSpecies.add(pentane);
     
     FlowSpecies hexane = new FlowSpecies();
     hexane.setSpeciesName("Hexane");
-    hexane.setHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    hexane.setAntoineConstants(1.0, 1.0, 1.0);
+    hexane.setHeatCapacityConstants(3.025, 53.722, 16.791, 0.0);
+    hexane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    hexane.setAntoineConstants(13.8193, 2696.04, 224.317);
     hexane.setHeatOfVapourization(1.0);
     hexane.setActivityCoefficient(1.0);
-    hexane.setCriticalTemperature (300.0);
+    hexane.setCriticalTemperature (507.6);
     flowSpecies.add(hexane);
     
     FlowSpecies cyclohexane = new FlowSpecies();
     cyclohexane.setSpeciesName("Cyclohexane");
-    cyclohexane.setHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    cyclohexane.setAntoineConstants(1.0, 1.0, 1.0);
+    cyclohexane.setHeatCapacityConstants(-3.876, 63.249, -20.928, 0.0);
+    cyclohexane.setLiquidHeatCapacityConstants(-9.048, 0.14138, -0.00016162, 0.0);
+    cyclohexane.setAntoineConstants(13.6568, 2723.44, 220.618);
     cyclohexane.setHeatOfVapourization(1.0);
     cyclohexane.setActivityCoefficient(1.0);
-    cyclohexane.setCriticalTemperature (300.0);
+    cyclohexane.setCriticalTemperature (554.0);
     flowSpecies.add(cyclohexane);
     
     FlowSpecies water = new FlowSpecies();
     water.setSpeciesName("Water");
-    water.setHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    water.setAntoineConstants(1.0, 1.0, 1.0);
+    water.setHeatCapacityConstants(3.47, 1.45, 0.0, 0.121);
+    water.setLiquidHeatCapacityConstants(8.712, 0.00125, -0.00000018, 0.0);
+    water.setAntoineConstants(16.3872, 3885.7, 230.17);
     water.setHeatOfVapourization(1.0);
     water.setActivityCoefficient(1.0);
-    water.setCriticalTemperature (300.0);
+    water.setCriticalTemperature (647.0);
     flowSpecies.add(water);
     
     FlowSpecies nitrogen = new FlowSpecies();
     nitrogen.setSpeciesName("Nitrogen");
-    nitrogen.setHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    nitrogen.setHeatCapacityConstants(3.28, 0.593, 0.0, 0.04);
+    nitrogen.setLiquidHeatCapacityConstants(0.0, 0.0, 0.0, 0.0);
     nitrogen.setAntoineConstants(1.0, 1.0, 1.0);
     nitrogen.setHeatOfVapourization(1.0);
     nitrogen.setActivityCoefficient(1.0);
-    nitrogen.setCriticalTemperature (300.0);
+    nitrogen.setCriticalTemperature (126.2);
     flowSpecies.add(nitrogen);
     
     return flowSpecies;

@@ -10,16 +10,24 @@ public class Species {
   // Species name
   private String speciesName;
   
-  // Heat capacity constants
+  // Vapour heat capacity constants
   private double heatCapacityA = 0;
   private double heatCapacityB = 0;
   private double heatCapacityC = 0;
   private double heatCapacityD = 0;
   
+  //Liquid heat capacity constants
+  private double liquidHeatCapacityA= 0;
+  private double liquidHeatCapacityB= 0;
+  private double liquidHeatCapacityC= 0;
+  private double liquidHeatCapacityD= 0;
+  
   // Antoine coefficients
   private double antoineA = 0;
   private double antoineB = 0;
   private double antoineC = 0;
+  
+  
   
   // Heat of vapourization
   private double heatOfVapourization = 0;
@@ -48,6 +56,14 @@ public class Species {
     this.heatCapacityD = heatCapacityD;
   }
   
+    public void setLiquidHeatCapacityConstants(double liquidHeatCapacityA, double liquidHeatCapacityB, double liquidHeatCapacityC, double liquidHeatCapacityD) {
+    this.liquidHeatCapacityA = liquidHeatCapacityA;
+    this.liquidHeatCapacityB = liquidHeatCapacityB;
+    this.liquidHeatCapacityC = liquidHeatCapacityC;
+    this.liquidHeatCapacityD = liquidHeatCapacityD;
+    
+  }
+  
   public void setAntoineConstants(double antoineA, double antoineB, double antoineC) {
     this.antoineA = antoineA;
     this.antoineB = antoineB;
@@ -59,7 +75,7 @@ public class Species {
   }
   
   public boolean setActivityCoefficient(double activityCoefficient) {
-    if (activityCoefficient > 0.0 && activityCoefficient <= 1.0) {
+    if (activityCoefficient > 0.0) {
       this.activityCoefficient = activityCoefficient;
       return true;
     } else {
@@ -72,6 +88,7 @@ public class Species {
       this.criticalTemperature = criticalTemperature;
       return true;
     } else {
+      System.out.println("All temperatures must be in Kelvin. Enter a positive value for temperature.");
       return false;
     }
   }
@@ -87,11 +104,22 @@ public class Species {
     return heatCapacityConstants;
   }
   
+   public double[] getLiquidHeatCapacityConstants() {
+    double[] liquidHeatCapacityConstants = new double[4];
+    liquidHeatCapacityConstants[0] = this.liquidHeatCapacityA;
+    liquidHeatCapacityConstants[0] = this.liquidHeatCapacityB;
+    liquidHeatCapacityConstants[0] = this.liquidHeatCapacityC;
+    liquidHeatCapacityConstants[0] = this.liquidHeatCapacityD;
+    
+    return liquidHeatCapacityConstants;
+  }
+  
   public double[] getAntoineConstants() {
     double[] antoineConstants = new double[3];
     antoineConstants[0] = this.antoineA;
     antoineConstants[1] = this.antoineB;
     antoineConstants[2] = this.antoineC;
+ 
     
     return antoineConstants;
   }
