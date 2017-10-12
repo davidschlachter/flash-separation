@@ -173,7 +173,7 @@ public class ConsoleUI {
       }
     }
     inletStream.setPressure(nextDouble);
-    output.println("  Molar flow rate (kg/s): ");
+    output.println("  Mass flow rate (kg/s): ");
     while (true) {
       nextString = scan.nextLine();
       if (nextString.isEmpty()) {
@@ -230,7 +230,34 @@ public class ConsoleUI {
     //
     // Check that the flash is possible! (outlet temperature is between dew and bubble point)
     //
-    
+    DewPoint dewPoint = new DewPoint(outletStream);
+    double dewPointTemperature = dewPoint.calc();
+    BubblePoint bubblePoint = new BubblePoint(outletStream);
+    double bubblePointTemperature = bubblePoint.calc();
+    if (outletStream.getTemperature() > 0.01 && inletStream.getTemperature() > 0.01) {
+      if (outletStream.getTemperature() < bubblePointTemperature) {
+        output.println("ERROR: The specified outlet temperature is below the bubble point -- no separation will occur!");
+        output.println("(Bubble point is: " + bubblePointTemperature + ")");
+        return true;
+      }
+      if (outletStream.getTemperature() > dewPointTemperature) {
+        output.println("ERROR: The specified outlet temperature is above the dew point -- no separation will occur!");
+        output.println("(Dew point is: " + dewPointTemperature + ")");
+        return true;
+      }
+    } else if (inletStream.getTemperature() < 0.01) {
+      if (inletStream.getTemperature() > bubblePointTemperature) {
+        output.println("ERROR: The specified inlet temperature is below the bubble point -- no separation will occur!");
+        output.println("(Bubble point is: " + bubblePointTemperature + ")");
+        return true;
+      }
+    } else if (outletStream.getTemperature() < 0.01) {
+      if (outletStream.getTemperature() < dewPointTemperature) {
+        output.println("ERROR: The specified outlet temperature is above the dew point -- no separation will occur!");
+        output.println("(Dew point is: " + dewPointTemperature + ")");
+        return true;
+      }
+    }
     
     //
     // Logic for determining the problem type
@@ -318,7 +345,7 @@ public class ConsoleUI {
     output.println("Inlet:");
     output.println("  Temperature: " + inletStream.getTemperature());
     output.println("  Pressure: " + inletStream.getPressure());
-    output.println("  Molar flow rate: " + inletStream.getMolarFlowRate());
+    output.println("  Mass flow rate: " + inletStream.getMolarFlowRate());
     output.println("  Total vapour fraction: " + inletStream.getVapourFraction());
     output.println("  Species and mole fractions: ");
     output.printf("    %15s  %5s  %5s  %5s%n", "Name", " liq ", " vap ", "total");
@@ -333,7 +360,7 @@ public class ConsoleUI {
     output.println("Outlet:");
     output.println("  Temperature: " + outletStream.getTemperature());
     output.println("  Pressure: " + outletStream.getPressure());
-    output.println("  Molar flow rate: " + outletStream.getMolarFlowRate());
+    output.println("  Mass flow rate: " + outletStream.getMolarFlowRate());
     output.println("  Total vapour fraction: " + inletStream.getVapourFraction());
     output.println("  Species and mole fractions: ");
     output.printf("    %15s  %5s  %5s  %5s%n", "Name", "liq", "vap", "total");
