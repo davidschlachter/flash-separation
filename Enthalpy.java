@@ -27,8 +27,8 @@ public class Enthalpy implements Function {
       finalTemperature = testTemp;
       initialTemperature = this.inlet.getTemperature();
     } else {
-      System.out.println("Failure to initialize temperatures to real values."); 
-      System.exit(1);
+      finalTemperature = this.outlet.getTemperature();
+      initialTemperature = this.inlet.getTemperature();
     }
     
     if (this.inlet.getNumberOfSpecies() != this.outlet.getNumberOfSpecies()) {
