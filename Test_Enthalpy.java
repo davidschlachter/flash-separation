@@ -8,12 +8,12 @@ public class Test_Enthalpy extends TestCase {
     FlowSpecies water = new FlowSpecies();
     water.setAntoineConstants(10.19621302, 1730.63, -39.724);
     water.setOverallMoleFraction(0.5);
-    water.setHeatCapacityConstants(3.47, 1.45, 0.0, 0.121);
+    water.setLiquidHeatCapacityConstants(3.47, 1.45, 0.0, 0.121);
     
     FlowSpecies ethanol = new FlowSpecies();
     ethanol.setAntoineConstants(9.80607302, 1332.04, -73.95);
     ethanol.setOverallMoleFraction(0.5);
-    ethanol.setHeatCapacityConstants(33.866, -0.1726, 0.00034917, 0.0);
+    ethanol.setLiquidHeatCapacityConstants(33.866, -0.1726, 0.00034917, 0.0);
     
     FlowStream inletStream = new FlowStream();
     FlowStream outletStream = new FlowStream();
@@ -35,7 +35,7 @@ public class Test_Enthalpy extends TestCase {
     Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
     double theEnthalpy = enthalpy.testFunction(360.0);
     
-    assertTrue("Enthalpy.testFunction()", theEnthalpy > 18243.0 && theEnthalpy < 18245.0);
+    assertTrue("Enthalpy.testFunction()", theEnthalpy > 29691.5 && theEnthalpy < 29691.7);
 
    
   }

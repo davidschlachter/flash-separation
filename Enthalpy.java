@@ -17,8 +17,9 @@ public class Enthalpy implements Function {
     int i;
     double initialTemperature = -1.0;
     double finalTemperature = -1.0;
+    double bubbleTemperature = -1.0;
     
-    double overallMoleFraction, vapourMoleFraction, heatOfVapourization, result = 0.0;
+    double overallMoleFraction, vapourMoleFraction, liquidMoleFraction, heatOfVapourization, result = 0.0;
     
     if (this.inlet.getTemperature() < 0.01) {
       initialTemperature = testTemp;
@@ -36,13 +37,16 @@ public class Enthalpy implements Function {
       System.exit(1);
     }
     
+    BubblePoint bubblePoint = new BubblePoint(this.inlet);
+    bubbleTemperature = bubblePoint.calc();
+    
      for (i = 0; i < this.outlet.getNumberOfSpecies(); i++) {
       overallMoleFraction = this.outlet.getFlowSpecies().get(i).getOverallMoleFraction();
       vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
-      heatOfVapourization = this.outlet.getFlowSpecies().get(i).getHeatOfVapourization();
+      liquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
       
-      result = result + vapourMoleFraction * (heatOfVapourization) + 
-        overallMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature);
+      result = result + vapourMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), bubbleTemperature, finalTemperature, "vapour") + 
+        liquidMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
     }
 
      return result;

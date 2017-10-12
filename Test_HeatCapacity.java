@@ -7,7 +7,7 @@ import junit.framework.TestCase;
  */
 public class Test_HeatCapacity extends TestCase {
   
-  public void testIntegrate() {
+  public void testLiquidIntegrate() {
     
     Species testSpecies = new Species();
     
@@ -16,9 +16,26 @@ public class Test_HeatCapacity extends TestCase {
     double heatCapacityC = 0.00034917;
     double heatCapacityD = 0.0;
     
-    testSpecies.setHeatCapacityConstants(heatCapacityA, heatCapacityB, heatCapacityC, heatCapacityD);
+    testSpecies.setLiquidHeatCapacityConstants(heatCapacityA, heatCapacityB, heatCapacityC, heatCapacityD);
     
-    double integral = HeatCapacity.integrate(testSpecies, 295.0, 333.0);
+    double integral = HeatCapacity.integrate(testSpecies, 295.0, 333.0, "liquid");
+    
+    assertTrue("HeatCapacity.integrate()", integral > 4460.0 && integral < 4470.0);
+    
+  }
+  
+  public void testVapourIntegrate() {
+    
+    Species testSpecies = new Species();
+    
+    double heatCapacityA = 33.866;
+    double heatCapacityB = -0.1726;
+    double heatCapacityC = 0.00034917;
+    double heatCapacityD = 0.0;
+    
+    testSpecies.setVapourHeatCapacityConstants(heatCapacityA, heatCapacityB, heatCapacityC, heatCapacityD);
+    
+    double integral = HeatCapacity.integrate(testSpecies, 295.0, 333.0, "vapour");
     
     assertTrue("HeatCapacity.integrate()", integral > 4460.0 && integral < 4470.0);
     

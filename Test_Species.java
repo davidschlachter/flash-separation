@@ -8,9 +8,9 @@ import junit.framework.TestCase;
 public class Test_Species extends TestCase {
   
   /**
-   * Test the getter and setter for the heat capacity constants for a species
+   * Test the getter and setter for the liquid heat capacity constants for a species
    */
-  public void testHeatCapacityConstants() {
+  public void testLiquidHeatCapacityConstants() {
     
     Species testSpecies = new Species();
     
@@ -19,14 +19,37 @@ public class Test_Species extends TestCase {
     double heatCapacityC = 1.0;
     double heatCapacityD = 1.0;
     
-    testSpecies.setHeatCapacityConstants(heatCapacityA, heatCapacityB, heatCapacityC, heatCapacityD);
+    testSpecies.setLiquidHeatCapacityConstants(heatCapacityA, heatCapacityB, heatCapacityC, heatCapacityD);
     
-    double[] heatCapacityConstants = testSpecies.getHeatCapacityConstants();
+    double[] heatCapacityConstants = testSpecies.getLiquidHeatCapacityConstants();
     
-    assertEquals("Species.set/getHeatCapacityConstants[0]", heatCapacityA, heatCapacityConstants[0]);
-    assertEquals("Species.set/getHeatCapacityConstants[1]", heatCapacityB, heatCapacityConstants[1]);
-    assertEquals("Species.set/getHeatCapacityConstants[2]", heatCapacityC, heatCapacityConstants[2]);
-    assertEquals("Species.set/getHeatCapacityConstants[3]", heatCapacityD, heatCapacityConstants[3]);
+    assertEquals("Species.set/getLiquidHeatCapacityConstants[0]", heatCapacityA, heatCapacityConstants[0]);
+    assertEquals("Species.set/getLiquidHeatCapacityConstants[1]", heatCapacityB, heatCapacityConstants[1]);
+    assertEquals("Species.set/getLiquidHeatCapacityConstants[2]", heatCapacityC, heatCapacityConstants[2]);
+    assertEquals("Species.set/getLiquidHeatCapacityConstants[3]", heatCapacityD, heatCapacityConstants[3]);
+    
+  }
+  
+  /**
+   * Test the getter and setter for the vapour heat capacity constants for a species
+   */
+  public void testVapourHeatCapacityConstants() {
+    
+    Species testSpecies = new Species();
+    
+    double heatCapacityA = 1.0;
+    double heatCapacityB = 1.0;
+    double heatCapacityC = 1.0;
+    double heatCapacityD = 1.0;
+    
+    testSpecies.setVapourHeatCapacityConstants(heatCapacityA, heatCapacityB, heatCapacityC, heatCapacityD);
+    
+    double[] heatCapacityConstants = testSpecies.getVapourHeatCapacityConstants();
+    
+    assertEquals("Species.set/getVapourHeatCapacityConstants[0]", heatCapacityA, heatCapacityConstants[0]);
+    assertEquals("Species.set/getVapourHeatCapacityConstants[1]", heatCapacityB, heatCapacityConstants[1]);
+    assertEquals("Species.set/getVapourHeatCapacityConstants[2]", heatCapacityC, heatCapacityConstants[2]);
+    assertEquals("Species.set/getVapourHeatCapacityConstants[3]", heatCapacityD, heatCapacityConstants[3]);
     
   }
   
@@ -52,19 +75,6 @@ public class Test_Species extends TestCase {
     
   }
   
-  /**
-   * Test the getter and setter for the heat of vapourization
-   */
-  public void testHeatOfVapourization() {
-    Species testSpecies = new Species();
-    
-    double heatOfVapourization = 1.0;
-    testSpecies.setHeatOfVapourization(heatOfVapourization);
-    
-    assertEquals("Species.set/getHeatOfVapourization", heatOfVapourization, testSpecies.getHeatOfVapourization());
-    
-  }
-  
   
   /**
    * Test the getter and setter for the activity coefficient
@@ -75,7 +85,6 @@ public class Test_Species extends TestCase {
     double activityCoefficient = 0.5;
     assertTrue("Species.setActivityCoefficient(0)", testSpecies.setActivityCoefficient(activityCoefficient));
     assertFalse("Species.setActivityCoefficient(-2.0)", testSpecies.setActivityCoefficient(-2.0));
-    assertFalse("Species.setActivityCoefficient(2.0)", testSpecies.setActivityCoefficient(2.0));
     assertEquals("Species.getActivityCoefficient()", activityCoefficient, testSpecies.getActivityCoefficient());
     
   }

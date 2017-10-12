@@ -9,7 +9,6 @@ public class FlowSpecies extends Species {
   
   public FlowSpecies() {
     super();
-    //return true;
   }
   
   // Setters

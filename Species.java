@@ -11,49 +11,41 @@ public class Species {
   private String speciesName;
   
   // Vapour heat capacity constants
-  private double heatCapacityA = 0;
-  private double heatCapacityB = 0;
-  private double heatCapacityC = 0;
-  private double heatCapacityD = 0;
+  private double vapourHeatCapacityA = 0.0;
+  private double vapourHeatCapacityB = 0.0;
+  private double vapourHeatCapacityC = 0.0;
+  private double vapourHeatCapacityD = 0.0;
   
   //Liquid heat capacity constants
-  private double liquidHeatCapacityA= 0;
-  private double liquidHeatCapacityB= 0;
-  private double liquidHeatCapacityC= 0;
-  private double liquidHeatCapacityD= 0;
+  private double liquidHeatCapacityA= 0.0;
+  private double liquidHeatCapacityB= 0.0;
+  private double liquidHeatCapacityC= 0.0;
+  private double liquidHeatCapacityD= 0.0;
   
   // Antoine coefficients
-  private double antoineA = 0;
-  private double antoineB = 0;
-  private double antoineC = 0;
-  
-  
-  
-  // Heat of vapourization
-  private double heatOfVapourization = 0;
+  private double antoineA = 0.0;
+  private double antoineB = 0.0;
+  private double antoineC = 0.0;
   
   // Activity coefficient (default value is 1 for an ideal solution)
-  private double activityCoefficient = 1;
+  private double activityCoefficient = 1.0;
 
   // Critical temperature (to determine condensability)
-  private double criticalTemperature = 0;
-
-  // default constructor method
-  public  Species() {
-    //return true;
-  }
+  private double criticalTemperature = 0.0;
   
+  // Constructor
+  public Species() {}
   
   // Setters
   public void setSpeciesName(String speciesName) {
     this.speciesName = speciesName;
   }
   
-  public void setHeatCapacityConstants(double heatCapacityA, double heatCapacityB, double heatCapacityC, double heatCapacityD) {
-    this.heatCapacityA = heatCapacityA;
-    this.heatCapacityB = heatCapacityB;
-    this.heatCapacityC = heatCapacityC;
-    this.heatCapacityD = heatCapacityD;
+  public void setVapourHeatCapacityConstants(double heatCapacityA, double heatCapacityB, double heatCapacityC, double heatCapacityD) {
+    this.vapourHeatCapacityA = heatCapacityA;
+    this.vapourHeatCapacityB = heatCapacityB;
+    this.vapourHeatCapacityC = heatCapacityC;
+    this.vapourHeatCapacityD = heatCapacityD;
   }
   
     public void setLiquidHeatCapacityConstants(double liquidHeatCapacityA, double liquidHeatCapacityB, double liquidHeatCapacityC, double liquidHeatCapacityD) {
@@ -68,10 +60,6 @@ public class Species {
     this.antoineA = antoineA;
     this.antoineB = antoineB;
     this.antoineC = antoineC;
-  }
-  
-  public void setHeatOfVapourization(double heatOfVapourization) {
-    this.heatOfVapourization = heatOfVapourization;
   }
   
   public boolean setActivityCoefficient(double activityCoefficient) {
@@ -94,22 +82,22 @@ public class Species {
   }
   
   // Getters
-  public double[] getHeatCapacityConstants() {
-    double[] heatCapacityConstants = new double[4];
-    heatCapacityConstants[0] = this.heatCapacityA;
-    heatCapacityConstants[1] = this.heatCapacityB;
-    heatCapacityConstants[2] = this.heatCapacityC;
-    heatCapacityConstants[3] = this.heatCapacityD;
+  public double[] getVapourHeatCapacityConstants() {
+    double[] vapourHeatCapacityConstants = new double[4];
+    vapourHeatCapacityConstants[0] = this.vapourHeatCapacityA;
+    vapourHeatCapacityConstants[1] = this.vapourHeatCapacityB;
+    vapourHeatCapacityConstants[2] = this.vapourHeatCapacityC;
+    vapourHeatCapacityConstants[3] = this.vapourHeatCapacityD;
     
-    return heatCapacityConstants;
+    return vapourHeatCapacityConstants;
   }
   
    public double[] getLiquidHeatCapacityConstants() {
     double[] liquidHeatCapacityConstants = new double[4];
     liquidHeatCapacityConstants[0] = this.liquidHeatCapacityA;
-    liquidHeatCapacityConstants[0] = this.liquidHeatCapacityB;
-    liquidHeatCapacityConstants[0] = this.liquidHeatCapacityC;
-    liquidHeatCapacityConstants[0] = this.liquidHeatCapacityD;
+    liquidHeatCapacityConstants[1] = this.liquidHeatCapacityB;
+    liquidHeatCapacityConstants[2] = this.liquidHeatCapacityC;
+    liquidHeatCapacityConstants[3] = this.liquidHeatCapacityD;
     
     return liquidHeatCapacityConstants;
   }
@@ -119,13 +107,7 @@ public class Species {
     antoineConstants[0] = this.antoineA;
     antoineConstants[1] = this.antoineB;
     antoineConstants[2] = this.antoineC;
- 
-    
     return antoineConstants;
-  }
-  
-  public double getHeatOfVapourization() {
-    return this.heatOfVapourization;
   }
   
   public double getActivityCoefficient() {
@@ -143,14 +125,17 @@ public class Species {
   // Clone method
   public Species (Species source) {
     this.speciesName = source.speciesName;
-    this.heatCapacityA = source.heatCapacityA;
-    this.heatCapacityB = source.heatCapacityB;
-    this.heatCapacityC = source.heatCapacityC;
-    this.heatCapacityD = source.heatCapacityD;
+    this.vapourHeatCapacityA = source.vapourHeatCapacityA;
+    this.vapourHeatCapacityB = source.vapourHeatCapacityB;
+    this.vapourHeatCapacityC = source.vapourHeatCapacityC;
+    this.vapourHeatCapacityD = source.vapourHeatCapacityD;
+    this.liquidHeatCapacityA = source.liquidHeatCapacityA;
+    this.liquidHeatCapacityB = source.liquidHeatCapacityB;
+    this.liquidHeatCapacityC = source.liquidHeatCapacityC;
+    this.liquidHeatCapacityD = source.liquidHeatCapacityD;
     this.antoineA = source.antoineA;
     this.antoineB = source.antoineB;
     this.antoineC = source.antoineC;
-    this.heatOfVapourization = source.heatOfVapourization;
     this.activityCoefficient = source.activityCoefficient;
     this.criticalTemperature = source.criticalTemperature;
    }

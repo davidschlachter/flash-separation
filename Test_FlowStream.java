@@ -30,18 +30,18 @@ public class Test_FlowStream extends TestCase {
     flowSpecies.add(new FlowSpecies());
     flowSpecies.add(new FlowSpecies());
     
-    flowSpecies.get(0).setHeatOfVapourization(1.0);
-    flowSpecies.get(1).setHeatOfVapourization(2.0);
+    flowSpecies.get(0).setSpeciesName("water");
+    flowSpecies.get(1).setSpeciesName("ethanol");
     
     testStream.setFlowSpecies(flowSpecies);
     
-    double fetchedHeatOfVapourization1 = testStream.getFlowSpecies().get(0).getHeatOfVapourization();
-    double fetchedHeatOfVapourization2 = testStream.getFlowSpecies().get(1).getHeatOfVapourization();
+    String fetchedSpeciesName1 = testStream.getFlowSpecies().get(0).getSpeciesName();
+    String fetchedSpeciesName2 = testStream.getFlowSpecies().get(1).getSpeciesName();
     
-    assertTrue("FlowStream.getFlowSpecies(testSpecies1)", fetchedHeatOfVapourization1 == 1.0);
-    assertFalse("FlowStream.getFlowSpecies(testSpecies1)", fetchedHeatOfVapourization1 == 0.0);
-    assertTrue("FlowStream.getFlowSpecies(testSpecies2)", fetchedHeatOfVapourization2 == 2.0);
-    assertFalse("FlowStream.getFlowSpecies(testSpecies2)", fetchedHeatOfVapourization2 == 0.0);
+    assertTrue("FlowStream.getFlowSpecies(testSpecies1)",  fetchedSpeciesName1.equals("water"));
+    assertFalse("FlowStream.getFlowSpecies(testSpecies1)", fetchedSpeciesName1.equals("ethanol"));
+    assertTrue("FlowStream.getFlowSpecies(testSpecies2)",  fetchedSpeciesName2.equals("ethanol"));
+    assertFalse("FlowStream.getFlowSpecies(testSpecies2)", fetchedSpeciesName2.equals("water"));
     
   }
   
@@ -53,18 +53,18 @@ public class Test_FlowStream extends TestCase {
     FlowSpecies testSpecies1 = new FlowSpecies();
     FlowSpecies testSpecies2 = new FlowSpecies();
     
-    testSpecies1.setHeatOfVapourization(1.0);
-    testSpecies2.setHeatOfVapourization(2.0);
+    testSpecies1.setSpeciesName("water");
+    testSpecies2.setSpeciesName("ethanol");
     testStream.addFlowSpecies(testSpecies1);
     testStream.addFlowSpecies(testSpecies2);
     
-    double fetchedHeatOfVapourization1 = testStream.getFlowSpecies().get(0).getHeatOfVapourization();
-    double fetchedHeatOfVapourization2 = testStream.getFlowSpecies().get(1).getHeatOfVapourization();
+    String fetchedSpeciesName1 = testStream.getFlowSpecies().get(0).getSpeciesName();
+    String fetchedSpeciesName2 = testStream.getFlowSpecies().get(1).getSpeciesName();
     
-    assertTrue("FlowStream.getFlowSpecies(testSpecies1)", fetchedHeatOfVapourization1 == 1.0);
-    assertFalse("FlowStream.getFlowSpecies(testSpecies1)", fetchedHeatOfVapourization1 == 0.0);
-    assertTrue("FlowStream.getFlowSpecies(testSpecies2)", fetchedHeatOfVapourization2 == 2.0);
-    assertFalse("FlowStream.getFlowSpecies(testSpecies2)", fetchedHeatOfVapourization2 == 0.0);
+    assertTrue("FlowStream.getFlowSpecies(testSpecies1)",  fetchedSpeciesName1.equals("water"));
+    assertFalse("FlowStream.getFlowSpecies(testSpecies1)", fetchedSpeciesName1.equals("ethanol"));
+    assertTrue("FlowStream.getFlowSpecies(testSpecies2)",  fetchedSpeciesName2.equals("ethanol"));
+    assertFalse("FlowStream.getFlowSpecies(testSpecies2)", fetchedSpeciesName2.equals("water"));
     
   }
   
