@@ -215,40 +215,8 @@ public class ConsoleUI {
     //
     // Show the summary of the stream properties, and confirm if they are okay!
     //
-    String speciesName;
-    double liquidMoleFraction, vapourMoleFraction, overallMoleFraction;
     output.println("\nSummary of stream properties entered:");
-    output.println("NOTE: Zero may indicate that the value has not been set, e.g. for temperatures!\n");
-    output.println("Inlet:");
-    output.println("  Temperature: " + inletStream.getTemperature());
-    output.println("  Pressure: " + inletStream.getPressure());
-    output.println("  Molar flow rate: " + inletStream.getMolarFlowRate());
-    output.println("  Total vapour fraction: " + inletStream.getVapourFraction());
-    output.println("  Species and mole fractions: ");
-    output.printf("    %15s  %5s  %5s  %5s%n", "Name", " liq ", " vap ", "total");
-    output.println("----------------------------------------");
-    for (i = 0; i < inletStream.getFlowSpecies().size(); i++) {
-      speciesName = inletStream.getFlowSpecies().get(i).getSpeciesName();
-      liquidMoleFraction = inletStream.getFlowSpecies().get(i).getLiquidMoleFraction();
-      vapourMoleFraction = inletStream.getFlowSpecies().get(i).getVapourMoleFraction();
-      overallMoleFraction = inletStream.getFlowSpecies().get(i).getOverallMoleFraction();
-      output.printf("    %15s  %.3f  %.3f  %.3f%n", speciesName, liquidMoleFraction, vapourMoleFraction, overallMoleFraction);
-    }
-    output.println("Outlet:");
-    output.println("  Temperature: " + outletStream.getTemperature());
-    output.println("  Pressure: " + outletStream.getPressure());
-    output.println("  Molar flow rate: " + outletStream.getMolarFlowRate());
-    output.println("  Total vapour fraction: " + inletStream.getVapourFraction());
-    output.println("  Species and mole fractions: ");
-    output.printf("    %15s  %5s  %5s  %5s%n", "Name", "liq", "vap", "total");
-    output.println("----------------------------------------");
-    for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
-      speciesName = outletStream.getFlowSpecies().get(i).getSpeciesName();
-      liquidMoleFraction = outletStream.getFlowSpecies().get(i).getLiquidMoleFraction();
-      vapourMoleFraction = outletStream.getFlowSpecies().get(i).getVapourMoleFraction();
-      overallMoleFraction = outletStream.getFlowSpecies().get(i).getOverallMoleFraction();
-      output.printf("    %15s  %5s  %5s  %.3f%n", speciesName, " --- ", " --- ", overallMoleFraction);
-    }
+    this.printStreams(scan, output, inletStream, outletStream);
     
     while (true) {
       output.println("\nAre the stream properties correct?");
@@ -259,11 +227,35 @@ public class ConsoleUI {
       if (choice == 'q') return true;  // Exit option for testing
     }
     
-   
+    //
+    // Check that the flash is possible! (outlet temperature is between dew and bubble point)
+    //
+    
+    
+    //
+    // Logic for determining the problem type
+    //
+    RachfordRice rachfordRice = new RachfordRice(outletStream);
+    double unknownTemperature;
+    // First problem type: both inlet and outlet temperatures are specified
+    if (outletStream.getTemperature() > 0.01 && inletStream.getTemperature() > 0.01) {
+      outletStream = rachfordRice.solve();
+      output.println("\nRESULTS: \n");
+      this.printStreams(scan, output, inletStream, outletStream);
+    } else {
+    // Second and third problem types: one of the temperatures is missing, and the
+    // flash is adiabatic
+      Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
+      unknownTemperature = RootFinder.calc(enthalpy, 0.01, 1000.0, 0.001);
+      output.println("The unknown temperature is: " + unknownTemperature);
+    }
+    
     
     scan.close();
     return true;
   }
+  
+  
   
   private void addSpecies(Scanner scan, PrintWriter output) {
     int i, choice;
@@ -315,6 +307,44 @@ public class ConsoleUI {
   
   private void addCustomSpecies(Scanner scan, PrintWriter output) {
     output.println("\nAdding a custom species\n");
+  }
+  
+  private void printStreams(Scanner scan, PrintWriter output, FlowStream inletStream, FlowStream outletStream) {
+    int i;
+    String speciesName;
+    double liquidMoleFraction, vapourMoleFraction, overallMoleFraction;
+    
+    output.println("NOTE: Zero may indicate that the value has not been set, e.g. for temperatures!\n");
+    output.println("Inlet:");
+    output.println("  Temperature: " + inletStream.getTemperature());
+    output.println("  Pressure: " + inletStream.getPressure());
+    output.println("  Molar flow rate: " + inletStream.getMolarFlowRate());
+    output.println("  Total vapour fraction: " + inletStream.getVapourFraction());
+    output.println("  Species and mole fractions: ");
+    output.printf("    %15s  %5s  %5s  %5s%n", "Name", " liq ", " vap ", "total");
+    output.println("----------------------------------------");
+    for (i = 0; i < inletStream.getFlowSpecies().size(); i++) {
+      speciesName = inletStream.getFlowSpecies().get(i).getSpeciesName();
+      liquidMoleFraction = inletStream.getFlowSpecies().get(i).getLiquidMoleFraction();
+      vapourMoleFraction = inletStream.getFlowSpecies().get(i).getVapourMoleFraction();
+      overallMoleFraction = inletStream.getFlowSpecies().get(i).getOverallMoleFraction();
+      output.printf("    %15s  %.3f  %.3f  %.3f%n", speciesName, liquidMoleFraction, vapourMoleFraction, overallMoleFraction);
+    }
+    output.println("Outlet:");
+    output.println("  Temperature: " + outletStream.getTemperature());
+    output.println("  Pressure: " + outletStream.getPressure());
+    output.println("  Molar flow rate: " + outletStream.getMolarFlowRate());
+    output.println("  Total vapour fraction: " + inletStream.getVapourFraction());
+    output.println("  Species and mole fractions: ");
+    output.printf("    %15s  %5s  %5s  %5s%n", "Name", "liq", "vap", "total");
+    output.println("----------------------------------------");
+    for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
+      speciesName = outletStream.getFlowSpecies().get(i).getSpeciesName();
+      liquidMoleFraction = outletStream.getFlowSpecies().get(i).getLiquidMoleFraction();
+      vapourMoleFraction = outletStream.getFlowSpecies().get(i).getVapourMoleFraction();
+      overallMoleFraction = outletStream.getFlowSpecies().get(i).getOverallMoleFraction();
+      output.printf("    %15s  %.3f  %.3f  %.3f%n", speciesName, liquidMoleFraction, vapourMoleFraction, overallMoleFraction);
+    }
   }
   
   
