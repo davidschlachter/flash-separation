@@ -8,6 +8,15 @@ import junit.framework.TestCase;
 public class Test_Species extends TestCase {
   
   /**
+   * Test the constructor
+   */
+  public void testConstructor() {
+    Species testSpecies = new Species();
+    assertTrue("new Species()", testSpecies != null);
+    assertFalse("new Species()", testSpecies == null);
+  }
+  
+  /**
    * Test the getter and setter for the liquid heat capacity constants for a species
    */
   public void testLiquidHeatCapacityConstants() {
@@ -99,6 +108,7 @@ public class Test_Species extends TestCase {
     testSpecies.setSpeciesName(speciesName);
     
     assertTrue("Species.getSpeciesName()", speciesName.equals(testSpecies.getSpeciesName()));
+    assertFalse("Species.getSpeciesName()", speciesName.equals("water"));
     
   }
   

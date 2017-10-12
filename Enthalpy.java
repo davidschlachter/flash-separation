@@ -6,10 +6,8 @@ public class Enthalpy implements Function {
   
   
   public Enthalpy(FlowStream inlet, FlowStream outlet) { 
-    
     this.inlet = inlet;
     this.outlet = outlet;
-
   }
   
   public double testFunction(double testTemp){
@@ -32,7 +30,7 @@ public class Enthalpy implements Function {
       initialTemperature = this.inlet.getTemperature();
     }
     
-    if (this.inlet.getNumberOfSpecies() != this.outlet.getNumberOfSpecies()) {
+    if (this.inlet.getFlowSpecies().size() != this.outlet.getFlowSpecies().size()) {
       System.out.println("Inlet and outlet streams do not have same number of species."); 
       System.exit(1);
     }
@@ -40,7 +38,7 @@ public class Enthalpy implements Function {
     BubblePoint bubblePoint = new BubblePoint(this.inlet);
     bubbleTemperature = bubblePoint.calc();
     
-     for (i = 0; i < this.outlet.getNumberOfSpecies(); i++) {
+     for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
       overallMoleFraction = this.outlet.getFlowSpecies().get(i).getOverallMoleFraction();
       vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
       liquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();

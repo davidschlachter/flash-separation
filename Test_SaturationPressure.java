@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 public class Test_SaturationPressure extends TestCase {
   
   // Test the static saturation pressure calculation method
-  public void testSaturationPressure() {
+  public void testCalc() {
     
     Species testSpecies = new Species();
     

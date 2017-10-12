@@ -2,8 +2,15 @@ import junit.framework.TestCase;
 
 public class Test_Enthalpy extends TestCase {
   
+  public void testConstructor() { 
+    FlowStream inlet = new FlowStream();
+    FlowStream outlet = new FlowStream();
+    Enthalpy enthalpy = new Enthalpy(inlet, outlet);
+    assertTrue("new Enthalpy(inlet, outlet)", enthalpy != null);
+    assertFalse("new Enthalpy(inlet, outlet)", enthalpy == null);
+  }
   
-  public void testEnthalpyCalc() { 
+  public void testTestFunction() { 
      
     FlowSpecies water = new FlowSpecies();
     water.setAntoineConstants(10.19621302, 1730.63, -39.724);

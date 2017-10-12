@@ -7,7 +7,7 @@ public class DewPoint implements Function {
   
   // Constructor -- requires a FlowStream with pressure specified 
   public DewPoint(FlowStream flowStream) {
-    if (flowStream.getPressure() > 0 && flowStream.getNumberOfSpecies() > 0) {
+    if (flowStream.getPressure() > 0 && flowStream.getFlowSpecies().size() > 0) {
       this.flowStream = flowStream;
     } else {
       System.out.println("Error: flow stream for must contain a pressure and at least one species!");
@@ -27,7 +27,7 @@ public class DewPoint implements Function {
     
     // Determine if any of the species is likely to be non-condensable, and if so, ignore it
     int i;
-    for (i = 0; i < flowStream.getNumberOfSpecies(); i++) {
+    for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       if (lowerTemperatureBound > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
         this.flowStream.getFlowSpecies().get(i).setOverallMoleFraction(0.0);
     }
@@ -46,7 +46,7 @@ public class DewPoint implements Function {
     double pressure = this.flowStream.getPressure();
     double overallMoleFraction, saturationPressure;
     
-    for (i = 0; i < flowStream.getNumberOfSpecies(); i++) {
+    for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);

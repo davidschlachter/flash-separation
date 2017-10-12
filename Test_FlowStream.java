@@ -10,6 +10,15 @@ import java.util.List;
 public class Test_FlowStream extends TestCase {
   
   /**
+   * Test the constructor
+   */
+  public void testConstructor() {
+    FlowStream testStream = new FlowStream();
+    assertTrue("new FlowStream()", testStream != null);
+    assertFalse("new FlowStream()", testStream == null);
+  }
+  
+  /**
    * Test adding a flowSpecies to the flowStream
    */
   public void testAddFlowSpecies() {
@@ -66,18 +75,6 @@ public class Test_FlowStream extends TestCase {
     assertTrue("FlowStream.getFlowSpecies(testSpecies2)",  fetchedSpeciesName2.equals("ethanol"));
     assertFalse("FlowStream.getFlowSpecies(testSpecies2)", fetchedSpeciesName2.equals("water"));
     
-  }
-  
-  /**
-   * Test getting the number of species in the stream
-   */
-  public void testGetNumberOfSpecies() {
-    FlowStream testStream = new FlowStream();
-    FlowSpecies testSpecies = new FlowSpecies();
-    testStream.addFlowSpecies(testSpecies);
-    
-    assertEquals("FlowStream.getNumberOfSpecies()", 1, testStream.getNumberOfSpecies());
-    assertFalse("FlowStream.getNumberOfSpecies()", testStream.getNumberOfSpecies() == 0);
   }
   
   /**

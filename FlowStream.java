@@ -74,10 +74,6 @@ public class FlowStream {
     return(this.flowSpecies);
   }
   
-  public int getNumberOfSpecies() {
-    return(this.flowSpecies.size());
-  }
-  
   public double getMolarFlowRate() {
     return this.molarFlowRate;
   }

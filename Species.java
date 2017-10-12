@@ -29,7 +29,7 @@ public class Species {
   
   // Activity coefficient (default value is 1 for an ideal solution)
   private double activityCoefficient = 1.0;
-
+  
   // Critical temperature (to determine condensability)
   private double criticalTemperature = 0.0;
   
@@ -48,12 +48,11 @@ public class Species {
     this.vapourHeatCapacityD = heatCapacityD;
   }
   
-    public void setLiquidHeatCapacityConstants(double liquidHeatCapacityA, double liquidHeatCapacityB, double liquidHeatCapacityC, double liquidHeatCapacityD) {
+  public void setLiquidHeatCapacityConstants(double liquidHeatCapacityA, double liquidHeatCapacityB, double liquidHeatCapacityC, double liquidHeatCapacityD) {
     this.liquidHeatCapacityA = liquidHeatCapacityA;
     this.liquidHeatCapacityB = liquidHeatCapacityB;
     this.liquidHeatCapacityC = liquidHeatCapacityC;
     this.liquidHeatCapacityD = liquidHeatCapacityD;
-    
   }
   
   public void setAntoineConstants(double antoineA, double antoineB, double antoineC) {
@@ -70,7 +69,7 @@ public class Species {
       return false;
     }
   }
-
+  
   public boolean setCriticalTemperature (double criticalTemperature) {
     if (criticalTemperature > 0.0) {
       this.criticalTemperature = criticalTemperature;
@@ -92,7 +91,7 @@ public class Species {
     return vapourHeatCapacityConstants;
   }
   
-   public double[] getLiquidHeatCapacityConstants() {
+  public double[] getLiquidHeatCapacityConstants() {
     double[] liquidHeatCapacityConstants = new double[4];
     liquidHeatCapacityConstants[0] = this.liquidHeatCapacityA;
     liquidHeatCapacityConstants[1] = this.liquidHeatCapacityB;
@@ -117,7 +116,7 @@ public class Species {
   public String getSpeciesName() {
     return this.speciesName;
   }
-
+  
   public double getCriticalTemperature() {
     return this.criticalTemperature;
   }
@@ -138,7 +137,7 @@ public class Species {
     this.antoineC = source.antoineC;
     this.activityCoefficient = source.activityCoefficient;
     this.criticalTemperature = source.criticalTemperature;
-   }
+  }
   
   
   

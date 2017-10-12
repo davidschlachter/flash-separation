@@ -7,7 +7,7 @@ public class BubblePoint implements Function {
   
   // Constructor -- requires a FlowStream with pressure specified 
   public BubblePoint(FlowStream flowStream) {
-    if (flowStream.getPressure() > 0 && flowStream.getNumberOfSpecies() > 0) {
+    if (flowStream.getPressure() > 0 && flowStream.getFlowSpecies().size() > 0) {
       this.flowStream = flowStream;
     } else {
       System.out.println("Error: flow stream for must contain a pressure and at least one species!");
@@ -30,7 +30,7 @@ public class BubblePoint implements Function {
     double pressure = this.flowStream.getPressure();
     double overallMoleFraction, saturationPressure;
     
-    for (i = 0; i < flowStream.getNumberOfSpecies(); i++) {
+    for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);

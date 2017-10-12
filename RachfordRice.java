@@ -3,7 +3,7 @@ public class RachfordRice implements Function {
   private FlowStream flowStream;
   
   public RachfordRice(FlowStream flowStream) { 
-    if (flowStream.getTemperature() > 0 && flowStream.getPressure() > 0 && flowStream.getNumberOfSpecies() > 0) {
+    if (flowStream.getTemperature() > 0 && flowStream.getPressure() > 0 && flowStream.getFlowSpecies().size() > 0) {
       this.flowStream = flowStream;
     } else {
       System.out.println("Error: flow stream must contain a pressure, temperature, and at least one species!");
@@ -29,7 +29,7 @@ public class RachfordRice implements Function {
     double overallMoleFraction, saturationPressure, kMinusOne;
     double liquidMoleFraction, vapourMoleFraction;
     
-    for (i = 0; i < flowStream.getNumberOfSpecies(); i++) {
+    for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), this.flowStream.getTemperature());
@@ -57,7 +57,7 @@ public class RachfordRice implements Function {
     double overallMoleFraction, saturationPressure;
     double kMinusOne;
     
-    for (i = 0; i < flowStream.getNumberOfSpecies(); i++) {
+    for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
