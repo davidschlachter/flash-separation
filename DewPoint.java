@@ -28,6 +28,10 @@ public class DewPoint implements Function {
     // Determine if any of the species is likely to be non-condensable, and if so, ignore it
     int i;
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
+      if (this.flowStream.getFlowSpecies().get(i).getCriticalTemperature() == 0.0) {
+       System.out.println("ERROR: Critical temperature is not specified.");
+       System.exit(1);
+      }
       if (lowerTemperatureBound > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
         this.flowStream.getFlowSpecies().get(i).setOverallMoleFraction(0.0);
     }

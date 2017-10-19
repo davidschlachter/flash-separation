@@ -107,4 +107,26 @@ public class Test_DewPoint extends TestCase {
 
   }
   
+  public void testDew() {
+   
+    FlowSpecies pentane = new FlowSpecies();
+    pentane.setAntoineConstants(8.9892, 1070.617, -40.454);
+    FlowSpecies hexane = new FlowSpecies();
+    hexane.setCriticalTemperature (507.6);
+    hexane.setAntoineConstants(9.00266, 1171.53, -48.784);
+    hexane.setOverallMoleFraction(0.85);
+    pentane.setCriticalTemperature (469.6);
+    pentane.setOverallMoleFraction(0.15);
+    
+    FlowStream flow1 = new FlowStream();
+    flow1.addFlowSpecies(pentane);
+    flow1.addFlowSpecies(hexane);
+    flow1.setPressure(101325);
+    
+    DewPoint pentaneDew = new DewPoint(flow1);
+    double answer = pentaneDew.calc();
+    System.out.println("Is "+answer);
+    assertTrue("pentaneDew.calc()",answer > 338.7 && answer < 339.0);
+  }
+  
 }

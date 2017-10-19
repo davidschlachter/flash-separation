@@ -70,4 +70,22 @@ public class Test_BubblePoint extends TestCase {
 
   }
   
+  
+  public void testBubPoint() {
+   FlowSpecies pentane = new FlowSpecies();
+    pentane.setAntoineConstants(8.9892, 1070.617, -40.454);
+    FlowSpecies hexane = new FlowSpecies();
+    hexane.setAntoineConstants(9.00266, 1171.53, -48.784);
+    hexane.setOverallMoleFraction(0.85);
+    pentane.setOverallMoleFraction(0.15);
+    
+    FlowStream flow1 = new FlowStream();
+    flow1.addFlowSpecies(pentane);
+    flow1.addFlowSpecies(hexane);
+    flow1.setPressure(101325);
+    
+    BubblePoint pentaneBub = new BubblePoint(flow1);
+    double answer = pentaneBub.calc();
+    assertTrue("pentaneBub.calc()",answer > 334.5 && answer < 335.0);
+  }
 }
