@@ -18,7 +18,7 @@ public class PresetSpecies {
     ethane.setSpeciesName("Ethane");
     ethane.setVapourHeatCapacityConstants(1.131, 19.225, -5.561, 0.0);
     ethane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    ethane.setAntoineConstants(1.0, 1.0, 1.0);
+    ethane.setAntoineConstants(8.9440666, 659.739, -16.719); // Source http://webbook.nist.gov/cgi/cbook.cgi?ID=C74840&Mask=4&Type=ANTOINE
     ethane.setActivityCoefficient(1.0);
     ethane.setCriticalTemperature (305.3);
     flowSpecies.add(ethane);
