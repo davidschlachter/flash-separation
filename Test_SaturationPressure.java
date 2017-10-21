@@ -26,4 +26,14 @@ public class Test_SaturationPressure extends TestCase {
     
   }
   
+  public void testSatPressure() {
+    
+    Species pentane = new Species();
+    pentane.setAntoineConstants(8.9892, 1070.617, -40.454);
+    double satPressure = SaturationPressure.calc(pentane,300.0);
+    assertTrue("SaturationPressure.calc(pentane,300.0)", (satPressure > 73154.2 && satPressure < 73155.0));
+    
+    
+  }
+  
 }
