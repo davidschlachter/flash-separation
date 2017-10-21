@@ -27,11 +27,20 @@ public class Species {
   private double antoineB = 0.0;
   private double antoineC = 0.0;
   
-  // Activity coefficient (default value is 1 for an ideal solution)
-  private double activityCoefficient = 1.0;
-  
   // Critical temperature (to determine condensability)
   private double criticalTemperature = 0.0;
+  
+  //Critical Pressure for computation of non-ideal case
+  private double criticalPressure = 0.0;
+  
+  //Critical volume for computation of non-ideal case
+  private double criticalVolume = 0.0;
+  
+  //Critical Z-value for computation of non-ideal case
+  private double criticalZ = 0.0;
+  
+  //Accentricity value for computation of non-ideal case
+  private double acentricFactor = 0.0;
   
   // Constructor
   public Species() {}
@@ -60,16 +69,7 @@ public class Species {
     this.antoineB = antoineB;
     this.antoineC = antoineC;
   }
-  
-  public boolean setActivityCoefficient(double activityCoefficient) {
-    if (activityCoefficient > 0.0) {
-      this.activityCoefficient = activityCoefficient;
-      return true;
-    } else {
-      return false;
-    }
-  }
-  
+
   public boolean setCriticalTemperature (double criticalTemperature) {
     if (criticalTemperature > 0.0) {
       this.criticalTemperature = criticalTemperature;
@@ -79,6 +79,49 @@ public class Species {
       return false;
     }
   }
+  
+  public boolean setCriticalPressure (double criticalPressure) {
+    if (criticalPressure > 0.0) {
+      this.criticalPressure = criticalPressure;
+      return true;
+    } else {
+      System.out.println("All pressures must be in Pascals. Enter a positive value for Pressure."); //TODO: check units and make sure this is appropriate
+      return false;
+    }
+  }
+  
+  public boolean setCriticalVolume (double criticalVolume) {
+    if (criticalVolume > 0.0) {
+      this.criticalVolume = criticalVolume;
+      return true;
+    } else {
+      System.out.println("All specific volumes must be in mol/m3. Enter a positive value for critical specific volume.");
+      return false;
+    }
+  }
+  
+  public boolean setCriticalZ (double criticalZ) {
+    if (criticalZ > 0.0) {
+      this.criticalZ = criticalZ;
+      return true;
+    } else {
+      System.out.println("All Z-values must be positive.");
+      return false;
+    }
+  }
+  
+  public boolean setAcentricFactor (double acentricFactor) {
+    if (acentricFactor >= -1.0 && acentricFactor <= 1.0 ) {
+      this.acentricFactor = acentricFactor;
+      return true;
+    } else {
+      System.out.println("All accentricities must be in positive. Enter a positive value for temperature.");
+      return false;
+    }
+ 
+  }
+  
+  
   
   // Getters
   public double[] getVapourHeatCapacityConstants() {
@@ -109,16 +152,28 @@ public class Species {
     return antoineConstants;
   }
   
-  public double getActivityCoefficient() {
-    return this.activityCoefficient;
-  }
-  
   public String getSpeciesName() {
     return this.speciesName;
   }
   
   public double getCriticalTemperature() {
     return this.criticalTemperature;
+  }
+  
+  public double getCriticalPressure() {
+    return this.criticalPressure;
+  }
+  
+  public double getCriticalVolume() {
+    return this.criticalVolume;
+  }
+  
+  public double getCriticalZ() {
+    return this.criticalZ;
+  }
+  
+  public double getAcentricFactor() {
+    return this.acentricFactor;
   }
   
   // Clone method
@@ -135,7 +190,6 @@ public class Species {
     this.antoineA = source.antoineA;
     this.antoineB = source.antoineB;
     this.antoineC = source.antoineC;
-    this.activityCoefficient = source.activityCoefficient;
     this.criticalTemperature = source.criticalTemperature;
   }
   

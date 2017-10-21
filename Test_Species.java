@@ -86,19 +86,6 @@ public class Test_Species extends TestCase {
   
   
   /**
-   * Test the getter and setter for the activity coefficient
-   */
-  public void testActivityCoefficient() {
-    Species testSpecies = new Species();
-    
-    double activityCoefficient = 0.5;
-    assertTrue("Species.setActivityCoefficient(0)", testSpecies.setActivityCoefficient(activityCoefficient));
-    assertFalse("Species.setActivityCoefficient(-2.0)", testSpecies.setActivityCoefficient(-2.0));
-    assertEquals("Species.getActivityCoefficient()", activityCoefficient, testSpecies.getActivityCoefficient());
-    
-  }
-  
-  /**
    * Test the getter and setter for the species name
    */
   public void testSpeciesName() {

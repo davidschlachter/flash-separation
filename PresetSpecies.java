@@ -19,7 +19,6 @@ public class PresetSpecies {
     ethane.setVapourHeatCapacityConstants(1.131, 19.225, -5.561, 0.0);
     ethane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
     ethane.setAntoineConstants(1.0, 1.0, 1.0);
-    ethane.setActivityCoefficient(1.0);
     ethane.setCriticalTemperature (305.3);
     flowSpecies.add(ethane);
     
@@ -28,7 +27,6 @@ public class PresetSpecies {
     pentane.setVapourHeatCapacityConstants(2.464, 45.351, 14.111, 0.0);
     pentane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
     pentane.setAntoineConstants(13.7667, 2451.88, 232.014);
-    pentane.setActivityCoefficient(1.0);
     pentane.setCriticalTemperature (469.6);
     flowSpecies.add(pentane);
     
@@ -37,7 +35,6 @@ public class PresetSpecies {
     hexane.setVapourHeatCapacityConstants(3.025, 53.722, 16.791, 0.0);
     hexane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
     hexane.setAntoineConstants(13.8193, 2696.04, 224.317);
-    hexane.setActivityCoefficient(1.0);
     hexane.setCriticalTemperature (507.6);
     flowSpecies.add(hexane);
     
@@ -46,7 +43,6 @@ public class PresetSpecies {
     cyclohexane.setVapourHeatCapacityConstants(-3.876, 63.249, -20.928, 0.0);
     cyclohexane.setLiquidHeatCapacityConstants(-9.048, 0.14138, -0.00016162, 0.0);
     cyclohexane.setAntoineConstants(13.6568, 2723.44, 220.618);
-    cyclohexane.setActivityCoefficient(1.0);
     cyclohexane.setCriticalTemperature (554.0);
     flowSpecies.add(cyclohexane);
     
@@ -55,7 +51,6 @@ public class PresetSpecies {
     water.setVapourHeatCapacityConstants(3.47, 1.45, 0.0, 0.121);
     water.setLiquidHeatCapacityConstants(8.712, 0.00125, -0.00000018, 0.0);
     water.setAntoineConstants(16.3872, 3885.7, 230.17);
-    water.setActivityCoefficient(1.0);
     water.setCriticalTemperature (647.0);
     flowSpecies.add(water);
     
@@ -64,7 +59,6 @@ public class PresetSpecies {
     nitrogen.setVapourHeatCapacityConstants(3.28, 0.593, 0.0, 0.04);
     nitrogen.setLiquidHeatCapacityConstants(0.0, 0.0, 0.0, 0.0);
     nitrogen.setAntoineConstants(1.0, 1.0, 1.0);
-    nitrogen.setActivityCoefficient(1.0);
     nitrogen.setCriticalTemperature (126.2);
     flowSpecies.add(nitrogen);
     
