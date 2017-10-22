@@ -23,6 +23,7 @@ public class ConsoleUI {
     String nextString;
     boolean firstRun = true;
     
+    
     //
     // Get the list of species that will be simulated
     //
@@ -338,6 +339,7 @@ public class ConsoleUI {
   
    private void addCustomSpecies(Scanner scan, PrintWriter output) {
    FlowSpecies customSpecies = new FlowSpecies();
+   char ideal;
      
    output.println("\nAdding a custom species.\n");
    System.out.println("Enter the name of the custom species (names should not include spaces):\n");
@@ -375,6 +377,11 @@ public class ConsoleUI {
    double3 = scan.nextDouble();
    customSpecies.setAntoineConstants(double1, double2, double3);
    
+    System.out.println("Will the simulation be run in ideal-gas mode?");
+    System.out.println("[y]es / [n]o");
+    ideal = scan.next().charAt(0);
+   
+   if(ideal == 'y'){
    System.out.println("Enter the critical temperature for "+customSpecies.getSpeciesName()+":");
    double1 = scan.nextDouble();
    customSpecies.setCriticalTemperature(double1);
@@ -394,6 +401,7 @@ public class ConsoleUI {
    System.out.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
    double1 = scan.nextDouble();
    customSpecies.setAcentricFactor(double1);
+   } else {}
    
    double[] verificationPrint4 = new double[4];
    double[] verificationPrint3 = new double[3]; //can i avoid initializing two arrays to accomodate different lengths?
@@ -408,11 +416,13 @@ public class ConsoleUI {
                       " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
    verificationPrint3 = customSpecies.getAntoineConstants();
    System.out.println("Antoine equation constants:        A="+verificationPrint3[0]+" B="+verificationPrint3[1]+" C="+verificationPrint3[2]);
+   if(ideal == 'y'){
    System.out.println("Critical temperature: "+customSpecies.getCriticalTemperature()+" K");
    System.out.println("Critical pressure:    "+customSpecies.getCriticalPressure()+" Pa");
    System.out.println("Critical volume:      "+customSpecies.getCriticalVolume()+" m^3/mol");
    System.out.println("Critical Z-value:     "+customSpecies.getCriticalZ());
    System.out.println("Acentric factor:      53"+customSpecies.getAcentricFactor()+"\n");
+   } else{}
    System.out.println("\n------------------------------------------------\n");
    
    break;
