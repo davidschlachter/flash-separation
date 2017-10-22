@@ -8,7 +8,10 @@ import junit.framework.TestCase;
 public class Test_Fugacity extends TestCase {
   
     //TODO: add a cloning method here to avoid clutter below when creating testStream over and over
-  public Fugacity createTestObject(FlowStream emptyStream){
+    
+  public void testConstructor() {
+    
+  FlowStream testStream = new FlowStream();
   
   FlowSpecies methylEthylKetone = new FlowSpecies();
   methylEthylKetone.setCriticalTemperature(535.5);
@@ -24,43 +27,12 @@ public class Test_Fugacity extends TestCase {
   toluene.setCriticalVolume(316.0);
   toluene.setAcentricFactor(0.262); 
   
-  emptyStream.addFlowSpecies(methylEthylKetone);
-  emptyStream.addFlowSpecies(toluene);
-  
-  Fugacity testFugacityStream = new Fugacity(emptyStream);
-  
-  return testFugacityStream;
-  
-  }
-    
-  public void testConstructor() {
-    
-  FlowStream testStream = new FlowStream();
-  
-  /*FlowSpecies methylEthylKetone = new FlowSpecies();
-  methylEthylKetone.setCriticalTemperature(535.5);
-  methylEthylKetone.setCriticalPressure(41.50);
-  methylEthylKetone.setCriticalZ(0.249);
-  methylEthylKetone.setCriticalVolume(267.0);
-  methylEthylKetone.setAcentricFactor(0.323); 
-  
-  FlowSpecies toluene = new FlowSpecies();
-  toluene.setCriticalTemperature(591.8);
-  toluene.setCriticalPressure(41.06);
-  toluene.setCriticalZ(0.264);
-  toluene.setCriticalVolume(316.0);
-  toluene.setAcentricFactor(0.262); 
-  
   testStream.addFlowSpecies(methylEthylKetone);
-  testStream.addFlowSpecies(toluene); */ 
+  testStream.addFlowSpecies(toluene); 
   
-  Fugacity emptyFugacityStream = new Fugacity(testStream); 
-  Fugacity filledFugacityStream = new Fugacity (testStream);
-  filledFugacityStream = emptyFugacityStream.createTestObject(testStream);
+  Fugacity testFugacityStream = new Fugacity(testStream); 
   
-  
-  
-  assertTrue(filledFugacityStream != null);
+  assertTrue(testFugacityStream != null);
     
   }
   
