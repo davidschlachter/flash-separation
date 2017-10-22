@@ -16,14 +16,14 @@ public class Fugacity /* implements Function*/ {
     if(nonIdealInitialized){
     this.flowStream = flowStream;
     } else {
-      System.out.println("Error: flow stream must contain a pressure, temperature, and at least one species!");
+      System.out.println("Error: non-ideal stream must have all non-ideal parameters!");
       System.exit(1);
     
   }
   
 }//end of constructor
   
- /* public double[][] crossSpeciesCriticalZ(){
+  public double[][] crossSpeciesCriticalZ(){
   
   double[][] criticalZValues = new double[flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
   
@@ -32,15 +32,15 @@ public class Fugacity /* implements Function*/ {
   
   for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
     for(j = 0; j < flowStream.getFlowSpecies().size(); j++){
-    criticalZValues[i][j] = (flowStream.getFlowSpecies().get(i).getCriticalZ() + flowStream.getFlowSpecies().get(j).getCriticalZ())/2.0;
+    criticalZValues[i][j] = (flowStream.getFlowSpecies().get(i).getCriticalZ() + flowStream.getFlowSpecies().get(j).getCriticalZ()) / 2.0;
     }
   }
   
   return criticalZValues;
   
-  }//end of crossSpeciesZ method */
+  }//end of crossSpeciesZ method 
   
- /* public double[][] crossSpeciesCriticalVolume(){
+  public double[][] crossSpeciesCriticalVolume(){
   
   double[][] criticalVolumes = new double[flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
   
@@ -49,14 +49,14 @@ public class Fugacity /* implements Function*/ {
   
    for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
     for(j = 0; j < flowStream.getFlowSpecies().size(); j++){
-    criticalVolumes[i][j] = Math.pow(((Math.pow(flowStream.getFlowSpecies().get(i).getCriticalVolume(), (1.0/3.0)) + 
-                             Math.pow(flowStream.getFlowSpecies().get(j).getCriticalZ(), (1.0/3.0)))/2.0), (3.0));
+    criticalVolumes[i][j] = (Math.pow(((Math.pow(flowStream.getFlowSpecies().get(i).getCriticalVolume(), (1.0/3.0)) + 
+                             Math.pow(flowStream.getFlowSpecies().get(j).getCriticalVolume(), (1.0/3.0)))/2.0), 3.0)) * 1e-6; //units of m3/mol
     }
   }
    
    return criticalVolumes;
   
-  }//end of crossSpeciesCriticalVolume method */
+  }//end of crossSpeciesCriticalVolume method 
   
   public double[][] crossSpeciesCriticalTemperature(){
   
@@ -73,11 +73,19 @@ public class Fugacity /* implements Function*/ {
    }
    
    return criticalTemperatures;
+   
   }//end of crossSpeciesCriticalTemperature method
   
-  /*public double[][] crossSpeciesCriticalPressure(){
+  public double[][] crossSpeciesCriticalPressure(){
   
     double[][] criticalPressures = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
+    double[][] criticalZValues = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
+    double[][] criticalTemperatures = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
+    double[][] criticalVolumes = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
+    
+    criticalZValues = crossSpeciesCriticalZ();
+    criticalTemperatures = crossSpeciesCriticalTemperature();
+    criticalVolumes = crossSpeciesCriticalVolume();
     
     int i = 0;
     int j = 0;
@@ -85,11 +93,13 @@ public class Fugacity /* implements Function*/ {
     
     for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
       for(j = 0; j < flowStream.getFlowSpecies().size(); j++){
-       criticalPressures[i][j] = (criticalZValues[i][j] * criticalTemperatures[i][j] * R) / criticalVolumes[i][j];
+       criticalPressures[i][j] = (criticalZValues[i][j] * criticalTemperatures[i][j] * R) / criticalVolumes[i][j]; //units of Pa
     }
   }
+    
+    return criticalPressures;
   
-  }//end of crossSpeciesCriticalPressure() method */
+  }//end of crossSpeciesCriticalPressure() method  
   
   public double[][] omegaIJ(){
   
@@ -114,18 +124,21 @@ public class Fugacity /* implements Function*/ {
     double[][] bij = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
     
     double criticalTemperatures[][] = crossSpeciesCriticalTemperature();
+    double criticalPressures[][] = crossSpeciesCriticalPressure();
+    
     double acentricFactors[][] = omegaIJ();
     double b0 = 0.0;
     double b1 = 0.0;
+    double R = 8.3145;
     
     int i = 0;
     int j = 0;
     
      for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
       for(j = 0; j < flowStream.getFlowSpecies().size(); j++){
-        b0 = 0.083 - (0.422/(Math.pow(flowStream.getTemperature()/criticalTemperatures[i][j], 1.6)));
-        b1 = 0.139 - (0.172/(Math.pow(flowStream.getTemperature()/criticalTemperatures[i][j], 4.2)));
-        bij[i][j] = b0 + b1 * acentricFactors[i][j];
+        b0 = 0.083 - (0.422/(Math.pow((flowStream.getTemperature()/criticalTemperatures[i][j]), 1.6)));
+        b1 = 0.139 - (0.172/(Math.pow((flowStream.getTemperature()/criticalTemperatures[i][j]), 4.2)));
+        bij[i][j] = (((b0 + b1 * acentricFactors[i][j]) * criticalTemperatures[i][j] * R) / criticalPressures[i][j]);
       }
      }
   
