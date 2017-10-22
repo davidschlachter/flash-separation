@@ -45,7 +45,7 @@ public class PresetSpecies {
     cyclohexane.setSpeciesName("Cyclohexane");
     cyclohexane.setVapourHeatCapacityConstants(-3.876, 63.249, -20.928, 0.0);
     cyclohexane.setLiquidHeatCapacityConstants(-9.048, 0.14138, -0.00016162, 0.0);
-    cyclohexane.setAntoineConstants(4.13983, 1316.554, -35.581);
+    cyclohexane.setAntoineConstants(9.13983, 1316.554, -35.581);
     cyclohexane.setCriticalTemperature (554.0);
     flowSpecies.add(cyclohexane);
     
@@ -53,7 +53,7 @@ public class PresetSpecies {
     water.setSpeciesName("Water");
     water.setVapourHeatCapacityConstants(3.47, 1.45, 0.0, 0.121);
     water.setLiquidHeatCapacityConstants(8.712, 0.00125, -0.00000018, 0.0);
-    water.setAntoineConstants(16.3872, 3885.7, 230.17);
+    water.setAntoineConstants(10.19621, 1730.63, -39.724);
     water.setCriticalTemperature (647.0);
     flowSpecies.add(water);
     
@@ -61,7 +61,7 @@ public class PresetSpecies {
     nitrogen.setSpeciesName("Nitrogen");
     nitrogen.setVapourHeatCapacityConstants(3.28, 0.593, 0.0, 0.04);
     nitrogen.setLiquidHeatCapacityConstants(0.0, 0.0, 0.0, 0.0);
-    nitrogen.setAntoineConstants(1.0, 1.0, 1.0);
+    nitrogen.setAntoineConstants(8.63792, 257.877, -6.344);
     nitrogen.setCriticalTemperature (126.2);
     flowSpecies.add(nitrogen);
     

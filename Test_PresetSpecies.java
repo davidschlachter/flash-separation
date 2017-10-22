@@ -22,8 +22,8 @@ public class Test_PresetSpecies extends TestCase {
   public void testAntoineCoefficients() {
     List<FlowSpecies> presetSpecies = PresetSpecies.get();
     
-    double lowerBound = 99298.5; // 101325 Pa - 2%
-    double upperBound = 103351.5; // 101325 Pa + 2%
+    double lowerBound = 98791.9; // 101325 Pa - 2%
+    double upperBound = 103858.2; // 101325 Pa + 2%
     
     double ethaneSaturationPressure = SaturationPressure.calc(presetSpecies.get(0), 184.37);
     assertTrue("Ethane saturation pressure (Antoine coefficients)",

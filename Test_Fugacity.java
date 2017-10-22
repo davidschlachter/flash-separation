@@ -165,8 +165,8 @@ public class Test_Fugacity extends TestCase {
   testStream.setPressure(25000);
 
   assertTrue(testCriticalPressures[0][0] > 4140000 && testCriticalPressures[0][0] < 4160000);
-  //assertTrue(testCriticalPressures[1][1] > 41.0 && testCriticalPressures[1][1] < 41.2);
-  //assertTrue(testCriticalPressures[0][1] > 41.2 && testCriticalPressures[0][1] < 41.4);
+  assertTrue(testCriticalPressures[1][1] > 4100000 && testCriticalPressures[1][1] < 4120000);
+  assertTrue(testCriticalPressures[0][1] > 4120000 && testCriticalPressures[0][1] < 4140000);
   
   }
   

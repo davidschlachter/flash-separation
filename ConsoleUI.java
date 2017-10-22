@@ -238,23 +238,27 @@ public class ConsoleUI {
       if (outletStream.getTemperature() < bubblePointTemperature) {
         output.println("ERROR: The specified outlet temperature is below the bubble point -- no separation will occur!");
         output.println("(Bubble point is: " + bubblePointTemperature + ")");
+        System.exit(1);
         return true;
       }
       if (outletStream.getTemperature() > dewPointTemperature) {
         output.println("ERROR: The specified outlet temperature is above the dew point -- no separation will occur!");
         output.println("(Dew point is: " + dewPointTemperature + ")");
+        System.exit(1);
         return true;
       }
     } else if (inletStream.getTemperature() < 0.01) {
       if (inletStream.getTemperature() > bubblePointTemperature) {
         output.println("ERROR: The specified inlet temperature is below the bubble point -- no separation will occur!");
         output.println("(Bubble point is: " + bubblePointTemperature + ")");
+        System.exit(1);
         return true;
       }
     } else if (outletStream.getTemperature() < 0.01) {
       if (outletStream.getTemperature() < dewPointTemperature) {
         output.println("ERROR: The specified outlet temperature is above the dew point -- no separation will occur!");
         output.println("(Dew point is: " + dewPointTemperature + ")");
+        System.exit(1);
         return true;
       }
     }
@@ -332,8 +336,94 @@ public class ConsoleUI {
     
   };
   
-  private void addCustomSpecies(Scanner scan, PrintWriter output) {
-    output.println("\nAdding a custom species\n");
+   private void addCustomSpecies(Scanner scan, PrintWriter output) {
+   FlowSpecies customSpecies = new FlowSpecies();
+     
+   output.println("\nAdding a custom species.\n");
+   System.out.println("Enter the name of the custom species (names should not include spaces):\n");
+   while(true){
+   String speciesName = scan.next();
+   if(speciesName.length() != 0){
+     customSpecies.setSpeciesName(speciesName);
+     this.theseSpecies.add(customSpecies);
+   }
+   System.out.println("\nEnter vapour heat capacity coefficient A:");
+   double double1 = scan.nextDouble();
+   System.out.println("\nEnter vapour heat capacity coefficient B:");
+   double double2 = scan.nextDouble();
+   System.out.println("\nEnter vapour heat capacity coefficient C:");
+   double double3 = scan.nextDouble();
+   System.out.println("\nEnter vapour heat capacity coefficient D:");
+   double double4 = scan.nextDouble();
+   customSpecies.setVapourHeatCapacityConstants(double1, double2, double3, double4);
+   
+   System.out.println("\nEnter liquid heat capacity coefficient A:");
+   double1 = scan.nextDouble();
+   System.out.println("\nEnter liquid heat capacity coefficient B:");
+   double2 = scan.nextDouble();
+   System.out.println("\nEnter liquid heat capacity coefficient C:");
+   double3 = scan.nextDouble();
+   System.out.println("\nEnter liquid heat capacity coefficient D:");
+   double4 = scan.nextDouble();
+   customSpecies.setLiquidHeatCapacityConstants(double1, double2, double3, double4);
+   
+   System.out.println("\nEnter Antoine equation constant A (units of Pa, K):");
+   double1 = scan.nextDouble();
+   System.out.println("\nEnter Antoine equation constant B (units of Pa, K):");
+   double2 = scan.nextDouble();
+   System.out.println("\nEnter Antoine equation constant C (units of Pa, K):");
+   double3 = scan.nextDouble();
+   customSpecies.setAntoineConstants(double1, double2, double3);
+   
+   System.out.println("Enter the critical temperature for "+customSpecies.getSpeciesName()+":");
+   double1 = scan.nextDouble();
+   customSpecies.setCriticalTemperature(double1);
+   
+   System.out.println("Enter the critical pressure for "+customSpecies.getSpeciesName()+":");
+   double1 = scan.nextDouble();
+   customSpecies.setCriticalPressure(double1);
+   
+   System.out.println("Enter the critical volume for "+customSpecies.getSpeciesName()+":");
+   double1 = scan.nextDouble();
+   customSpecies.setCriticalVolume(double1);
+   
+   System.out.println("Enter the critical Z-value for "+customSpecies.getSpeciesName()+":");
+   double1 = scan.nextDouble();
+   customSpecies.setCriticalZ(double1);
+   
+   System.out.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
+   double1 = scan.nextDouble();
+   customSpecies.setAcentricFactor(double1);
+   
+   double[] verificationPrint4 = new double[4];
+   double[] verificationPrint3 = new double[3]; //can i avoid initializing two arrays to accomodate different lengths?
+   
+   System.out.println("Are these properties correct?\n");
+   System.out.println("------------------------------------------------\n");
+   verificationPrint4 = customSpecies.getVapourHeatCapacityConstants();
+   System.out.println("Vapour heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
+                      " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
+   verificationPrint4 = customSpecies.getLiquidHeatCapacityConstants();
+   System.out.println("Liquid heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
+                      " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
+   verificationPrint3 = customSpecies.getAntoineConstants();
+   System.out.println("Antoine equation constants:        A="+verificationPrint3[0]+" B="+verificationPrint3[1]+" C="+verificationPrint3[2]);
+   System.out.println("Critical temperature: "+customSpecies.getCriticalTemperature()+" K");
+   System.out.println("Critical pressure:    "+customSpecies.getCriticalPressure()+" Pa");
+   System.out.println("Critical volume:      "+customSpecies.getCriticalVolume()+" m^3/mol");
+   System.out.println("Critical Z-value:     "+customSpecies.getCriticalZ());
+   System.out.println("Acentric factor:      53"+customSpecies.getAcentricFactor()+"\n");
+   System.out.println("\n------------------------------------------------\n");
+   
+   break;
+   
+   
+     
+   }
+    
+    
+    
+    
   }
   
   private void printStreams(Scanner scan, PrintWriter output, FlowStream inletStream, FlowStream outletStream) {

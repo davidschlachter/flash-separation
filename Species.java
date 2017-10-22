@@ -115,7 +115,7 @@ public class Species {
       this.acentricFactor = acentricFactor;
       return true;
     } else {
-      System.out.println("All accentricities must be in positive. Enter a positive value for temperature.");
+      System.out.println("All accentricities must be between -1.0 and 1.0. Enter an appropriate value for the acentric factor.");
       return false;
     }
  
@@ -124,6 +124,7 @@ public class Species {
   
   
   // Getters
+  
   public double[] getVapourHeatCapacityConstants() {
     double[] vapourHeatCapacityConstants = new double[4];
     vapourHeatCapacityConstants[0] = this.vapourHeatCapacityA;
