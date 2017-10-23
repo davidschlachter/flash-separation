@@ -1,27 +1,10 @@
-public class Fugacity /* implements Function*/ {
+public class Fugacity /* implements Function */ {
   
   private FlowStream flowStream;
   
   public Fugacity(FlowStream flowStream) { 
-    
-    int i = 0;
-    boolean nonIdealInitialized = false;
-    
-    for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
-      if (flowStream.getFlowSpecies().get(i).getCriticalTemperature() > 0 && flowStream.getFlowSpecies().get(i).getCriticalPressure() > 0 &&
-          flowStream.getFlowSpecies().get(i).getCriticalVolume() > 0 && flowStream.getFlowSpecies().get(i).getCriticalZ() > 0) {
-        nonIdealInitialized = true;
-      } else {};
-    }
-    if(nonIdealInitialized){
-      this.flowStream = flowStream;
-    } else {
-      System.out.println("Error: non-ideal stream must have all non-ideal parameters!");
-      System.exit(1);
-      
-    }
-    
-  }//end of constructor
+    this.flowStream = flowStream;
+     }//end of constructor
   
   public double[][] crossSpeciesCriticalZ(){
     
@@ -181,5 +164,32 @@ public class Fugacity /* implements Function*/ {
     
     
   }//end of fugacity coefficients method
+  
+  public Fugacity createTestObject(){
+  
+  FlowStream testStream = new FlowStream();
+  
+  FlowSpecies methylEthylKetone = new FlowSpecies();
+  methylEthylKetone.setCriticalTemperature(535.5);
+  methylEthylKetone.setCriticalPressure(41.50);
+  methylEthylKetone.setCriticalZ(0.249);
+  methylEthylKetone.setCriticalVolume(267.0);
+  methylEthylKetone.setAcentricFactor(0.323); 
+  
+  FlowSpecies toluene = new FlowSpecies();
+  toluene.setCriticalTemperature(591.8);
+  toluene.setCriticalPressure(41.06);
+  toluene.setCriticalZ(0.264);
+  toluene.setCriticalVolume(316.0);
+  toluene.setAcentricFactor(0.262); 
+  
+  testStream.addFlowSpecies(methylEthylKetone);
+  testStream.addFlowSpecies(toluene); 
+  
+  Fugacity testFugacityStream = new Fugacity(testStream); 
+  
+  return testFugacityStream;
+  
+  }
   
 }//end of Fugacity class

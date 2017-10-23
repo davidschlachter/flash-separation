@@ -29,7 +29,7 @@ public class ConsoleUI {
     //
     output.println("\nSelect species for the simulation:");
     while (true) {
-     
+      
       output.println("Current species selected:\n");
       if (this.theseSpecies.size() == 0) {
         output.println("  [ No species selected ]\n");
@@ -40,7 +40,7 @@ public class ConsoleUI {
         output.print("\n");
       }
       output.println("Select an action: [a]dd species   [r]emove species   [d]one\n");
-
+      
       if (firstRun == false) {
         scan.nextLine();
       } else {
@@ -51,7 +51,9 @@ public class ConsoleUI {
       if (choice == 'a') this.addSpecies(scan, output);
       if (choice == 'r') this.removeSpecies(scan, output);
       if (choice == 'q') return true;  // Exit option for testing
-      if (choice == 'd') break;
+      if (choice == 'd') {
+        if (this.theseSpecies.size() == 0) {System.exit(1);} else {break;}
+     }
     }
     
     FlowStream inletStream  = new FlowStream();
@@ -275,8 +277,8 @@ public class ConsoleUI {
       output.println("\nRESULTS: \n");
       this.printStreams(scan, output, inletStream, outletStream);
     } else {
-    // Second and third problem types: one of the temperatures is missing, and the
-    // flash is adiabatic
+      // Second and third problem types: one of the temperatures is missing, and the
+      // flash is adiabatic
       Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
       unknownTemperature = RootFinder.calc(enthalpy, 0.01, 1000.0, 0.001);
       output.println("The unknown temperature is: " + unknownTemperature);
@@ -313,7 +315,7 @@ public class ConsoleUI {
       this.addCustomSpecies(scan, output);
     }
     
-
+    
   };
   
   private void removeSpecies(Scanner scan, PrintWriter output) {
@@ -337,101 +339,109 @@ public class ConsoleUI {
     
   };
   
-   private void addCustomSpecies(Scanner scan, PrintWriter output) {
-   FlowSpecies customSpecies = new FlowSpecies();
-   char ideal;
-     
-   output.println("\nAdding a custom species.\n");
-   System.out.println("Enter the name of the custom species (names should not include spaces):\n");
-   while(true){
-   String speciesName = scan.next();
-   if(speciesName.length() != 0){
-     customSpecies.setSpeciesName(speciesName);
-     this.theseSpecies.add(customSpecies);
-   }
-   System.out.println("\nEnter vapour heat capacity coefficient A:");
-   double double1 = scan.nextDouble();
-   System.out.println("\nEnter vapour heat capacity coefficient B:");
-   double double2 = scan.nextDouble();
-   System.out.println("\nEnter vapour heat capacity coefficient C:");
-   double double3 = scan.nextDouble();
-   System.out.println("\nEnter vapour heat capacity coefficient D:");
-   double double4 = scan.nextDouble();
-   customSpecies.setVapourHeatCapacityConstants(double1, double2, double3, double4);
-   
-   System.out.println("\nEnter liquid heat capacity coefficient A:");
-   double1 = scan.nextDouble();
-   System.out.println("\nEnter liquid heat capacity coefficient B:");
-   double2 = scan.nextDouble();
-   System.out.println("\nEnter liquid heat capacity coefficient C:");
-   double3 = scan.nextDouble();
-   System.out.println("\nEnter liquid heat capacity coefficient D:");
-   double4 = scan.nextDouble();
-   customSpecies.setLiquidHeatCapacityConstants(double1, double2, double3, double4);
-   
-   System.out.println("\nEnter Antoine equation constant A (units of Pa, K):");
-   double1 = scan.nextDouble();
-   System.out.println("\nEnter Antoine equation constant B (units of Pa, K):");
-   double2 = scan.nextDouble();
-   System.out.println("\nEnter Antoine equation constant C (units of Pa, K):");
-   double3 = scan.nextDouble();
-   customSpecies.setAntoineConstants(double1, double2, double3);
-   
-    System.out.println("Will the simulation be run in ideal-gas mode?");
-    System.out.println("[y]es / [n]o");
-    ideal = scan.next().charAt(0);
-   
-   if(ideal == 'y'){
-   System.out.println("Enter the critical temperature for "+customSpecies.getSpeciesName()+":");
-   double1 = scan.nextDouble();
-   customSpecies.setCriticalTemperature(double1);
-   
-   System.out.println("Enter the critical pressure for "+customSpecies.getSpeciesName()+":");
-   double1 = scan.nextDouble();
-   customSpecies.setCriticalPressure(double1);
-   
-   System.out.println("Enter the critical volume for "+customSpecies.getSpeciesName()+":");
-   double1 = scan.nextDouble();
-   customSpecies.setCriticalVolume(double1);
-   
-   System.out.println("Enter the critical Z-value for "+customSpecies.getSpeciesName()+":");
-   double1 = scan.nextDouble();
-   customSpecies.setCriticalZ(double1);
-   
-   System.out.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
-   double1 = scan.nextDouble();
-   customSpecies.setAcentricFactor(double1);
-   } else {}
-   
-   double[] verificationPrint4 = new double[4];
-   double[] verificationPrint3 = new double[3]; //can i avoid initializing two arrays to accomodate different lengths?
-   
-   System.out.println("Are these properties correct?\n");
-   System.out.println("------------------------------------------------\n");
-   verificationPrint4 = customSpecies.getVapourHeatCapacityConstants();
-   System.out.println("Vapour heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
-                      " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
-   verificationPrint4 = customSpecies.getLiquidHeatCapacityConstants();
-   System.out.println("Liquid heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
-                      " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
-   verificationPrint3 = customSpecies.getAntoineConstants();
-   System.out.println("Antoine equation constants:        A="+verificationPrint3[0]+" B="+verificationPrint3[1]+" C="+verificationPrint3[2]);
-   if(ideal == 'y'){
-   System.out.println("Critical temperature: "+customSpecies.getCriticalTemperature()+" K");
-   System.out.println("Critical pressure:    "+customSpecies.getCriticalPressure()+" Pa");
-   System.out.println("Critical volume:      "+customSpecies.getCriticalVolume()+" m^3/mol");
-   System.out.println("Critical Z-value:     "+customSpecies.getCriticalZ());
-   System.out.println("Acentric factor:      53"+customSpecies.getAcentricFactor()+"\n");
-   } else{}
-   System.out.println("\n------------------------------------------------\n");
-   
-   break;
-   
-   
-     
-   }
+  private void addCustomSpecies(Scanner scan, PrintWriter output) {
+    FlowSpecies customSpecies = new FlowSpecies();
+    char ideal;
     
-    
+    output.println("\nAdding a custom species.\n");
+    while(true){
+      while(true){
+    System.out.println("Enter the name of the custom species (names should not include spaces):\n");
+        
+        String speciesName = scan.next();
+        if(speciesName.length() != 0){
+          customSpecies.setSpeciesName(speciesName);
+          this.theseSpecies.add(customSpecies);
+        }
+        System.out.println("\nEnter vapour heat capacity coefficient A:");
+        double double1 = scan.nextDouble();
+        System.out.println("\nEnter vapour heat capacity coefficient B:");
+        double double2 = scan.nextDouble();
+        System.out.println("\nEnter vapour heat capacity coefficient C:");
+        double double3 = scan.nextDouble();
+        System.out.println("\nEnter vapour heat capacity coefficient D:");
+        double double4 = scan.nextDouble();
+        customSpecies.setVapourHeatCapacityConstants(double1, double2, double3, double4);
+        
+        System.out.println("\nEnter liquid heat capacity coefficient A:");
+        double1 = scan.nextDouble();
+        System.out.println("\nEnter liquid heat capacity coefficient B:");
+        double2 = scan.nextDouble();
+        System.out.println("\nEnter liquid heat capacity coefficient C:");
+        double3 = scan.nextDouble();
+        System.out.println("\nEnter liquid heat capacity coefficient D:");
+        double4 = scan.nextDouble();
+        customSpecies.setLiquidHeatCapacityConstants(double1, double2, double3, double4);
+        
+        System.out.println("\nEnter Antoine equation constant A (units of Pa, K):");
+        double1 = scan.nextDouble();
+        System.out.println("\nEnter Antoine equation constant B (units of Pa, K):");
+        double2 = scan.nextDouble();
+        System.out.println("\nEnter Antoine equation constant C (units of Pa, K):");
+        double3 = scan.nextDouble();
+        customSpecies.setAntoineConstants(double1, double2, double3);
+        
+        System.out.println("Will the simulation be run in ideal-gas mode?");
+        System.out.println("[y]es / [n]o");
+        ideal = scan.next().charAt(0);
+        
+        if(ideal == 'n'){
+          System.out.println("Enter the critical temperature for "+customSpecies.getSpeciesName()+":");
+          double1 = scan.nextDouble();
+          customSpecies.setCriticalTemperature(double1);
+          
+          System.out.println("Enter the critical pressure for "+customSpecies.getSpeciesName()+":");
+          double1 = scan.nextDouble();
+          customSpecies.setCriticalPressure(double1);
+          
+          System.out.println("Enter the critical volume for "+customSpecies.getSpeciesName()+":");
+          double1 = scan.nextDouble();
+          customSpecies.setCriticalVolume(double1);
+          
+          System.out.println("Enter the critical Z-value for "+customSpecies.getSpeciesName()+":");
+          double1 = scan.nextDouble();
+          customSpecies.setCriticalZ(double1);
+          
+          System.out.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
+          double1 = scan.nextDouble();
+          customSpecies.setAcentricFactor(double1);
+        } else {}
+        
+        double[] verificationPrint4 = new double[4];
+        double[] verificationPrint3 = new double[3]; //can i avoid initializing two arrays to accomodate different lengths?
+        
+        System.out.println("Are these properties correct?\n");
+        System.out.println("------------------------------------------------\n");
+        verificationPrint4 = customSpecies.getVapourHeatCapacityConstants();
+        System.out.println("Vapour heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
+                           " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
+        verificationPrint4 = customSpecies.getLiquidHeatCapacityConstants();
+        System.out.println("Liquid heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
+                           " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
+        verificationPrint3 = customSpecies.getAntoineConstants();
+        System.out.println("Antoine equation constants:        A="+verificationPrint3[0]+" B="+verificationPrint3[1]+" C="+verificationPrint3[2]);
+        if(ideal == 'n'){
+          System.out.println("Critical temperature:             "+customSpecies.getCriticalTemperature()+" K");
+          System.out.println("Critical pressure:                "+customSpecies.getCriticalPressure()+" Pa");
+          System.out.println("Critical volume:                  "+customSpecies.getCriticalVolume()+" m^3/mol");
+          System.out.println("Critical Z-value:                 "+customSpecies.getCriticalZ());
+          System.out.println("Acentric factor:                  "+customSpecies.getAcentricFactor()+"\n");
+        } else{}
+        System.out.println("\n------------------------------------------------\n");
+        
+        char choice; 
+        output.println("\nAre the stream properties correct?");
+        output.println("  [y]es   [n]o");
+        choice = scan.next().charAt(0);
+        if (choice == 'y') break;
+        if (choice == 'n') this.theseSpecies.remove(customSpecies) ;
+      }
+  
+      
+      break;
+      
+    }
+      
     
     
   }
