@@ -17,13 +17,13 @@ public class Test_PresetSpecies extends TestCase {
   
   // Test whether the units of the Antoine coefficients are Pa, K
   // If the saturation pressure at the known boiling point is atmospheric pressure,
-  // then the units are correct. Accepted error in the tests is 2 %
+  // then the units are correct. Accepted error in the tests is 2.5 %
   // Source of boiling points: https://www.engineeringtoolbox.com/boiling-points-fluids-gases-d_155.html
   public void testAntoineCoefficients() {
     List<FlowSpecies> presetSpecies = PresetSpecies.get();
     
-    double lowerBound = 98791.9; // 101325 Pa - 2%
-    double upperBound = 103858.2; // 101325 Pa + 2%
+    double lowerBound = 98791.9; // 101325 Pa - 2.5%
+    double upperBound = 103858.2; // 101325 Pa + 2.5%
     
     double ethaneSaturationPressure = SaturationPressure.calc(presetSpecies.get(0), 184.37);
     assertTrue("Ethane saturation pressure (Antoine coefficients)",
