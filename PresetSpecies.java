@@ -18,7 +18,6 @@ public class PresetSpecies {
     ethane.setSpeciesName("Ethane");
     ethane.setVapourHeatCapacityConstants(1.131, 19.225, -5.561, 0.0);
     ethane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    ethane.setAntoineConstants(1.0, 1.0, 1.0);
     ethane.setAntoineConstants(8.9440666, 659.739, -16.719); // Source http://webbook.nist.gov/cgi/cbook.cgi?ID=C74840&Mask=4&Type=ANTOINE
     ethane.setCriticalTemperature (305.3);
     flowSpecies.add(ethane);
@@ -27,7 +26,6 @@ public class PresetSpecies {
     pentane.setSpeciesName("Pentane");
     pentane.setVapourHeatCapacityConstants(2.464, 45.351, 14.111, 0.0);
     pentane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    pentane.setAntoineConstants(13.7667, 2451.88, 232.014);
     pentane.setAntoineConstants(8.9892, 1070.617, -40.454);
     pentane.setCriticalTemperature (469.6);
     flowSpecies.add(pentane);
@@ -36,7 +34,6 @@ public class PresetSpecies {
     hexane.setSpeciesName("Hexane");
     hexane.setVapourHeatCapacityConstants(3.025, 53.722, 16.791, 0.0);
     hexane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    hexane.setAntoineConstants(13.8193, 2696.04, 224.317);
     hexane.setAntoineConstants(9.00266, 1171.53, -48.784);
     hexane.setCriticalTemperature (507.6);
     flowSpecies.add(hexane);
