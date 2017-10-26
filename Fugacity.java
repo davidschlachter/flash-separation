@@ -4,7 +4,7 @@ public class Fugacity /* implements Function */ {
   
   public Fugacity(FlowStream flowStream) { 
     this.flowStream = flowStream;
-     }//end of constructor
+  }//end of constructor
   
   public double[][] crossSpeciesCriticalZ(){
     
@@ -165,31 +165,9 @@ public class Fugacity /* implements Function */ {
     
   }//end of fugacity coefficients method
   
-  public Fugacity createTestObject(){
-  
-  FlowStream testStream = new FlowStream();
-  
-  FlowSpecies methylEthylKetone = new FlowSpecies();
-  methylEthylKetone.setCriticalTemperature(535.5);
-  methylEthylKetone.setCriticalPressure(41.50);
-  methylEthylKetone.setCriticalZ(0.249);
-  methylEthylKetone.setCriticalVolume(267.0);
-  methylEthylKetone.setAcentricFactor(0.323); 
-  
-  FlowSpecies toluene = new FlowSpecies();
-  toluene.setCriticalTemperature(591.8);
-  toluene.setCriticalPressure(41.06);
-  toluene.setCriticalZ(0.264);
-  toluene.setCriticalVolume(316.0);
-  toluene.setAcentricFactor(0.262); 
-  
-  testStream.addFlowSpecies(methylEthylKetone);
-  testStream.addFlowSpecies(toluene); 
-  
-  Fugacity testFugacityStream = new Fugacity(testStream); 
-  
-  return testFugacityStream;
-  
+  public FlowStream getFlowStream() {
+    return this.flowStream;
   }
   
+ 
 }//end of Fugacity class
