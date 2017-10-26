@@ -192,6 +192,10 @@ public class Species {
     this.antoineB = source.antoineB;
     this.antoineC = source.antoineC;
     this.criticalTemperature = source.criticalTemperature;
+    this.criticalPressure = source.criticalPressure;
+    this.criticalVolume = source.criticalVolume;
+    this.criticalZ = source.criticalZ;
+    this.acentricFactor = source.acentricFactor;
   }
   
   
