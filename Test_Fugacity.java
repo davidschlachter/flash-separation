@@ -11,7 +11,7 @@ public class Test_Fugacity extends TestCase {
     
     FlowStream testStream = new FlowStream();
     Fugacity testFugacityStream = new Fugacity(testStream);  
-    assertTrue(createTestObject() != null);
+    assertTrue(testFugacityStream != null);
     
   }
   
@@ -178,6 +178,5 @@ public class Test_Fugacity extends TestCase {
     return testFugacityStream;
     
   }
-  
-  
+
 }
