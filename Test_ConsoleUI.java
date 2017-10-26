@@ -26,7 +26,9 @@ public class Test_ConsoleUI extends TestCase {
     
     String output = stringWriter.toString();
     
-    assertTrue("ConsoleUI add species", output.contains("Ethane\n  Pentane\n  Hexane"));
+    String newline = System.getProperty("line.separator");
+    
+    assertTrue("ConsoleUI add species", output.contains("Ethane" + newline + "  Pentane" + newline + "  Hexane"));
   }
   
   public void testRemoveSpecies() {
@@ -45,9 +47,11 @@ public class Test_ConsoleUI extends TestCase {
     ConsoleUI console = new ConsoleUI();
     console.run(new Scanner(input), new PrintWriter(stringWriter));
     
+    String newline = System.getProperty("line.separator");
+    
     String output = stringWriter.toString();
     
-    assertTrue("ConsoleUI add species", output.contains("Ethane\n  Hexane\n"));
+    assertTrue("ConsoleUI add species", output.contains("Ethane" + newline + "  Hexane" + newline));
   }
   
 }
