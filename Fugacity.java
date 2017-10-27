@@ -165,9 +165,38 @@ public class Fugacity /* implements Function */ {
     
   }//end of fugacity coefficients method
   
+  public double[] betaI(){
+    double srkOmega = 0.08664;
+    double[] beta = new double[flowStream.getFlowSpecies().size()];
+    int i = 0;
+    for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
+      beta[i] = srkOmega * (flowStream.getPressure() / (flowStream.getFlowSpecies().get(i).getCriticalPressure())) /
+        (flowStream.getTemperature() / (flowStream.getFlowSpecies().get(i).getCriticalTemperature())); 
+    }
+    return beta;
+  }
+  
   public FlowStream getFlowStream() {
     return this.flowStream;
   }
   
- 
+  public double[] qValues(){
+    double psi = 0.42748;
+    double omega = 0.08664;
+    double alpha = 0.0;
+    double[] acentricFactors = new double[flowStream.getFlowSpecies().size()];
+    double[] results = new double[flowStream.getFlowSpecies().size()];
+    int i = 0;
+    for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
+      acentricFactors[i] = flowStream.getFlowSpecies().get(i).getAcentricFactor();
+    }
+    for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
+      alpha = Math.pow((1 + (0.480 + 1.574 * acentricFactors[i] - Math.pow((0.176 * acentricFactors[i]),2)) * 
+                        (1 - Math.pow(flowStream.getTemperature() / flowStream.getFlowSpecies().get(i).getCriticalTemperature(), 0.5))),2);
+      results[i] = (psi * alpha) / (omega * (flowStream.getTemperature() / flowStream.getFlowSpecies().get(i).getCriticalTemperature()));
+    }
+    return results;
+  }
+  
+  
 }//end of Fugacity class
