@@ -2,6 +2,7 @@
 *~
 *.tmp
 *.temp
+[eE]clipse[cC]ompiler.txt
 
 # Mac DS Store files
 .DS_Store
