@@ -143,13 +143,56 @@ public class Test_Fugacity extends TestCase {
     
     testFugacityStream.getFlowStream().setTemperature(323.15);
     testFugacityStream.getFlowStream().setPressure(25000.0);
+    testFugacityStream.fugacityCoefficients();
     
     double[] results = new double[testFugacityStream.getFlowStream().getFlowSpecies().size()];
-    results = testFugacityStream.fugacityCoefficients();
+    int i = 0;
+    for(i = 0; i < testFugacityStream.getFlowStream().getFlowSpecies().size(); i++){
+      results[i] = testFugacityStream.getFlowStream().getFlowSpecies().get(i).getMixtureFugacityCoefficient();
+    }
     
     assertTrue(results[0] < 0.989 && results[0] > 0.985);
     assertTrue(results[1] < 0.985 && results[1] > 0.981);
     
+  }
+  
+  public void testBeta(){
+    
+    Fugacity testFugacityStream = createPureSpeciesTestObject();
+    testFugacityStream.beta();
+    assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getBeta() < 0.027 &&
+               testFugacityStream.getFlowStream().getFlowSpecies().get(0).getBeta() > 0.026);   
+  }
+  
+  public void testQValue(){
+    
+    Fugacity testFugacityStream = createPureSpeciesTestObject();
+    testFugacityStream.qValue();
+    assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getQValue() < 6.95 &&
+               testFugacityStream.getFlowStream().getFlowSpecies().get(0).getQValue() > 6.85);
+  }
+  
+  public void testZValue(){
+    
+    Fugacity testFugacityStream = createPureSpeciesTestObject();
+    testFugacityStream.beta();
+    testFugacityStream.qValue();
+    testFugacityStream.zValue();
+    assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getZValue() < 0.822 &&
+               testFugacityStream.getFlowStream().getFlowSpecies().get(0).getQValue() > 0.816);
+  }
+  
+  public void testActivityCoefficient(){
+    
+    Fugacity testFugacityStream = createPureSpeciesTestObject();
+    
+    testFugacityStream.getFlowStream().getFlowSpecies().get(0).setMixtureFugacityCoefficient(0.985);
+    testFugacityStream.getFlowStream().getFlowSpecies().get(0).setVapourMoleFraction(0.75);
+    testFugacityStream.getFlowStream().getFlowSpecies().get(0).setLiquidMoleFraction(0.5);
+    testFugacityStream.computeNonIdealParameters(testFugacityStream);
+    
+    assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getActivityCoefficient() < 1.77 &&
+               testFugacityStream.getFlowStream().getFlowSpecies().get(0).getActivityCoefficient() > 1.73);
   }
   
   private Fugacity createTestObject(){
@@ -178,5 +221,18 @@ public class Test_Fugacity extends TestCase {
     return testFugacityStream;
     
   }
-
+  
+  private Fugacity createPureSpeciesTestObject(){
+    FlowSpecies nButane = new FlowSpecies();
+    nButane.setCriticalTemperature(425.1);
+    nButane.setCriticalPressure(3796000);
+    nButane.setAcentricFactor(0.199);
+    FlowStream testStream = new FlowStream();
+    testStream.addFlowSpecies(nButane);
+    testStream.setTemperature(350);
+    testStream.setPressure(945730);
+    Fugacity testFugacityObject = new Fugacity(testStream);
+    return testFugacityObject;
+  }
+  
 }

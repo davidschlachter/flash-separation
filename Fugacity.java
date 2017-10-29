@@ -1,4 +1,4 @@
-public class Fugacity /* implements Function */ {
+public class Fugacity implements Function  {
   
   private FlowStream flowStream;
   
@@ -135,9 +135,8 @@ public class Fugacity /* implements Function */ {
     return bij;
   }//end of bValues method
   
-  public double[] fugacityCoefficients(){
+  public void fugacityCoefficients(){
     int n = flowStream.getFlowSpecies().size();
-    double[] results = new double[n];
     double[][] bij = bValues();
     
     int i = 0;
@@ -153,7 +152,7 @@ public class Fugacity /* implements Function */ {
       for(i = 0; i < n; i++){
         for(j = 0; j < i; j++){
           if(i>k)
-          sumTerm += flowStream.getFlowSpecies().get(i).getVapourMoleFraction() * 
+            sumTerm += flowStream.getFlowSpecies().get(i).getVapourMoleFraction() * 
             flowStream.getFlowSpecies().get(j).getVapourMoleFraction() * 
             ( (4 * bij[i][k]) - bij[i][i] - (2 * bij[k][k]) - (2 * bij[i][j]) + bij[j][j]);
           else
@@ -163,33 +162,32 @@ public class Fugacity /* implements Function */ {
         }
       }
       fugacityCoefficient = Math.exp((P / (R * T)) * (bij[k][k] + (0.5 * sumTerm)));
-      results[k] = fugacityCoefficient;
+      flowStream.getFlowSpecies().get(k).setMixtureFugacityCoefficient(fugacityCoefficient);
       sumTerm = 0.0;
     }
-    return results;
   }//end of fugacity coefficients method
   
-  public double[] betaI(){
+  public void beta(){
     double srkOmega = 0.08664;
-    double[] beta = new double[flowStream.getFlowSpecies().size()];
+    double beta = 0.0;
     int i = 0;
     for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
-      beta[i] = srkOmega * (flowStream.getPressure() / (flowStream.getFlowSpecies().get(i).getCriticalPressure())) /
+      beta = srkOmega * (flowStream.getPressure() / (flowStream.getFlowSpecies().get(i).getCriticalPressure())) /
         (flowStream.getTemperature() / (flowStream.getFlowSpecies().get(i).getCriticalTemperature())); 
+      flowStream.getFlowSpecies().get(i).setBeta(beta);
     }
-    return beta;
   }
   
   public FlowStream getFlowStream() {
     return this.flowStream;
   }
   
-  public double[] qValues(){
+  public void qValue(){
     double psi = 0.42748;
     double omega = 0.08664;
     double alpha = 0.0;
     double[] acentricFactors = new double[flowStream.getFlowSpecies().size()];
-    double[] results = new double[flowStream.getFlowSpecies().size()];
+    double result = 0.0;
     int i = 0;
     for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
       acentricFactors[i] = flowStream.getFlowSpecies().get(i).getAcentricFactor();
@@ -197,9 +195,66 @@ public class Fugacity /* implements Function */ {
     for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
       alpha = Math.pow((1 + (0.480 + 1.574 * acentricFactors[i] - Math.pow((0.176 * acentricFactors[i]),2)) * 
                         (1 - Math.pow(flowStream.getTemperature() / flowStream.getFlowSpecies().get(i).getCriticalTemperature(), 0.5))),2);
-      results[i] = (psi * alpha) / (omega * (flowStream.getTemperature() / flowStream.getFlowSpecies().get(i).getCriticalTemperature()));
+      result = (psi * alpha) / (omega * (flowStream.getTemperature() / flowStream.getFlowSpecies().get(i).getCriticalTemperature()));
+      flowStream.getFlowSpecies().get(i).setQValue(result);
     }
-    return results;
+  }
+  
+  public void zValue(){
+    
+    double upperBound = 20.0;
+    double lowerBound = 0.01;
+    double accuracy = 0.001;
+    double result = 0.0;
+    int i = 0;
+    
+    for(i=0; i < flowStream.getFlowSpecies().size(); i++){
+      result = RootFinder.calc(this, lowerBound, upperBound, accuracy);
+      flowStream.getFlowSpecies().get(i).setZValue(result);
+    }
+  }
+  
+  public void activityCoefficient(){
+    
+    double pureSpeciesFugacityCoefficient = 0.0;
+      int i = 0;
+    
+    for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
+      pureSpeciesFugacityCoefficient = Math.exp(flowStream.getFlowSpecies().get(i).getZValue() - 1 - Math.log(flowStream.getFlowSpecies().get(i).getZValue()
+                                                                                                                - flowStream.getFlowSpecies().get(i).getBeta()) - flowStream.getFlowSpecies().get(i).getQValue()
+                                                  * flowStream.getFlowSpecies().get(i).getBeta() / flowStream.getFlowSpecies().get(i).getZValue());
+      
+      flowStream.getFlowSpecies().get(i).setActivityCoefficient((flowStream.getFlowSpecies().get(i).getMixtureFugacityCoefficient() * 
+                                                                 flowStream.getFlowSpecies().get(i).getVapourMoleFraction()) / 
+                                                                (flowStream.getFlowSpecies().get(i).getLiquidMoleFraction() * 
+                                                                 pureSpeciesFugacityCoefficient));
+    }
+    
+  }
+  
+  public double testFunction(double z){   
+    
+    double result = 0;
+    int i = 0;
+    for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
+      result += (-1 * z) + 1 + flowStream.getFlowSpecies().get(i).getBeta() - (flowStream.getFlowSpecies().get(i).getBeta()
+                                                                                 * flowStream.getFlowSpecies().get(i).getQValue() * (z - flowStream.getFlowSpecies().get(i).getBeta())) 
+        / (z * (z + flowStream.getFlowSpecies().get(i).getBeta())); 
+    } 
+    return result;
+  }
+  
+    public void computeNonIdealParameters(Fugacity fugacityObject){
+    
+      /* TODO: checks must be implemented here to make sure all parameters are in place
+       * for the proper calculation of nonideal parameters */
+      
+    fugacityObject.fugacityCoefficients();
+    fugacityObject.beta();
+    fugacityObject.qValue();
+    fugacityObject.zValue();
+    fugacityObject.activityCoefficient();
+  
   }
   
   
