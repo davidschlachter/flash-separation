@@ -281,7 +281,7 @@ public class Species {
     this.criticalVolume = source.criticalVolume;
     this.criticalZ = source.criticalZ;
     this.acentricFactor = source.acentricFactor;
-    this.zValue  = source.zValue;
+    this.zValue = source.zValue;
     this.beta = source.beta;
     this.qValue = source.qValue;
     this.activityCoefficient = source.activityCoefficient;

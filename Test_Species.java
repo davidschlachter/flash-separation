@@ -114,4 +114,57 @@ public class Test_Species extends TestCase {
     
   }
   
+  /*
+   * Test the cloning method
+   */
+  public void testClone() {
+    Species testSpecies = new Species();
+    
+    testSpecies.setSpeciesName("test");
+    testSpecies.setVapourHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    testSpecies.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    testSpecies.setAntoineConstants(1.0, 1.0, 1.0);
+    testSpecies.setCriticalTemperature(1.0);
+    testSpecies.setCriticalPressure(1.0);
+    testSpecies.setCriticalVolume(1.0);
+    testSpecies.setCriticalZ(1.0);
+    testSpecies.setAcentricFactor(1.0);
+    testSpecies.setZValue(1.0);
+    testSpecies.setBeta(1.0);
+    testSpecies.setQValue(1.0);
+    testSpecies.setActivityCoefficient(1.0);
+    testSpecies.setMixtureFugacityCoefficient(1.0);
+    
+    double testVapourHeatCapacityConstants[] = testSpecies.getVapourHeatCapacityConstants();
+    double testLiquidHeatCapacityConstants[] = testSpecies.getLiquidHeatCapacityConstants();
+    double testAntoineConstants[] = testSpecies.getAntoineConstants();
+    
+    Species cloneSpecies = new Species(testSpecies);
+    double cloneVapourHeatCapacityConstants[] = cloneSpecies.getVapourHeatCapacityConstants();
+    double cloneLiquidHeatCapacityConstants[] = cloneSpecies.getLiquidHeatCapacityConstants();
+    double cloneAntoineConstants[] = cloneSpecies.getAntoineConstants();
+    
+    assertEquals("Species.cloneSpeciesName", testSpecies.getSpeciesName(), cloneSpecies.getSpeciesName());
+    assertEquals("Species.cloneVapourHeatCapacityA", testVapourHeatCapacityConstants[0], cloneVapourHeatCapacityConstants[0]);
+    assertEquals("Species.cloneVapourHeatCapacityB", testVapourHeatCapacityConstants[1], cloneVapourHeatCapacityConstants[1]);
+    assertEquals("Species.cloneVapourHeatCapacityC", testVapourHeatCapacityConstants[2], cloneVapourHeatCapacityConstants[2]);
+    assertEquals("Species.cloneVapourHeatCapacityD", testVapourHeatCapacityConstants[3], cloneVapourHeatCapacityConstants[3]);
+    assertEquals("Species.cloneLiquidHeatCapacityA", testLiquidHeatCapacityConstants[0], cloneLiquidHeatCapacityConstants[0]);
+    assertEquals("Species.cloneLiquidHeatCapacityB", testLiquidHeatCapacityConstants[1], cloneLiquidHeatCapacityConstants[1]);
+    assertEquals("Species.cloneLiquidHeatCapacityC", testLiquidHeatCapacityConstants[2], cloneLiquidHeatCapacityConstants[2]);
+    assertEquals("Species.cloneLiquidHeatCapacityD", testLiquidHeatCapacityConstants[3], cloneLiquidHeatCapacityConstants[3]);
+    assertEquals("Species.cloneAntoineA", testAntoineConstants[0], cloneAntoineConstants[0]);
+    assertEquals("Species.cloneAntoineB", testAntoineConstants[1], cloneAntoineConstants[1]);
+    assertEquals("Species.cloneAntoineC", testAntoineConstants[2], cloneAntoineConstants[2]);
+    assertEquals("Species.cloneCriticalTemperature", testSpecies.getCriticalTemperature(), cloneSpecies.getCriticalTemperature());
+    assertEquals("Species.cloneCriticalPressure", testSpecies.getCriticalPressure(), cloneSpecies.getCriticalPressure());
+    assertEquals("Species.cloneCriticalVolume", testSpecies.getCriticalVolume(), cloneSpecies.getCriticalVolume());
+    assertEquals("Species.cloneCriticalZ", testSpecies.getCriticalZ(), cloneSpecies.getCriticalZ());
+    assertEquals("Species.cloneAcentricFactor", testSpecies.getAcentricFactor(), cloneSpecies.getAcentricFactor());
+    assertEquals("Species.cloneZValue", testSpecies.getZValue(), cloneSpecies.getZValue());
+    assertEquals("Species.cloneBeta", testSpecies.getBeta(), cloneSpecies.getBeta());
+    assertEquals("Species.cloneQValue", testSpecies.getQValue(), cloneSpecies.getQValue());
+    assertEquals("Species.cloneActivityCoefficient", testSpecies.getActivityCoefficient(), cloneSpecies.getActivityCoefficient());
+    assertEquals("Species.cloneMixutreFugacityCoefficient", testSpecies.getMixtureFugacityCoefficient(), cloneSpecies.getMixtureFugacityCoefficient());
+  }
 }
