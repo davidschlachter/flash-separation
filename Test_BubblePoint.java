@@ -27,11 +27,11 @@ public class Test_BubblePoint extends TestCase {
     
     // Test function result for water and ethanol at 1 atm, 300 K
     FlowSpecies water = new FlowSpecies();
-    water.setAntoineConstants(10.19621302, 1730.63, -39.724);
+    water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
     water.setOverallMoleFraction(0.5);
     
     FlowSpecies ethanol = new FlowSpecies();
-    ethanol.setAntoineConstants(9.80607302, 1332.04, -73.95);
+    ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
     ethanol.setOverallMoleFraction(0.5);
     
     testStream.addFlowSpecies(water);
@@ -52,11 +52,11 @@ public class Test_BubblePoint extends TestCase {
     
     // Test function result for water and ethanol at 1 atm, 300 K
     FlowSpecies water = new FlowSpecies();
-    water.setAntoineConstants(10.19621302, 1730.63, -39.724);
+    water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
     water.setOverallMoleFraction(0.5);
     
     FlowSpecies ethanol = new FlowSpecies();
-    ethanol.setAntoineConstants(9.80607302, 1332.04, -73.95);
+    ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
     ethanol.setOverallMoleFraction(0.5);
     
     testStream.addFlowSpecies(water);
@@ -73,9 +73,9 @@ public class Test_BubblePoint extends TestCase {
   
   public void testBubPoint() {
    FlowSpecies pentane = new FlowSpecies();
-    pentane.setAntoineConstants(8.9892, 1070.617, -40.454);
+    pentane.setAntoineConstants(new AntoineCoefficients(8.9892, 1070.617, -40.454));
     FlowSpecies hexane = new FlowSpecies();
-    hexane.setAntoineConstants(9.00266, 1171.53, -48.784);
+    hexane.setAntoineConstants(new AntoineCoefficients(9.00266, 1171.53, -48.784));
     hexane.setOverallMoleFraction(0.85);
     pentane.setOverallMoleFraction(0.15);
     

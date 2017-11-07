@@ -14,7 +14,7 @@ public class Test_SaturationPressure extends TestCase {
     
     // Antoine coefficients for water between 0-100 ºC, with units in Pa, K
     // source: Wikipedia  :)
-    testSpecies.setAntoineConstants(10.19621302, 1730.63, -39.724);
+    testSpecies.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
     // Temperature in K for the saturation pressure calculation
     double temperature = 298.15;
     
@@ -29,7 +29,7 @@ public class Test_SaturationPressure extends TestCase {
   public void testSatPressure() {
     
     Species pentane = new Species();
-    pentane.setAntoineConstants(8.9892, 1070.617, -40.454);
+    pentane.setAntoineConstants(new AntoineCoefficients(8.9892, 1070.617, -40.454));
     double satPressure = SaturationPressure.calc(pentane,300.0);
     assertTrue("SaturationPressure.calc(pentane,300.0)", (satPressure > 73154.2 && satPressure < 73155.0));
     

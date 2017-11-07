@@ -73,9 +73,9 @@ public class Test_Species extends TestCase {
     double antoineB = 1.0;
     double antoineC = 1.0;
     
-    testSpecies.setAntoineConstants(antoineA, antoineB, antoineC);
+    testSpecies.setAntoineConstants(new AntoineCoefficients(antoineA, antoineB, antoineC));
     
-    double[] antoineConstants = testSpecies.getAntoineConstants();
+    double[] antoineConstants = testSpecies.getAntoineConstants(0.0);
     
     assertEquals("Species.set/getAntoineConstants[0]", antoineA, antoineConstants[0]);
     assertEquals("Species.set/getAntoineConstants[1]", antoineB, antoineConstants[1]);
@@ -123,7 +123,7 @@ public class Test_Species extends TestCase {
     testSpecies.setSpeciesName("test");
     testSpecies.setVapourHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
     testSpecies.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    testSpecies.setAntoineConstants(1.0, 1.0, 1.0);
+    testSpecies.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
     testSpecies.setCriticalTemperature(1.0);
     testSpecies.setCriticalPressure(1.0);
     testSpecies.setCriticalVolume(1.0);
@@ -137,12 +137,12 @@ public class Test_Species extends TestCase {
     
     double testVapourHeatCapacityConstants[] = testSpecies.getVapourHeatCapacityConstants();
     double testLiquidHeatCapacityConstants[] = testSpecies.getLiquidHeatCapacityConstants();
-    double testAntoineConstants[] = testSpecies.getAntoineConstants();
+    double testAntoineConstants[] = testSpecies.getAntoineConstants(0.0);
     
     Species cloneSpecies = new Species(testSpecies);
     double cloneVapourHeatCapacityConstants[] = cloneSpecies.getVapourHeatCapacityConstants();
     double cloneLiquidHeatCapacityConstants[] = cloneSpecies.getLiquidHeatCapacityConstants();
-    double cloneAntoineConstants[] = cloneSpecies.getAntoineConstants();
+    double cloneAntoineConstants[] = cloneSpecies.getAntoineConstants(0.0);
     
     assertEquals("Species.cloneSpeciesName", testSpecies.getSpeciesName(), cloneSpecies.getSpeciesName());
     assertEquals("Species.cloneVapourHeatCapacityA", testVapourHeatCapacityConstants[0], cloneVapourHeatCapacityConstants[0]);

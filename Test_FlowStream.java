@@ -138,8 +138,8 @@ public class Test_FlowStream extends TestCase {
     ethane.setSpeciesName("Ethane");
     ethane.setVapourHeatCapacityConstants(1.131, 19.225, -5.561, 0.0);
     ethane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    ethane.setAntoineConstants(1.0, 1.0, 1.0);
-    ethane.setAntoineConstants(8.9440666, 659.739, -16.719);
+    ethane.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
+    ethane.setAntoineConstants(new AntoineCoefficients(8.9440666, 659.739, -16.719));
     ethane.setCriticalTemperature (305.3);
     ethane.setOverallMoleFraction(0.5);
     ethane.setVapourMoleFraction(0.5);
@@ -148,8 +148,7 @@ public class Test_FlowStream extends TestCase {
     pentane.setSpeciesName("Pentane");
     pentane.setVapourHeatCapacityConstants(2.464, 45.351, 14.111, 0.0);
     pentane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    pentane.setAntoineConstants(13.7667, 2451.88, 232.014);
-    pentane.setAntoineConstants(8.9892, 1070.617, -40.454);
+    pentane.setAntoineConstants(new AntoineCoefficients(8.9892, 1070.617, -40.454));
     pentane.setCriticalTemperature (469.6);
     pentane.setOverallMoleFraction(0.5);
     pentane.setVapourMoleFraction(0.5);
@@ -168,8 +167,8 @@ public class Test_FlowStream extends TestCase {
     ethaneTwo.setSpeciesName("Ethane");
     ethaneTwo.setVapourHeatCapacityConstants(1.131, 19.225, -5.561, 0.0);
     ethaneTwo.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    ethaneTwo.setAntoineConstants(1.0, 1.0, 1.0);
-    ethaneTwo.setAntoineConstants(8.9440666, 659.739, -16.719);
+    ethaneTwo.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
+    ethaneTwo.setAntoineConstants(new AntoineCoefficients(8.9440666, 659.739, -16.719));
     ethaneTwo.setCriticalTemperature (305.3);
     ethaneTwo.setOverallMoleFraction(0.50045); // +0.0009
     ethaneTwo.setVapourMoleFraction(0.50045); // +0.0009
@@ -178,8 +177,7 @@ public class Test_FlowStream extends TestCase {
     pentaneTwo.setSpeciesName("Pentane");
     pentaneTwo.setVapourHeatCapacityConstants(2.464, 45.351, 14.111, 0.0);
     pentaneTwo.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    pentaneTwo.setAntoineConstants(13.7667, 2451.88, 232.014);
-    pentaneTwo.setAntoineConstants(8.9892, 1070.617, -40.454);
+    pentaneTwo.setAntoineConstants(new AntoineCoefficients(8.9892, 1070.617, -40.454));
     pentaneTwo.setCriticalTemperature (469.6);
     pentaneTwo.setOverallMoleFraction(0.49955); // -0.0009
     pentaneTwo.setVapourMoleFraction(0.49955); // -0.0009
@@ -197,8 +195,7 @@ public class Test_FlowStream extends TestCase {
     ethaneThree.setSpeciesName("Ethane");
     ethaneThree.setVapourHeatCapacityConstants(1.0, 19.0, -5.0, 0.0);  // Smaller
     ethaneThree.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    ethaneThree.setAntoineConstants(2.0, 2.0, 2.0); // Bigger
-    ethaneThree.setAntoineConstants(8.0, 659.0, -16.0); // Smaller
+    ethaneThree.setAntoineConstants(new AntoineCoefficients(8.0, 659.0, -16.0)); // Smaller
     ethaneThree.setCriticalTemperature (340.0); // Bigger
     ethaneThree.setOverallMoleFraction(0.2); // Smaller
     ethaneThree.setVapourMoleFraction(0.2); // Smaller
@@ -207,8 +204,7 @@ public class Test_FlowStream extends TestCase {
     pentaneThree.setSpeciesName("Pentane");
     pentaneThree.setVapourHeatCapacityConstants(2.464, 45.351, 14.111, 0.0);
     pentaneThree.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
-    pentaneThree.setAntoineConstants(13.7667, 2451.88, 232.014);
-    pentaneThree.setAntoineConstants(8.9892, 1070.617, -40.454);
+    pentaneThree.setAntoineConstants(new AntoineCoefficients(8.9892, 1070.617, -40.454));
     pentaneThree.setCriticalTemperature (469.6);
     pentaneThree.setOverallMoleFraction(1.0); // Bigger
     pentaneThree.setVapourMoleFraction(1.0); // Bigger
