@@ -52,7 +52,7 @@ public class Species {
   private double qValue = 0.0;
   
   //activity coefficient for nonideal liquid behaviour
-  private double activityCoefficient = 0.0;
+  private double activityCoefficient = 1.0;
   
   //fugacity coefficient for nonideal behaviour
   private double mixtureFugacityCoefficient = 0.0;

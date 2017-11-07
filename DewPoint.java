@@ -29,8 +29,8 @@ public class DewPoint implements Function {
     int i;
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       if (this.flowStream.getFlowSpecies().get(i).getCriticalTemperature() == 0.0) {
-       System.out.println("ERROR: Critical temperature is not specified.");
-       System.exit(1);
+        System.out.println("ERROR: Critical temperature is not specified.");
+        System.exit(1);
       }
       if (lowerTemperatureBound > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
         this.flowStream.getFlowSpecies().get(i).setOverallMoleFraction(0.0);
@@ -48,15 +48,17 @@ public class DewPoint implements Function {
     
     double temperature = x;
     double pressure = this.flowStream.getPressure();
+    double activityCoefficient;
     double overallMoleFraction, saturationPressure;
     
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
+      activityCoefficient = this.flowStream.getFlowSpecies().get(i).getActivityCoefficient();
       
-      result = result + (overallMoleFraction / (saturationPressure / pressure));
-
+      result = result + (overallMoleFraction / ((saturationPressure * activityCoefficient) / pressure));
+      
     }
     
     return (result - 1);
