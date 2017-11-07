@@ -226,6 +226,42 @@ public class Test_FlowStream extends TestCase {
     
   }
   
+  /**
+   * Test the constructor
+   */
+  public void testCopyConstructor() {
+
+    FlowStream firstStream = new FlowStream();
+    firstStream.setFlowSpecies(PresetSpecies.get());
+    firstStream.setMolarFlowRate(10.0);
+    firstStream.setTemperature(300.0);
+    firstStream.setPressure(100000.0);
+    firstStream.setVapourFraction(0.5);
+    
+    FlowStream secondStream = new FlowStream(firstStream);
+    
+    // Test with approximately equals first!
+    assertTrue("firstStream.approxEquals(firstStream)", firstStream.approxEquals(firstStream));
+    assertTrue("secondStream.approxEquals(firstStream)", secondStream.approxEquals(firstStream));
+    
+    // Check that the properties were all copied over
+    assertTrue("Copy constructor: molar flow rates equal", firstStream.getMolarFlowRate() == secondStream.getMolarFlowRate());
+    assertTrue("Copy constructor: temperatures equal", firstStream.getTemperature() == secondStream.getTemperature());
+    assertTrue("Copy constructor: pressures equal", firstStream.getPressure() == secondStream.getPressure());
+    assertTrue("Copy constructor: vapour fractions equal", firstStream.getVapourFraction() == secondStream.getVapourFraction());
+    // TODO: Check that species list is the same for both!
+    
+    // Check that the objects are independent
+    firstStream.setPressure(200000.0);
+    assertTrue("Copy constructor: new pressures not equal", firstStream.getPressure() != secondStream.getPressure());
+    
+    // Check that the copy was deep
+    assertTrue("Copy constructor: deep copy", firstStream.getFlowSpecies().get(1).getCriticalTemperature() == secondStream.getFlowSpecies().get(1).getCriticalTemperature());
+    firstStream.getFlowSpecies().get(1).setCriticalTemperature(400.0);
+    assertFalse("Copy constructor: deep copy", firstStream.getFlowSpecies().get(1).getCriticalTemperature() == secondStream.getFlowSpecies().get(1).getCriticalTemperature());
+    
+  }
+  
   
   
 }

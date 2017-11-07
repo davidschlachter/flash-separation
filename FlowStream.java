@@ -23,7 +23,20 @@ public class FlowStream {
   // Default constructor
   public FlowStream() {
     flowSpecies = new ArrayList<FlowSpecies>();
-    //return true;
+  }
+  
+  // Copy constructor
+  public FlowStream (FlowStream source) {
+    int i;
+    this.flowSpecies = new ArrayList<FlowSpecies>();
+    for (i = 0; i < source.flowSpecies.size(); i++) {
+      this.flowSpecies.add(new FlowSpecies(source.flowSpecies.get(i)));
+    }
+    this.molarFlowRate = source.molarFlowRate;
+    this.temperature = source.temperature;
+    this.pressure = source.pressure;
+    this.vapourFraction = source.vapourFraction;
+    this.error = source.error;
   }
   
   // Setters
