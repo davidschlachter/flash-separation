@@ -225,7 +225,7 @@ public class Test_FlowStream extends TestCase {
   /**
    * Test the constructor
    */
-  public void testCopyConstructor() {
+  public void testClone() {
 
     FlowStream firstStream = new FlowStream();
     firstStream.setFlowSpecies(PresetSpecies.get());
@@ -234,7 +234,7 @@ public class Test_FlowStream extends TestCase {
     firstStream.setPressure(100000.0);
     firstStream.setVapourFraction(0.5);
     
-    FlowStream secondStream = new FlowStream(firstStream);
+    FlowStream secondStream = firstStream.clone();
     
     // Test with approximately equals first!
     assertTrue("firstStream.approxEquals(firstStream)", firstStream.approxEquals(firstStream));
