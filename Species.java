@@ -267,7 +267,7 @@ public class Species {
     for (i = 0; i < this.antoineCoefficients.size(); i++) {
       thisSet = this.antoineCoefficients.get(i);
       // Find a set of Antoine coefficients for the given temperature
-      if (temperature > thisSet.getLowerTemperatureBound() && temperature < thisSet.getUpperTemperatureBound()) {
+      if (temperature >= thisSet.getLowerTemperatureBound() && temperature <= thisSet.getUpperTemperatureBound()) {
         antoineConstants[0] = thisSet.getA();
         antoineConstants[1] = thisSet.getB();
         antoineConstants[2] = thisSet.getC();

@@ -1,4 +1,7 @@
 import junit.framework.TestCase;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * A JUnit test case class.
@@ -80,7 +83,26 @@ public class Test_Species extends TestCase {
     assertEquals("Species.set/getAntoineConstants[0]", antoineA, antoineConstants[0]);
     assertEquals("Species.set/getAntoineConstants[1]", antoineB, antoineConstants[1]);
     assertEquals("Species.set/getAntoineConstants[2]", antoineC, antoineConstants[2]);
-
+    
+    
+  }
+  
+  public void testMultipleAntoineConstants() {
+    
+    Species testSpecies = new Species();
+    
+    List<AntoineCoefficients> cyclohexaneAntoine = new ArrayList<AntoineCoefficients>();
+    cyclohexaneAntoine.add(new AntoineCoefficients(9.145546612, 1316.554, -35.581, 323, 523)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110827&Mask=4&Type=ANTOINE&Plot=on
+    cyclohexaneAntoine.add(new AntoineCoefficients(8.997716612, 1216.93, -48.621, 303, 343)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110827&Mask=4&Type=ANTOINE&Plot=on
+    cyclohexaneAntoine.add(new AntoineCoefficients(8.176966612, 780.637, -107.29, 315.7, 353.9)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110827&Mask=4&Type=ANTOINE&Plot=on
+    cyclohexaneAntoine.add(new AntoineCoefficients(8.975596612, 1203.562, -50.287, 293.06, 354.73)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110827&Mask=4&Type=ANTOINE&Plot=on
+    testSpecies.setAntoineConstants(cyclohexaneAntoine);
+    
+    double[] returnedConstants = testSpecies.getAntoineConstants(400.0);
+    assertTrue(returnedConstants[0] > 9.1450 && returnedConstants[0] < 9.1456);
+    
+    returnedConstants = testSpecies.getAntoineConstants(295.0);
+    assertTrue(returnedConstants[0] > 8.9750 && returnedConstants[0] < 8.9756);
     
   }
   
