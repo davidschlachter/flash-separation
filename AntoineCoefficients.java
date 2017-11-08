@@ -1,15 +1,19 @@
 public class AntoineCoefficients {
-
-  double a, b, c;
-  double lowerTemperatureBound, upperTemperatureBound;
+  
+  private double a, b, c;
+  private double lowerTemperatureBound, upperTemperatureBound;
   
   public AntoineCoefficients(double a, double b, double c, double lowerTemperatureBound, double upperTemperatureBound) {
     this.a = a;
     this.b = b;
     this.c = c;
-    // TODO: Check that temperatures are greater than absolute zero
-    this.lowerTemperatureBound = lowerTemperatureBound;
-    this.upperTemperatureBound = upperTemperatureBound;
+    if(lowerTemperatureBound >= 0. && upperTemperatureBound >= 0){
+      this.lowerTemperatureBound = lowerTemperatureBound;
+      this.upperTemperatureBound = upperTemperatureBound;
+    } else {
+      System.out.println("Upper and lower temperature bounds must both be above absolute zero.");
+      System.exit(1);
+    }
   }
   
   public AntoineCoefficients(double a, double b, double c) {
@@ -58,5 +62,5 @@ public class AntoineCoefficients {
   public double getUpperTemperatureBound() {
     return this.upperTemperatureBound;
   }
-
+  
 }

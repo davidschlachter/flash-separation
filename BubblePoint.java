@@ -29,15 +29,16 @@ public class BubblePoint extends Function {
     double temperature = x;
     double pressure = this.flowStream.getPressure();
     double overallMoleFraction, saturationPressure;
-    double activityCoefficient;
+    double activityCoefficient, largePhi;
     
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
       activityCoefficient = this.flowStream.getFlowSpecies().get(i).getActivityCoefficient();
+      largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
       
-      result = result + (((saturationPressure * activityCoefficient) / pressure)*overallMoleFraction);
+      result = result + (saturationPressure * activityCoefficient * overallMoleFraction / (pressure * largePhi));
       
     }
     
