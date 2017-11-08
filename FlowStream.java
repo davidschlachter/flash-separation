@@ -137,5 +137,9 @@ public class FlowStream {
     
   }
   
+  //Clone method
+  public FlowStream clone() {
+    return new FlowStream(this);
+  }
   
 }
