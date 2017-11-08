@@ -1,339 +1,119 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <drjava version="drjava-20160913-225446">
-  <project autorefresh="true" main="Main" root="" work="">
+  <project autorefresh="true" main="Main.class" root="" work="">
     <createjar file=""/>
     <source>
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <file active="true" name="Test_Fugacity.java" package="" timestamp="08-Nov-2017 13:28:10">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="DewPoint.java" package="" timestamp="07-Nov-2017 16:28:36">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Test_HeatCapacity.java" package="" timestamp="18-Oct-2017 17:35:36">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Test_RachfordRice.java" package="" timestamp="11-Oct-2017 13:09:13">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Test_SaturationPressure.java" package="" timestamp="21-Oct-2017 12:01:58">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Main.java" package="" timestamp="11-Oct-2017 22:49:14">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="SaturationPressure.java" package="" timestamp="29-Sep-2017 17:32:18">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Function.java" package="" timestamp="29-Sep-2017 17:32:18">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="RootFinder.java" package="" timestamp="02-Oct-2017 09:21:25">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Test_BubblePoint.java" package="" timestamp="21-Oct-2017 12:01:58">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Test_FlowSpecies.java" package="" timestamp="18-Oct-2017 17:35:36">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Test_DewPoint.java" package="" timestamp="21-Oct-2017 12:01:58">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Test_ConsoleUI.java" package="" timestamp="26-Oct-2017 15:58:32">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="FlowSpecies.java" package="" timestamp="18-Oct-2017 17:35:36">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="HeatCapacity.java" package="" timestamp="18-Oct-2017 17:35:36">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Test_FlowStream.java" package="" timestamp="26-Oct-2017 23:59:35">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Test_Enthalpy.java" package="" timestamp="18-Oct-2017 17:35:36">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="BubblePoint.java" package="" timestamp="07-Nov-2017 16:28:36">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="RachfordRice.java" package="" timestamp="18-Oct-2017 17:35:36">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Enthalpy.java" package="" timestamp="21-Oct-2017 12:01:58">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Test_Species.java" package="" timestamp="07-Nov-2017 16:28:36">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Test_PresetSpecies.java" package="" timestamp="25-Oct-2017 17:12:42">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="PresetSpecies.java" package="" timestamp="26-Oct-2017 23:59:35">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="FlowStream.java" package="" timestamp="26-Oct-2017 23:59:35">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="ConsoleUI.java" package="" timestamp="25-Oct-2017 17:12:42">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Species.java" package="" timestamp="07-Nov-2017 17:14:04">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-      </file>
-      <file name="Fugacity.java" package="" timestamp="08-Nov-2017 13:27:11">
-        <select from="7571" to="7571"/>
-        <scroll column="2686" row="0"/>
-=======
-      <file active="true" name="Test_Enthalpy.java" package="" timestamp="08-Nov-2017 00:40:01">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="AntoineCoefficients.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_FlowSpecies.java" package="" timestamp="16-Oct-2017 14:09:52">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_HeatCapacity.java" package="" timestamp="16-Oct-2017 14:09:52">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Main.java" package="" timestamp="11-Oct-2017 20:02:25">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_ConsoleUI.java" package="" timestamp="26-Oct-2017 15:54:37">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="FlowSpecies.java" package="" timestamp="31-Oct-2017 00:27:41">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_PresetSpecies.java" package="" timestamp="26-Oct-2017 15:17:27">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_Fugacity.java" package="" timestamp="31-Oct-2017 00:15:21">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_RachfordRice.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="ConsoleUI.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="PresetSpecies.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="SaturationPressure.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_FlowStream.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_SaturationPressure.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_Species.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Species.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="RootFinder.java" package="" timestamp="07-Nov-2017 23:43:37">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="DewPoint.java" package="" timestamp="07-Nov-2017 23:46:36">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Function.java" package="" timestamp="07-Nov-2017 23:50:06">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="HeatCapacity.java" package="" timestamp="08-Nov-2017 00:00:24">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Fugacity.java" package="" timestamp="08-Nov-2017 00:01:27">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="FlowStream.java" package="" timestamp="08-Nov-2017 00:01:54">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Enthalpy.java" package="" timestamp="08-Nov-2017 00:15:47">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="BubblePoint.java" package="" timestamp="08-Nov-2017 00:26:38">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_BubblePoint.java" package="" timestamp="08-Nov-2017 00:26:38">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-=======
-      <file active="true" name="Test_Enthalpy.java" package="" timestamp="08-Nov-2017 00:40:01">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="AntoineCoefficients.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_FlowSpecies.java" package="" timestamp="16-Oct-2017 14:09:52">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_HeatCapacity.java" package="" timestamp="16-Oct-2017 14:09:52">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Main.java" package="" timestamp="11-Oct-2017 20:02:25">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_ConsoleUI.java" package="" timestamp="26-Oct-2017 15:54:37">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="FlowSpecies.java" package="" timestamp="31-Oct-2017 00:27:41">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_PresetSpecies.java" package="" timestamp="26-Oct-2017 15:17:27">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_Fugacity.java" package="" timestamp="31-Oct-2017 00:15:21">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_RachfordRice.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="ConsoleUI.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="PresetSpecies.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="SaturationPressure.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_FlowStream.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_SaturationPressure.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_Species.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Species.java" package="" timestamp="07-Nov-2017 23:23:23">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="RootFinder.java" package="" timestamp="07-Nov-2017 23:43:37">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="DewPoint.java" package="" timestamp="07-Nov-2017 23:46:36">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Function.java" package="" timestamp="07-Nov-2017 23:50:06">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="HeatCapacity.java" package="" timestamp="08-Nov-2017 00:00:24">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Fugacity.java" package="" timestamp="08-Nov-2017 00:01:27">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="FlowStream.java" package="" timestamp="08-Nov-2017 00:01:54">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Enthalpy.java" package="" timestamp="08-Nov-2017 00:15:47">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="BubblePoint.java" package="" timestamp="08-Nov-2017 00:26:38">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="Test_BubblePoint.java" package="" timestamp="08-Nov-2017 00:26:38">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
->>>>>>> 5b19efff6f842f0c677d3b5489977c8bde557779
-      <file name="Test_DewPoint.java" package="" timestamp="08-Nov-2017 00:26:38">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-      </file>
-      <file name="RachfordRice.java" package="" timestamp="08-Nov-2017 00:34:40">
-        <select from="1627" to="1627"/>
-        <scroll column="24" row="0"/>
-<<<<<<< HEAD
->>>>>>> 5b19efff6f842f0c677d3b5489977c8bde557779
-=======
->>>>>>> 5b19efff6f842f0c677d3b5489977c8bde557779
+      <file active="true" name="AntoineCoefficients.java" package="" timestamp="07-Nov-2017 17:53:11">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="BubblePoint.java" package="" timestamp="08-Nov-2017 13:49:50">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="ConsoleUI.java" package="" timestamp="07-Nov-2017 17:47:20">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="DewPoint.java" package="" timestamp="08-Nov-2017 08:29:13">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Enthalpy.java" package="" timestamp="08-Nov-2017 08:29:13">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="FlowSpecies.java" package="" timestamp="08-Nov-2017 13:48:14">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="FlowStream.java" package="" timestamp="07-Nov-2017 16:54:25">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Fugacity.java" package="" timestamp="08-Nov-2017 13:50:04">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Function.java" package="" timestamp="08-Nov-2017 08:29:13">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="HeatCapacity.java" package="" timestamp="12-Oct-2017 11:28:26">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Main.java" package="" timestamp="08-Nov-2017 13:48:10">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="PresetSpecies.java" package="" timestamp="07-Nov-2017 17:51:12">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="RachfordRice.java" package="" timestamp="08-Nov-2017 08:29:13">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="RootFinder.java" package="" timestamp="08-Nov-2017 08:29:13">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="SaturationPressure.java" package="" timestamp="07-Nov-2017 17:51:40">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Species.java" package="" timestamp="08-Nov-2017 13:50:04">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_BubblePoint.java" package="" timestamp="08-Nov-2017 08:29:13">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_ConsoleUI.java" package="" timestamp="26-Oct-2017 15:56:17">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_DewPoint.java" package="" timestamp="08-Nov-2017 08:29:13">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_Enthalpy.java" package="" timestamp="08-Nov-2017 08:29:13">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_FlowSpecies.java" package="" timestamp="12-Oct-2017 12:13:03">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_FlowStream.java" package="" timestamp="07-Nov-2017 17:55:12">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_Fugacity.java" package="" timestamp="08-Nov-2017 13:50:04">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_HeatCapacity.java" package="" timestamp="12-Oct-2017 12:15:05">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_PresetSpecies.java" package="" timestamp="08-Nov-2017 13:48:17">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_RachfordRice.java" package="" timestamp="07-Nov-2017 17:43:32">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_SaturationPressure.java" package="" timestamp="07-Nov-2017 17:55:21">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
+      </file>
+      <file name="Test_Species.java" package="" timestamp="07-Nov-2017 17:55:58">
+        <select from="248" to="248"/>
+        <scroll column="0" row="0"/>
       </file>
     </source>
     <included/>
