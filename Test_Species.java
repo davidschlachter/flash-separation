@@ -114,6 +114,127 @@ public class Test_Species extends TestCase {
     
   }
   
+  /**
+   * Test the getter and setter for the critical pressure
+   */
+  public void testCriticalPressure() {
+    Species testSpecies = new Species();
+    double criticalPressure = 300.0;
+    
+    assertFalse("Species.setCriticalPressure(-1.0)", testSpecies.setCriticalPressure(-1.0));
+    assertEquals("Species.setCriticalPressure(1.0)", true, testSpecies.setCriticalPressure(criticalPressure));
+    assertTrue("Species.setCriticalPressure()", testSpecies.getCriticalPressure() == criticalPressure);
+  }
+  
+  /**
+   * Test the getter and setter for the critical volume
+   */
+  public void testCriticalVolume() {
+    Species testSpecies = new Species();
+    double criticalVolume = 100.0;
+    
+    assertFalse("Species.setCriticalVolume(-1.0)", testSpecies.setCriticalVolume(-1.0));
+    assertEquals("Species.setCriticalVolume(1.0)", true, testSpecies.setCriticalVolume(criticalVolume));
+    assertTrue("Species.setCriticalVolume()", testSpecies.getCriticalVolume() == criticalVolume);
+  }
+  
+  /**
+   * Test the getter and setter for the critical z value
+   */
+  public void testCriticalZ() {
+    Species testSpecies = new Species();
+    double criticalZ = 1.0;
+    
+    assertFalse("Species.setCriticalZ(-1.0)", testSpecies.setCriticalZ(-1.0));
+    assertEquals("Species.setCriticalZ(1.0)", true, testSpecies.setCriticalZ(criticalZ));
+    assertTrue("Species.setCriticalZ()", testSpecies.getCriticalZ() == criticalZ);
+  }
+  
+  /**
+   * Test the getter and setter for the acentric factor
+   */
+  public void testAcentricFactor() {
+    Species testSpecies = new Species();
+    double acentricFactor = 0.5;
+    
+    assertFalse("Species.setAcentricFactor(-1.1)", testSpecies.setAcentricFactor(-1.1));
+    assertFalse("Species.setAcentricFactor(1.1)", testSpecies.setAcentricFactor(1.1));
+    assertEquals("Species.setAcentricFactor(1.0)", true, testSpecies.setAcentricFactor(acentricFactor));
+    assertTrue("Species.setAcentricFactor()", testSpecies.getAcentricFactor() == acentricFactor);
+  }
+  
+  /**
+   * Test the getter and setter for z value
+   */
+  public void testZValue() {
+    Species testSpecies = new Species();
+    double zValue = 0.5;
+    
+    assertFalse("Species.setZValue(-1.0)", testSpecies.setZValue(-1.0));
+    assertEquals("Species.setZValue(1.0)", true, testSpecies.setZValue(zValue));
+    assertTrue("Species.setZValue()", testSpecies.getZValue() == zValue);
+  }
+  
+  /**
+   * Test the getter and setter for beta
+   */
+  public void testBeta() {
+    Species testSpecies = new Species();
+    double beta = 0.5;
+    
+    assertFalse("Species.setBeta(-1.0)", testSpecies.setBeta(-1.0));
+    assertEquals("Species.setBeta(1.0)", true, testSpecies.setBeta(beta));
+    assertTrue("Species.setBeta()", testSpecies.getBeta() == beta);
+  }
+  
+  /**
+   * Test the getter and setter for q value
+   */
+  public void testQValue() {
+    Species testSpecies = new Species();
+    double qValue = 0.5;
+    
+    assertFalse("Species.setQValue(-1.0)", testSpecies.setQValue(-1.0));
+    assertEquals("Species.setQValue(1.0)", true, testSpecies.setQValue(qValue));
+    assertTrue("Species.setQValue()", testSpecies.getQValue() == qValue);
+  }
+  
+  /**
+   * Test the getter and setter for activity coefficient
+   */
+  public void testActivityCoefficient() {
+    Species testSpecies = new Species();
+    double activityCoefficient = 0.5;
+    
+    assertFalse("Species.setActivityCoefficient(-1.0)", testSpecies.setActivityCoefficient(-1.0));
+    assertEquals("Species.setActivityCoefficient(1.0)", true, testSpecies.setActivityCoefficient(activityCoefficient));
+    assertTrue("Species.setActivityCoefficient()", testSpecies.getActivityCoefficient() == activityCoefficient);
+  }
+  
+  /**
+   * Test the getter and setter for mixture fugacity coefficient
+   */
+  public void testMixtureFugacityCoefficient() {
+    Species testSpecies = new Species();
+    double mixtureFugacityCoefficient = 0.5;
+    
+    assertFalse("Species.setMixtureFugacityCoefficient(-1.0)", testSpecies.setMixtureFugacityCoefficient(-1.0));
+    assertEquals("Species.setMixtureFugacityCoefficient(1.0)", true, testSpecies.setMixtureFugacityCoefficient(mixtureFugacityCoefficient));
+    assertTrue("Species.setMixtureFugacityCoefficient()", testSpecies.getMixtureFugacityCoefficient() == mixtureFugacityCoefficient);
+  }
+  
+  /**
+   * Test the getter and setter for large phi
+   */
+  public void testLargePhi() {
+    Species testSpecies = new Species();
+    double largePhi = 0.5;
+    
+    assertFalse("Species.setLargePhi(-1.0)", testSpecies.setLargePhi(-1.0));
+    assertEquals("Species.setLargePhi(1.0)", true, testSpecies.setLargePhi(largePhi));
+    assertTrue("Species.setLargePhi()", testSpecies.getLargePhi() == largePhi);
+  }
+  
   /*
    * Test the cloning method
    */
