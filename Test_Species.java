@@ -282,7 +282,7 @@ public class Test_Species extends TestCase {
     double testLiquidHeatCapacityConstants[] = testSpecies.getLiquidHeatCapacityConstants();
     double testAntoineConstants[] = testSpecies.getAntoineConstants(0.0);
     
-    Species cloneSpecies = new Species(testSpecies);
+    Species cloneSpecies = testSpecies.clone();
     double cloneVapourHeatCapacityConstants[] = cloneSpecies.getVapourHeatCapacityConstants();
     double cloneLiquidHeatCapacityConstants[] = cloneSpecies.getLiquidHeatCapacityConstants();
     double cloneAntoineConstants[] = cloneSpecies.getAntoineConstants(0.0);

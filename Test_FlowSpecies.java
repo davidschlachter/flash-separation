@@ -71,7 +71,7 @@ public class Test_FlowSpecies extends TestCase {
     testSpecies.setLiquidMoleFraction(liquidMoleFraction);
     testSpecies.setOverallMoleFraction(overallMoleFraction);
     
-    FlowSpecies copiedSpecies = new FlowSpecies(testSpecies);
+    FlowSpecies copiedSpecies = testSpecies.clone();
     
     assertEquals("Species.getVapourMoleFraction()", vapourMoleFraction, copiedSpecies.getVapourMoleFraction());
     assertEquals("Species.getLiquidMoleFraction()", liquidMoleFraction, copiedSpecies.getLiquidMoleFraction());
