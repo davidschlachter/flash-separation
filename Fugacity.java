@@ -1,4 +1,4 @@
-public class Fugacity implements Function  {
+public class Fugacity extends Function  {
   
   private FlowStream flowStream;
   
@@ -63,10 +63,10 @@ public class Fugacity implements Function  {
   
   public double[][] crossSpeciesCriticalPressure(){
     int n = flowStream.getFlowSpecies().size();
-    double[][] criticalPressures = new double[n][];// = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
-    double[][] criticalZValues = new double[n][];// = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
-    double[][] criticalTemperatures = new double[n][];// = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
-    double[][] criticalVolumes = new double[n][];// = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
+    double[][] criticalPressures = new double[n][];
+    double[][] criticalZValues = new double[n][];
+    double[][] criticalTemperatures = new double[n][];
+    double[][] criticalVolumes = new double[n][];
     int i = 0;
     int j = 0;
     for(i=0; i<n; i++) {
@@ -201,15 +201,13 @@ public class Fugacity implements Function  {
   }
   
   public void zValue(){
-    
-    double upperBound = 20.0;
-    double lowerBound = 0.01;
+    double[] bounds = this.getBounds(1.0, 1.0);
     double accuracy = 0.001;
     double result = 0.0;
     int i = 0;
     
     for(i=0; i < flowStream.getFlowSpecies().size(); i++){
-      result = RootFinder.calc(this, lowerBound, upperBound, accuracy);
+      result = RootFinder.calc(this, bounds[0], bounds[1], accuracy);
       flowStream.getFlowSpecies().get(i).setZValue(result);
     }
   }

@@ -62,6 +62,7 @@ public class Test_BubblePoint extends TestCase {
     testStream.addFlowSpecies(water);
     testStream.addFlowSpecies(ethanol);
     testStream.setPressure(101325.0);
+    testStream.setTemperature(298.0);
     
     BubblePoint testBubblePoint = new BubblePoint(testStream);
     double dewPoint = testBubblePoint.calc();
@@ -82,7 +83,8 @@ public class Test_BubblePoint extends TestCase {
     FlowStream flow1 = new FlowStream();
     flow1.addFlowSpecies(pentane);
     flow1.addFlowSpecies(hexane);
-    flow1.setPressure(101325);
+    flow1.setPressure(101325.0);
+    flow1.setTemperature(298.0);
     
     BubblePoint pentaneBub = new BubblePoint(flow1);
     double answer = pentaneBub.calc();

@@ -1,9 +1,7 @@
-public class Enthalpy implements Function {
+public class Enthalpy extends Function {
   
   private FlowStream inlet;
   private FlowStream outlet;
-  
-  
   
   public Enthalpy(FlowStream inlet, FlowStream outlet) { 
     this.inlet = inlet;

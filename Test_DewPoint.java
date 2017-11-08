@@ -64,6 +64,7 @@ public class Test_DewPoint extends TestCase {
     testStream.addFlowSpecies(water);
     testStream.addFlowSpecies(ethanol);
     testStream.setPressure(101325.0);
+    testStream.setTemperature(298.0);
     
     DewPoint testDewPoint = new DewPoint(testStream);
     double dewPoint = testDewPoint.calc();
@@ -99,6 +100,7 @@ public class Test_DewPoint extends TestCase {
     testStream.addFlowSpecies(hexane);
     testStream.addFlowSpecies(nitrogen);
     testStream.setPressure(300000.0);
+    testStream.setTemperature(298.0);
     
     DewPoint testDewPoint = new DewPoint(testStream);
     double dewPoint = testDewPoint.calc();
@@ -121,7 +123,8 @@ public class Test_DewPoint extends TestCase {
     FlowStream flow1 = new FlowStream();
     flow1.addFlowSpecies(pentane);
     flow1.addFlowSpecies(hexane);
-    flow1.setPressure(101325);
+    flow1.setPressure(101325.0);
+    flow1.setTemperature(298.0);
     
     DewPoint pentaneDew = new DewPoint(flow1);
     double answer = pentaneDew.calc();

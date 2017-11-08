@@ -37,14 +37,12 @@ public class Test_Enthalpy extends TestCase {
     inletStream.addFlowSpecies(water);
     inletStream.addFlowSpecies(ethanol);
     inletStream.setPressure(101325.0);
-
+    inletStream.setTemperature(360.0);
     
     Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
     double theEnthalpy = enthalpy.testFunction(360.0);
     
     assertTrue("Enthalpy.testFunction()", theEnthalpy > 29691.5 && theEnthalpy < 29691.7);
-
-   
   }
   
 }
