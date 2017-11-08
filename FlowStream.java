@@ -16,10 +16,6 @@ public class FlowStream {
   private double pressure = 0.0;
   private double vapourFraction = 0.0;
   
-  // Acceptable error for approxEquals
-  private double error = 0.001;
-  
-  
   // Default constructor
   public FlowStream() {
     flowSpecies = new ArrayList<FlowSpecies>();
@@ -36,7 +32,6 @@ public class FlowStream {
     this.temperature = source.temperature;
     this.pressure = source.pressure;
     this.vapourFraction = source.vapourFraction;
-    this.error = source.error;
   }
   
   // Setters
@@ -107,15 +102,15 @@ public class FlowStream {
   }
   
   // Equals
-  public boolean approxEquals(FlowStream target) {
+  public boolean approxEquals(FlowStream target, double error) {
     boolean equals = true;
     int i;
     FlowSpecies sourceSpecies, targetSpecies;
     
-    if (Math.abs((this.molarFlowRate - target.molarFlowRate)/this.molarFlowRate) > this.error) equals = false;
-    if (Math.abs((this.temperature - target.getTemperature())/this.temperature) > this.error) equals = false;
-    if (Math.abs((this.pressure - target.getPressure())/this.pressure) > this.error) equals = false;
-    if (Math.abs((this.vapourFraction - target.getVapourFraction())/this.vapourFraction) > this.error) equals = false;
+    if (Math.abs((this.molarFlowRate - target.molarFlowRate)/this.molarFlowRate) > error) equals = false;
+    if (Math.abs((this.temperature - target.getTemperature())/this.temperature) > error) equals = false;
+    if (Math.abs((this.pressure - target.getPressure())/this.pressure) > error) equals = false;
+    if (Math.abs((this.vapourFraction - target.getVapourFraction())/this.vapourFraction) > error) equals = false;
     
     if (this.flowSpecies.size() != target.flowSpecies.size()) {
       equals = false;
@@ -125,17 +120,21 @@ public class FlowStream {
     for (i = 0; i < this.flowSpecies.size(); i++) {
       sourceSpecies = this.flowSpecies.get(i);
       targetSpecies = target.flowSpecies.get(i);
-      if (Math.abs((sourceSpecies.getOverallMoleFraction() - targetSpecies.getOverallMoleFraction())/sourceSpecies.getOverallMoleFraction()) > this.error) equals = false;
-      if (Math.abs((sourceSpecies.getLiquidMoleFraction() - targetSpecies.getLiquidMoleFraction())/sourceSpecies.getLiquidMoleFraction()) > this.error) equals = false;
-      if (Math.abs((sourceSpecies.getVapourMoleFraction() - targetSpecies.getVapourMoleFraction())/sourceSpecies.getVapourMoleFraction()) > this.error) equals = false;
-      if (Math.abs((sourceSpecies.getCriticalPressure() - targetSpecies.getCriticalPressure())/sourceSpecies.getCriticalPressure()) > this.error) equals = false;
-      if (Math.abs((sourceSpecies.getCriticalTemperature() - targetSpecies.getCriticalTemperature())/sourceSpecies.getCriticalTemperature()) > this.error) equals = false;
-      if (Math.abs((sourceSpecies.getCriticalVolume() - targetSpecies.getCriticalVolume())/sourceSpecies.getCriticalVolume()) > this.error) equals = false;
+      if (Math.abs((sourceSpecies.getOverallMoleFraction() - targetSpecies.getOverallMoleFraction())/sourceSpecies.getOverallMoleFraction()) > error) equals = false;
+      if (Math.abs((sourceSpecies.getLiquidMoleFraction() - targetSpecies.getLiquidMoleFraction())/sourceSpecies.getLiquidMoleFraction()) > error) equals = false;
+      if (Math.abs((sourceSpecies.getVapourMoleFraction() - targetSpecies.getVapourMoleFraction())/sourceSpecies.getVapourMoleFraction()) > error) equals = false;
+      if (Math.abs((sourceSpecies.getCriticalPressure() - targetSpecies.getCriticalPressure())/sourceSpecies.getCriticalPressure()) > error) equals = false;
+      if (Math.abs((sourceSpecies.getCriticalTemperature() - targetSpecies.getCriticalTemperature())/sourceSpecies.getCriticalTemperature()) > error) equals = false;
+      if (Math.abs((sourceSpecies.getCriticalVolume() - targetSpecies.getCriticalVolume())/sourceSpecies.getCriticalVolume()) > error) equals = false;
     }
     
     return equals;
     
   }
   
+  //Clone method
+  public FlowStream clone() {
+    return new FlowStream(this);
+  }
   
 }

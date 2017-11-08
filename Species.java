@@ -62,6 +62,36 @@ public class Species {
   // Constructor
   public Species() {}
   
+  //Copy Constructor
+  public Species (Species source) {
+    int i;
+    this.speciesName = source.speciesName;
+    this.vapourHeatCapacityA = source.vapourHeatCapacityA;
+    this.vapourHeatCapacityB = source.vapourHeatCapacityB;
+    this.vapourHeatCapacityC = source.vapourHeatCapacityC;
+    this.vapourHeatCapacityD = source.vapourHeatCapacityD;
+    this.liquidHeatCapacityA = source.liquidHeatCapacityA;
+    this.liquidHeatCapacityB = source.liquidHeatCapacityB;
+    this.liquidHeatCapacityC = source.liquidHeatCapacityC;
+    this.liquidHeatCapacityD = source.liquidHeatCapacityD;
+    if (source.antoineCoefficients != null) {
+      this.antoineCoefficients = new ArrayList<AntoineCoefficients>();
+      for (i = 0; i < source.antoineCoefficients.size(); i++) {
+        this.antoineCoefficients.add(new AntoineCoefficients(source.antoineCoefficients.get(i)));
+      }
+    }
+    this.criticalTemperature = source.criticalTemperature;
+    this.criticalPressure = source.criticalPressure;
+    this.criticalVolume = source.criticalVolume;
+    this.criticalZ = source.criticalZ;
+    this.acentricFactor = source.acentricFactor;
+    this.zValue = source.zValue;
+    this.beta = source.beta;
+    this.qValue = source.qValue;
+    this.activityCoefficient = source.activityCoefficient;
+    this.mixtureFugacityCoefficient = source.mixtureFugacityCoefficient;
+  }
+  
   // Setters
   public void setSpeciesName(String speciesName) {
     this.speciesName = speciesName;
@@ -237,7 +267,7 @@ public class Species {
     for (i = 0; i < this.antoineCoefficients.size(); i++) {
       thisSet = this.antoineCoefficients.get(i);
       // Find a set of Antoine coefficients for the given temperature
-      if (temperature > thisSet.getLowerTemperatureBound() && temperature < thisSet.getUpperTemperatureBound()) {
+      if (temperature >= thisSet.getLowerTemperatureBound() && temperature <= thisSet.getUpperTemperatureBound()) {
         antoineConstants[0] = thisSet.getA();
         antoineConstants[1] = thisSet.getB();
         antoineConstants[2] = thisSet.getC();
@@ -300,36 +330,44 @@ public class Species {
   return this.largePhi;
   }
   
-  // Clone method
-  public Species (Species source) {
-    int i;
-    this.speciesName = source.speciesName;
-    this.vapourHeatCapacityA = source.vapourHeatCapacityA;
-    this.vapourHeatCapacityB = source.vapourHeatCapacityB;
-    this.vapourHeatCapacityC = source.vapourHeatCapacityC;
-    this.vapourHeatCapacityD = source.vapourHeatCapacityD;
-    this.liquidHeatCapacityA = source.liquidHeatCapacityA;
-    this.liquidHeatCapacityB = source.liquidHeatCapacityB;
-    this.liquidHeatCapacityC = source.liquidHeatCapacityC;
-    this.liquidHeatCapacityD = source.liquidHeatCapacityD;
-    if (source.antoineCoefficients != null) {
-      this.antoineCoefficients = new ArrayList<AntoineCoefficients>();
-      for (i = 0; i < source.antoineCoefficients.size(); i++) {
-        this.antoineCoefficients.add(new AntoineCoefficients(source.antoineCoefficients.get(i)));
+  //Equals
+  public boolean equals(Species other) {
+    boolean antoineEquals = false;
+    //not sure if this block underneath makes sense
+    if(this.antoineCoefficients.size() == other.antoineCoefficients.size()) {
+      for(int i=0; i<this.antoineCoefficients.size(); i++) {
+        if(this.antoineCoefficients.get(i) == other.antoineCoefficients.get(i)) antoineEquals = true;
+        else antoineEquals = false;
       }
     }
-    this.criticalTemperature = source.criticalTemperature;
-    this.criticalPressure = source.criticalPressure;
-    this.criticalVolume = source.criticalVolume;
-    this.criticalZ = source.criticalZ;
-    this.acentricFactor = source.acentricFactor;
-    this.zValue = source.zValue;
-    this.beta = source.beta;
-    this.qValue = source.qValue;
-    this.activityCoefficient = source.activityCoefficient;
-    this.mixtureFugacityCoefficient = source.mixtureFugacityCoefficient;
+    else return false;
+
+    if(antoineEquals == true && 
+       this.speciesName.equalsIgnoreCase(other.speciesName) &&
+       this.vapourHeatCapacityA == other.vapourHeatCapacityA &&
+       this.vapourHeatCapacityB == other.vapourHeatCapacityB &&
+       this.vapourHeatCapacityC == other.vapourHeatCapacityC &&
+       this.vapourHeatCapacityD == other.vapourHeatCapacityD &&
+       this.liquidHeatCapacityA == other.liquidHeatCapacityA &&
+       this.liquidHeatCapacityB == other.liquidHeatCapacityB &&
+       this.liquidHeatCapacityC == other.liquidHeatCapacityC &&
+       this.liquidHeatCapacityD == other.liquidHeatCapacityD &&
+       this.criticalTemperature == other.criticalTemperature &&
+       this.criticalPressure == other.criticalPressure &&
+       this.criticalVolume == other.criticalVolume &&
+       this.criticalZ == other.criticalZ &&
+       this.acentricFactor == other.acentricFactor &&
+       this.zValue == other.zValue &&
+       this.beta == other.beta &&
+       this.qValue == other.qValue &&
+       this.activityCoefficient == other.activityCoefficient &&
+       this.mixtureFugacityCoefficient == other.mixtureFugacityCoefficient) return true;
+    else return false;
   }
   
-  
+  // Clone method
+  public Species clone() {
+    return new Species(this);
+  }
   
 }

@@ -216,16 +216,20 @@ public class Test_FlowStream extends TestCase {
     thirdStream.setPressure(90000.0); // Smaller
     thirdStream.setVapourFraction(0.6); // Smaller
     
-    assertTrue("firstStream.approxEquals(firstStream)", firstStream.approxEquals(firstStream));
-    assertTrue("firstStream.approxEquals(secondStream)", firstStream.approxEquals(secondStream));
-    assertFalse("firstStream.approxEquals(thirdStream)", firstStream.approxEquals(thirdStream));
+    double error = 0.001;
+    
+    assertTrue("firstStream.approxEquals(firstStream)", firstStream.approxEquals(firstStream, error));
+    assertTrue("firstStream.approxEquals(secondStream)", firstStream.approxEquals(secondStream, error));
+    assertFalse("firstStream.approxEquals(thirdStream)", firstStream.approxEquals(thirdStream, error));
     
   }
   
   /**
    * Test the constructor
    */
-  public void testCopyConstructor() {
+  public void testClone() {
+    
+    double error = 0.001;
 
     FlowStream firstStream = new FlowStream();
     firstStream.setFlowSpecies(PresetSpecies.get());
@@ -234,11 +238,11 @@ public class Test_FlowStream extends TestCase {
     firstStream.setPressure(100000.0);
     firstStream.setVapourFraction(0.5);
     
-    FlowStream secondStream = new FlowStream(firstStream);
+    FlowStream secondStream = firstStream.clone();
     
     // Test with approximately equals first!
-    assertTrue("firstStream.approxEquals(firstStream)", firstStream.approxEquals(firstStream));
-    assertTrue("secondStream.approxEquals(firstStream)", secondStream.approxEquals(firstStream));
+    assertTrue("firstStream.approxEquals(firstStream)", firstStream.approxEquals(firstStream, error));
+    assertTrue("secondStream.approxEquals(firstStream)", secondStream.approxEquals(firstStream, error));
     
     // Check that the properties were all copied over
     assertTrue("Copy constructor: molar flow rates equal", firstStream.getMolarFlowRate() == secondStream.getMolarFlowRate());

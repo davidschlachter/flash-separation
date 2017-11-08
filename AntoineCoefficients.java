@@ -63,4 +63,13 @@ public class AntoineCoefficients {
     return this.upperTemperatureBound;
   }
   
+  //Equals
+  public boolean equals(AntoineCoefficients other) {
+    if(this.a == other.a &&
+       this.b == other.b &&
+       this.c == other.c &&
+       this.lowerTemperatureBound == other.lowerTemperatureBound &&
+       this.upperTemperatureBound == other.upperTemperatureBound) return true;
+    else return false;
+  }
 }
