@@ -53,7 +53,7 @@ public class ConsoleUI {
       if (choice == 'q') return true;  // Exit option for testing
       if (choice == 'd') {
         if (this.theseSpecies.size() == 0) {System.exit(1);} else {break;}
-     }
+      }
     }
     
     FlowStream inletStream  = new FlowStream();
@@ -70,11 +70,7 @@ public class ConsoleUI {
     double moleFraction = -1.0, moleFractionSum = 0.0;
     while (true) {
       for (i = 0; i < inletStream.getFlowSpecies().size(); i++) {
-        while (true) {
-          output.println("  Mole fraction of " + inletStream.getFlowSpecies().get(i).getSpeciesName() + ": ");
-          moleFraction = scan.nextDouble();
-          if (moleFraction >= 0.0 && moleFraction <= 1.0) break;
-        }
+        moleFraction = getADouble("  Mole fraction of " + inletStream.getFlowSpecies().get(i).getSpeciesName() + ": ", 0.0, 1.0, scan, output, false);
         inletStream.getFlowSpecies().get(i).setLiquidMoleFraction(moleFraction);
         moleFractionSum += moleFraction; 
       }
@@ -108,11 +104,7 @@ public class ConsoleUI {
         moleFractionSum = 0.0;
         while (true) {
           for (i = 0; i < inletStream.getFlowSpecies().size(); i++) {
-            while (true) {
-              output.println("  Mole fraction of " + inletStream.getFlowSpecies().get(i).getSpeciesName() + ": ");
-              moleFraction = scan.nextDouble();
-              if (moleFraction >= 0.0 && moleFraction <= 1.0) break;
-            }
+            moleFraction = getADouble("  Mole fraction of " + inletStream.getFlowSpecies().get(i).getSpeciesName() + ": ", 0.0, 1.0, scan, output, false);
             inletStream.getFlowSpecies().get(i).setVapourMoleFraction(moleFraction);
             moleFractionSum += moleFraction; 
           }
@@ -123,11 +115,7 @@ public class ConsoleUI {
             moleFractionSum = 0.0;
           }
         }
-        while (true) {
-          output.println("\nWhat fraction of the feed is in the vapour phase?");
-          moleFraction = scan.nextDouble();
-          if (moleFraction >= 0.0 && moleFraction <= 1.0) break;
-        }
+        moleFraction = getADouble("\nWhat fraction of the feed is in the vapour phase?", 0.0, 1.0, scan, output, false);
         inletStream.setVapourFraction(moleFraction);
         for (i = 0; i < inletStream.getFlowSpecies().size(); i++) {
           moleFraction = inletStream.getFlowSpecies().get(i).getLiquidMoleFraction() * (1.0 - inletStream.getVapourFraction())
@@ -152,66 +140,16 @@ public class ConsoleUI {
     // Set general stream properties (T, P, flowrate)
     //
     output.println("\nFor the input stream, enter the following properties if known:");
-    output.println("  Temperature (K): ");
-    while (true) {
-      nextString = scan.nextLine();
-      if (nextString.isEmpty()) {
-        nextDouble = 0.0;
-        break;
-      } else {
-        nextDouble = Double.parseDouble(nextString);
-        break;
-      }
-    }
+    nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
     inletStream.setTemperature(nextDouble);
-    output.println("  Pressure (Pa): ");
-    while (true) {
-      nextString = scan.nextLine();
-      if (nextString.isEmpty()) {
-        nextDouble = 0.0;
-        break;
-      } else {
-        nextDouble = Double.parseDouble(nextString);
-        break;
-      }
-    }
+    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, true);
     inletStream.setPressure(nextDouble);
-    output.println("  Mass flow rate (kg/s): ");
-    while (true) {
-      nextString = scan.nextLine();
-      if (nextString.isEmpty()) {
-        nextDouble = 0.0;
-        break;
-      } else {
-        nextDouble = Double.parseDouble(nextString);
-        break;
-      }
-    }
+    nextDouble = getADouble("  Mass flow rate (kg/s): ", 0.0, Double.MAX_VALUE, scan, output, true);
     inletStream.setMolarFlowRate(nextDouble);
     output.println("\nFor the outlet stream, enter the following properties if known:");
-    output.println("  Temperature (K): ");
-    while (true) {
-      nextString = scan.nextLine();
-      if (nextString.isEmpty()) {
-        nextDouble = 0.0;
-        break;
-      } else {
-        nextDouble = Double.parseDouble(nextString);
-        break;
-      }
-    }
+    nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
     outletStream.setTemperature(nextDouble);
-    output.println("  Pressure (Pa): ");
-    while (true) {
-      nextString = scan.nextLine();
-      if (nextString.isEmpty()) {
-        nextDouble = 0.0;
-        break;
-      } else {
-        nextDouble = Double.parseDouble(nextString);
-        break;
-      }
-    }
+    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, true);
     outletStream.setPressure(nextDouble);
     outletStream.setMolarFlowRate(inletStream.getMolarFlowRate());
     
@@ -346,7 +284,7 @@ public class ConsoleUI {
     output.println("\nAdding a custom species.\n");
     while(true){
       while(true){
-    output.println("Enter the name of the custom species (names should not include spaces):\n");
+        output.println("Enter the name of the custom species (names should not include spaces):\n");
         
         String speciesName = scan.next();
         if(speciesName.length() != 0){
@@ -418,10 +356,10 @@ public class ConsoleUI {
         output.println("------------------------------------------------\n");
         verificationPrint4 = customSpecies.getVapourHeatCapacityConstants();
         output.println("Vapour heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
-                           " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
+                       " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
         verificationPrint4 = customSpecies.getLiquidHeatCapacityConstants();
         output.println("Liquid heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
-                           " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
+                       " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
         verificationPrint3 = customSpecies.getAntoineConstants(1.0); // Hacky -- should use a real number / accurate range
         output.println("Antoine equation constants:        A="+verificationPrint3[0]+" B="+verificationPrint3[1]+" C="+verificationPrint3[2]);
         if(ideal == 'n'){
@@ -440,12 +378,12 @@ public class ConsoleUI {
         if (choice == 'y') break;
         if (choice == 'n') this.theseSpecies.remove(customSpecies) ;
       }
-  
+      
       
       break;
       
     }
-      
+    
     
     
   }
@@ -486,6 +424,40 @@ public class ConsoleUI {
       overallMoleFraction = outletStream.getFlowSpecies().get(i).getOverallMoleFraction();
       output.printf("    %15s  %.3f  %.3f  %.3f%n", speciesName, liquidMoleFraction, vapourMoleFraction, overallMoleFraction);
     }
+  }
+  
+  private double getADouble(String message, double lowerBound, double upperBound, Scanner scan, PrintWriter output, boolean permitEmpty) {
+    
+    double userInput = 0.0;
+    String nextString;
+    
+    if (permitEmpty == true ) {
+      output.println(message);
+      while (true) {
+        nextString = scan.nextLine();
+        if (nextString.isEmpty()) {
+          userInput = 0.0;
+          break;
+        } else {
+          if (lowerBound != upperBound) {
+            if (userInput <= lowerBound || userInput >= upperBound) continue;
+          }
+          userInput = Double.parseDouble(nextString);
+          break;
+        }
+      }
+    }
+    
+    else {
+      
+      while (true) {
+        output.println(message);
+        userInput = scan.nextDouble();
+        if (userInput >= lowerBound && userInput <= upperBound) break;
+      }}
+    
+    return userInput;
+    
   }
   
   
