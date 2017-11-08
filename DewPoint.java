@@ -38,11 +38,10 @@ public class DewPoint extends Function {
   
   
   // Test function for the root finder
-  public double testFunction(double x) {
+  public double testFunction(double temperature) {
     int i;
     double result = 0.0;
     
-    double temperature = x;
     double pressure = this.flowStream.getPressure();
     double activityCoefficient;
     double overallMoleFraction, saturationPressure, largePhi;
@@ -54,7 +53,7 @@ public class DewPoint extends Function {
       activityCoefficient = this.flowStream.getFlowSpecies().get(i).getActivityCoefficient();
       largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
       
-      result = result + (overallMoleFraction * largePhi * pressure / (activityCoefficient * saturationPressure));
+      result = result + (overallMoleFraction * activityCoefficient * pressure / (largePhi * saturationPressure));
       
     }
     

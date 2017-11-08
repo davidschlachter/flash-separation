@@ -73,6 +73,39 @@ public class Test_DewPoint extends TestCase {
 
   }
   
+  public void testNonIdealCalc(){
+  
+  FlowStream testStream = new FlowStream();
+    
+    // Test function result for water and ethanol at 1 atm, 300 K
+    FlowSpecies mek = new FlowSpecies();
+    mek.setOverallMoleFraction(0.75);
+    mek.setCriticalTemperature(300);
+    mek.setActivityCoefficient(0.953);
+    mek.setLargePhi(1.0638);
+    mek.setAntoineConstants(new AntoineCoefficients(10., 1400., -35., 0.1, 1000.));
+    
+    FlowSpecies toluene = new FlowSpecies();
+    toluene.setOverallMoleFraction(0.25);
+    toluene.setCriticalTemperature(300);
+    toluene.setActivityCoefficient(0.968);
+    toluene.setLargePhi(1.01);
+    toluene.setAntoineConstants(new AntoineCoefficients(9., 1300., -30., 0.1, 1000.));
+    
+    testStream.addFlowSpecies(mek);
+    testStream.addFlowSpecies(toluene);
+    testStream.setPressure(750000.0);
+    testStream.setTemperature(300.);
+   
+    DewPoint testNonIdealDewpoint = new DewPoint(testStream);
+    double dewpoint = testNonIdealDewpoint.calc();
+    System.out.println("DEWPOINT IS: "+dewpoint);
+    
+    assertTrue(dewpoint > 326.2 && dewpoint < 326.9); //this should be double checked
+    
+  
+  } 
+  
   // Test the DewPoint calculation with a non-condensing species included
   // Problem is example 7.21 from  CHEMICAL AND ENERGY PROCESS ENGINEERING
   // by Sigurd Skogestad, Published by CRC Press (2009)
