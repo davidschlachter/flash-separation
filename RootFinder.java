@@ -1,12 +1,9 @@
 public class RootFinder {
  
-  // Static method to find the root of a Function's testFunction method
   public static final int JMAX = 100;
   
+  // Static method to find the root of a Function's testFunction method
   public static double calc(Function func, double x1, double x2, double xacc) {
-
-    int maxIterations = 100;
-    
     double xL, xU, xM, xR_old, xR, error;
     xL = x1;
     xU = x2;
@@ -14,7 +11,7 @@ public class RootFinder {
     
     double fL, fU, fM, fR;
     
-    for(int j=0; j < maxIterations; j++)
+    for(int j=0; j < JMAX; j++)
     {
       xR_old = xR;
       xM = (xL + xU)/2.;

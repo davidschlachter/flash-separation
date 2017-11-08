@@ -143,7 +143,7 @@ public class Test_Fugacity extends TestCase {
     
     testFugacityStream.getFlowStream().setTemperature(323.15);
     testFugacityStream.getFlowStream().setPressure(25000.0);
-    testFugacityStream.fugacityCoefficients();
+    testFugacityStream.mixtureFugacityCoefficients();
     
     double[] results = new double[testFugacityStream.getFlowStream().getFlowSpecies().size()];
     int i = 0;
@@ -182,7 +182,7 @@ public class Test_Fugacity extends TestCase {
                testFugacityStream.getFlowStream().getFlowSpecies().get(0).getQValue() > 0.816);
   }
   
-  public void testActivityCoefficient(){
+    public void testActivityCoefficient(){
     
     Fugacity testFugacityStream = createPureSpeciesTestObject();
     
@@ -195,6 +195,20 @@ public class Test_Fugacity extends TestCase {
                testFugacityStream.getFlowStream().getFlowSpecies().get(0).getActivityCoefficient() > 1.73);
   }
   
+  public void testLargePhi(){
+    
+    Fugacity testFugacityStream = createTestObject();
+    testFugacityStream.getFlowStream().setTemperature(323.15);
+    testFugacityStream.getFlowStream().setPressure(25000);
+    testFugacityStream.computeNonIdealParameters(testFugacityStream);
+    
+    assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getLargePhi() <  1.07);
+    assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getLargePhi() >  1.03);
+    assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(1).getLargePhi() <  1.01);
+    assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(1).getLargePhi() >  1.005);
+    
+  }
+  
   private Fugacity createTestObject(){
     
     FlowStream testStream = new FlowStream();
@@ -205,6 +219,8 @@ public class Test_Fugacity extends TestCase {
     methylEthylKetone.setCriticalZ(0.249);
     methylEthylKetone.setCriticalVolume(267.0);
     methylEthylKetone.setAcentricFactor(0.323); 
+    methylEthylKetone.setAntoineConstants(10., 1400., -35.);
+    
     
     FlowSpecies toluene = new FlowSpecies();
     toluene.setCriticalTemperature(591.8);
@@ -212,6 +228,7 @@ public class Test_Fugacity extends TestCase {
     toluene.setCriticalZ(0.264);
     toluene.setCriticalVolume(316.0);
     toluene.setAcentricFactor(0.262); 
+    toluene.setAntoineConstants(9., 1300., -30.);
     
     testStream.addFlowSpecies(methylEthylKetone);
     testStream.addFlowSpecies(toluene); 
