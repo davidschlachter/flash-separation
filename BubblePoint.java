@@ -1,7 +1,7 @@
 /**
  * Class that returns the dew point of a stream of given composition at a given pressure
  */
-public class BubblePoint implements Function {
+public class BubblePoint extends Function {
   
   private FlowStream flowStream;
   
@@ -17,8 +17,8 @@ public class BubblePoint implements Function {
   
   // Return the bubble point for the given flowStream components at the given pressure
   public double calc() {
-    // TODO: Need to find the bounds automatically before calling RootFinder.calc!
-    return RootFinder.calc(this, 100.0, 1000.0, 0.001);
+    double[] bounds = this.getBounds(flowStream.getTemperature(), 1.0);
+    return RootFinder.calc(this, bounds[0], bounds[1], 0.001);
   }
   
   // Test function for the root finder

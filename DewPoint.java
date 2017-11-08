@@ -1,7 +1,7 @@
 /**
  * Class that returns the dew point of a stream of given composition at a given pressure
  */
-public class DewPoint implements Function {
+public class DewPoint extends Function {
   
   private FlowStream flowStream;
   
@@ -18,11 +18,7 @@ public class DewPoint implements Function {
   
   // Return the dew point for the given flowStream components at the given pressure
   public double calc() {
-    //
-    // TODO: Need to find the bounds automatically before calling RootFinder.calc!
-    //
-    double lowerTemperatureBound = 200.0;
-    double upperTemperatureBound = 1000.0;
+    double[] bounds = this.getBounds(flowStream.getTemperature(), 1.0);
     double accuracy = 0.0001;
     
     // Determine if any of the species is likely to be non-condensable, and if so, ignore it
@@ -32,12 +28,12 @@ public class DewPoint implements Function {
         System.out.println("ERROR: Critical temperature is not specified.");
         System.exit(1);
       }
-      if (lowerTemperatureBound > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
+      if (bounds[0] > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
         this.flowStream.getFlowSpecies().get(i).setOverallMoleFraction(0.0);
     }
     
     // Calculate the dew point
-    return RootFinder.calc(this, lowerTemperatureBound, upperTemperatureBound, accuracy);
+    return RootFinder.calc(this, bounds[0], bounds[1], accuracy);
   }
   
   

@@ -379,7 +379,11 @@ public class ConsoleUI {
         double2 = scan.nextDouble();
         output.println("\nEnter Antoine equation constant C (units of Pa, K):");
         double3 = scan.nextDouble();
-        customSpecies.setAntoineConstants(double1, double2, double3);
+        output.println("\nEnter the lower temperature bound for these constants (K):");
+        double4 = scan.nextDouble();
+        output.println("\nEnter the upper temperature bound for these constants (K):");
+        double double5 = scan.nextDouble();
+        customSpecies.setAntoineConstants(new AntoineCoefficients(double1, double2, double3, double4, double5));
         
         output.println("Will the simulation be run in ideal-gas mode?");
         output.println("[y]es / [n]o");
@@ -418,7 +422,7 @@ public class ConsoleUI {
         verificationPrint4 = customSpecies.getLiquidHeatCapacityConstants();
         output.println("Liquid heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
                            " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
-        verificationPrint3 = customSpecies.getAntoineConstants();
+        verificationPrint3 = customSpecies.getAntoineConstants(1.0); // Hacky -- should use a real number / accurate range
         output.println("Antoine equation constants:        A="+verificationPrint3[0]+" B="+verificationPrint3[1]+" C="+verificationPrint3[2]);
         if(ideal == 'n'){
           output.println("Critical temperature:             "+customSpecies.getCriticalTemperature()+" K");
