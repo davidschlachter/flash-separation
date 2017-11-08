@@ -1,5 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
+
 
 /*
  * Species stores the physical properties of a given species
@@ -24,7 +23,9 @@ public class Species {
   private double liquidHeatCapacityD= 0.0;
   
   // Antoine coefficients
-  private List<AntoineCoefficients> antoineCoefficients;
+  private double antoineA = 0.0;
+  private double antoineB = 0.0;
+  private double antoineC = 0.0;
   
   // Critical temperature (to determine condensability)
   private double criticalTemperature = 0.0;
@@ -56,9 +57,6 @@ public class Species {
   //fugacity coefficient for nonideal behaviour
   private double mixtureFugacityCoefficient = 0.0;
   
-  //large phi for nonideal handling
-  private double largePhi = 1.0;
-  
   // Constructor
   public Species() {}
   
@@ -81,17 +79,10 @@ public class Species {
     this.liquidHeatCapacityD = liquidHeatCapacityD;
   }
   
-  public void setAntoineConstants(List<AntoineCoefficients> source) {
-    int i;
-    this.antoineCoefficients = new ArrayList<AntoineCoefficients>();
-    for (i = 0; i < source.size(); i++) {
-      this.antoineCoefficients.add(new AntoineCoefficients(source.get(i)));
-    }
-  }
-  
-  public void setAntoineConstants(AntoineCoefficients source) {
-    this.antoineCoefficients = new ArrayList<AntoineCoefficients>();
-    this.antoineCoefficients.add(new AntoineCoefficients(source));
+  public void setAntoineConstants(double antoineA, double antoineB, double antoineC) {
+    this.antoineA = antoineA;
+    this.antoineB = antoineB;
+    this.antoineC = antoineC;
   }
   
   public boolean setCriticalTemperature (double criticalTemperature) {
@@ -195,16 +186,6 @@ public class Species {
     }
   }
   
-  public boolean setLargePhi(double largePhi){
-    if(largePhi > 0.0){
-      this.largePhi = largePhi;
-      return true;
-    } else {
-      System.out.println("Large phi must be greater than 0.");
-      return false;
-    }
-  }
-  
   
   
   // Getters
@@ -229,26 +210,11 @@ public class Species {
     return liquidHeatCapacityConstants;
   }
   
-  public double[] getAntoineConstants(double temperature) {
-    int i;
-    AntoineCoefficients thisSet;
+  public double[] getAntoineConstants() {
     double[] antoineConstants = new double[3];
-    
-    for (i = 0; i < this.antoineCoefficients.size(); i++) {
-      thisSet = this.antoineCoefficients.get(i);
-      // Find a set of Antoine coefficients for the given temperature
-      if (temperature > thisSet.getLowerTemperatureBound() && temperature < thisSet.getUpperTemperatureBound()) {
-        antoineConstants[0] = thisSet.getA();
-        antoineConstants[1] = thisSet.getB();
-        antoineConstants[2] = thisSet.getC();
-        return antoineConstants;
-      }
-    }
-    // If no match could be found, return the first set
-    thisSet = this.antoineCoefficients.get(0);
-    antoineConstants[0] = thisSet.getA();
-    antoineConstants[1] = thisSet.getB();
-    antoineConstants[2] = thisSet.getC();
+    antoineConstants[0] = this.antoineA;
+    antoineConstants[1] = this.antoineB;
+    antoineConstants[2] = this.antoineC;
     return antoineConstants;
   }
   
@@ -296,13 +262,8 @@ public class Species {
     return this.mixtureFugacityCoefficient;
   }
   
-  public double getLargePhi(){
-  return this.largePhi;
-  }
-  
   // Clone method
   public Species (Species source) {
-    int i;
     this.speciesName = source.speciesName;
     this.vapourHeatCapacityA = source.vapourHeatCapacityA;
     this.vapourHeatCapacityB = source.vapourHeatCapacityB;
@@ -312,12 +273,9 @@ public class Species {
     this.liquidHeatCapacityB = source.liquidHeatCapacityB;
     this.liquidHeatCapacityC = source.liquidHeatCapacityC;
     this.liquidHeatCapacityD = source.liquidHeatCapacityD;
-    if (source.antoineCoefficients != null) {
-      this.antoineCoefficients = new ArrayList<AntoineCoefficients>();
-      for (i = 0; i < source.antoineCoefficients.size(); i++) {
-        this.antoineCoefficients.add(new AntoineCoefficients(source.antoineCoefficients.get(i)));
-      }
-    }
+    this.antoineA = source.antoineA;
+    this.antoineB = source.antoineB;
+    this.antoineC = source.antoineC;
     this.criticalTemperature = source.criticalTemperature;
     this.criticalPressure = source.criticalPressure;
     this.criticalVolume = source.criticalVolume;

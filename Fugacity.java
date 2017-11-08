@@ -1,4 +1,4 @@
-public class Fugacity extends Function  {
+public class Fugacity implements Function  {
   
   private FlowStream flowStream;
   
@@ -63,10 +63,10 @@ public class Fugacity extends Function  {
   
   public double[][] crossSpeciesCriticalPressure(){
     int n = flowStream.getFlowSpecies().size();
-    double[][] criticalPressures = new double[n][];
-    double[][] criticalZValues = new double[n][];
-    double[][] criticalTemperatures = new double[n][];
-    double[][] criticalVolumes = new double[n][];
+    double[][] criticalPressures = new double[n][];// = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
+    double[][] criticalZValues = new double[n][];// = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
+    double[][] criticalTemperatures = new double[n][];// = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
+    double[][] criticalVolumes = new double[n][];// = new double [flowStream.getFlowSpecies().size()][flowStream.getFlowSpecies().size()];
     int i = 0;
     int j = 0;
     for(i=0; i<n; i++) {
@@ -135,7 +135,7 @@ public class Fugacity extends Function  {
     return bij;
   }//end of bValues method
   
-  public void mixtureFugacityCoefficients(){
+  public void fugacityCoefficients(){
     int n = flowStream.getFlowSpecies().size();
     double[][] bij = bValues();
     
@@ -201,13 +201,15 @@ public class Fugacity extends Function  {
   }
   
   public void zValue(){
-    double[] bounds = this.getBounds(1.0, 1.0);
+    
+    double upperBound = 20.0;
+    double lowerBound = 0.01;
     double accuracy = 0.001;
     double result = 0.0;
     int i = 0;
     
     for(i=0; i < flowStream.getFlowSpecies().size(); i++){
-      result = RootFinder.calc(this, bounds[0], bounds[1], accuracy);
+      result = RootFinder.calc(this, lowerBound, upperBound, accuracy);
       flowStream.getFlowSpecies().get(i).setZValue(result);
     }
   }
@@ -215,7 +217,7 @@ public class Fugacity extends Function  {
   public void activityCoefficient(){
     
     double pureSpeciesFugacityCoefficient = 0.0;
-    int i = 0;
+      int i = 0;
     
     for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
       pureSpeciesFugacityCoefficient = Math.exp(flowStream.getFlowSpecies().get(i).getZValue() - 1 - Math.log(flowStream.getFlowSpecies().get(i).getZValue()
@@ -230,27 +232,6 @@ public class Fugacity extends Function  {
     
   }
   
-  public void largePhi(){
-    
-    double R = 8.3145;
-    
-    double[] phiSat = new double[flowStream.getFlowSpecies().size()];
-    int n = flowStream.getFlowSpecies().size();
-    double[][] bValues = new double[n][];
-    for(int i=0; i<n; i++) {
-      bValues[i] = new double[i+1];
-    }
-    bValues=bValues();
-    System.out.println("Bvalue for species MEK is "+bValues[0][0]);
-    System.out.println("Bvalue for species toluene is "+bValues[1][1]);
-    for(int i=0; i<n; i++){
-      phiSat[i]=Math.exp((bValues[i][i]*SaturationPressure.calc(flowStream.getFlowSpecies().get(i),flowStream.getTemperature()))/(R * flowStream.getTemperature()));
-      flowStream.getFlowSpecies().get(i).setLargePhi(flowStream.getFlowSpecies().get(i).getMixtureFugacityCoefficient()/phiSat[i]);
-      System.out.println("SATURATION PRESSURE IS "+SaturationPressure.calc(flowStream.getFlowSpecies().get(i),flowStream.getTemperature()));
-      System.out.println("PHI SAT IS "+phiSat[i]);
-    }  
-  }
-  
   public double testFunction(double z){   
     
     double result = 0;
@@ -263,20 +244,17 @@ public class Fugacity extends Function  {
     return result;
   }
   
-  public void computeNonIdealParameters(Fugacity fugacityObject){
+    public void computeNonIdealParameters(Fugacity fugacityObject){
     
-    /* TODO: checks must be implemented here to make sure all parameters are in place
-     * for the proper calculation of nonideal parameters */
-    
-    fugacityObject.mixtureFugacityCoefficients();
+      /* TODO: checks must be implemented here to make sure all parameters are in place
+       * for the proper calculation of nonideal parameters */
+      
+    fugacityObject.fugacityCoefficients();
     fugacityObject.beta();
     fugacityObject.qValue();
     fugacityObject.zValue();
     fugacityObject.activityCoefficient();
-    if(fugacityObject.getFlowStream().getFlowSpecies().size() > 1){      // large Phi can only be computed for multicomponent streams. 
-    fugacityObject.largePhi();                                           //an arrayIndexOutOfBounds error is thrown if run w/ 1 species
-    }
-    
+  
   }
   
   
