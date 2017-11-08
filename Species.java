@@ -330,6 +330,41 @@ public class Species {
   return this.largePhi;
   }
   
+  //Equals
+  public boolean equals(Species other) {
+    boolean antoineEquals = false;
+    //not sure if this block underneath makes sense
+    if(this.antoineCoefficients.size() == other.antoineCoefficients.size()) {
+      for(int i=0; i<this.antoineCoefficients.size(); i++) {
+        if(this.antoineCoefficients.get(i) == other.antoineCoefficients.get(i)) antoineEquals = true;
+        else antoineEquals = false;
+      }
+    }
+    else return false;
+
+    if(antoineEquals == true && 
+       this.speciesName.equalsIgnoreCase(other.speciesName) &&
+       this.vapourHeatCapacityA == other.vapourHeatCapacityA &&
+       this.vapourHeatCapacityB == other.vapourHeatCapacityB &&
+       this.vapourHeatCapacityC == other.vapourHeatCapacityC &&
+       this.vapourHeatCapacityD == other.vapourHeatCapacityD &&
+       this.liquidHeatCapacityA == other.liquidHeatCapacityA &&
+       this.liquidHeatCapacityB == other.liquidHeatCapacityB &&
+       this.liquidHeatCapacityC == other.liquidHeatCapacityC &&
+       this.liquidHeatCapacityD == other.liquidHeatCapacityD &&
+       this.criticalTemperature == other.criticalTemperature &&
+       this.criticalPressure == other.criticalPressure &&
+       this.criticalVolume == other.criticalVolume &&
+       this.criticalZ == other.criticalZ &&
+       this.acentricFactor == other.acentricFactor &&
+       this.zValue == other.zValue &&
+       this.beta == other.beta &&
+       this.qValue == other.qValue &&
+       this.activityCoefficient == other.activityCoefficient &&
+       this.mixtureFugacityCoefficient == other.mixtureFugacityCoefficient) return true;
+    else return false;
+  }
+  
   // Clone method
   public Species clone() {
     return new Species(this);

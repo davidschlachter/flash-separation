@@ -62,6 +62,15 @@ public class FlowSpecies extends Species {
     return this.vapourMoleFraction;
   }
   
+  //Equals
+  public boolean equals(FlowSpecies other) {
+    super.equals(other);
+    if(this.overallMoleFraction == other.overallMoleFraction &&
+       this.liquidMoleFraction == other.liquidMoleFraction &&
+       this.vapourMoleFraction == other.vapourMoleFraction) return true;
+    else return false;
+  }
+  
   // Clone method
   public FlowSpecies clone() {
     return new FlowSpecies(this);
