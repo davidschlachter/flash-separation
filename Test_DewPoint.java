@@ -6,7 +6,7 @@ import junit.framework.TestCase;
  * the test with JUnit.
  */
 public class Test_DewPoint extends TestCase {
-
+  
   // Test the constructor
   public void testConstructor() {
     FlowStream testStream = new FlowStream();
@@ -41,9 +41,9 @@ public class Test_DewPoint extends TestCase {
     
     DewPoint testDewPoint = new DewPoint(testStream);
     double testFunction = testDewPoint.testFunction(temperature);
-
+    
     assertTrue("DewPoint.testFunction()", testFunction > -0.700 && testFunction < -0.690);
-
+    
   }
   
   // Test the DewPoint calculation
@@ -68,14 +68,14 @@ public class Test_DewPoint extends TestCase {
     
     DewPoint testDewPoint = new DewPoint(testStream);
     double dewPoint = testDewPoint.calc();
-
+    
     assertTrue("DewPoint.calc()", dewPoint > 364.25 && dewPoint < 364.28);
-
+    
   }
   
   public void testNonIdealCalc(){
-  
-      FlowStream testStream = new FlowStream();
+    
+    FlowStream testStream = new FlowStream();
     
     // Test function result for water and ethanol at 1 atm, 300 K under NONIDEAL CONDITIONS!
     FlowSpecies water = new FlowSpecies();
@@ -109,7 +109,7 @@ public class Test_DewPoint extends TestCase {
   // Test the DewPoint calculation with a non-condensing species included
   // Problem is example 7.21 from  CHEMICAL AND ENERGY PROCESS ENGINEERING
   // by Sigurd Skogestad, Published by CRC Press (2009)
-
+  
   public void testCalcNonCondensing() {
     FlowStream testStream = new FlowStream();
     
@@ -118,12 +118,12 @@ public class Test_DewPoint extends TestCase {
     pentane.setAntoineConstants(new AntoineCoefficients(8.983576612, 1064.840, -41.136));
     pentane.setOverallMoleFraction(0.1);
     pentane.setCriticalTemperature(469.6);
-
+    
     FlowSpecies hexane = new FlowSpecies();
     hexane.setAntoineConstants(new AntoineCoefficients(9.007106612, 1170.875, -48.833));
     hexane.setOverallMoleFraction(0.1);
     hexane.setCriticalTemperature(507.6);
-   
+    
     FlowSpecies nitrogen = new FlowSpecies();
     nitrogen.setAntoineConstants(new AntoineCoefficients(3.74192, 264.651, -6.788));
     nitrogen.setOverallMoleFraction(0.8);
@@ -139,11 +139,13 @@ public class Test_DewPoint extends TestCase {
     double dewPoint = testDewPoint.calc();
     
     assertTrue("DewPoint.calc()", dewPoint > 314.0 && dewPoint < 315.0);
-
+    // Test that the mole fraction of nitrogen wasn't changed in the source FlowStream
+    assertTrue("testStream.getFlowSpecies(2).getOverallMoleFraction()", testStream.getFlowSpecies().get(2).getOverallMoleFraction() > 0.7999 && testStream.getFlowSpecies().get(2).getOverallMoleFraction() < 0.8001);
+    
   }
   
   public void testDew() {
-   
+    
     FlowSpecies pentane = new FlowSpecies();
     pentane.setAntoineConstants(new AntoineCoefficients(8.9892, 1070.617, -40.454));
     FlowSpecies hexane = new FlowSpecies();

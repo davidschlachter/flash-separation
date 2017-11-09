@@ -324,14 +324,15 @@ public class ConsoleUI {
         double double5 = scan.nextDouble();
         customSpecies.setAntoineConstants(new AntoineCoefficients(double1, double2, double3, double4, double5));
         
+        output.println("Enter the critical temperature for "+customSpecies.getSpeciesName()+":");
+        double1 = scan.nextDouble();
+        customSpecies.setCriticalTemperature(double1);
+        
         output.println("Will the simulation be run in ideal-gas mode?");
         output.println("[y]es / [n]o");
         ideal = scan.next().charAt(0);
         
         if(ideal == 'n'){
-          output.println("Enter the critical temperature for "+customSpecies.getSpeciesName()+":");
-          double1 = scan.nextDouble();
-          customSpecies.setCriticalTemperature(double1);
           
           output.println("Enter the critical pressure for "+customSpecies.getSpeciesName()+":");
           double1 = scan.nextDouble();

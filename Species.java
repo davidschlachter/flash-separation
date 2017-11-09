@@ -26,7 +26,7 @@ public class Species {
   // Antoine coefficients
   private List<AntoineCoefficients> antoineCoefficients;
   
-  // Critical temperature (to determine condensability)
+  // Critical temperature
   private double criticalTemperature = 0.0;
   
   //Critical Pressure for computation of non-ideal case
@@ -58,9 +58,6 @@ public class Species {
   
   //large phi for nonideal handling
   private double largePhi = 1.0;
-  
-  //condensability status so user does not need to input critical temperature in the case of ideal gases
-  private boolean condensabilityStatus = true;
   
   // Constructor
   public Species() {}
@@ -238,10 +235,6 @@ public class Species {
     }
   }
   
-  public void setCondensabilityStatus(boolean condensabilityStatus){
-  this.condensabilityStatus=condensabilityStatus;
-  }
-  
   // Getters
   
   public double[] getVapourHeatCapacityConstants() {
@@ -332,11 +325,7 @@ public class Species {
   }
   
   public double getLargePhi(){
-  return this.largePhi;
-  }
-  
-  public boolean getCondensabilityStatus(){
-  return this.condensabilityStatus;
+    return this.largePhi;
   }
   
   //Equals
@@ -354,7 +343,7 @@ public class Species {
       }
     }
     else return false;
-
+    
     if(this.speciesName.equalsIgnoreCase(other.speciesName) &&
        this.vapourHeatCapacityA == other.vapourHeatCapacityA &&
        this.vapourHeatCapacityB == other.vapourHeatCapacityB &&
