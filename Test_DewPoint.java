@@ -96,11 +96,12 @@ public class Test_DewPoint extends TestCase {
     testStream.addFlowSpecies(toluene);
     testStream.setPressure(750000.0);
     testStream.setTemperature(300.);
-   
+    
     DewPoint testNonIdealDewpoint = new DewPoint(testStream);
     double dewpoint = testNonIdealDewpoint.calc();
     System.out.println("DEWPOINT IS: "+dewpoint);
     
+    //Hand calcs give: (326.2, 326.9), Program calcs give: (396.8, 397.9)
     assertTrue(dewpoint > 326.2 && dewpoint < 326.9); //this should be double checked
     
   

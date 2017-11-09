@@ -310,4 +310,60 @@ public class Test_Species extends TestCase {
     assertEquals("Species.cloneActivityCoefficient", testSpecies.getActivityCoefficient(), cloneSpecies.getActivityCoefficient());
     assertEquals("Species.cloneMixutreFugacityCoefficient", testSpecies.getMixtureFugacityCoefficient(), cloneSpecies.getMixtureFugacityCoefficient());
   }
+  
+  /**
+   * Test the equals method
+   */
+  public void testEquals() {
+    Species testSpecies = new Species();
+    testSpecies.setSpeciesName("test");
+    testSpecies.setVapourHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    testSpecies.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    testSpecies.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
+    testSpecies.setCriticalTemperature(1.0);
+    testSpecies.setCriticalPressure(1.0);
+    testSpecies.setCriticalVolume(1.0);
+    testSpecies.setCriticalZ(1.0);
+    testSpecies.setAcentricFactor(1.0);
+    testSpecies.setZValue(1.0);
+    testSpecies.setBeta(1.0);
+    testSpecies.setQValue(1.0);
+    testSpecies.setActivityCoefficient(1.0);
+    testSpecies.setMixtureFugacityCoefficient(1.0);
+    
+    Species equalSpecies = new Species();
+    equalSpecies.setSpeciesName("TeSt");
+    equalSpecies.setVapourHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    equalSpecies.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    equalSpecies.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
+    equalSpecies.setCriticalTemperature(1.0);
+    equalSpecies.setCriticalPressure(1.0);
+    equalSpecies.setCriticalVolume(1.0);
+    equalSpecies.setCriticalZ(1.0);
+    equalSpecies.setAcentricFactor(1.0);
+    equalSpecies.setZValue(1.0);
+    equalSpecies.setBeta(1.0);
+    equalSpecies.setQValue(1.0);
+    equalSpecies.setActivityCoefficient(1.0);
+    equalSpecies.setMixtureFugacityCoefficient(1.0);
+    
+    Species inequalSpecies = new Species();
+    inequalSpecies.setSpeciesName("differentTest");
+    inequalSpecies.setVapourHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    inequalSpecies.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    inequalSpecies.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
+    inequalSpecies.setCriticalTemperature(1.0);
+    inequalSpecies.setCriticalPressure(1.0);
+    inequalSpecies.setCriticalVolume(1.0);
+    inequalSpecies.setCriticalZ(1.0);
+    inequalSpecies.setAcentricFactor(1.0);
+    inequalSpecies.setZValue(1.0);
+    inequalSpecies.setBeta(1.0);
+    inequalSpecies.setQValue(1.0);
+    inequalSpecies.setActivityCoefficient(1.0);
+    inequalSpecies.setMixtureFugacityCoefficient(1.0);
+    
+    assertTrue("Species.equals(equalSpecies)", testSpecies.equals(equalSpecies));
+    assertFalse("Species.equals(inequalSpecies)", testSpecies.equals(inequalSpecies));
+  }
 }
