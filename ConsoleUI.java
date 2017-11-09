@@ -86,6 +86,7 @@ public class ConsoleUI {
     // Are these the same as the overall mole fractions? If not, do the right thing  :) 
     //
     while (true) {
+      
       output.println("\nIs the input stream entirely in the liquid phase?");
       output.println("  [y]es   [n]o\n");
       scan.nextLine();
