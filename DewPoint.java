@@ -55,7 +55,7 @@ public class DewPoint extends Function {
       activityCoefficient = this.flowStream.getFlowSpecies().get(i).getActivityCoefficient();
       largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
       
-      result = result + (overallMoleFraction * activityCoefficient * pressure / (largePhi * saturationPressure));
+      result = result + (overallMoleFraction * largePhi * pressure / (activityCoefficient * saturationPressure));
       
     }
     
