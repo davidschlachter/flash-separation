@@ -2,28 +2,15 @@ import junit.framework.TestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * A JUnit test case class.
- * Every method starting with the word "test" will be called when running
- * the test with JUnit.
- */
 public class Test_Species extends TestCase {
   
-  /**
-   * Test the constructor
-   */
   public void testConstructor() {
     Species testSpecies = new Species();
     assertTrue("new Species()", testSpecies != null);
     assertFalse("new Species()", testSpecies == null);
   }
   
-  /**
-   * Test the getter and setter for the liquid heat capacity constants for a species
-   */
   public void testLiquidHeatCapacityConstants() {
-    
     Species testSpecies = new Species();
     
     double heatCapacityA = 1.0;
@@ -32,21 +19,15 @@ public class Test_Species extends TestCase {
     double heatCapacityD = 1.0;
     
     testSpecies.setLiquidHeatCapacityConstants(heatCapacityA, heatCapacityB, heatCapacityC, heatCapacityD);
-    
     double[] heatCapacityConstants = testSpecies.getLiquidHeatCapacityConstants();
     
     assertEquals("Species.set/getLiquidHeatCapacityConstants[0]", heatCapacityA, heatCapacityConstants[0]);
     assertEquals("Species.set/getLiquidHeatCapacityConstants[1]", heatCapacityB, heatCapacityConstants[1]);
     assertEquals("Species.set/getLiquidHeatCapacityConstants[2]", heatCapacityC, heatCapacityConstants[2]);
     assertEquals("Species.set/getLiquidHeatCapacityConstants[3]", heatCapacityD, heatCapacityConstants[3]);
-    
   }
   
-  /**
-   * Test the getter and setter for the vapour heat capacity constants for a species
-   */
   public void testVapourHeatCapacityConstants() {
-    
     Species testSpecies = new Species();
     
     double heatCapacityA = 1.0;
@@ -62,12 +43,8 @@ public class Test_Species extends TestCase {
     assertEquals("Species.set/getVapourHeatCapacityConstants[1]", heatCapacityB, heatCapacityConstants[1]);
     assertEquals("Species.set/getVapourHeatCapacityConstants[2]", heatCapacityC, heatCapacityConstants[2]);
     assertEquals("Species.set/getVapourHeatCapacityConstants[3]", heatCapacityD, heatCapacityConstants[3]);
-    
   }
   
-  /**
-   * Test the getter and setter for the Antoine equation coefficients for a species
-   */
   public void testAntoineConstants() {
     
     Species testSpecies = new Species();
@@ -83,12 +60,9 @@ public class Test_Species extends TestCase {
     assertEquals("Species.set/getAntoineConstants[0]", antoineA, antoineConstants[0]);
     assertEquals("Species.set/getAntoineConstants[1]", antoineB, antoineConstants[1]);
     assertEquals("Species.set/getAntoineConstants[2]", antoineC, antoineConstants[2]);
-    
-    
   }
   
   public void testMultipleAntoineConstants() {
-    
     Species testSpecies = new Species();
     
     List<AntoineCoefficients> cyclohexaneAntoine = new ArrayList<AntoineCoefficients>();
@@ -103,27 +77,17 @@ public class Test_Species extends TestCase {
     
     returnedConstants = testSpecies.getAntoineConstants(295.0);
     assertTrue(returnedConstants[0] > 8.9750 && returnedConstants[0] < 8.9756);
-    
   }
   
-  
-  /**
-   * Test the getter and setter for the species name
-   */
   public void testSpeciesName() {
     Species testSpecies = new Species();
-    
     String speciesName = "ethanol";
     testSpecies.setSpeciesName(speciesName);
     
     assertTrue("Species.getSpeciesName()", speciesName.equals(testSpecies.getSpeciesName()));
     assertFalse("Species.getSpeciesName()", speciesName.equals("water"));
-    
   }
   
-  /**
-   * Test the getter and setter for the critical temperature
-   */
   public void testCriticalTemperature() {
     Species testSpecies = new Species();
     
@@ -133,12 +97,8 @@ public class Test_Species extends TestCase {
     assertFalse("Species.setCriticalTemperature(-1.0)", testSpecies.setCriticalTemperature(-1.0));
     assertEquals("Species.setCriticalTemperature(1.0)",  true, testSpecies.setCriticalTemperature(criticalTemperature));
     assertTrue("Species.getCriticalTemperature()", testSpecies.getCriticalTemperature() == criticalTemperature);
-    
   }
   
-  /**
-   * Test the getter and setter for the critical pressure
-   */
   public void testCriticalPressure() {
     Species testSpecies = new Species();
     double criticalPressure = 300.0;
@@ -148,9 +108,6 @@ public class Test_Species extends TestCase {
     assertTrue("Species.setCriticalPressure()", testSpecies.getCriticalPressure() == criticalPressure);
   }
   
-  /**
-   * Test the getter and setter for the critical volume
-   */
   public void testCriticalVolume() {
     Species testSpecies = new Species();
     double criticalVolume = 100.0;
@@ -160,9 +117,6 @@ public class Test_Species extends TestCase {
     assertTrue("Species.setCriticalVolume()", testSpecies.getCriticalVolume() == criticalVolume);
   }
   
-  /**
-   * Test the getter and setter for the critical z value
-   */
   public void testCriticalZ() {
     Species testSpecies = new Species();
     double criticalZ = 1.0;
@@ -172,9 +126,6 @@ public class Test_Species extends TestCase {
     assertTrue("Species.setCriticalZ()", testSpecies.getCriticalZ() == criticalZ);
   }
   
-  /**
-   * Test the getter and setter for the acentric factor
-   */
   public void testAcentricFactor() {
     Species testSpecies = new Species();
     double acentricFactor = 0.5;
@@ -185,9 +136,6 @@ public class Test_Species extends TestCase {
     assertTrue("Species.setAcentricFactor()", testSpecies.getAcentricFactor() == acentricFactor);
   }
   
-  /**
-   * Test the getter and setter for z value
-   */
   public void testZValue() {
     Species testSpecies = new Species();
     double zValue = 0.5;
@@ -197,9 +145,6 @@ public class Test_Species extends TestCase {
     assertTrue("Species.setZValue()", testSpecies.getZValue() == zValue);
   }
   
-  /**
-   * Test the getter and setter for beta
-   */
   public void testBeta() {
     Species testSpecies = new Species();
     double beta = 0.5;
@@ -209,9 +154,6 @@ public class Test_Species extends TestCase {
     assertTrue("Species.setBeta()", testSpecies.getBeta() == beta);
   }
   
-  /**
-   * Test the getter and setter for q value
-   */
   public void testQValue() {
     Species testSpecies = new Species();
     double qValue = 0.5;
@@ -221,9 +163,6 @@ public class Test_Species extends TestCase {
     assertTrue("Species.setQValue()", testSpecies.getQValue() == qValue);
   }
   
-  /**
-   * Test the getter and setter for activity coefficient
-   */
   public void testActivityCoefficient() {
     Species testSpecies = new Species();
     double activityCoefficient = 0.5;
@@ -233,9 +172,6 @@ public class Test_Species extends TestCase {
     assertTrue("Species.setActivityCoefficient()", testSpecies.getActivityCoefficient() == activityCoefficient);
   }
   
-  /**
-   * Test the getter and setter for mixture fugacity coefficient
-   */
   public void testMixtureFugacityCoefficient() {
     Species testSpecies = new Species();
     double mixtureFugacityCoefficient = 0.5;
@@ -245,9 +181,6 @@ public class Test_Species extends TestCase {
     assertTrue("Species.setMixtureFugacityCoefficient()", testSpecies.getMixtureFugacityCoefficient() == mixtureFugacityCoefficient);
   }
   
-  /**
-   * Test the getter and setter for large phi
-   */
   public void testLargePhi() {
     Species testSpecies = new Species();
     double largePhi = 0.5;
@@ -257,9 +190,6 @@ public class Test_Species extends TestCase {
     assertTrue("Species.setLargePhi()", testSpecies.getLargePhi() == largePhi);
   }
   
-  /*
-   * Test the cloning method
-   */
   public void testClone() {
     Species testSpecies = new Species();
     
@@ -311,9 +241,6 @@ public class Test_Species extends TestCase {
     assertEquals("Species.cloneMixutreFugacityCoefficient", testSpecies.getMixtureFugacityCoefficient(), cloneSpecies.getMixtureFugacityCoefficient());
   }
   
-  /**
-   * Test the equals method
-   */
   public void testEquals() {
     Species testSpecies = new Species();
     testSpecies.setSpeciesName("test");

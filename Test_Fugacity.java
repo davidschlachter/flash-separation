@@ -1,22 +1,14 @@
 import junit.framework.TestCase;
 
-/**
- * A JUnit test case class.
- * Every method starting with the word "test" will be called when running
- * the test with JUnit.
- */
 public class Test_Fugacity extends TestCase {
   
   public void testConstructor() {
-    
     FlowStream testStream = new FlowStream();
     Fugacity testFugacityStream = new Fugacity(testStream);  
     assertTrue(testFugacityStream != null);
-    
   }
   
-  public void testCrossSpeciesCriticalZ(){
-    
+  public void testCrossSpeciesCriticalZ() {
     FlowStream testStream = new FlowStream();
     Fugacity testFugacityStream = new Fugacity(testStream);
     testFugacityStream = createTestObject();
@@ -33,11 +25,9 @@ public class Test_Fugacity extends TestCase {
     assertTrue(testCriticalZValues[0][0] > 0.247 && testCriticalZValues[0][0] < 0.251);
     assertTrue(testCriticalZValues[1][0] > 0.254 && testCriticalZValues[1][0] < 0.258);
     assertTrue(testCriticalZValues[1][1] > 0.262 && testCriticalZValues[1][1] < 0.266);
-    
   }
   
-  public void testCrossSpeciesCriticalVolume(){
-    
+  public void testCrossSpeciesCriticalVolume() {
     FlowStream testStream = new FlowStream();
     Fugacity testFugacityStream = new Fugacity(testStream);
     testFugacityStream = createTestObject();
@@ -54,11 +44,9 @@ public class Test_Fugacity extends TestCase {
     assertTrue(testCriticalVolumes[0][0] > 0.000266 && testCriticalVolumes[0][0] < 0.000268);
     assertTrue(testCriticalVolumes[1][0] > 0.000290 && testCriticalVolumes[1][0] < 0.000292);
     assertTrue(testCriticalVolumes[1][1] > 0.000315 && testCriticalVolumes[1][1] < 0.000317);
-    
   }
   
-  public void testCrossSpeciesCriticalTemperature(){
-    
+  public void testCrossSpeciesCriticalTemperature() {
     FlowStream testStream = new FlowStream();
     Fugacity testFugacityStream = new Fugacity(testStream);
     testFugacityStream = createTestObject();
@@ -75,11 +63,9 @@ public class Test_Fugacity extends TestCase {
     assertTrue(testCriticalTemps[0][0] > 535.0 && testCriticalTemps[0][0] < 536.0);
     assertTrue(testCriticalTemps[1][0] > 562.5 && testCriticalTemps[1][0] < 563.5);
     assertTrue(testCriticalTemps[1][1] > 591.5 && testCriticalTemps[1][1] < 592.5);
-    
   }
   
-  public void testCrossSpeciesCriticalPressure(){
-    
+  public void testCrossSpeciesCriticalPressure() {
     FlowStream testStream = new FlowStream();
     Fugacity testFugacityStream = new Fugacity(testStream);
     testFugacityStream = createTestObject();
@@ -98,11 +84,9 @@ public class Test_Fugacity extends TestCase {
     assertTrue(testCriticalPressures[0][0] > 4140000 && testCriticalPressures[0][0] < 4160000);
     assertTrue(testCriticalPressures[1][1] > 4100000 && testCriticalPressures[1][1] < 4120000);
     assertTrue(testCriticalPressures[1][0] > 4120000 && testCriticalPressures[1][0] < 4140000);
-    
   }
   
-  public void testOmegaIJ(){
-    
+  public void testOmegaIJ() {
     FlowStream testStream = new FlowStream();
     Fugacity testFugacityStream = new Fugacity(testStream);
     testFugacityStream = createTestObject();
@@ -119,11 +103,9 @@ public class Test_Fugacity extends TestCase {
     assertTrue(testOmegaIJ[0][0] > 0.321 && testOmegaIJ[0][0] < 0.325);
     assertTrue(testOmegaIJ[1][1] > 0.260 && testOmegaIJ[1][1] < 0.264);
     assertTrue(testOmegaIJ[1][0] > 0.291 && testOmegaIJ[1][0] < 0.295);
-    
   }
   
-  public void testBValues(){
-    
+  public void testBValues() {
     Fugacity testFugacityStream = createTestObject();;
     
     testFugacityStream.getFlowStream().setTemperature(323.15);
@@ -134,11 +116,9 @@ public class Test_Fugacity extends TestCase {
     assertTrue(testBValues[0][0] > -0.001380 && testBValues[0][0] < -0.001370);
     assertTrue(testBValues[1][1] > -0.001875 && testBValues[1][1] < -0.001870);
     assertTrue(testBValues[1][0] > -0.001615 && testBValues[1][0] < -0.001608);
-    
   }
   
-  public void testFugacityCoefficients(){
-    
+  public void testFugacityCoefficients() {
     Fugacity testFugacityStream = createTestObject();
     
     testFugacityStream.getFlowStream().setTemperature(323.15);
@@ -153,27 +133,23 @@ public class Test_Fugacity extends TestCase {
     
     assertTrue(results[0] < 0.989 && results[0] > 0.985);
     assertTrue(results[1] < 0.985 && results[1] > 0.981);
-    
   }
   
-  public void testBeta(){
-    
+  public void testBeta() {
     Fugacity testFugacityStream = createPureSpeciesTestObject();
     testFugacityStream.beta();
     assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getBeta() < 0.027 &&
                testFugacityStream.getFlowStream().getFlowSpecies().get(0).getBeta() > 0.026);   
   }
   
-  public void testQValue(){
-    
+  public void testQValue() {
     Fugacity testFugacityStream = createPureSpeciesTestObject();
     testFugacityStream.qValue();
     assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getQValue() < 6.95 &&
                testFugacityStream.getFlowStream().getFlowSpecies().get(0).getQValue() > 6.85);
   }
   
-  public void testZValue(){
-    
+  public void testZValue() {
     Fugacity testFugacityStream = createPureSpeciesTestObject();
     testFugacityStream.beta();
     testFugacityStream.qValue();
@@ -182,8 +158,7 @@ public class Test_Fugacity extends TestCase {
                testFugacityStream.getFlowStream().getFlowSpecies().get(0).getQValue() > 0.816);
   }
   
-    public void testActivityCoefficient(){
-    
+  public void testActivityCoefficient() {
     Fugacity testFugacityStream = createPureSpeciesTestObject();
     
     testFugacityStream.getFlowStream().getFlowSpecies().get(0).setMixtureFugacityCoefficient(0.985);
@@ -195,8 +170,7 @@ public class Test_Fugacity extends TestCase {
                testFugacityStream.getFlowStream().getFlowSpecies().get(0).getActivityCoefficient() > 1.73);
   }
   
-  public void testLargePhi(){
-    
+  public void testLargePhi() {
     Fugacity testFugacityStream = createTestObject();
     testFugacityStream.getFlowStream().setTemperature(323.15);
     testFugacityStream.getFlowStream().setPressure(25000);
@@ -209,8 +183,7 @@ public class Test_Fugacity extends TestCase {
     
   }
   
-  private Fugacity createTestObject(){
-    
+  private Fugacity createTestObject() {
     FlowStream testStream = new FlowStream();
     
     FlowSpecies methylEthylKetone = new FlowSpecies();
@@ -235,10 +208,9 @@ public class Test_Fugacity extends TestCase {
     Fugacity testFugacityStream = new Fugacity(testStream); 
     
     return testFugacityStream;
-    
   }
   
-  private Fugacity createPureSpeciesTestObject(){
+  private Fugacity createPureSpeciesTestObject() {
     FlowSpecies nButane = new FlowSpecies();
     nButane.setCriticalTemperature(425.1);
     nButane.setCriticalPressure(3796000);

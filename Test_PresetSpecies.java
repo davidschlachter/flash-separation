@@ -1,11 +1,6 @@
 import junit.framework.TestCase;
 import java.util.List;
 
-/**
- * A JUnit test case class.
- * Every method starting with the word "test" will be called when running
- * the test with JUnit.
- */
 public class Test_PresetSpecies extends TestCase {
   
   // Test that the preset species list does return a list of species
@@ -48,8 +43,6 @@ public class Test_PresetSpecies extends TestCase {
     double nitrogenSaturationPressure = SaturationPressure.calc(presetSpecies.get(5), 77.15);
     assertTrue("Nitrogen saturation pressure (Antoine coefficients)",
                nitrogenSaturationPressure > lowerBound && nitrogenSaturationPressure < upperBound);
-    
-    
   }
   
 }

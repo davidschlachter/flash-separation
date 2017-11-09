@@ -2,36 +2,20 @@ import junit.framework.TestCase;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A JUnit test case class.
- * Every method starting with the word "test" will be called when running
- * the test with JUnit.
- */
 public class Test_FlowStream extends TestCase {
   
-  /**
-   * Test the constructor
-   */
   public void testConstructor() {
     FlowStream testStream = new FlowStream();
     assertTrue("new FlowStream()", testStream != null);
     assertFalse("new FlowStream()", testStream == null);
   }
   
-  /**
-   * Test adding a flowSpecies to the flowStream
-   */
   public void testAddFlowSpecies() {
     FlowStream testStream = new FlowStream();
     FlowSpecies testSpecies = new FlowSpecies();
-    
     assertTrue("FlowStream.addFlowSpecies(testSpecies)", testStream.addFlowSpecies(testSpecies));
-    
   }
   
-  /**
-   * Test setting and getting the list of flowSpecies in flowStream directly
-   */
   public void testSetFlowSpeciesGetFlowSpecies() {
     FlowStream testStream = new FlowStream();
     
@@ -51,12 +35,8 @@ public class Test_FlowStream extends TestCase {
     assertFalse("FlowStream.getFlowSpecies(testSpecies1)", fetchedSpeciesName1.equals("ethanol"));
     assertTrue("FlowStream.getFlowSpecies(testSpecies2)",  fetchedSpeciesName2.equals("ethanol"));
     assertFalse("FlowStream.getFlowSpecies(testSpecies2)", fetchedSpeciesName2.equals("water"));
-    
   }
   
-  /**
-   * Test setting and getting the list of flowSpecies using addFlowSpecies
-   */
   public void testAddFlowSpeciesGetFlowSpecies() {
     FlowStream testStream = new FlowStream();
     FlowSpecies testSpecies1 = new FlowSpecies();
@@ -74,12 +54,8 @@ public class Test_FlowStream extends TestCase {
     assertFalse("FlowStream.getFlowSpecies(testSpecies1)", fetchedSpeciesName1.equals("ethanol"));
     assertTrue("FlowStream.getFlowSpecies(testSpecies2)",  fetchedSpeciesName2.equals("ethanol"));
     assertFalse("FlowStream.getFlowSpecies(testSpecies2)", fetchedSpeciesName2.equals("water"));
-    
   }
   
-  /**
-   * Test set/getMolarFlowRate
-   */
   public void testMolarFlowRate() {
     FlowStream testStream = new FlowStream();
     testStream.setMolarFlowRate(1.0);
@@ -88,9 +64,6 @@ public class Test_FlowStream extends TestCase {
     assertFalse("FlowStream.getMolarFlowRate()", testStream.getMolarFlowRate() == 0.0);
   }
   
-  /**
-   * Test set/getTemperature
-   */
   public void testTemperature() {
     FlowStream testStream = new FlowStream();
     testStream.setTemperature(1.0);
@@ -99,9 +72,6 @@ public class Test_FlowStream extends TestCase {
     assertFalse("FlowStream.getTemperature()", testStream.getTemperature() == 0.0);
   }
   
-  /**
-   * Test set/getPressure
-   */
   public void testPressure() {
     FlowStream testStream = new FlowStream();
     testStream.setPressure(1.0);
@@ -110,9 +80,6 @@ public class Test_FlowStream extends TestCase {
     assertFalse("FlowStream.getPressure()", testStream.getPressure() == 0.0);
   }
   
-  /**
-   * Test the getter and setter for the vapour fraction
-   */
   public void testVapourFraction() {
     FlowStream testStream = new FlowStream();
     
@@ -124,9 +91,6 @@ public class Test_FlowStream extends TestCase {
     
   }
   
-  /**
-   * Test the approximately equals method
-   */
   public void testApproxEquals() {
     
     FlowStream firstStream = new FlowStream();
@@ -224,13 +188,10 @@ public class Test_FlowStream extends TestCase {
     
   }
   
-  /**
-   * Test the constructor
-   */
   public void testClone() {
     
     double error = 0.001;
-
+    
     FlowStream firstStream = new FlowStream();
     firstStream.setFlowSpecies(PresetSpecies.get());
     firstStream.setMolarFlowRate(10.0);

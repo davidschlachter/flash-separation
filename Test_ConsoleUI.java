@@ -3,11 +3,6 @@ import java.util.Scanner;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-/**
- * A JUnit test case class.
- * Every method starting with the word "test" will be called when running
- * the test with JUnit.
- */
 public class Test_ConsoleUI extends TestCase {
   
   public void testAddSpecies() {

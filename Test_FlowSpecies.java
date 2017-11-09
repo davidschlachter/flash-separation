@@ -1,24 +1,13 @@
 import junit.framework.TestCase;
 
-/**
- * A JUnit test case class.
- * Every method starting with the word "test" will be called when running
- * the test with JUnit.
- */
 public class Test_FlowSpecies extends TestCase {
   
-  /**
-   * Test the constructor
-   */
   public void testConstructor() {
     FlowSpecies testSpecies = new FlowSpecies();
     assertTrue("new FlowSpecies()", testSpecies != null);
     assertFalse("new FlowSpecies()", testSpecies == null);
   }
   
-  /**
-   * Test the getter and setter for the overall mole fraction
-   */
   public void testOverallMoleFraction() {
     FlowSpecies testSpecies = new FlowSpecies();
     
@@ -29,9 +18,6 @@ public class Test_FlowSpecies extends TestCase {
     assertEquals("Species.getOverallMoleFraction()", overallMoleFraction, testSpecies.getOverallMoleFraction());
   }
   
-  /**
-  * Test the getter and setter for the liquid mole fraction
-  */
   public void testLiquidMoleFraction() {
     FlowSpecies testSpecies = new FlowSpecies();
     
@@ -43,9 +29,6 @@ public class Test_FlowSpecies extends TestCase {
     
   }
   
-  /**
-  * Test the getter and setter for the gas mole fraction
-  */
   public void testVapourMoleFraction() {
     FlowSpecies testSpecies = new FlowSpecies();
     
@@ -57,9 +40,6 @@ public class Test_FlowSpecies extends TestCase {
     
   }
   
-  /**
-  * Test the clone method
-  */
   public void testClone() {
     FlowSpecies testSpecies = new FlowSpecies();
     
@@ -78,9 +58,6 @@ public class Test_FlowSpecies extends TestCase {
     assertEquals("Species.getOverallMoleFraction()", overallMoleFraction, copiedSpecies.getOverallMoleFraction());
   }
   
-  /**
-   * Test the equals method
-   */
   public void testEquals() {
     FlowSpecies testFlowSpecies = new FlowSpecies();
     testFlowSpecies.setVapourMoleFraction(0.5);
