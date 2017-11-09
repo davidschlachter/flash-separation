@@ -9,7 +9,7 @@ public class Enthalpy extends Function {
   }
   
   public double testFunction(double testTemp){
-  
+    
     int i;
     double initialTemperature = -1.0;
     double finalTemperature = -1.0;
@@ -36,16 +36,15 @@ public class Enthalpy extends Function {
     BubblePoint bubblePoint = new BubblePoint(this.inlet);
     bubbleTemperature = bubblePoint.calc();
     
-     for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
+    for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
       vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
       liquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
-      
       result = result + vapourMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), bubbleTemperature, finalTemperature, "vapour") + 
         liquidMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
     }
-
-     return result;
-
+    
+    return result;
+    
   }
-
+  
 }
