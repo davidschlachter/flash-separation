@@ -77,6 +77,7 @@ public class Test_DewPoint extends TestCase {
   
       FlowStream testStream = new FlowStream();
     
+<<<<<<< HEAD
     // Test function result for water and ethanol at 1 atm, 300 K under NONIDEAL CONDITIONS!
     FlowSpecies water = new FlowSpecies();
     water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
@@ -91,6 +92,34 @@ public class Test_DewPoint extends TestCase {
     ethanol.setCriticalTemperature(514.0);
     ethanol.setActivityCoefficient(0.968);
     ethanol.setLargePhi(1.003);
+=======
+    // Test function result for water and ethanol at 1 atm, 300 K
+    FlowSpecies mek = new FlowSpecies();
+    mek.setOverallMoleFraction(0.75);
+    mek.setCriticalTemperature(500);
+    mek.setActivityCoefficient(0.953);
+    mek.setLargePhi(1.043);
+    mek.setAntoineConstants(new AntoineCoefficients(10., 1400., -35., 0.1, 1000.));
+    
+    FlowSpecies toluene = new FlowSpecies();
+    toluene.setOverallMoleFraction(0.25);
+    toluene.setCriticalTemperature(500);
+    toluene.setActivityCoefficient(0.968);
+    toluene.setLargePhi(1.003);
+    toluene.setAntoineConstants(new AntoineCoefficients(9., 1300., -30., 0.1, 1000.));
+    
+    testStream.addFlowSpecies(mek);
+    testStream.addFlowSpecies(toluene);
+    testStream.setPressure(75000.0);
+    testStream.setTemperature(300.);
+    
+    DewPoint testNonIdealDewpoint = new DewPoint(testStream);
+    double dewpoint = testNonIdealDewpoint.calc();
+    System.out.println("DEWPOINT IS: "+dewpoint);
+    
+    //Hand calcs give: (326.2, 326.9), Program calcs give: (396.8, 397.9)
+    assertTrue(dewpoint > 326.2 && dewpoint < 326.9); //this should be double checked
+>>>>>>> 24196806c43850a853d106156a1c38d3b6171242
     
     testStream.addFlowSpecies(water);
     testStream.addFlowSpecies(ethanol);

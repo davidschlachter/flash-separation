@@ -341,18 +341,21 @@ public class Species {
   
   //Equals
   public boolean equals(Species other) {
-    boolean antoineEquals = false;
-    //not sure if this block underneath makes sense
+    
     if(this.antoineCoefficients.size() == other.antoineCoefficients.size()) {
       for(int i=0; i<this.antoineCoefficients.size(); i++) {
-        if(this.antoineCoefficients.get(i) == other.antoineCoefficients.get(i)) antoineEquals = true;
-        else antoineEquals = false;
+        if(this.antoineCoefficients.get(i).getA() != other.antoineCoefficients.get(i).getA() ||
+           this.antoineCoefficients.get(i).getB() != other.antoineCoefficients.get(i).getB() ||
+           this.antoineCoefficients.get(i).getC() != other.antoineCoefficients.get(i).getC() ||
+           this.antoineCoefficients.get(i).getLowerTemperatureBound() != other.antoineCoefficients.get(i).getLowerTemperatureBound() ||
+           this.antoineCoefficients.get(i).getUpperTemperatureBound() != other.antoineCoefficients.get(i).getUpperTemperatureBound()) {
+          return false;
+        }
       }
     }
     else return false;
 
-    if(antoineEquals == true && 
-       this.speciesName.equalsIgnoreCase(other.speciesName) &&
+    if(this.speciesName.equalsIgnoreCase(other.speciesName) &&
        this.vapourHeatCapacityA == other.vapourHeatCapacityA &&
        this.vapourHeatCapacityB == other.vapourHeatCapacityB &&
        this.vapourHeatCapacityC == other.vapourHeatCapacityC &&
