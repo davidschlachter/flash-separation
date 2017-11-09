@@ -59,6 +59,9 @@ public class Species {
   //large phi for nonideal handling
   private double largePhi = 1.0;
   
+  //condensability status so user does not need to input critical temperature in the case of ideal gases
+  private boolean condensabilityStatus = true;
+  
   // Constructor
   public Species() {}
   
@@ -235,7 +238,9 @@ public class Species {
     }
   }
   
-  
+  public void setCondensabilityStatus(boolean condensabilityStatus){
+  this.condensabilityStatus=condensabilityStatus;
+  }
   
   // Getters
   
@@ -328,6 +333,10 @@ public class Species {
   
   public double getLargePhi(){
   return this.largePhi;
+  }
+  
+  public boolean getCondensabilityStatus(){
+  return this.condensabilityStatus;
   }
   
   //Equals
