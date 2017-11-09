@@ -241,13 +241,9 @@ public class Fugacity extends Function  {
       bValues[i] = new double[i+1];
     }
     bValues=bValues();
-    System.out.println("Bvalue for species MEK is "+bValues[0][0]);
-    System.out.println("Bvalue for species toluene is "+bValues[1][1]);
     for(int i=0; i<n; i++){
       phiSat[i]=Math.exp((bValues[i][i]*SaturationPressure.calc(flowStream.getFlowSpecies().get(i),flowStream.getTemperature()))/(R * flowStream.getTemperature()));
       flowStream.getFlowSpecies().get(i).setLargePhi(flowStream.getFlowSpecies().get(i).getMixtureFugacityCoefficient()/phiSat[i]);
-      System.out.println("SATURATION PRESSURE IS "+SaturationPressure.calc(flowStream.getFlowSpecies().get(i),flowStream.getTemperature()));
-      System.out.println("PHI SAT IS "+phiSat[i]);
     }  
   }
   

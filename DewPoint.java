@@ -24,11 +24,13 @@ public class DewPoint extends Function {
     // Determine if any of the species is likely to be non-condensable, and if so, ignore it
     int i;
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
-      if (this.flowStream.getFlowSpecies().get(i).getCriticalTemperature() == 0.0) {
+      if (this.flowStream.getFlowSpecies().get(i).getCriticalTemperature() == 0.0 && 
+          this.flowStream.getFlowSpecies().get(i).getCondensabilityStatus() == true) {
         System.out.println("ERROR: Critical temperature is not specified.");
         System.exit(1);
       }
-      if (bounds[0] > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
+      if (bounds[0] > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature() || 
+          this.flowStream.getFlowSpecies().get(i).getCondensabilityStatus() == false)
         this.flowStream.getFlowSpecies().get(i).setOverallMoleFraction(0.0);
     }
     
@@ -38,11 +40,10 @@ public class DewPoint extends Function {
   
   
   // Test function for the root finder
-  public double testFunction(double x) {
+  public double testFunction(double temperature) {
     int i;
     double result = 0.0;
     
-    double temperature = x;
     double pressure = this.flowStream.getPressure();
     double activityCoefficient;
     double overallMoleFraction, saturationPressure, largePhi;
