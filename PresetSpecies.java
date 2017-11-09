@@ -59,7 +59,8 @@ public class PresetSpecies {
     
     FlowSpecies water = new FlowSpecies();
     water.setSpeciesName("Water");
-    water.setVapourHeatCapacityConstants(3.47, 1.45, 0.0, 0.121);
+    // Source: Smith & Van Ness, Appendix C, Table C1 -- all constants in book multiplied by R, units are J/mol, K
+    water.setVapourHeatCapacityConstants(28.851315, 0.012056025, 0.0, 100605.45);
     water.setLiquidHeatCapacityConstants(8.712, 0.00125, -0.00000018, 0.0);
     List<AntoineCoefficients> waterAntoine = new ArrayList<AntoineCoefficients>();
     waterAntoine.add(new AntoineCoefficients(8.565306612, 643.748, -198.043, 379, 575)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
