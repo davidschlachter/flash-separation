@@ -8,7 +8,7 @@ public class DewPoint extends Function {
   // Constructor -- requires a FlowStream with pressure specified 
   public DewPoint(FlowStream flowStream) {
     if (flowStream.getPressure() > 0 && flowStream.getFlowSpecies().size() > 0) {
-      this.flowStream = flowStream;
+      this.flowStream = new FlowStream(flowStream);
     } else {
       System.out.println("Error: flow stream for must contain a pressure and at least one species!");
       System.exit(1);
