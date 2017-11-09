@@ -22,7 +22,7 @@ public class HeatCapacity {
     result += (1.0/3.0) * (constants[2] * (finalTemperature*finalTemperature*finalTemperature - initialTemperature*initialTemperature*initialTemperature));
     result += (-1.0 * constants[3]) * ((1.0/finalTemperature) - (1.0/initialTemperature));
     
-    return result * gasConstant;
+    return result;
   }
   
 }
