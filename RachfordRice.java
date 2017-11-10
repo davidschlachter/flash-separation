@@ -1,4 +1,4 @@
-public class RachfordRice extends Function {
+public class RachfordRice implements Function {
   
   private FlowStream flowStream;
   
@@ -13,7 +13,7 @@ public class RachfordRice extends Function {
   
   // Solve the composition of the given flow stream
   public FlowStream solve() {
-    double[] bounds = this.getBounds(1.0, 0.1); //what is a reasonable starting point?
+    double[] bounds = RootFinder.getBounds(this, 1.0, 0.1); //what is a reasonable starting point?
     double vOverF = RootFinder.calc(this, bounds[0], bounds[1], 0.001);
     
     if (Double.isNaN(vOverF)) {
