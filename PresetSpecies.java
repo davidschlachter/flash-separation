@@ -47,7 +47,7 @@ public class PresetSpecies {
     FlowSpecies cyclohexane = new FlowSpecies();
     cyclohexane.setSpeciesName("Cyclohexane");
     cyclohexane.setVapourHeatCapacityConstants(-32.2268461848, 0.5258812678902, -0.0001740050146944, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
-    cyclohexane.setLiquidHeatCapacityConstants-75.2292322704, 1.175498326524, -0.001343782992876, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
+    cyclohexane.setLiquidHeatCapacityConstants(-75.2292322704, 1.175498326524, -0.001343782992876, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
     List<AntoineCoefficients> cyclohexaneAntoine = new ArrayList<AntoineCoefficients>();
     cyclohexaneAntoine.add(new AntoineCoefficients(9.145546612, 1316.554, -35.581, 323, 523)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110827&Mask=4&Type=ANTOINE&Plot=on
     cyclohexaneAntoine.add(new AntoineCoefficients(8.997716612, 1216.93, -48.621, 303, 343)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110827&Mask=4&Type=ANTOINE&Plot=on
