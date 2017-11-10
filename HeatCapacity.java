@@ -13,7 +13,6 @@ public class HeatCapacity {
       constants = new double[] {0.0}; // So that constants is always initialized -- avoids compiler error
       System.exit(1);
     }
-    double gasConstant = 8.3145;
     
     double result = 0.0;
     

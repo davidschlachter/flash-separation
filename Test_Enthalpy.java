@@ -1,5 +1,4 @@
 import junit.framework.TestCase;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Test_Enthalpy extends TestCase {
@@ -45,6 +44,8 @@ public class Test_Enthalpy extends TestCase {
     double theEnthalpy = enthalpy.testFunction(360.0);
     
     assertTrue("Enthalpy.testFunction()", theEnthalpy > 29691.5 && theEnthalpy < 29691.7);
+  }
+  
   // Test a pure species enthalpy calculation, reference is from the steam tables
   public void testPureSpeciesEnthalpyCalculation() {
     
