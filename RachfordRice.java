@@ -11,6 +11,14 @@ public class RachfordRice extends Function {
     } 
   }
   
+  public FlowStream getFlowStream(){
+    return this.flowStream;
+  }
+  
+  public void setFlowStream(FlowStream newStream){
+    this.flowStream = new FlowStream(newStream);
+  }
+  
   // Solve the composition of the given flow stream
   public FlowStream solve() {
     double[] bounds = this.getBounds(1.0, 0.1); //what is a reasonable starting point?
@@ -38,7 +46,7 @@ public class RachfordRice extends Function {
       
       vapourMoleFraction = (kMinusOne + 1) * this.flowStream.getFlowSpecies().get(i).getLiquidMoleFraction();
       this.flowStream.getFlowSpecies().get(i).setVapourMoleFraction(vapourMoleFraction);
-
+      
     }
     
     return this.flowStream;
@@ -52,20 +60,22 @@ public class RachfordRice extends Function {
     
     double temperature = this.flowStream.getTemperature();
     double pressure = this.flowStream.getPressure();
-    double overallMoleFraction, saturationPressure;
+    double overallMoleFraction, saturationPressure, activityCoefficient, largePhi;
     double kMinusOne;
     
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
-      kMinusOne = (saturationPressure/pressure)-1;
+      activityCoefficient = this.flowStream.getFlowSpecies().get(i).getActivityCoefficient();
+      largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
+      kMinusOne = (activityCoefficient * saturationPressure)/(pressure * largePhi)-1;
       
       result = result + (overallMoleFraction*kMinusOne)/(1 + x*kMinusOne);
-
+      
     }
     
-    return result;
+    return result; 
   }
   
 }

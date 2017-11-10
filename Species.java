@@ -54,7 +54,7 @@ public class Species {
   private double activityCoefficient = 1.0;
   
   //fugacity coefficient for nonideal behaviour
-  private double mixtureFugacityCoefficient = 0.0;
+  private double mixtureFugacityCoefficient = 1.0;
   
   //large phi for nonideal handling
   private double largePhi = 1.0;
