@@ -11,41 +11,6 @@ public class Test_Enthalpy extends TestCase {
     assertFalse("new Enthalpy(inlet, outlet)", enthalpy == null);
   }
   
-  public void testTestFunction() { 
-     
-    FlowSpecies water = new FlowSpecies();
-    water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
-    water.setOverallMoleFraction(0.5);
-    water.setLiquidHeatCapacityConstants(3.47, 1.45, 0.0, 0.121);
-    
-    FlowSpecies ethanol = new FlowSpecies();
-    ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
-    ethanol.setOverallMoleFraction(0.5);
-    ethanol.setLiquidHeatCapacityConstants(33.866, -0.1726, 0.00034917, 0.0);
-    
-    FlowStream inletStream = new FlowStream();
-    FlowStream outletStream = new FlowStream();
-    
-    outletStream.addFlowSpecies(water);
-    outletStream.addFlowSpecies(ethanol);
-    outletStream.setPressure(101325.0);
-    outletStream.setTemperature(368.0);
-    
-    RachfordRice testRachfordRice = new RachfordRice(outletStream);
-
-    outletStream = testRachfordRice.solve();
-    
-    inletStream.addFlowSpecies(water);
-    inletStream.addFlowSpecies(ethanol);
-    inletStream.setPressure(101325.0);
-    inletStream.setTemperature(360.0);
-    
-    Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
-    double theEnthalpy = enthalpy.testFunction(360.0);
-    
-    assertTrue("Enthalpy.testFunction()", theEnthalpy > 29691.5 && theEnthalpy < 29691.7);
-  }
-  
   // Test a pure species enthalpy calculation, reference is from the steam tables
   public void testPureSpeciesEnthalpyCalculation() {
     
@@ -72,6 +37,8 @@ public class Test_Enthalpy extends TestCase {
     
     Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
     double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
+    
+    System.out.println("Water enthalpy is: " + theEnthalpy);
     
     // Note that real change is closer to 890 J/mol, but the correlation is a bit off
     // in this range
