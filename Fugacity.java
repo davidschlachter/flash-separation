@@ -1,4 +1,4 @@
-public class Fugacity extends Function  {
+public class Fugacity implements Function  {
   
   private FlowStream flowStream;
   
@@ -201,7 +201,7 @@ public class Fugacity extends Function  {
   }
   
   public void zValue(){
-    double[] bounds = this.getBounds(1.0, 1.0);
+    double[] bounds = RootFinder.getBounds(this, 1.0, 1.0);
     double accuracy = 0.001;
     double result = 0.0;
     int i = 0;

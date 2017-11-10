@@ -16,8 +16,8 @@ public class PresetSpecies {
     
     FlowSpecies ethane = new FlowSpecies();
     ethane.setSpeciesName("Ethane");
-    ethane.setVapourHeatCapacityConstants(1.131, 19.225, -5.561, 0.0);
-    ethane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    ethane.setVapourHeatCapacityConstants(9.4036540338, 0.159845489655, -0.0000462367109478, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
+    ethane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0); // TODO: find actual values!!
     List<AntoineCoefficients> ethaneAntoine = new ArrayList<AntoineCoefficients>();
     ethaneAntoine.add(new AntoineCoefficients(9.512776612, 791.3, -6.422, 91.33, 144.13)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C74840&Mask=4&Type=ANTOINE#ANTOINE
     ethaneAntoine.add(new AntoineCoefficients(8.944066612, 659.739, -16.719, 135.74, 199.91)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C74840&Mask=4&Type=ANTOINE#ANTOINE
@@ -27,16 +27,16 @@ public class PresetSpecies {
     
     FlowSpecies pentane = new FlowSpecies();
     pentane.setSpeciesName("Pentane");
-    pentane.setVapourHeatCapacityConstants(2.464, 45.351, 14.111, 0.0);
-    pentane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    pentane.setVapourHeatCapacityConstants(20.4868289472, 0.3770690663898, -0.0001173253422378, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
+    pentane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0); // TODO: find actual values!!
     pentane.setAntoineConstants(new AntoineCoefficients(8.994916612, 1070.617, -40.454, 268.6, 341.37)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C109660&Mask=4&Type=ANTOINE&Plot=on
     pentane.setCriticalTemperature (469.6);
     flowSpecies.add(pentane);
     
     FlowSpecies hexane = new FlowSpecies();
     hexane.setSpeciesName("Hexane");
-    hexane.setVapourHeatCapacityConstants(3.025, 53.722, 16.791, 0.0);
-    hexane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0);
+    hexane.setVapourHeatCapacityConstants(25.151240895, 0.4466694093756, -0.0001396080945018, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
+    hexane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0); // TODO: find actual values!!
     List<AntoineCoefficients> hexaneAntoine = new ArrayList<AntoineCoefficients>();
     hexaneAntoine.add(new AntoineCoefficients(8.461756612, 1044.038, -53.896, 117.7, 264.93)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110543&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     hexaneAntoine.add(new AntoineCoefficients(9.008376612, 1171.53, -48.784, 286.18, 342.69)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110543&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
@@ -46,8 +46,8 @@ public class PresetSpecies {
     
     FlowSpecies cyclohexane = new FlowSpecies();
     cyclohexane.setSpeciesName("Cyclohexane");
-    cyclohexane.setVapourHeatCapacityConstants(-3.876, 63.249, -20.928, 0.0);
-    cyclohexane.setLiquidHeatCapacityConstants(-9.048, 0.14138, -0.00016162, 0.0);
+    cyclohexane.setVapourHeatCapacityConstants(-32.2268461848, 0.5258812678902, -0.0001740050146944, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
+    cyclohexane.setLiquidHeatCapacityConstants(-75.2292322704, 1.175498326524, -0.001343782992876, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
     List<AntoineCoefficients> cyclohexaneAntoine = new ArrayList<AntoineCoefficients>();
     cyclohexaneAntoine.add(new AntoineCoefficients(9.145546612, 1316.554, -35.581, 323, 523)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110827&Mask=4&Type=ANTOINE&Plot=on
     cyclohexaneAntoine.add(new AntoineCoefficients(8.997716612, 1216.93, -48.621, 303, 343)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110827&Mask=4&Type=ANTOINE&Plot=on
@@ -59,9 +59,8 @@ public class PresetSpecies {
     
     FlowSpecies water = new FlowSpecies();
     water.setSpeciesName("Water");
-    // Source: Smith & Van Ness, Appendix C, Table C1 -- all constants in book multiplied by R, units are J/mol, K
-    water.setVapourHeatCapacityConstants(28.851315, 0.012056025, 0.0, 100605.45);
-    water.setLiquidHeatCapacityConstants(8.712, 0.00125, -0.00000018, 0.0);
+    water.setVapourHeatCapacityConstants(28.851315, 0.012056025, 0.0, 100605.45); // Source: Smith & Van Ness, Appendix C, Table C1 -- all constants in book multiplied by R, units are J/mol, K
+    water.setLiquidHeatCapacityConstants(72.4355737776, 0.01039307475, -0.000001496602764, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
     List<AntoineCoefficients> waterAntoine = new ArrayList<AntoineCoefficients>();
     waterAntoine.add(new AntoineCoefficients(8.565306612, 643.748, -198.043, 379, 575)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     waterAntoine.add(new AntoineCoefficients(10.40792661, 1838.675, -31.737, 273, 303)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
@@ -76,8 +75,8 @@ public class PresetSpecies {
     
     FlowSpecies nitrogen = new FlowSpecies();
     nitrogen.setSpeciesName("Nitrogen");
-    nitrogen.setVapourHeatCapacityConstants(3.28, 0.593, 0.0, 0.04);
-    nitrogen.setLiquidHeatCapacityConstants(0.0, 0.0, 0.0, 0.0);
+    nitrogen.setVapourHeatCapacityConstants(27.271428144, 0.0049304746614, 0, 33257.8392); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
+    nitrogen.setLiquidHeatCapacityConstants(0.0, 0.0, 0.0, 0.0); // TODO: find actual values!!
     List<AntoineCoefficients> nitrogenAntoine = new ArrayList<AntoineCoefficients>();
     nitrogenAntoine.add(new AntoineCoefficients(8.741916612, 264.651, -6.788, 78.0, 126)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7727379&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     nitrogenAntoine.add(new AntoineCoefficients(8.643636612, 257.877, -6.344, 63.14, 78.0)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7727379&Mask=4&Type=ANTOINE&Plot=on#ANTOINE

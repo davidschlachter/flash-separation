@@ -1,7 +1,7 @@
 /**
  * Class that returns the dew point of a stream of given composition at a given pressure
  */
-public class DewPoint extends Function {
+public class DewPoint implements Function {
   
   private FlowStream flowStream;
   
@@ -18,7 +18,7 @@ public class DewPoint extends Function {
   
   // Return the dew point for the given flowStream components at the given pressure
   public double calc() {
-    double[] bounds = this.getBounds(flowStream.getTemperature(), 1.0);
+    double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 1.0);
     double accuracy = 0.0001;
     
     // Determine if any of the species is likely to be non-condensable, and if so, ignore it

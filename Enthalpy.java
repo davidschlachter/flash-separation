@@ -1,4 +1,4 @@
-public class Enthalpy extends Function {
+public class Enthalpy implements Function {
   
   private FlowStream inlet;
   private FlowStream outlet;
