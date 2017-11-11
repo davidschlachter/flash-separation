@@ -26,6 +26,9 @@ public class Species {
   // Antoine coefficients
   private List<AntoineCoefficients> antoineCoefficients;
   
+  // Heat of vapourization
+  private double heatOfVapourization = 0.0;
+  
   // Critical temperature
   private double criticalTemperature = 0.0;
   
@@ -122,6 +125,16 @@ public class Species {
   public void setAntoineConstants(AntoineCoefficients source) {
     this.antoineCoefficients = new ArrayList<AntoineCoefficients>();
     this.antoineCoefficients.add(new AntoineCoefficients(source));
+  }
+  
+  public boolean setHeatOfVapourization(double heatOfVapourization) {
+    if (heatOfVapourization >= 0.0) {
+      this.heatOfVapourization = heatOfVapourization;
+      return true;
+    } else {
+      System.out.println("Enter a positive value for heat of vapourization.");
+      return false;
+    }
   }
   
   public boolean setCriticalTemperature (double criticalTemperature) {
@@ -282,6 +295,10 @@ public class Species {
   
   public String getSpeciesName() {
     return this.speciesName;
+  }
+  
+  public double getHeatOfVapourization() {
+    return this.heatOfVapourization;
   }
   
   public double getCriticalTemperature() {

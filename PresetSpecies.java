@@ -70,6 +70,7 @@ public class PresetSpecies {
     waterAntoine.add(new AntoineCoefficients(11.21534661, 2354.731, 7.559, 293, 343)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     waterAntoine.add(new AntoineCoefficients(9.660016612, 1435.264, -64.848, 255.9, 373.2)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     water.setAntoineConstants(waterAntoine);
+    water.setHeatOfVapourization(40660.0)
     water.setCriticalTemperature (647.0);
     flowSpecies.add(water);
     
