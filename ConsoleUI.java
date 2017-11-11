@@ -219,7 +219,7 @@ public class ConsoleUI {
       // Second and third problem types: one of the temperatures is missing, and the
       // flash is adiabatic
       Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
-      unknownTemperature = RootFinder.calc(enthalpy, 0.01, 1000.0, 0.001);
+      unknownTemperature = RiddersMethod.calc(enthalpy, 0.01, 1000.0, 0.001);
       output.println("The unknown temperature is: " + unknownTemperature);
     }
     

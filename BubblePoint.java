@@ -18,7 +18,7 @@ public class BubblePoint implements Function {
   // Return the bubble point for the given flowStream components at the given pressure
   public double calc() {
     double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 1.0);
-    return RootFinder.calc(this, bounds[0], bounds[1], 0.001);
+    return RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
   }
   
   // Test function for the root finder

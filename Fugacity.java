@@ -207,7 +207,7 @@ public class Fugacity implements Function  {
     int i = 0;
     
     for(i=0; i < flowStream.getFlowSpecies().size(); i++){
-      result = RootFinder.calc(this, bounds[0], bounds[1], accuracy);
+      result = RiddersMethod.calc(this, bounds[0], bounds[1], accuracy);
       flowStream.getFlowSpecies().get(i).setZValue(result);
     }
   }
