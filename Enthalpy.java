@@ -15,7 +15,7 @@ public class Enthalpy implements Function {
     double finalTemperature = -1.0;
     double bubbleTemperature = -1.0;
     
-    double vapourMoleFraction, liquidMoleFraction, result = 0.0;
+    double vapourMoleFraction, liquidMoleFraction, heatofVapourization, result = 0.0;
     
     if (this.inlet.getTemperature() < 0.01) {
       initialTemperature = testTemp;
@@ -44,21 +44,25 @@ public class Enthalpy implements Function {
       }
     }
     
-    if(this.inlet.getVapourFraction() == 1.0 && this.outlet.getVapourFraction() == 1.0)
+    else if(this.inlet.getVapourFraction() == 1.0 && this.outlet.getVapourFraction() == 1.0)
     {
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
         vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
         result = result + vapourMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
       }
     }
-    
-    
-    /*for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
-     vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
-     liquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
-     result = result + vapourMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), bubbleTemperature, finalTemperature, "vapour") + 
-     liquidMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
-     }*/
+    else
+    {
+      for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
+        vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
+        liquidMoleFraction = this.inlet.getFlowSpecies().get(i).getLiquidMoleFraction();
+        heatofVapourization = this.outlet.getFlowSpecies().get(i).getHeatOfVapourization();
+          
+        result = result + vapourMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), bubbleTemperature, finalTemperature, "vapour") + 
+          liquidMoleFraction * HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, bubbleTemperature, "liquid") + heatofVapourization;
+          
+      }
+    }
     
     return result;
     
