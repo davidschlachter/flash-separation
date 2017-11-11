@@ -28,7 +28,7 @@ public class PresetSpecies {
     FlowSpecies pentane = new FlowSpecies();
     pentane.setSpeciesName("Pentane");
     pentane.setVapourHeatCapacityConstants(20.4868289472, 0.3770690663898, -0.0001173253422378, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
-    pentane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0); // TODO: find actual values!!
+    pentane.setLiquidHeatCapacityConstants(168.6, 0.0, 0.0, 0.0); //http://webbook.nist.gov/cgi/cbook.cgi?ID=C109660&Mask=7#Thermo-Condensed
     pentane.setAntoineConstants(new AntoineCoefficients(8.994916612, 1070.617, -40.454, 268.6, 341.37)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C109660&Mask=4&Type=ANTOINE&Plot=on
     pentane.setCriticalTemperature (469.6);
     flowSpecies.add(pentane);
@@ -36,7 +36,7 @@ public class PresetSpecies {
     FlowSpecies hexane = new FlowSpecies();
     hexane.setSpeciesName("Hexane");
     hexane.setVapourHeatCapacityConstants(25.151240895, 0.4466694093756, -0.0001396080945018, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
-    hexane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0); // TODO: find actual values!!
+    hexane.setLiquidHeatCapacityConstants(189.1, 0, 0, 0); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110543&Mask=2#Thermo-Condensed
     List<AntoineCoefficients> hexaneAntoine = new ArrayList<AntoineCoefficients>();
     hexaneAntoine.add(new AntoineCoefficients(8.461756612, 1044.038, -53.896, 117.7, 264.93)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110543&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     hexaneAntoine.add(new AntoineCoefficients(9.008376612, 1171.53, -48.784, 286.18, 342.69)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C110543&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
@@ -76,7 +76,7 @@ public class PresetSpecies {
     FlowSpecies nitrogen = new FlowSpecies();
     nitrogen.setSpeciesName("Nitrogen");
     nitrogen.setVapourHeatCapacityConstants(27.271428144, 0.0049304746614, 0, 33257.8392); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
-    nitrogen.setLiquidHeatCapacityConstants(0.0, 0.0, 0.0, 0.0); // TODO: find actual values!!
+    nitrogen.setLiquidHeatCapacityConstants(28.57, 0.0, 0.0, 0.0); // https://technifab.com/cryogenic-resource-library/cryogenic-fluids/liquid-nitrogen/
     List<AntoineCoefficients> nitrogenAntoine = new ArrayList<AntoineCoefficients>();
     nitrogenAntoine.add(new AntoineCoefficients(8.741916612, 264.651, -6.788, 78.0, 126)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7727379&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     nitrogenAntoine.add(new AntoineCoefficients(8.643636612, 257.877, -6.344, 63.14, 78.0)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7727379&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
