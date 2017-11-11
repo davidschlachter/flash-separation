@@ -141,16 +141,16 @@ public class ConsoleUI {
     // Set general stream properties (T, P, flowrate)
     //
     output.println("\nFor the input stream, enter the following properties if known:");
-    nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
+    nextDouble = getADouble1("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
     inletStream.setTemperature(nextDouble);
-    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, true);
+    nextDouble = getADouble1("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, true);
     inletStream.setPressure(nextDouble);
-    nextDouble = getADouble("  Mass flow rate (kg/s): ", 0.0, Double.MAX_VALUE, scan, output, true);
+    nextDouble = getADouble1("  Mass flow rate (kg/s): ", 0.0, Double.MAX_VALUE, scan, output, true);
     inletStream.setMolarFlowRate(nextDouble);
     output.println("\nFor the outlet stream, enter the following properties if known:");
-    nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
+    nextDouble = getADouble1("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
     outletStream.setTemperature(nextDouble);
-    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, true);
+    nextDouble = getADouble1("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, true);
     outletStream.setPressure(nextDouble);
     outletStream.setMolarFlowRate(inletStream.getMolarFlowRate());
     
@@ -462,5 +462,29 @@ public class ConsoleUI {
     
   }
   
+  private double getADouble1(String message, double lowerBound, double upperBound, Scanner scan, PrintWriter output, boolean permitEmpty) {
+    
+    String nextString;
+    double userInput = 0.0;
+    
+    if (permitEmpty == true ) {
+      output.println(message);
+      while (true) {
+        nextString = scan.nextLine();
+        if (nextString.isEmpty()) {
+          userInput = 0.0;
+          break;
+        }
+        else {
+        userInput = Double.parseDouble(nextString);
+        if (lowerBound != upperBound) {
+            if (userInput <= lowerBound || userInput >= upperBound) continue;
+          }
+        break;
+            }
+         }
+     }
+    return userInput;
+  }
   
 }
