@@ -22,7 +22,8 @@ public class RachfordRice implements Function {
   // Solve the composition of the given flow stream
   public FlowStream solve() {
     double[] bounds = RootFinder.getBounds(this, 1.0, 0.1); //what is a reasonable starting point?
-    double vOverF = RootFinder.calc(this, bounds[0], bounds[1], 0.001);
+    //double vOverF = RootFinder.calc(this, bounds[0], bounds[1], 0.001);
+    double vOverF = RootFinder.calc(this, 0., 10., 0.001);
     
     if (Double.isNaN(vOverF)) {
       System.out.println("ERROR: The value of V/F for the RachfordRice equation could not be determined.");
@@ -33,13 +34,17 @@ public class RachfordRice implements Function {
     
     int i;
     double overallMoleFraction, saturationPressure, kMinusOne;
-    double liquidMoleFraction, vapourMoleFraction;
+    double liquidMoleFraction, vapourMoleFraction, pressure;
+    double activityCoefficient, largePhi;
     
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), this.flowStream.getTemperature());
-      kMinusOne = (saturationPressure/this.flowStream.getPressure())-1;
+      activityCoefficient = this.flowStream.getFlowSpecies().get(i).getActivityCoefficient();
+      largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
+      pressure = this.flowStream.getPressure();
+      kMinusOne = (activityCoefficient * saturationPressure)/(pressure * largePhi)-1;
       
       liquidMoleFraction = overallMoleFraction/(1 + vOverF*kMinusOne);
       this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(liquidMoleFraction);
@@ -71,7 +76,7 @@ public class RachfordRice implements Function {
       largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
       kMinusOne = (activityCoefficient * saturationPressure)/(pressure * largePhi)-1;
       
-      result = result + (overallMoleFraction*kMinusOne)/(1 + x*kMinusOne);
+      result = (result + (overallMoleFraction*kMinusOne)/(1 + x*kMinusOne)) ;
       
     }
     

@@ -131,14 +131,14 @@ public class Test_RachfordRice extends TestCase {
     
     do{
     solvedFlowStream = testRachfordRice.solve();
-    count++;
+    count=count+1;
     for(int i = 0; i < solvedFlowStream.getFlowSpecies().size(); i++){
     testObject.getFlowStream().getFlowSpecies().get(i).setLiquidMoleFraction(solvedFlowStream.getFlowSpecies().get(i).getLiquidMoleFraction());
     testObject.getFlowStream().getFlowSpecies().get(i).setVapourMoleFraction(solvedFlowStream.getFlowSpecies().get(i).getVapourMoleFraction());
     }
     testObject.computeNonIdealParameters(testObject);
     testRachfordRice.setFlowStream(testObject.getFlowStream());
-    }while(solvedFlowStream.approxEquals(testRachfordRice.getFlowStream(), 0.1) == false && count < 500);
+    }while(solvedFlowStream.approxEquals(testRachfordRice.getFlowStream(), 0.001) == false &&  count < 500);
     
     double nHexaneLiquidMoleFraction = solvedFlowStream.getFlowSpecies().get(0).getLiquidMoleFraction();
     double nHexaneVapourMoleFraction = solvedFlowStream.getFlowSpecies().get(0).getVapourMoleFraction();
@@ -152,6 +152,23 @@ public class Test_RachfordRice extends TestCase {
     double benzeneLiquidMoleFraction = solvedFlowStream.getFlowSpecies().get(3).getLiquidMoleFraction();
     double benzeneVapourMoleFraction = solvedFlowStream.getFlowSpecies().get(3).getVapourMoleFraction();
     double benzeneOverallMoleFraction = solvedFlowStream.getFlowSpecies().get(3).getOverallMoleFraction();
+    
+    System.out.println("nHexane Liquid mole fraction is: "+nHexaneLiquidMoleFraction);
+    System.out.println("nHexane vapour mole fraction is: "+nHexaneVapourMoleFraction);
+    System.out.println("nHexane overall mole fraction is: "+nHexaneOverallMoleFraction);
+    System.out.println("ethanol Liquid mole fraction is: "+ethanolLiquidMoleFraction);
+    System.out.println("ehhanol vapour mole fraction is: "+ethanolVapourMoleFraction);
+    System.out.println("ethanol overall mole fraction is: "+ethanolOverallMoleFraction);
+    System.out.println("mcp Liquid mole fraction is: "+mcpLiquidMoleFraction);
+    System.out.println("mcp Liquid mole fraction is: "+mcpVapourMoleFraction);
+    System.out.println("mcp Liquid mole fraction is: "+mcpOverallMoleFraction);
+    System.out.println("benzene Liquid mole fraction is: "+benzeneLiquidMoleFraction);
+    System.out.println("benzene vapour mole fraction is: "+benzeneVapourMoleFraction);
+    System.out.println("benzene overall mole fraction is: "+benzeneOverallMoleFraction);
+    System.out.println("COUNT IS: "+count);
+    
+    
+    
     
     assertTrue(nHexaneLiquidMoleFraction+ethanolLiquidMoleFraction+mcpLiquidMoleFraction+benzeneLiquidMoleFraction < 1.15);   //this test failing idiciates there is a problem with the summation term in rachford rice 
     

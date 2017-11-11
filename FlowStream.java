@@ -126,6 +126,9 @@ public class FlowStream {
       if (Math.abs((sourceSpecies.getCriticalPressure() - targetSpecies.getCriticalPressure())/sourceSpecies.getCriticalPressure()) > error) equals = false;
       if (Math.abs((sourceSpecies.getCriticalTemperature() - targetSpecies.getCriticalTemperature())/sourceSpecies.getCriticalTemperature()) > error) equals = false;
       if (Math.abs((sourceSpecies.getCriticalVolume() - targetSpecies.getCriticalVolume())/sourceSpecies.getCriticalVolume()) > error) equals = false;
+      if (Math.abs((sourceSpecies.getLargePhi() - targetSpecies.getLargePhi())/sourceSpecies.getLargePhi()) > error) equals = false;
+      if (Math.abs((sourceSpecies.getActivityCoefficient() - targetSpecies.getActivityCoefficient())/sourceSpecies.getActivityCoefficient()) > error) equals = false;  //check to make sure all parameters are equal
+      if (Math.abs((sourceSpecies.getMixtureFugacityCoefficient() - targetSpecies.getMixtureFugacityCoefficient())/sourceSpecies.getMixtureFugacityCoefficient()) > error) equals = false;
     }
     
     return equals;
