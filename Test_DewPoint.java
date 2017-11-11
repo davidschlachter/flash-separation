@@ -81,7 +81,6 @@ public class Test_DewPoint extends TestCase {
     
     DewPoint pentaneDew = new DewPoint(flow1);
     double answer = pentaneDew.calc();
-    System.out.println("Is "+answer);
     assertTrue("pentaneDew.calc()",answer > 338.7 && answer < 339.0);
   }
   
