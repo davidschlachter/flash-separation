@@ -17,7 +17,7 @@ public class PresetSpecies {
     FlowSpecies ethane = new FlowSpecies();
     ethane.setSpeciesName("Ethane");
     ethane.setVapourHeatCapacityConstants(9.4036540338, 0.159845489655, -0.0000462367109478, 0.0); // Smith & Van Ness, Appendix C, Table C1. Corrected to return C_p instead of C_p / R
-    ethane.setLiquidHeatCapacityConstants(1.0, 1.0, 1.0, 1.0); // TODO: find actual values!!
+    ethane.setLiquidHeatCapacityConstants(84.241323, -0.208833, 0.00092758, 0.00002610); // Source: http://nvlpubs.nist.gov/nistpubs/jres/80A/jresv80An5-6p739_A1b.pdf
     List<AntoineCoefficients> ethaneAntoine = new ArrayList<AntoineCoefficients>();
     ethaneAntoine.add(new AntoineCoefficients(9.512776612, 791.3, -6.422, 91.33, 144.13)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C74840&Mask=4&Type=ANTOINE#ANTOINE
     ethaneAntoine.add(new AntoineCoefficients(8.944066612, 659.739, -16.719, 135.74, 199.91)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C74840&Mask=4&Type=ANTOINE#ANTOINE
