@@ -36,12 +36,29 @@ public class Enthalpy implements Function {
     BubblePoint bubblePoint = new BubblePoint(this.inlet);
     bubbleTemperature = bubblePoint.calc();
     
-    for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
-      vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
-      liquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
-      result = result + vapourMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), bubbleTemperature, finalTemperature, "vapour") + 
-        liquidMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
+    if(this.inlet.getVapourFraction() == 0.0 && this.outlet.getVapourFraction() == 0.0)
+    {
+      for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
+        liquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
+        result = result + liquidMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
+      }
     }
+    
+    if(this.inlet.getVapourFraction() == 1.0 && this.outlet.getVapourFraction() == 1.0)
+    {
+      for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
+        vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
+        result = result + vapourMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
+      }
+    }
+    
+    
+    /*for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
+     vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
+     liquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
+     result = result + vapourMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), bubbleTemperature, finalTemperature, "vapour") + 
+     liquidMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
+     }*/
     
     return result;
     
