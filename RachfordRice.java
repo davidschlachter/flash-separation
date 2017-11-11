@@ -1,4 +1,4 @@
-public class RachfordRice implements Function {
+public class RachfordRice implements DifferentiableFunction {
   
   private FlowStream flowStream;
   
@@ -76,6 +76,11 @@ public class RachfordRice implements Function {
     }
     
     return result; 
+  }
+  
+  //Test derivative for Newton-Raphson root finder
+  public double testDerivative(double x) {
+    return x;
   }
   
 }
