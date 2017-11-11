@@ -22,7 +22,7 @@ public class RachfordRice implements Function {
   // Solve the composition of the given flow stream
   public FlowStream solve() {
     double[] bounds = RootFinder.getBounds(this, 1.0, 0.1); //what is a reasonable starting point?
-    double vOverF = RootFinder.calc(this, bounds[0], bounds[1], 0.001);
+    double vOverF = RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
     
     if (Double.isNaN(vOverF)) {
       System.out.println("ERROR: The value of V/F for the RachfordRice equation could not be determined.");

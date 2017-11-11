@@ -33,7 +33,7 @@ public class DewPoint implements Function {
     }
     
     // Calculate the dew point
-    return RootFinder.calc(this, bounds[0], bounds[1], accuracy);
+    return RiddersMethod.calc(this, bounds[0], bounds[1], accuracy);
   }
   
   
