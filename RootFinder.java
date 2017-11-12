@@ -12,7 +12,7 @@ public class RootFinder {
     double testProduct = 0.0;
     
     for(int i=0; i<JMAX; i++) {
-      if((i/2)==0) bounds[0] -= step;
+      if((i%2)==0) bounds[0] -= step;
       else bounds[1] += step;
       
       testProduct = func.testFunction(bounds[0])*func.testFunction(bounds[1]);
