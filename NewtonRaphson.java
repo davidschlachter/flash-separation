@@ -16,5 +16,6 @@ public class NewtonRaphson extends RootFinder {
     
     System.out.println("WARNING: Exceeded maximum number of iterations!");
     return x[1];
-  }
+  } 
+  
 }

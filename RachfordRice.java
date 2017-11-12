@@ -22,12 +22,10 @@ public class RachfordRice implements DifferentiableFunction {
   // Solve the composition of the given flow stream
   public FlowStream solve() {
     double[] bounds = RootFinder.getBounds(this, 1.0, 0.1); //what is a reasonable starting point?
-<<<<<<< HEAD
-    //double vOverF = RootFinder.calc(this, bounds[0], bounds[1], 0.001);
-    double vOverF = RootFinder.calc(this, 0., 10., 0.001);
-=======
+    
+    
     double vOverF = RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
->>>>>>> 6a4c26a3dbc2708d5664f4bea9f1b53861dc5b10
+    
     
     if (Double.isNaN(vOverF)) {
       System.out.println("ERROR: The value of V/F for the RachfordRice equation could not be determined.");
@@ -89,7 +87,25 @@ public class RachfordRice implements DifferentiableFunction {
   
   //Test derivative for Newton-Raphson root finder
   public double testDerivative(double x) {
-    return x;
+    
+    double result = 0.0;
+    double overallMoleFraction, kMinusOne, saturationPressure, activityCoefficient, largePhi;
+    double temperature = this.flowStream.getTemperature();
+    double pressure = this.flowStream.getPressure();
+    
+    for(int i=0; i<flowStream.getFlowSpecies().size(); i++){
+      
+      overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
+      saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
+      activityCoefficient = this.flowStream.getFlowSpecies().get(i).getActivityCoefficient();
+      largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
+      kMinusOne = (activityCoefficient * saturationPressure)/(pressure * largePhi)-1;
+      
+      result -= (overallMoleFraction * Math.pow(kMinusOne, 2))/(Math.pow((1+x*kMinusOne),2));
+      
+    }
+    
+    return result;
   }
   
 }
