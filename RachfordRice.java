@@ -21,10 +21,10 @@ public class RachfordRice implements DifferentiableFunction {
   
   // Solve the composition of the given flow stream
   public FlowStream solve() {
-    double[] bounds = RootFinder.getBounds(this, 1.0, 0.1); //what is a reasonable starting point?
+    double[] bounds = RootFinder.getBounds(this, 0, 0.1); //what is a reasonable starting point?
     
     
-    double vOverF = RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
+    double vOverF = NewtonRaphson.calc(this, 0.5, 0.1);
     
     
     if (Double.isNaN(vOverF)) {
@@ -101,7 +101,7 @@ public class RachfordRice implements DifferentiableFunction {
       largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
       kMinusOne = (activityCoefficient * saturationPressure)/(pressure * largePhi)-1;
       
-      result -= (overallMoleFraction * Math.pow(kMinusOne, 2))/(Math.pow((1+x*kMinusOne),2));
+      result = result - (overallMoleFraction * Math.pow(kMinusOne, 2))/(Math.pow((1+x*kMinusOne),2));
       
     }
     

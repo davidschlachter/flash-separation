@@ -6,6 +6,7 @@ public class Fugacity implements Function  {
     this.flowStream = flowStream;
   }//end of constructor
   
+  
   public double[][] crossSpeciesCriticalZ(){
     double[][] criticalZValues;
     int n = flowStream.getFlowSpecies().size();
@@ -201,7 +202,7 @@ public class Fugacity implements Function  {
   }
   
   public void zValue(){
-    double[] bounds = RootFinder.getBounds(this, 1.0, 1.0);
+    double[] bounds = RootFinder.getBounds(this, 0.5, 0.25);
     double accuracy = 0.001;
     double result = 0.0;
     int i = 0;
@@ -252,9 +253,10 @@ public class Fugacity implements Function  {
     double result = 0;
     int i = 0;
     for(i = 0; i < flowStream.getFlowSpecies().size(); i++){
-      result += (-1 * z) + 1 + flowStream.getFlowSpecies().get(i).getBeta() - (flowStream.getFlowSpecies().get(i).getBeta()
-                                                                                 * flowStream.getFlowSpecies().get(i).getQValue() * (z - flowStream.getFlowSpecies().get(i).getBeta())) 
-        / (z * (z + flowStream.getFlowSpecies().get(i).getBeta())); 
+      double beta, q;
+      beta = flowStream.getFlowSpecies().get(i).getBeta();
+      q = flowStream.getFlowSpecies().get(i).getQValue();
+      result +=  (-1 * z) + beta + z*(beta+z)*((1+beta+z)/(q*beta)); 
     } 
     return result;
   }
@@ -275,5 +277,24 @@ public class Fugacity implements Function  {
     
   }
   
+  public boolean nonIdealComputed(Fugacity unmodifiedStream){
+  boolean result = true;
   
-}//end of Fugacity class
+  for(int i=0; i<unmodifiedStream.getFlowStream().getFlowSpecies().size(); i++){
+    
+    if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getMixtureFugacityCoefficient() == this.getFlowStream().getFlowSpecies().get(i).getMixtureFugacityCoefficient()) result = false;
+   // if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getActivityCoefficient() == this.getFlowStream().getFlowSpecies().get(i).getActivityCoefficient()) result = false;
+   // if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getLargePhi() == this.getFlowStream().getFlowSpecies().get(i).getLargePhi()) result = false;
+    if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getBeta() == this.getFlowStream().getFlowSpecies().get(i).getBeta()) result = false;
+    if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getQValue() == this.getFlowStream().getFlowSpecies().get(i).getQValue()) result = false;
+    if(Math.abs(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getZValue() - this.getFlowStream().getFlowSpecies().get(i).getZValue()) < 0.01) result = false;
+  System.out.println("unmodified z "+i+" is: "+unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getZValue());
+  System.out.println("modified z "+i+" is: "+getFlowStream().getFlowSpecies().get(i).getZValue());
+  }
+    return result;
+  }
+  
+}
+  
+  
+

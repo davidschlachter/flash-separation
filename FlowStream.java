@@ -110,7 +110,9 @@ public class FlowStream {
     if (Math.abs((this.molarFlowRate - target.molarFlowRate)/this.molarFlowRate) > error) equals = false;
     if (Math.abs((this.temperature - target.getTemperature())/this.temperature) > error) equals = false;
     if (Math.abs((this.pressure - target.getPressure())/this.pressure) > error) equals = false;
-    if (Math.abs((this.vapourFraction - target.getVapourFraction())/this.vapourFraction) > error) equals = false;
+    if (this.vapourFraction != 0.0){
+      if (Math.abs((this.vapourFraction - target.getVapourFraction())/this.vapourFraction) > error) equals = false;
+    }
     
     if (this.flowSpecies.size() != target.flowSpecies.size()) {
       equals = false;

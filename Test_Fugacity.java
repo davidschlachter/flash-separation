@@ -183,12 +183,26 @@ public class Test_Fugacity extends TestCase {
     
   }
   
+  public void testComputeNonIdealParameters(){
+    
+    Fugacity unmodifiedStream = createTestObject();
+    Fugacity modifiedStream = createTestObject();
+    modifiedStream.mixtureFugacityCoefficients();
+    modifiedStream.beta();
+    modifiedStream.qValue();
+    modifiedStream.zValue();
+    boolean areTheyDifferent = false;
+    areTheyDifferent = (modifiedStream.nonIdealComputed(unmodifiedStream));
+    assertTrue(areTheyDifferent == true);
+    
+  }
+  
   private Fugacity createTestObject() {
     FlowStream testStream = new FlowStream();
     
     FlowSpecies methylEthylKetone = new FlowSpecies();
     methylEthylKetone.setCriticalTemperature(535.5);
-    methylEthylKetone.setCriticalPressure(41.50);
+    methylEthylKetone.setCriticalPressure(4150000.);
     methylEthylKetone.setCriticalZ(0.249);
     methylEthylKetone.setCriticalVolume(267.0);
     methylEthylKetone.setAcentricFactor(0.323); 
@@ -196,7 +210,7 @@ public class Test_Fugacity extends TestCase {
     
     FlowSpecies toluene = new FlowSpecies();
     toluene.setCriticalTemperature(591.8);
-    toluene.setCriticalPressure(41.06);
+    toluene.setCriticalPressure(4106000.);
     toluene.setCriticalZ(0.264);
     toluene.setCriticalVolume(316.0);
     toluene.setAcentricFactor(0.262); 
@@ -204,6 +218,8 @@ public class Test_Fugacity extends TestCase {
     
     testStream.addFlowSpecies(methylEthylKetone);
     testStream.addFlowSpecies(toluene); 
+    testStream.setTemperature(300.);
+    testStream.setPressure(101325);
     
     Fugacity testFugacityStream = new Fugacity(testStream); 
     
