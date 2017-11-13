@@ -275,4 +275,36 @@ public class Test_Enthalpy extends TestCase {
     assertTrue(theReverseEnthalpy < -96500.94 && theReverseEnthalpy > -100439.75);
   }
   
+  // Test specifically if the heat of vapourization and other species properties are available to the
+  // Enthapy class
+  public void testGettersSetters() {
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+
+    FlowStream inletStream = new FlowStream();
+    FlowStream outletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(3))); // Cyclohexane
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.75);
+    inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.75);
+    inletStream.getFlowSpecies().get(0).setVapourMoleFraction(0.0);
+    inletStream.setMolarFlowRate(2.0);
+    inletStream.setTemperature(20.0 + 273.15);
+    inletStream.setPressure(101325.0);
+    inletStream.setVapourFraction(0.0);
+    
+    outletStream.addFlowSpecies(presetSpecies.get(4));
+    outletStream.addFlowSpecies(presetSpecies.get(3));
+    outletStream.setMolarFlowRate(2.0);
+    outletStream.setTemperature(150.0 + 273.15);
+    outletStream.setPressure(101325.0);
+    outletStream.setVapourFraction(1.0);
+    
+    Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
+    
+    assertTrue(enthalpy.getInlet().getFlowSpecies().get(0).getCriticalTemperature() == presetSpecies.get(4).getCriticalTemperature());
+    assertTrue(enthalpy.getInlet().getFlowSpecies().get(0).getHeatOfVapourization() == presetSpecies.get(4).getHeatOfVapourization());
+    
+  }
+  
 }

@@ -4,12 +4,26 @@ public class Enthalpy implements Function {
   private FlowStream outlet;
   
   public Enthalpy(FlowStream inlet, FlowStream outlet) { 
-    this.inlet = inlet;
-    this.outlet = outlet;
+    this.inlet = new FlowStream(inlet);
+    this.outlet = new FlowStream(outlet);
   }
   
+  // Getters and setters
+  public void setInlet(FlowStream inlet) {
+    this.inlet = new FlowStream(inlet);
+  }
+  public void setOutlet(FlowStream outlet) {
+    this.outlet = new FlowStream(outlet);
+  }
+  public FlowStream getInlet() {
+    return this.inlet; // Permit modification of the inlet via this method
+  }
+  public FlowStream getOutlet() {
+    return this.outlet;
+  }
+  
+  // Calculate the enthalpy change between the inlet and the outlet streams
   public double testFunction(double testTemp){
-    
     int i;
     double initialTemperature = -1.0;
     double finalTemperature = -1.0;

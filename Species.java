@@ -83,6 +83,7 @@ public class Species {
         this.antoineCoefficients.add(new AntoineCoefficients(source.antoineCoefficients.get(i)));
       }
     }
+    this.heatOfVapourization = source.heatOfVapourization;
     this.criticalTemperature = source.criticalTemperature;
     this.criticalPressure = source.criticalPressure;
     this.criticalVolume = source.criticalVolume;
@@ -370,6 +371,7 @@ public class Species {
        this.liquidHeatCapacityB == other.liquidHeatCapacityB &&
        this.liquidHeatCapacityC == other.liquidHeatCapacityC &&
        this.liquidHeatCapacityD == other.liquidHeatCapacityD &&
+       this.heatOfVapourization == other.heatOfVapourization &&
        this.criticalTemperature == other.criticalTemperature &&
        this.criticalPressure == other.criticalPressure &&
        this.criticalVolume == other.criticalVolume &&

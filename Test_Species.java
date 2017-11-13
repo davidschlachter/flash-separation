@@ -293,4 +293,11 @@ public class Test_Species extends TestCase {
     assertTrue("Species.equals(equalSpecies)", testSpecies.equals(equalSpecies));
     assertFalse("Species.equals(inequalSpecies)", testSpecies.equals(inequalSpecies));
   }
+  
+  public void testConstructorWithPresetSpecies() {
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    FlowSpecies testSp = new FlowSpecies(presetSpecies.get(0));
+    
+    assertTrue(testSp.equals(presetSpecies.get(0)));
+  }
 }
