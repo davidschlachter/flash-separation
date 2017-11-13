@@ -1,7 +1,7 @@
 public class RootFinder {
  
   //Max number of iterations
-  public static final int JMAX = 100;
+  public static final int JMAX = 1000;
   
   //Static method to return bounds for a root  
   public static double[] getBounds(Function func, double initialGuess, double step) {
