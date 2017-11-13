@@ -17,6 +17,15 @@ public class Enthalpy implements Function {
     
     double vapourMoleFraction, liquidMoleFraction, heatofVapourization, result = 0.0;
     
+    double inletVapourFraction, outletVapourFraction, inletFlowRate, outletFlowRate, inletVapourMoleFraction;
+    double inletLiquidMoleFraction, inletLiquidFlowRate, inletVapourFlowRate, outletVapourMoleFraction;
+    double outletLiquidMoleFraction, outletLiquidFlowRate, outletVapourFlowRate;
+    
+    inletVapourFraction = this.inlet.getVapourFraction();
+    outletVapourFraction = this.outlet.getVapourFraction();
+    inletFlowRate = this.inlet.getMolarFlowRate();
+    outletFlowRate = this.inlet.getMolarFlowRate();
+    
     if (this.inlet.getTemperature() < 0.01) {
       initialTemperature = testTemp;
       finalTemperature = this.outlet.getTemperature();
@@ -47,15 +56,6 @@ public class Enthalpy implements Function {
       BubblePoint bubblePoint = new BubblePoint(this.inlet);
       bubbleTemperature = bubblePoint.calc();
       
-      double inletVapourFraction, outletVapourFraction, inletFlowRate, outletFlowRate, inletVapourMoleFraction;
-      double inletLiquidMoleFraction, inletLiquidFlowRate, inletVapourFlowRate, outletVapourMoleFraction;
-      double outletLiquidMoleFraction, outletLiquidFlowRate, outletVapourFlowRate;
-      
-      inletVapourFraction = this.inlet.getVapourFraction();
-      outletVapourFraction = this.outlet.getVapourFraction();
-      inletFlowRate = this.inlet.getMolarFlowRate();
-      outletFlowRate = this.inlet.getMolarFlowRate();
-      
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
         inletVapourMoleFraction = this.inlet.getFlowSpecies().get(i).getVapourMoleFraction();
         inletLiquidMoleFraction = this.inlet.getFlowSpecies().get(i).getLiquidMoleFraction();
@@ -74,8 +74,11 @@ public class Enthalpy implements Function {
           result += inletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
                                                                initialTemperature, bubbleTemperature, "liquid");
           result += outletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-                                                               bubbleTemperature, finalTemperature, "vapour");
+                                                                bubbleTemperature, finalTemperature, "vapour");
           result += (inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization;
+          //System.out.println("For species #" + i + ", liquid change is: " + inletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+                                                               initialTemperature, bubbleTemperature, "liquid") + ", vapour change is: "+outletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+                                                                bubbleTemperature, finalTemperature, "vapour")+"and hov change is: "+(inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization);
         }
         // If the liquid has all condensed
         if (inletLiquidFlowRate < outletLiquidFlowRate) {
@@ -84,7 +87,10 @@ public class Enthalpy implements Function {
           result += inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
                                                                initialTemperature, bubbleTemperature, "vapour");
           result -= (outletLiquidFlowRate-inletLiquidFlowRate)*heatofVapourization;
-
+          //System.out.println("For species #" + i + ", liquid change is: " + outletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+                                                                bubbleTemperature, finalTemperature, "liquid") + ", vapour change is: "+inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+                                                               initialTemperature, bubbleTemperature, "vapour")+"and hov change is: "+(-(outletLiquidFlowRate-inletLiquidFlowRate)*heatofVapourization));
+          
         }
       }
     }
