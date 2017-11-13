@@ -92,7 +92,6 @@ public class Test_Enthalpy extends TestCase {
     inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
     inletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
     inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(1.0);
-    inletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
     inletStream.setMolarFlowRate(1.0); // 1 mol/s = 3.6 kgmol/h
     inletStream.setTemperature(20.0 + 273.15);
     inletStream.setPressure(101325.0);
@@ -101,7 +100,6 @@ public class Test_Enthalpy extends TestCase {
     outletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
     outletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
     outletStream.getFlowSpecies().get(0).setVapourMoleFraction(1.0);
-    outletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
     outletStream.setMolarFlowRate(1.0);
     outletStream.setTemperature(150.0 + 273.15);
     outletStream.setPressure(101325.0);
@@ -128,7 +126,6 @@ public class Test_Enthalpy extends TestCase {
     inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
     inletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
     inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(1.0);
-    inletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
     inletStream.setMolarFlowRate(1.0); // 1 mol/s = 3.6 kgmol/h
     inletStream.setTemperature(20.0 + 273.15);
     inletStream.setPressure(101325.0);
@@ -138,7 +135,6 @@ public class Test_Enthalpy extends TestCase {
     outletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
     outletStream.getFlowSpecies().get(0).setVapourMoleFraction(1.0);
     outletStream.getFlowSpecies().get(0).setLiquidMoleFraction(1.0);
-    outletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
     outletStream.setMolarFlowRate(1.0);
     outletStream.setTemperature(100.0 + 273.15);
     outletStream.setPressure(101325.0);
@@ -166,7 +162,6 @@ public class Test_Enthalpy extends TestCase {
     inletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
     inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(1.0);
     inletStream.getFlowSpecies().get(0).setVapourMoleFraction(1.0);
-    inletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
     inletStream.setMolarFlowRate(1.0); // 1 mol/s = 3.6 kgmol/h
     inletStream.setTemperature(100.0 + 273.15);
     inletStream.setPressure(101325.0);
@@ -176,7 +171,6 @@ public class Test_Enthalpy extends TestCase {
     outletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
     outletStream.getFlowSpecies().get(0).setVapourMoleFraction(1.0);
     outletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.0);
-    outletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
     outletStream.setMolarFlowRate(1.0);
     outletStream.setTemperature(150.0 + 273.15);
     outletStream.setPressure(101325.0);
@@ -203,7 +197,6 @@ public class Test_Enthalpy extends TestCase {
     inletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
     inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(1.0);
     inletStream.getFlowSpecies().get(0).setVapourMoleFraction(1.0);
-    inletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
     inletStream.setMolarFlowRate(1.0); // 1 mol/s = 3.6 kgmol/h
     inletStream.setTemperature(100.0 + 273.15);
     inletStream.setPressure(101325.0);
@@ -213,7 +206,6 @@ public class Test_Enthalpy extends TestCase {
     outletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
     outletStream.getFlowSpecies().get(0).setVapourMoleFraction(1.0);
     outletStream.getFlowSpecies().get(0).setLiquidMoleFraction(1.0);
-    outletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
     outletStream.setMolarFlowRate(1.0);
     outletStream.setTemperature(100.0 + 273.15);
     outletStream.setPressure(101325.0);
@@ -240,7 +232,6 @@ public class Test_Enthalpy extends TestCase {
     inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.75);
     inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.75);
     inletStream.getFlowSpecies().get(0).setVapourMoleFraction(0.0);
-    inletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
     inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(3))); // Cyclohexane
     inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.25);
     inletStream.getFlowSpecies().get(1).setLiquidMoleFraction(0.25);
@@ -255,7 +246,6 @@ public class Test_Enthalpy extends TestCase {
     outletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.75);
     outletStream.getFlowSpecies().get(0).setVapourMoleFraction(0.75);
     outletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.0);
-    outletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
     outletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(3)));
     outletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.25);
     outletStream.getFlowSpecies().get(1).setVapourMoleFraction(0.25);
