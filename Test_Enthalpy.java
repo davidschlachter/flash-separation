@@ -228,4 +228,51 @@ public class Test_Enthalpy extends TestCase {
     assertTrue(theReverseEnthalpy < -19923.4 && theReverseEnthalpy > -20736.6);
   }
   
+  // Test a mixture enthalpy calculation from subcooled liquid to superheated vapour
+  // Reference values are from our own manual calculations using BubblePoint and HeatCapacity methods
+  public void testMixtureEnthalpyCalculation() {
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    
+    FlowStream inletStream = new FlowStream();
+    FlowStream outletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.75);
+    inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.75);
+    inletStream.getFlowSpecies().get(0).setVapourMoleFraction(0.0);
+    inletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(3))); // Cyclohexane
+    inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.25);
+    inletStream.getFlowSpecies().get(1).setLiquidMoleFraction(0.25);
+    inletStream.getFlowSpecies().get(1).setVapourMoleFraction(0.0);
+    inletStream.getFlowSpecies().get(1).setHeatOfVapourization(31690.4);
+    inletStream.setMolarFlowRate(2.0);
+    inletStream.setTemperature(20.0 + 273.15);
+    inletStream.setPressure(101325.0);
+    inletStream.setVapourFraction(0.0);
+    
+    outletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4)));
+    outletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.75);
+    outletStream.getFlowSpecies().get(0).setVapourMoleFraction(0.75);
+    outletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.0);
+    outletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
+    outletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(3)));
+    outletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.25);
+    outletStream.getFlowSpecies().get(1).setVapourMoleFraction(0.25);
+    outletStream.getFlowSpecies().get(1).setLiquidMoleFraction(0.0);
+    outletStream.getFlowSpecies().get(1).setHeatOfVapourization(31690.4);
+    outletStream.setMolarFlowRate(2.0);
+    outletStream.setTemperature(150.0 + 273.15);
+    outletStream.setPressure(101325.0);
+    outletStream.setVapourFraction(1.0);
+    
+    Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
+    double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
+    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
+    
+    //System.out.println("The VLE mixture enthalpy change is: "+theEnthalpy+" "+theReverseEnthalpy);
+    assertTrue(theEnthalpy > 96500.94 && theEnthalpy < 100439.75);
+    assertTrue(theReverseEnthalpy < -96500.94 && theReverseEnthalpy > -100439.75);
+  }
+  
 }
