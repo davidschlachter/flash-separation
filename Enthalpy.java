@@ -33,34 +33,59 @@ public class Enthalpy implements Function {
       System.exit(1);
     }
     
-    BubblePoint bubblePoint = new BubblePoint(this.inlet);
-    bubbleTemperature = bubblePoint.calc();
-    
-    if(this.inlet.getVapourFraction() == 0.0 && this.outlet.getVapourFraction() == 0.0)
-    {
+    if(this.inlet.getVapourFraction() == 0.0 && this.outlet.getVapourFraction() == 0.0) {
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
         liquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
         result = result + liquidMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
       }
-    }
-    
-    else if(this.inlet.getVapourFraction() == 1.0 && this.outlet.getVapourFraction() == 1.0)
-    {
+    } else if(this.inlet.getVapourFraction() == 1.0 && this.outlet.getVapourFraction() == 1.0) {
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
         vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
         result = result + vapourMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
       }
-    }
-    else
-    {
+    } else {
+      BubblePoint bubblePoint = new BubblePoint(this.inlet);
+      bubbleTemperature = bubblePoint.calc();
+      
+      double inletVapourFraction, outletVapourFraction, inletFlowRate, outletFlowRate, inletVapourMoleFraction;
+      double inletLiquidMoleFraction, inletLiquidFlowRate, inletVapourFlowRate, outletVapourMoleFraction;
+      double outletLiquidMoleFraction, outletLiquidFlowRate, outletVapourFlowRate;
+      
+      inletVapourFraction = this.inlet.getVapourFraction();
+      outletVapourFraction = this.outlet.getVapourFraction();
+      inletFlowRate = this.inlet.getMolarFlowRate();
+      outletFlowRate = this.inlet.getMolarFlowRate();
+      
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
-        vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
-        liquidMoleFraction = this.inlet.getFlowSpecies().get(i).getLiquidMoleFraction();
+        inletVapourMoleFraction = this.inlet.getFlowSpecies().get(i).getVapourMoleFraction();
+        inletLiquidMoleFraction = this.inlet.getFlowSpecies().get(i).getLiquidMoleFraction();
+        inletLiquidFlowRate = inletFlowRate*(1-inletVapourFraction)*inletLiquidMoleFraction;
+        inletVapourFlowRate = inletFlowRate*inletVapourFraction*inletVapourMoleFraction;
+        
+        outletVapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
+        outletLiquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
+        outletLiquidFlowRate = outletFlowRate*(1-outletVapourFraction)*outletLiquidMoleFraction;
+        outletVapourFlowRate = outletFlowRate*outletVapourFraction*outletVapourMoleFraction;
+        
         heatofVapourization = this.outlet.getFlowSpecies().get(i).getHeatOfVapourization();
-          
-        result = result + vapourMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), bubbleTemperature, finalTemperature, "vapour") + 
-          liquidMoleFraction * HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, bubbleTemperature, "liquid") + heatofVapourization;
-          
+        
+        // If some of the liquid has vapourized
+        if (inletLiquidFlowRate > outletLiquidFlowRate) {
+          result += inletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+                                                               initialTemperature, bubbleTemperature, "liquid");
+          result += outletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+                                                               bubbleTemperature, finalTemperature, "vapour");
+          result += (inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization;
+        }
+        // If the liquid has all condensed
+        if (inletLiquidFlowRate < outletLiquidFlowRate) {
+          result += outletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+                                                                bubbleTemperature, finalTemperature, "liquid");
+          result += inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+                                                               initialTemperature, bubbleTemperature, "vapour");
+          result -= (outletLiquidFlowRate-inletLiquidFlowRate)*heatofVapourization;
+
+        }
       }
     }
     
