@@ -191,4 +191,41 @@ public class Test_Enthalpy extends TestCase {
     assertTrue(theReverseEnthalpy < -21603.5 && theReverseEnthalpy > -22485.3);
   }
   
+  // Test a pure species enthalpy calculation within VLE
+  // Reference values are from the steam tables
+  public void testPureSpeciesVLEEnthalpyCalculation() {
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    
+    FlowStream inletStream = new FlowStream();
+    FlowStream outletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
+    inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(1.0);
+    outletStream.getFlowSpecies().get(0).setVapourMoleFraction(1.0);
+    inletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
+    inletStream.setMolarFlowRate(1.0); // 1 mol/s = 3.6 kgmol/h
+    inletStream.setTemperature(100.0 + 273.15);
+    inletStream.setPressure(101325.0);
+    inletStream.setVapourFraction(0.25); // 25% of the water is vapourized
+    
+    outletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4)));
+    outletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
+    outletStream.getFlowSpecies().get(0).setVapourMoleFraction(1.0);
+    outletStream.getFlowSpecies().get(0).setLiquidMoleFraction(1.0);
+    outletStream.getFlowSpecies().get(0).setHeatOfVapourization(40660.0);
+    outletStream.setMolarFlowRate(1.0);
+    outletStream.setTemperature(100.0 + 273.15);
+    outletStream.setPressure(101325.0);
+    outletStream.setVapourFraction(0.75); // 75% of the water is vapourized
+    
+    Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
+    double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
+    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
+    
+    //System.out.println("The VLE enthalpy change is: "+theEnthalpy+" "+theReverseEnthalpy);
+    assertTrue(theEnthalpy > 19923.4 && theEnthalpy < 20736.6);
+    assertTrue(theReverseEnthalpy < -19923.4 && theReverseEnthalpy > -20736.6);
+  }
+  
 }
