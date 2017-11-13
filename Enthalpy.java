@@ -44,13 +44,15 @@ public class Enthalpy implements Function {
     
     if(this.inlet.getVapourFraction() == 0.0 && this.outlet.getVapourFraction() == 0.0) {
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
-        liquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
-        result = result + liquidMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
+        outletLiquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
+        outletLiquidFlowRate = outletFlowRate*(1-outletVapourFraction)*outletLiquidMoleFraction;
+        result = result + outletLiquidFlowRate * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
       }
     } else if(this.inlet.getVapourFraction() == 1.0 && this.outlet.getVapourFraction() == 1.0) {
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
-        vapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
-        result = result + vapourMoleFraction * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
+        outletVapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
+        outletVapourFlowRate = outletFlowRate*outletVapourFraction*outletVapourMoleFraction;
+        result = result + outletVapourFlowRate * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
       }
     } else {
       BubblePoint bubblePoint = new BubblePoint(this.inlet);
