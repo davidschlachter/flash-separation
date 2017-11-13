@@ -59,7 +59,7 @@ public class Test_Enthalpy extends TestCase {
     inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
     inletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
     inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(1.0);
-    inletStream.setMolarFlowRate(1.0); // 1 mol/s = 3.6 kgmol/h
+    inletStream.setMolarFlowRate(2.0); // 1 mol/s = 3.6 kgmol/h
     inletStream.setTemperature(20.0 + 273.15);
     inletStream.setPressure(101325.0);
     inletStream.setVapourFraction(0.0);
@@ -67,7 +67,7 @@ public class Test_Enthalpy extends TestCase {
     outletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
     outletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
     outletStream.getFlowSpecies().get(0).setLiquidMoleFraction(1.0);
-    outletStream.setMolarFlowRate(1.0);
+    outletStream.setMolarFlowRate(2.0);
     outletStream.setTemperature(80.0 + 273.15);
     outletStream.setPressure(101325.0);
     outletStream.setVapourFraction(0.0);
@@ -76,8 +76,8 @@ public class Test_Enthalpy extends TestCase {
     double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
     double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
     
-    assertTrue(theEnthalpy > 4503.0 && theEnthalpy < 4540.0);
-    assertTrue(theReverseEnthalpy > -4540.0 && theReverseEnthalpy < -4503.0);
+    assertTrue(theEnthalpy > 9006.0 && theEnthalpy < 9080.0);
+    assertTrue(theReverseEnthalpy > -9080.0 && theReverseEnthalpy < -9006.0);
   }
   
   // Test a pure species enthalpy calculation for the transition between subcooled liquid and
