@@ -18,9 +18,6 @@ public class DewPoint implements Function {
   
   // Return the dew point for the given flowStream components at the given pressure
   public double calc() {
-    double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 1.0);
-    double accuracy = 0.0001;
-    
     // Determine if any of the species is likely to be non-condensable, and if so, ignore it
     int i;
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
@@ -28,11 +25,13 @@ public class DewPoint implements Function {
         System.out.println("ERROR: Critical temperature is not specified.");
         System.exit(1);
       }
-      if (bounds[0] > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
+      if (flowStream.getTemperature() > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
         this.flowStream.getFlowSpecies().get(i).setOverallMoleFraction(0.0);
     }
     
     // Calculate the dew point
+    double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 5.0);
+    double accuracy = 0.0001;
     return RiddersMethod.calc(this, bounds[0], bounds[1], accuracy);
   }
   
