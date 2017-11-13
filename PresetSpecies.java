@@ -70,9 +70,9 @@ public class PresetSpecies {
     waterAntoine.add(new AntoineCoefficients(10.40792661, 1838.675, -31.737, 273, 303)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     waterAntoine.add(new AntoineCoefficients(10.20960661, 1733.926, -39.485, 304, 333)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     waterAntoine.add(new AntoineCoefficients(10.08251661, 1659.793, -45.854, 334, 363)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
-    waterAntoine.add(new AntoineCoefficients(10.08925661, 1663.125, -45.622, 344, 373.2)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
+    //waterAntoine.add(new AntoineCoefficients(10.08925661, 1663.125, -45.622, 344, 373.2)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     waterAntoine.add(new AntoineCoefficients(11.21534661, 2354.731, 7.559, 293, 343)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
-    waterAntoine.add(new AntoineCoefficients(9.660016612, 1435.264, -64.848, 255.9, 373.2)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
+    waterAntoine.add(new AntoineCoefficients(9.660016612, 1435.264, -64.848, 255.9, 378.999)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     water.setAntoineConstants(waterAntoine);
     water.setHeatOfVapourization(40714.5); // http://gchem.cm.utexas.edu/data/section2.php?target=heat-transition.php
     water.setCriticalTemperature(647.0);
