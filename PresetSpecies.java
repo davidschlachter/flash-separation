@@ -24,6 +24,7 @@ public class PresetSpecies {
     ethane.setAntoineConstants(ethaneAntoine);
     ethane.setHeatOfVapourization(15500.3); // Average of http://webbook.nist.gov/cgi/cbook.cgi?ID=C74840&Mask=4
     ethane.setCriticalTemperature(305.3);
+    ethane.setAcentricFactor(0.100); // Source: Smith & Van Ness, Appendix B
     flowSpecies.add(ethane);
     
     FlowSpecies pentane = new FlowSpecies();
@@ -33,6 +34,7 @@ public class PresetSpecies {
     pentane.setAntoineConstants(new AntoineCoefficients(8.994916612, 1070.617, -40.454, 268.6, 341.37)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C109660&Mask=4&Type=ANTOINE&Plot=on
     pentane.setHeatOfVapourization(27623.75); // Average of http://webbook.nist.gov/cgi/cbook.cgi?ID=C109660&Mask=4
     pentane.setCriticalTemperature(469.6);
+    pentane.setAcentricFactor(0.252); // Source: Smith & Van Ness, Appendix B
     flowSpecies.add(pentane);
     
     FlowSpecies hexane = new FlowSpecies();
@@ -45,6 +47,7 @@ public class PresetSpecies {
     hexane.setAntoineConstants(hexaneAntoine);
     hexane.setHeatOfVapourization(30927.77778); // Average of http://webbook.nist.gov/cgi/cbook.cgi?ID=C110543&Mask=4
     hexane.setCriticalTemperature(507.6);
+    hexane.setAcentricFactor(0.301); // Source: Smith & Van Ness, Appendix B
     flowSpecies.add(hexane);
     
     FlowSpecies cyclohexane = new FlowSpecies();
@@ -59,6 +62,7 @@ public class PresetSpecies {
     cyclohexane.setAntoineConstants(cyclohexaneAntoine);
     cyclohexane.setHeatOfVapourization(31690.4); // Average of http://webbook.nist.gov/cgi/cbook.cgi?ID=C110827&Mask=4
     cyclohexane.setCriticalTemperature(554.0);
+    cyclohexane.setAcentricFactor(0.210); // Source: Smith & Van Ness, Appendix B
     flowSpecies.add(cyclohexane);
     
     FlowSpecies water = new FlowSpecies();
@@ -76,6 +80,7 @@ public class PresetSpecies {
     water.setAntoineConstants(waterAntoine);
     water.setHeatOfVapourization(40714.5); // http://gchem.cm.utexas.edu/data/section2.php?target=heat-transition.php
     water.setCriticalTemperature(647.0);
+    water.setAcentricFactor(0.345); // Source: Smith & Van Ness, Appendix B
     flowSpecies.add(water);
     
     FlowSpecies nitrogen = new FlowSpecies();
@@ -88,6 +93,7 @@ public class PresetSpecies {
     nitrogen.setAntoineConstants(nitrogenAntoine);
     nitrogen.setHeatOfVapourization(5850.0); // Average of http://webbook.nist.gov/cgi/cbook.cgi?ID=C7727379&Mask=4
     nitrogen.setCriticalTemperature(126.2);
+    nitrogen.setAcentricFactor(0.038); // Source: Smith & Van Ness, Appendix B
     flowSpecies.add(nitrogen);
     
     return flowSpecies;
