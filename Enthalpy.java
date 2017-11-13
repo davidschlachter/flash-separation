@@ -76,9 +76,9 @@ public class Enthalpy implements Function {
           result += outletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
                                                                 bubbleTemperature, finalTemperature, "vapour");
           result += (inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization;
-          //System.out.println("For species #" + i + ", liquid change is: " + inletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-                                                               initialTemperature, bubbleTemperature, "liquid") + ", vapour change is: "+outletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-                                                                bubbleTemperature, finalTemperature, "vapour")+"and hov change is: "+(inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization);
+          /*System.out.println("For species #" + i + ", liquid change is: " + inletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+                                                              /initialTemperature, bubbleTemperature, "liquid") + ", vapour change is: "+outletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+                                                                bubbleTemperature, finalTemperature, "vapour")+"and hov change is: "+(inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization);*/
         }
         // If the liquid has all condensed
         if (inletLiquidFlowRate < outletLiquidFlowRate) {
@@ -87,9 +87,9 @@ public class Enthalpy implements Function {
           result += inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
                                                                initialTemperature, bubbleTemperature, "vapour");
           result -= (outletLiquidFlowRate-inletLiquidFlowRate)*heatofVapourization;
-          //System.out.println("For species #" + i + ", liquid change is: " + outletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-                                                                bubbleTemperature, finalTemperature, "liquid") + ", vapour change is: "+inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-                                                               initialTemperature, bubbleTemperature, "vapour")+"and hov change is: "+(-(outletLiquidFlowRate-inletLiquidFlowRate)*heatofVapourization));
+          /*System.out.println("For species #" + i + ", liquid change is: " + outletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+bubbleTemperature, finalTemperature, "liquid") + ", vapour change is: "+inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
+          initialTemperature, bubbleTemperature, "vapour")+"and hov change is: "+(-(outletLiquidFlowRate-inletLiquidFlowRate)*heatofVapourization));*/
           
         }
       }
