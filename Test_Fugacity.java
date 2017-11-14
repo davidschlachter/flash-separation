@@ -145,7 +145,7 @@ public class Test_Fugacity extends TestCase {
     Fugacity testFugacityStream = createPureSpeciesTestObject();
     testFugacityStream.beta();
     testFugacityStream.qValue();
-    testFugacityStream.zValue();
+    testFugacityStream.flowStreamZValues();
     System.out.println("Z VALUE FROM TEST IS :"+testFugacityStream.getFlowStream().getFlowSpecies().get(0).getZValue());
     System.out.println("beta value from test is: "+testFugacityStream.getFlowStream().getFlowSpecies().get(0).getBeta());
     System.out.println("q value from test is: "+testFugacityStream.getFlowStream().getFlowSpecies().get(0).getQValue());
@@ -186,7 +186,7 @@ public class Test_Fugacity extends TestCase {
     modifiedStream.mixtureFugacityCoefficients();
     modifiedStream.beta();
     modifiedStream.qValue();
-    modifiedStream.zValue();
+    modifiedStream.flowStreamZValues();
     modifiedStream.largePhi();
     modifiedStream.activityCoefficient();
     boolean areTheyDifferent = false;

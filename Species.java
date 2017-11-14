@@ -6,7 +6,7 @@ import java.util.List;
  * 
  */
 
-public class Species {
+public class Species implements Function{
   
   // Species name
   private String speciesName;
@@ -380,6 +380,26 @@ public class Species {
   // Clone method
   public Species clone() {
     return new Species(this);
+  }
+  
+    public void zValue(){
+      double[] bounds = RootFinder.getBounds(this, 0.75, 0.01);
+      double accuracy = 0.0001;
+      double result = 0.0;
+      result = RiddersMethod.calc(this, bounds[0], bounds[1], accuracy);
+      setZValue(result);
+
+  }
+  
+    public double testFunction(double z){   
+    
+    double result = 0.0;
+      double beta, q;
+      beta = getBeta();
+      q = getQValue();
+    
+      result =  (-1*z) + beta + z*(beta+z)*((1+beta-z)/(q*beta)); 
+    return result;
   }
   
 }

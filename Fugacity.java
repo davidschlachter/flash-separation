@@ -1,4 +1,4 @@
-public class Fugacity implements Function  {
+public class Fugacity  {
   
   private FlowStream flowStream;
   
@@ -200,15 +200,11 @@ public class Fugacity implements Function  {
       flowStream.getFlowSpecies().get(i).setQValue(result);
     }
   }
+
   
-  public void zValue(){
-    for(int i=0; i < flowStream.getFlowSpecies().size(); i++){
-      double[] bounds = RootFinder.getBounds(this, 0.75, 0.01);
-      double accuracy = 0.0001;
-      double result = 0.0;
-      result = RiddersMethod.calc(this, bounds[0], bounds[1], accuracy);
-      flowStream.getFlowSpecies().get(i).setZValue(result);
-      result = 0;
+  public void flowStreamZValues(){
+    for(int i=0; i< flowStream.getFlowSpecies().size(); i++){
+    flowStream.getFlowSpecies().get(i).zValue();
     }
   }
   
@@ -246,20 +242,6 @@ public class Fugacity implements Function  {
     }  
   }
   
-  public double testFunction(double z){   
-    
-    double result = 0;
-    for(int i = 0; i < flowStream.getFlowSpecies().size(); i++){
-      double beta, q;
-      beta = flowStream.getFlowSpecies().get(i).getBeta();
-      q = flowStream.getFlowSpecies().get(i).getQValue();
-    
-      result =  (-1*z) + beta + z*(beta+z)*((1+beta-z)/(q*beta)); 
-    } 
-    return result;
-  }
-  
-  
   public void computeNonIdealParameters(Fugacity fugacityObject){
     
     /* TODO: checks must be implemented here to make sure all parameters are in place
@@ -268,7 +250,7 @@ public class Fugacity implements Function  {
     fugacityObject.mixtureFugacityCoefficients();
     fugacityObject.beta();
     fugacityObject.qValue();
-    fugacityObject.zValue();
+    fugacityObject.flowStreamZValues();
     fugacityObject.activityCoefficient();
     if(fugacityObject.getFlowStream().getFlowSpecies().size() > 1){      // large Phi can only be computed for multicomponent streams. 
       fugacityObject.largePhi();                                           //an arrayIndexOutOfBounds error is thrown if run w/ 1 species
@@ -287,16 +269,7 @@ public class Fugacity implements Function  {
       if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getBeta() == this.getFlowStream().getFlowSpecies().get(i).getBeta()) result = false;
       if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getQValue() == this.getFlowStream().getFlowSpecies().get(i).getQValue()) result = false;
       if(Math.abs(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getZValue() - this.getFlowStream().getFlowSpecies().get(i).getZValue()) < 0.01) result = false;
-      System.out.println("unmodified Q "+i+" is: "+unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getQValue());
-      System.out.println("modified Q "+i+" is: "+this.getFlowStream().getFlowSpecies().get(i).getQValue());
-      System.out.println("unmodified beta "+i+" is: "+unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getBeta());
-      System.out.println("modified beta "+i+" is: "+this.getFlowStream().getFlowSpecies().get(i).getBeta());
-      System.out.println("unmodified z "+i+" is: "+unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getZValue());
-      System.out.println("modified z "+i+" is: "+this.getFlowStream().getFlowSpecies().get(i).getZValue());
-      System.out.println("unmodified LP "+i+" is: "+unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getLargePhi());
-      System.out.println("modified LP "+i+" is: "+this.getFlowStream().getFlowSpecies().get(i).getLargePhi());
-      System.out.println("unmodified AC "+i+" is: "+unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getActivityCoefficient());
-      System.out.println("modified AC "+i+" is: "+this.getFlowStream().getFlowSpecies().get(i).getActivityCoefficient());
+
     }
     return result;
   }
