@@ -141,6 +141,7 @@ public class Test_Fugacity extends TestCase {
                testFugacityStream.getFlowStream().getFlowSpecies().get(0).getQValue() > 6.85);
   }
   
+  // Can validate with http://people.ds.cam.ac.uk/pjb10/thermo/pure.html
   public void testZValue() {
     Fugacity testFugacityStream = createPureSpeciesTestObject();
     testFugacityStream.beta();
