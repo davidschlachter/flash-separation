@@ -128,11 +128,11 @@ public class Test_RachfordRice extends TestCase {
     FlowStream solvedFlowStream = new FlowStream();
     Fugacity testObject = new Fugacity(testStream);
     Fugacity modifiedTestObject = new Fugacity(testStream);
-    testObject.computeNonIdealParameters(modifiedTestObject);  
-    assertTrue(testObject.getFlowStream().approxEquals(modifiedTestObject.getFlowStream(), 0.01));
+    modifiedTestObject.computeNonIdealParameters(modifiedTestObject);  
+    assertFalse(testObject.getFlowStream().approxEquals(modifiedTestObject.getFlowStream(), 0.01));
     RachfordRice testRachfordRice = new RachfordRice(testObject.getFlowStream());
     
-    /*do{
+   /* do{
     solvedFlowStream = testRachfordRice.solve();
     count=count+1;
     for(int i = 0; i < solvedFlowStream.getFlowSpecies().size(); i++){
@@ -168,7 +168,7 @@ public class Test_RachfordRice extends TestCase {
     System.out.println("benzene Liquid mole fraction is: "+benzeneLiquidMoleFraction);
     System.out.println("benzene vapour mole fraction is: "+benzeneVapourMoleFraction);
     System.out.println("benzene overall mole fraction is: "+benzeneOverallMoleFraction);
-    System.out.println("COUNT IS: "+count); */
+    System.out.println("COUNT IS: "+count); 
     
     
     
