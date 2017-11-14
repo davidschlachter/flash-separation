@@ -1,5 +1,5 @@
 /**
- * Class that returns the dew point of a stream of given composition at a given pressure
+ * Class that returns the bubble point of a stream of given composition at a given pressure
  */
 public class BubblePoint implements Function {
   

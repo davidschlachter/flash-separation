@@ -160,7 +160,7 @@ public class Test_Fugacity extends TestCase {
     testFugacityStream.getFlowStream().getFlowSpecies().get(0).setMixtureFugacityCoefficient(0.985);
     testFugacityStream.getFlowStream().getFlowSpecies().get(0).setVapourMoleFraction(0.75);
     testFugacityStream.getFlowStream().getFlowSpecies().get(0).setLiquidMoleFraction(0.5);
-    testFugacityStream.computeNonIdealParameters(testFugacityStream);
+    testFugacityStream.computeNonIdealParameters();
     
     assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getActivityCoefficient() < 1.77 &&
                testFugacityStream.getFlowStream().getFlowSpecies().get(0).getActivityCoefficient() > 1.73);
@@ -170,7 +170,7 @@ public class Test_Fugacity extends TestCase {
     Fugacity testFugacityStream = new Fugacity(createTestObject());
     testFugacityStream.getFlowStream().setTemperature(323.15);
     testFugacityStream.getFlowStream().setPressure(25000);
-    testFugacityStream.computeNonIdealParameters(testFugacityStream);
+    testFugacityStream.computeNonIdealParameters();
     
     assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getLargePhi() <  1.07);
     assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getLargePhi() >  1.03);
