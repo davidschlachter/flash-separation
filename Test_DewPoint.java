@@ -86,33 +86,46 @@ public class Test_DewPoint extends TestCase {
   
   // Test for a non-ideal calculation
   public void testNonIdealCalc(){
-    
+    //System.out.println("Starting non-ideal dew point");
     FlowStream testStream = new FlowStream();
     
     // Test function result for water and ethanol at 1 atm, 300 K under NONIDEAL CONDITIONS!
     FlowSpecies water = new FlowSpecies();
     water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
     water.setOverallMoleFraction(0.75);
+    water.setVapourMoleFraction(0.75);
+    water.setLiquidMoleFraction(0.75);
     water.setCriticalTemperature(647.0);
-    water.setActivityCoefficient(0.953);
-    water.setLargePhi(1.043);
+    water.setCriticalPressure(22120000.0);
+    water.setAcentricFactor(0.345);
+    //water.setActivityCoefficient(0.953);
+    //water.setLargePhi(1.043);
     
     FlowSpecies ethanol = new FlowSpecies();
     ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
     ethanol.setOverallMoleFraction(0.25);
+    ethanol.setVapourMoleFraction(0.25);
+    ethanol.setLiquidMoleFraction(0.25);
     ethanol.setCriticalTemperature(514.0);
-    ethanol.setActivityCoefficient(0.968);
-    ethanol.setLargePhi(1.003);
-    // Test function result for water and ethanol at 1 atm, 300 K
+    ethanol.setAcentricFactor(0.645);
+    ethanol.setCriticalPressure(6148000.0);
+    //ethanol.setActivityCoefficient(0.968);
+    //ethanol.setLargePhi(1.003);
     
     testStream.addFlowSpecies(water);
     testStream.addFlowSpecies(ethanol);
     testStream.setPressure(101325.0);
     testStream.setTemperature(300.);
+    testStream.setVapourFraction(1.0);
+    
+    Fugacity fugacity = new Fugacity(testStream);
+    fugacity.computeNonIdealParameters();
     
     DewPoint testNonIdealDewpoint = new DewPoint(testStream);
     double dewpoint = testNonIdealDewpoint.calc();
-    System.out.println("DEWPOINT IS: "+dewpoint);
+    //System.out.println("Water activity coefficient is: " + testStream.getFlowSpecies().get(0).getActivityCoefficient());
+    //System.out.println("Ethanol activity coefficient is: " + testStream.getFlowSpecies().get(1).getActivityCoefficient());
+    //System.out.println("DEWPOINT IS: "+dewpoint);
     
     assertTrue(dewpoint > 371.1 && dewpoint < 371.5);
     
