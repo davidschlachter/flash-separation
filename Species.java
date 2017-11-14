@@ -216,7 +216,7 @@ public class Species implements Function{
       this.activityCoefficient = activityCoefficient;
       return true;
     } else {
-      System.out.println("Activity coefficient must be greater than 0.");
+      System.out.println("Activity coefficient must be greater than 0 (was: " + activityCoefficient + ")");
       return false;
     }
   }
@@ -226,7 +226,7 @@ public class Species implements Function{
       this.mixtureFugacityCoefficient = mixtureFugacityCoefficient;
       return true;
     } else {
-      System.out.println("Fugacity Coefficient must be greater than 0.");
+      System.out.println("Fugacity Coefficient must be greater than 0 (was: "+mixtureFugacityCoefficient+")");
       return false;
     }
   }
