@@ -11,17 +11,9 @@ public class Species {
   // Species name
   private String speciesName;
   
-  // Vapour heat capacity constants
-  private double vapourHeatCapacityA = 0.0;
-  private double vapourHeatCapacityB = 0.0;
-  private double vapourHeatCapacityC = 0.0;
-  private double vapourHeatCapacityD = 0.0;
-  
-  //Liquid heat capacity constants
-  private double liquidHeatCapacityA= 0.0;
-  private double liquidHeatCapacityB= 0.0;
-  private double liquidHeatCapacityC= 0.0;
-  private double liquidHeatCapacityD= 0.0;
+  // Heat capacity constants
+  private double[] vapourHeatCapacity = new double[4];
+  private double[] liquidHeatCapacity = new double[4];
   
   // Antoine coefficients
   private List<AntoineCoefficients> antoineCoefficients;
@@ -69,14 +61,14 @@ public class Species {
   public Species (Species source) {
     int i;
     this.speciesName = source.speciesName;
-    this.vapourHeatCapacityA = source.vapourHeatCapacityA;
-    this.vapourHeatCapacityB = source.vapourHeatCapacityB;
-    this.vapourHeatCapacityC = source.vapourHeatCapacityC;
-    this.vapourHeatCapacityD = source.vapourHeatCapacityD;
-    this.liquidHeatCapacityA = source.liquidHeatCapacityA;
-    this.liquidHeatCapacityB = source.liquidHeatCapacityB;
-    this.liquidHeatCapacityC = source.liquidHeatCapacityC;
-    this.liquidHeatCapacityD = source.liquidHeatCapacityD;
+    this.vapourHeatCapacity[0] = source.vapourHeatCapacity[0];
+    this.vapourHeatCapacity[1] = source.vapourHeatCapacity[1];
+    this.vapourHeatCapacity[2] = source.vapourHeatCapacity[2];
+    this.vapourHeatCapacity[3] = source.vapourHeatCapacity[3];
+    this.liquidHeatCapacity[0] = source.liquidHeatCapacity[0];
+    this.liquidHeatCapacity[1] = source.liquidHeatCapacity[1];
+    this.liquidHeatCapacity[2] = source.liquidHeatCapacity[2];
+    this.liquidHeatCapacity[3] = source.liquidHeatCapacity[3];
     if (source.antoineCoefficients != null) {
       this.antoineCoefficients = new ArrayList<AntoineCoefficients>();
       for (i = 0; i < source.antoineCoefficients.size(); i++) {
@@ -102,17 +94,17 @@ public class Species {
   }
   
   public void setVapourHeatCapacityConstants(double heatCapacityA, double heatCapacityB, double heatCapacityC, double heatCapacityD) {
-    this.vapourHeatCapacityA = heatCapacityA;
-    this.vapourHeatCapacityB = heatCapacityB;
-    this.vapourHeatCapacityC = heatCapacityC;
-    this.vapourHeatCapacityD = heatCapacityD;
+    this.vapourHeatCapacity[0] = heatCapacityA;
+    this.vapourHeatCapacity[1] = heatCapacityB;
+    this.vapourHeatCapacity[2] = heatCapacityC;
+    this.vapourHeatCapacity[3] = heatCapacityD;
   }
   
   public void setLiquidHeatCapacityConstants(double liquidHeatCapacityA, double liquidHeatCapacityB, double liquidHeatCapacityC, double liquidHeatCapacityD) {
-    this.liquidHeatCapacityA = liquidHeatCapacityA;
-    this.liquidHeatCapacityB = liquidHeatCapacityB;
-    this.liquidHeatCapacityC = liquidHeatCapacityC;
-    this.liquidHeatCapacityD = liquidHeatCapacityD;
+    this.liquidHeatCapacity[0] = liquidHeatCapacityA;
+    this.liquidHeatCapacity[1] = liquidHeatCapacityB;
+    this.liquidHeatCapacity[2] = liquidHeatCapacityC;
+    this.liquidHeatCapacity[3] = liquidHeatCapacityD;
   }
   
   public void setAntoineConstants(List<AntoineCoefficients> source) {
@@ -253,20 +245,20 @@ public class Species {
   
   public double[] getVapourHeatCapacityConstants() {
     double[] vapourHeatCapacityConstants = new double[4];
-    vapourHeatCapacityConstants[0] = this.vapourHeatCapacityA;
-    vapourHeatCapacityConstants[1] = this.vapourHeatCapacityB;
-    vapourHeatCapacityConstants[2] = this.vapourHeatCapacityC;
-    vapourHeatCapacityConstants[3] = this.vapourHeatCapacityD;
+    vapourHeatCapacityConstants[0] = this.vapourHeatCapacity[0];
+    vapourHeatCapacityConstants[1] = this.vapourHeatCapacity[1];
+    vapourHeatCapacityConstants[2] = this.vapourHeatCapacity[2];
+    vapourHeatCapacityConstants[3] = this.vapourHeatCapacity[3];
     
     return vapourHeatCapacityConstants;
   }
   
   public double[] getLiquidHeatCapacityConstants() {
     double[] liquidHeatCapacityConstants = new double[4];
-    liquidHeatCapacityConstants[0] = this.liquidHeatCapacityA;
-    liquidHeatCapacityConstants[1] = this.liquidHeatCapacityB;
-    liquidHeatCapacityConstants[2] = this.liquidHeatCapacityC;
-    liquidHeatCapacityConstants[3] = this.liquidHeatCapacityD;
+    liquidHeatCapacityConstants[0] = this.liquidHeatCapacity[0];
+    liquidHeatCapacityConstants[1] = this.liquidHeatCapacity[1];
+    liquidHeatCapacityConstants[2] = this.liquidHeatCapacity[2];
+    liquidHeatCapacityConstants[3] = this.liquidHeatCapacity[3];
     
     return liquidHeatCapacityConstants;
   }
@@ -363,14 +355,14 @@ public class Species {
     else return false;
     
     if(this.speciesName.equalsIgnoreCase(other.speciesName) &&
-       this.vapourHeatCapacityA == other.vapourHeatCapacityA &&
-       this.vapourHeatCapacityB == other.vapourHeatCapacityB &&
-       this.vapourHeatCapacityC == other.vapourHeatCapacityC &&
-       this.vapourHeatCapacityD == other.vapourHeatCapacityD &&
-       this.liquidHeatCapacityA == other.liquidHeatCapacityA &&
-       this.liquidHeatCapacityB == other.liquidHeatCapacityB &&
-       this.liquidHeatCapacityC == other.liquidHeatCapacityC &&
-       this.liquidHeatCapacityD == other.liquidHeatCapacityD &&
+       this.vapourHeatCapacity[0] == other.vapourHeatCapacity[0] &&
+       this.vapourHeatCapacity[1] == other.vapourHeatCapacity[1] &&
+       this.vapourHeatCapacity[2] == other.vapourHeatCapacity[2] &&
+       this.vapourHeatCapacity[3] == other.vapourHeatCapacity[3] &&
+       this.liquidHeatCapacity[0] == other.liquidHeatCapacity[0] &&
+       this.liquidHeatCapacity[1] == other.liquidHeatCapacity[1] &&
+       this.liquidHeatCapacity[2] == other.liquidHeatCapacity[2] &&
+       this.liquidHeatCapacity[3] == other.liquidHeatCapacity[3] &&
        this.heatOfVapourization == other.heatOfVapourization &&
        this.criticalTemperature == other.criticalTemperature &&
        this.criticalPressure == other.criticalPressure &&
