@@ -93,8 +93,15 @@ public class Enthalpy implements Function {
           } else {
             lBound = outletBubbleTemperature;
           }
-          result += inletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),  initialTemperature, lBound, "liquid");
-          result += outletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), lBound, finalTemperature, "vapour");
+          // Liquid that was vapourized
+          result += (inletLiquidFlowRate-outletLiquidFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),  initialTemperature, lBound, "liquid");
+          // Liquid that was heated but not vapourized
+          result += outletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),  initialTemperature, finalTemperature, "liquid");
+          // Vapour that was formed
+          result += (outletVapourFlowRate-inletVapourFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), lBound, finalTemperature, "vapour");
+          // Vapour that did not change state (just heated)
+          result += inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), lBound, finalTemperature, "vapour");
+          // Heat of vapourization for vapourized liquid
           result += (inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization;
         }
         // If some of the vapour has condensed
