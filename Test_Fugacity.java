@@ -147,9 +147,6 @@ public class Test_Fugacity extends TestCase {
     testFugacityStream.beta();
     testFugacityStream.qValue();
     testFugacityStream.flowStreamZValues();
-    System.out.println("Z VALUE FROM TEST IS :"+testFugacityStream.getFlowStream().getFlowSpecies().get(0).getZValue());
-    System.out.println("beta value from test is: "+testFugacityStream.getFlowStream().getFlowSpecies().get(0).getBeta());
-    System.out.println("q value from test is: "+testFugacityStream.getFlowStream().getFlowSpecies().get(0).getQValue());
     assertTrue(testFugacityStream.getFlowStream().getFlowSpecies().get(0).getZValue() < 0.823 &&
                testFugacityStream.getFlowStream().getFlowSpecies().get(0).getZValue() > 0.817);
   }
