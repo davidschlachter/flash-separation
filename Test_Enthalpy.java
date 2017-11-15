@@ -1,5 +1,6 @@
 import junit.framework.TestCase;
 import java.util.List;
+import java.util.ArrayList;
 
 public class Test_Enthalpy extends TestCase {
   
@@ -112,6 +113,40 @@ public class Test_Enthalpy extends TestCase {
     //System.out.println("The phase change enthalpy change is: "+theEnthalpy+" "+theReverseEnthalpy);
     assertTrue(theEnthalpy > 47464.0 && theEnthalpy < 49401.0);
     assertTrue(theReverseEnthalpy < -47464.0 && theReverseEnthalpy > -49401.0);
+  }
+  
+  // Test a pure species enthalpy calculation for the transition between subcooled liquid and
+  // superheated vapour (in both directions), with a change in pressure
+  // Reference values are from the steam tables
+  public void testPureSpeciesPressureChangePhaseChangeEnthalpyCalculation() {
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    
+    FlowStream inletStream = new FlowStream();
+    FlowStream outletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
+    inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(1.0);
+    inletStream.setMolarFlowRate(1.0); // 1 mol/s = 3.6 kgmol/h
+    inletStream.setTemperature(120.0 + 273.15);
+    inletStream.setPressure(200000.0);
+    inletStream.setVapourFraction(0.0);
+    
+    outletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
+    outletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
+    outletStream.getFlowSpecies().get(0).setVapourMoleFraction(1.0);
+    outletStream.setMolarFlowRate(1.0);
+    outletStream.setTemperature(110.0 + 273.15);
+    outletStream.setPressure(100000.0);
+    outletStream.setVapourFraction(1.0);
+    
+    Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
+    double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
+    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
+    
+    System.out.println("The pressure change phase change enthalpy change is: "+theEnthalpy+" "+theReverseEnthalpy);
+    assertTrue(theEnthalpy > 38708.04 && theEnthalpy < 40287.96);
+    assertTrue(theReverseEnthalpy < -38708.04 && theReverseEnthalpy > -40287.96);
   }
   
   // Test a pure species enthalpy calculation for the transition between subcooled liquid and
