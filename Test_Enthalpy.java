@@ -332,4 +332,61 @@ public class Test_Enthalpy extends TestCase {
     
   }
   
+  // Test sourced from https://www.youtube.com/watch?v=Aw4VsloWVjM&t=3s -- verify that the solution is actually adiabatic!
+  // NOTE: This test is only here so that we can validate that this transition IS actually adiabatic -- if it is, we
+  // can use this system to test our Controller.
+  public void testIdealAdiabaticFlash() {
+    
+    FlowSpecies ethanol = new FlowSpecies();
+    FlowSpecies methanol = new FlowSpecies();
+    
+    methanol.setOverallMoleFraction(0.30);
+    ethanol.setOverallMoleFraction(0.70);
+    // Antoine
+    List<AntoineCoefficients> methanolAntoine = new ArrayList<AntoineCoefficients>();
+    methanol.setAntoineConstants(new AntoineCoefficients(10.2049, 1582, -33.15));
+    ethanol.setAntoineConstants(new AntoineCoefficients(10.2349, 1593, -47.15));
+    // Heat capacities
+    methanol.setVapourHeatCapacityConstants(52., 0., 0., 0.);
+    methanol.setLiquidHeatCapacityConstants(110., 0., 0., 0.);
+    ethanol.setLiquidHeatCapacityConstants(165., 0., 0., 0.);
+    ethanol.setVapourHeatCapacityConstants(80., 0., 0., 0.);
+    // Other
+    methanol.setCriticalTemperature(513.0);
+    methanol.setHeatOfVapourization(35300.0);
+    ethanol.setCriticalTemperature(514.0);
+    ethanol.setHeatOfVapourization(38600.0);
+    
+    FlowStream inlet = new FlowStream();
+    inlet.addFlowSpecies(methanol);
+    inlet.addFlowSpecies(ethanol);
+    inlet.setMolarFlowRate(1.0);
+    
+    FlowStream outlet = new FlowStream(inlet);
+    
+    inlet.setTemperature(423.0);
+    inlet.getFlowSpecies().get(0).setLiquidMoleFraction(methanol.getOverallMoleFraction());
+    inlet.getFlowSpecies().get(1).setLiquidMoleFraction(ethanol.getOverallMoleFraction());
+    // Hack so that enthalpy works :)
+    inlet.setVapourFraction(0.00000001);
+    inlet.getFlowSpecies().get(0).setVapourMoleFraction(0.5);
+    inlet.getFlowSpecies().get(1).setVapourMoleFraction(0.5);
+    // </hack>
+    inlet.setPressure(20.0 * 100000);
+    outlet.setPressure(2.0 * 100000);
+    outlet.getFlowSpecies().get(0).setLiquidMoleFraction(0.27);
+    outlet.getFlowSpecies().get(1).setLiquidMoleFraction(0.73);
+    outlet.getFlowSpecies().get(0).setVapourMoleFraction(0.38);
+    outlet.getFlowSpecies().get(1).setVapourMoleFraction(0.62);
+    outlet.setVapourFraction(0.26);
+    outlet.setTemperature(365.0);
+    
+    double theEnthalpy = new Enthalpy(inlet, outlet).testFunction(outlet.getTemperature());
+    double theReverseEnthalpy = new Enthalpy(outlet, inlet).testFunction(inlet.getTemperature());
+    
+    assertTrue(theEnthalpy > -100.0 && theEnthalpy < 100.0);
+    assertTrue(theReverseEnthalpy < 100.0 && theReverseEnthalpy > -100.0);
+    
+  }
+  
 }
