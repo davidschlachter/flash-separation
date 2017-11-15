@@ -205,24 +205,13 @@ public class ConsoleUI {
       }
     }
     
-    //
-    // Logic for determining the problem type
-    //
-    RachfordRice rachfordRice = new RachfordRice(outletStream);
-    double unknownTemperature;
-    // First problem type: both inlet and outlet temperatures are specified
-    if (outletStream.getTemperature() > 0.01 && inletStream.getTemperature() > 0.01) {
-      outletStream = rachfordRice.solve();
-      output.println("\nRESULTS: \n");
-      this.printStreams(scan, output, inletStream, outletStream);
-    } else {
-      // Second and third problem types: one of the temperatures is missing, and the
-      // flash is adiabatic
-      Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
-      unknownTemperature = RiddersMethod.calc(enthalpy, 0.01, 1000.0, 0.001);
-      output.println("The unknown temperature is: " + unknownTemperature);
-    }
+    // Calculate what's missing in the stream(s)
+    Controller.calc(inletStream, outletStream);
     
+    
+    // Print the final results
+    output.println("\nRESULTS: \n");
+    this.printStreams(scan, output, inletStream, outletStream);
     
     scan.close();
     return true;

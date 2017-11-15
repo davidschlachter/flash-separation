@@ -216,7 +216,7 @@ public class Species implements Function{
       this.activityCoefficient = activityCoefficient;
       return true;
     } else {
-      System.out.println("Activity coefficient must be greater than 0.");
+      System.out.println("Activity coefficient must be greater than 0 (was: " + activityCoefficient + ")");
       return false;
     }
   }
@@ -226,7 +226,7 @@ public class Species implements Function{
       this.mixtureFugacityCoefficient = mixtureFugacityCoefficient;
       return true;
     } else {
-      System.out.println("Fugacity Coefficient must be greater than 0.");
+      System.out.println("Fugacity Coefficient must be greater than 0 (was: "+mixtureFugacityCoefficient+")");
       return false;
     }
   }
@@ -382,23 +382,18 @@ public class Species implements Function{
     return new Species(this);
   }
   
-    public void zValue(){
-      double[] bounds = RootFinder.getBounds(this, 0.75, 0.01);
-      double accuracy = 0.0001;
-      double result = 0.0;
-      result = RiddersMethod.calc(this, bounds[0], bounds[1], accuracy);
-      setZValue(result);
-
+  public void zValue(){
+    double[] bounds = RootFinder.getBounds(this, 0.75, 0.01);
+    double accuracy = 0.0001;
+    double result = 0.0;
+    result = RiddersMethod.calc(this, bounds[0], bounds[1], accuracy);
+    this.zValue = result;
   }
   
-    public double testFunction(double z){   
-    
+  public double testFunction(double z){   
     double result = 0.0;
-      double beta, q;
-      beta = getBeta();
-      q = getQValue();
     
-      result =  (-1*z) + beta + z*(beta+z)*((1+beta-z)/(q*beta)); 
+    result =  (-1*z) + this.beta + z*(this.beta+z)*((1+this.beta-z)/(this.qValue*this.beta)); 
     return result;
   }
   

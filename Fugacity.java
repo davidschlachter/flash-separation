@@ -243,18 +243,18 @@ public class Fugacity  {
     }  
   }
   
-  public void computeNonIdealParameters(Fugacity fugacityObject){
+  public void computeNonIdealParameters(){
     
     /* TODO: checks must be implemented here to make sure all parameters are in place
      * for the proper calculation of nonideal parameters */
     
-    fugacityObject.mixtureFugacityCoefficients();
-    fugacityObject.beta();
-    fugacityObject.qValue();
-    fugacityObject.flowStreamZValues();
-    fugacityObject.activityCoefficient();
-    if(fugacityObject.getFlowStream().getFlowSpecies().size() > 1){      // large Phi can only be computed for multicomponent streams. 
-      fugacityObject.largePhi();                                           //an arrayIndexOutOfBounds error is thrown if run w/ 1 species
+    this.mixtureFugacityCoefficients();
+    this.beta();
+    this.qValue();
+    this.flowStreamZValues();
+    this.activityCoefficient();
+    if(this.getFlowStream().getFlowSpecies().size() > 1){      // large Phi can only be computed for multicomponent streams. 
+      this.largePhi();                                           //an arrayIndexOutOfBounds error is thrown if run w/ 1 species
     }
     
   }

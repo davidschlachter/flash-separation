@@ -21,8 +21,6 @@ public class RachfordRice implements DifferentiableFunction {
   
   // Solve the composition of the given flow stream
   public FlowStream solve() {
-    double[] bounds = RootFinder.getBounds(this, 1.0, 0.1);
-    
     
     double vOverF = NewtonRaphson.calc(this, 0.5, 0.1);
     
