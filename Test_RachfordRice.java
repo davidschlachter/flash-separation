@@ -128,15 +128,12 @@ public class Test_RachfordRice extends TestCase {
     FlowStream solvedFlowStream = new FlowStream();
     Fugacity testObject = new Fugacity(testStream);
     Fugacity modifiedTestObject = new Fugacity(testStream);
-<<<<<<< HEAD
     modifiedTestObject.computeNonIdealParameters(modifiedTestObject);  
     assertFalse(testObject.nonIdealComputed(modifiedTestObject));
     RachfordRice testRachfordRice = new RachfordRice(modifiedTestObject.getFlowStream());
-=======
     modifiedTestObject.computeNonIdealParameters();  
     assertFalse(testObject.getFlowStream().approxEquals(modifiedTestObject.getFlowStream(), 0.01));
     RachfordRice testRachfordRice = new RachfordRice(testObject.getFlowStream());
->>>>>>> 50f899b25da05a6b399d0f9a27d7e83e304c55a0
     
     do{
     solvedFlowStream = testRachfordRice.solve();
