@@ -102,10 +102,11 @@ public class Test_BubblePoint extends TestCase {
     testStream.addFlowSpecies(water);
     testStream.addFlowSpecies(ethanol);
     testStream.setPressure(101325.0);
-    testStream.setTemperature(298.0);
+    testStream.setTemperature(300.);
     
     BubblePoint testBubblePoint = new BubblePoint(testStream);
     double bubblePoint = testBubblePoint.calc();
+    System.out.println("BUBBLE POINT IS: "+bubblePoint);
     
     assertTrue(bubblePoint > 367.3 && bubblePoint < 367.7);
     

@@ -155,15 +155,16 @@ public class Fugacity  {
           if(i>k)
             sumTerm += flowStream.getFlowSpecies().get(i).getVapourMoleFraction() * 
             flowStream.getFlowSpecies().get(j).getVapourMoleFraction() * 
-            ( (4 * bij[i][k]) - bij[i][i] - (2 * bij[k][k]) - (2 * bij[i][j]) + bij[j][j]);
+            ( (4. * bij[i][k]) - bij[i][i] - (2. * bij[k][k]) - (2. * bij[i][j]) + bij[j][j]);
           else
             sumTerm += flowStream.getFlowSpecies().get(i).getVapourMoleFraction() * 
             flowStream.getFlowSpecies().get(j).getVapourMoleFraction() * 
-            ( (4 * bij[k][i]) - bij[i][i] - (2 * bij[k][k]) - (2 * bij[i][j]) + bij[j][j]);
+            ( (4. * bij[k][i]) - bij[i][i] - (2. * bij[k][k]) - (2. * bij[i][j]) + bij[j][j]);
         }
       }
       fugacityCoefficient = Math.exp((P / (R * T)) * (bij[k][k] + (0.5 * sumTerm)));
       flowStream.getFlowSpecies().get(k).setMixtureFugacityCoefficient(fugacityCoefficient);
+      System.out.println("FUGACITY COEFFICIENT IS : "+fugacityCoefficient);
       sumTerm = 0.0;
     }
   }//end of fugacity coefficients method
