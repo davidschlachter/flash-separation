@@ -145,8 +145,8 @@ public class Test_Enthalpy extends TestCase {
     double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
     
     //System.out.println("The pressure change phase change enthalpy change is: "+theEnthalpy+" "+theReverseEnthalpy);
-    assertTrue(theEnthalpy > 40370. && theEnthalpy < 40374.);
-    assertTrue(theReverseEnthalpy < -40370. && theReverseEnthalpy > -40374.);
+    assertTrue(theEnthalpy > 38868. && theEnthalpy < 40454.);
+    assertTrue(theReverseEnthalpy < -38868. && theReverseEnthalpy > -40454.);
   }
   
   // Test a pure species enthalpy calculation for the transition between subcooled liquid and

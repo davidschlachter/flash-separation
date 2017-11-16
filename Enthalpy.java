@@ -85,37 +85,31 @@ public class Enthalpy implements Function {
         
         heatofVapourization = this.outlet.getFlowSpecies().get(i).getHeatOfVapourization();
         
+        //
         // If some of the liquid has vapourized
+        //
         if (inletLiquidFlowRate > outletLiquidFlowRate) {
-          double lBound;
-          if (initialTemperature > finalTemperature) {
-            lBound = initialTemperature;
-          } else {
-            lBound = outletBubbleTemperature;
-          }
-          // Liquid that was vapourized
-          result += (inletLiquidFlowRate-outletLiquidFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),  initialTemperature, lBound, "liquid");
-          // Liquid that was heated but not vapourized
+          // How much liquid is left in the end? Calculate its change in enthalpy
           result += outletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),  initialTemperature, finalTemperature, "liquid");
-          // Vapour that was formed
-          result += (outletVapourFlowRate-inletVapourFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), lBound, finalTemperature, "vapour");
-          // Vapour that did not change state (just heated)
-          result += inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), lBound, finalTemperature, "vapour");
-          // Heat of vapourization for vapourized liquid
-          result += (inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization;
+          // How much liquid changed phase? Calculate it's enthalpy change by going to standard conditions, vaporizing, then going to final conditions
+          result += (inletLiquidFlowRate-outletLiquidFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, 298.15, "liquid");
+          result += (inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization; // Standard H.o.V.
+          result += (inletLiquidFlowRate-outletLiquidFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), 298.15, finalTemperature, "vapour");
+          // How much vapour was in the inlet and just changed temperature?
+          result += inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
         }
+        //
         // If some of the vapour has condensed
+        //
         if (inletLiquidFlowRate < outletLiquidFlowRate) {
-          double uBound;
-          if (initialTemperature < finalTemperature) {
-            uBound = finalTemperature;
-          } else {
-            uBound = outletBubbleTemperature;
-          }
-          result += outletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), uBound, finalTemperature, "liquid");
-          result += inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),  initialTemperature, uBound, "vapour");
-          result -= (outletLiquidFlowRate-inletLiquidFlowRate)*heatofVapourization;
-          
+          // How much vapour is left in the end? Calculate its change in enthalpy
+          result += outletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
+          // How much vapour changed phase? Calculate it's enthalpy change by going to standard conditions, condensing, then going to final conditions
+          result += (inletVapourFlowRate-outletVapourFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, 298.15, "vapour");
+          result -= (inletVapourFlowRate-outletVapourFlowRate)*heatofVapourization;
+          result += (inletVapourFlowRate-outletVapourFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), 298.15, finalTemperature, "liquid");
+          // How much liquid was in the inlet and just changed temperature?
+          result += inletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
         }
       }
     }
