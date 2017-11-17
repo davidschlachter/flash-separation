@@ -215,15 +215,19 @@ public class Test_RachfordRice extends TestCase {
     FlowSpecies nHexane = new FlowSpecies();
     nHexane.setAntoineConstants(new AntoineCoefficients(9.00165, 1170.87529, -48.833, 1., 1000.));
     nHexane.setOverallMoleFraction(0.25);
+    nHexane.setCriticalTemperature(507.6);
     FlowSpecies ethanol = new FlowSpecies();
     ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 1., 1000.));
     ethanol.setOverallMoleFraction(0.4);
+    ethanol.setCriticalTemperature(514);
     FlowSpecies mcp = new FlowSpecies();
     mcp.setAntoineConstants(new AntoineCoefficients(8.98773, 1186.059, -47.108, 1., 1000.));
     mcp.setOverallMoleFraction(0.2);
+    mcp.setCriticalTemperature(532.8);
     FlowSpecies benzene = new FlowSpecies();
     benzene.setAntoineConstants(new AntoineCoefficients(8.9854, 1184.23854, -55.578, 1., 1000.));
     benzene.setOverallMoleFraction(0.15);
+    benzene.setCriticalTemperature(562);
                             
     testStream.addFlowSpecies(nHexane);
     testStream.addFlowSpecies(ethanol);
