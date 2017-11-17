@@ -6,6 +6,10 @@ public class Fugacity  {
     this.flowStream = flowStream;
   }//end of constructor
   
+  //setter
+  public void setFlowStream(FlowStream input){
+  this.flowStream = input;
+  }
   
   public double[][] crossSpeciesCriticalZ(){
     double[][] criticalZValues;
@@ -36,7 +40,7 @@ public class Fugacity  {
     for(i=0; i<n; i++){
       for(j=0; j<=i; j++){
         criticalVolumes[i][j] = (Math.pow(((Math.pow(flowStream.getFlowSpecies().get(i).getCriticalVolume(), (1.0/3.0)) + 
-                                            Math.pow(flowStream.getFlowSpecies().get(j).getCriticalVolume(), (1.0/3.0)))/2.0), 3.0)) * 1e-6; //units of m3/mol
+                                            Math.pow(flowStream.getFlowSpecies().get(j).getCriticalVolume(), (1.0/3.0)))/2.0), 3.0)); //units of m3/mol
       }
     }
     return criticalVolumes;
@@ -130,7 +134,7 @@ public class Fugacity  {
       for(j = 0; j <= i; j++){
         b0 = 0.083 - (0.422/(Math.pow((flowStream.getTemperature()/criticalTemperatures[i][j]), 1.6)));
         b1 = 0.139 - (0.172/(Math.pow((flowStream.getTemperature()/criticalTemperatures[i][j]), 4.2)));
-        bij[i][j] = (((b0 + b1 * acentricFactors[i][j]) * criticalTemperatures[i][j] * R) / criticalPressures[i][j]);
+        bij[i][j] = (((b0 + b1 * acentricFactors[i][j]) * criticalTemperatures[i][j] * R) / (criticalPressures[i][j]));
       }
     }
     return bij;
@@ -164,7 +168,6 @@ public class Fugacity  {
       }
       fugacityCoefficient = Math.exp((P / (R * T)) * (bij[k][k] + (0.5 * sumTerm)));
       flowStream.getFlowSpecies().get(k).setMixtureFugacityCoefficient(fugacityCoefficient);
-      System.out.println("FUGACITY COEFFICIENT IS : "+fugacityCoefficient);
       sumTerm = 0.0;
     }
   }//end of fugacity coefficients method
@@ -239,6 +242,7 @@ public class Fugacity  {
     bValues=bValues();
     for(int i=0; i<n; i++){
       phiSat[i]=Math.exp((bValues[i][i]*SaturationPressure.calc(flowStream.getFlowSpecies().get(i),flowStream.getTemperature()))/(R * flowStream.getTemperature()));
+                         
       flowStream.getFlowSpecies().get(i).setLargePhi(flowStream.getFlowSpecies().get(i).getMixtureFugacityCoefficient()/phiSat[i]);
     }  
   }
@@ -247,10 +251,10 @@ public class Fugacity  {
     
     /* TODO: checks must be implemented here to make sure all parameters are in place
      * for the proper calculation of nonideal parameters */
-    
-    this.mixtureFugacityCoefficients();
+
     this.beta();
     this.qValue();
+    this.mixtureFugacityCoefficients();
     this.flowStreamZValues();
     this.activityCoefficient();
     if(this.getFlowStream().getFlowSpecies().size() > 1){      // large Phi can only be computed for multicomponent streams. 
@@ -259,21 +263,24 @@ public class Fugacity  {
     
   }
   
-  public boolean nonIdealComputed(Fugacity unmodifiedStream){
-    boolean result = true;
+  public boolean nonIdealParamsDiff(Fugacity unmodifiedStream){
+    boolean result = false;
+    double tolerance = 0.001;
     
     for(int i=0; i<unmodifiedStream.getFlowStream().getFlowSpecies().size(); i++){
       
-      if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getMixtureFugacityCoefficient() == this.getFlowStream().getFlowSpecies().get(i).getMixtureFugacityCoefficient()) result = false;
-      if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getActivityCoefficient() == this.getFlowStream().getFlowSpecies().get(i).getActivityCoefficient()) result = false;
-      if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getLargePhi() == this.getFlowStream().getFlowSpecies().get(i).getLargePhi()) result = false;
-      if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getBeta() == this.getFlowStream().getFlowSpecies().get(i).getBeta()) result = false;
-      if(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getQValue() == this.getFlowStream().getFlowSpecies().get(i).getQValue()) result = false;
-      if(Math.abs(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getZValue() - this.getFlowStream().getFlowSpecies().get(i).getZValue()) < 0.01) result = false;
+      if(Math.abs(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getMixtureFugacityCoefficient() - this.getFlowStream().getFlowSpecies().get(i).getMixtureFugacityCoefficient()) < tolerance) result = true;
+      if(Math.abs(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getActivityCoefficient() - this.getFlowStream().getFlowSpecies().get(i).getActivityCoefficient()) < tolerance) result = true;
+      if(Math.abs(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getLargePhi() - this.getFlowStream().getFlowSpecies().get(i).getLargePhi()) < tolerance) result = true;
+      if(Math.abs(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getBeta() - this.getFlowStream().getFlowSpecies().get(i).getBeta()) < tolerance) result = true;
+      if(Math.abs(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getQValue() - this.getFlowStream().getFlowSpecies().get(i).getQValue()) < tolerance) result = true;
+      if(Math.abs(unmodifiedStream.getFlowStream().getFlowSpecies().get(i).getZValue() - this.getFlowStream().getFlowSpecies().get(i).getZValue()) < tolerance) result = true;
 
     }
     return result;
   }
+  
+
   
 }
 

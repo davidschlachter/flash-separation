@@ -15,6 +15,11 @@ public class DewPoint implements Function {
     } 
   }
   
+  //flowStream getter
+  public FlowStream getFlowStream(){
+    return this.flowStream;
+  }
+  
   
   // Return the dew point for the given flowStream components at the given pressure
   public double calc() {
@@ -30,7 +35,7 @@ public class DewPoint implements Function {
     }
     
     // Calculate the dew point
-    double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 5.0);
+    double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 0.5);
     double accuracy = 0.0001;
     return RiddersMethod.calc(this, bounds[0], bounds[1], accuracy);
   }
@@ -44,12 +49,19 @@ public class DewPoint implements Function {
     double pressure = this.flowStream.getPressure();
     double activityCoefficient, overallMoleFraction, saturationPressure, largePhi;
     
+    this.flowStream.setTemperature(temperature);
+    Fugacity fugacity = new Fugacity(this.flowStream);  //this has just been added and may not work yet
+    
+    if(this.flowStream.isIdeal() == false){
+    fugacity.computeNonIdealParameters();
+    }
+    
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
-      overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
-      saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
-      activityCoefficient = this.flowStream.getFlowSpecies().get(i).getActivityCoefficient();
-      largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
+      overallMoleFraction = fugacity.getFlowStream().getFlowSpecies().get(i).getOverallMoleFraction();
+      saturationPressure = SaturationPressure.calc(fugacity.getFlowStream().getFlowSpecies().get(i), temperature);
+      activityCoefficient = fugacity.getFlowStream().getFlowSpecies().get(i).getActivityCoefficient();
+      largePhi = fugacity.getFlowStream().getFlowSpecies().get(i).getLargePhi();
       
       result = result + (overallMoleFraction * largePhi * pressure / (activityCoefficient * saturationPressure));
       

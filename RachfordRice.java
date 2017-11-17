@@ -29,7 +29,7 @@ public class RachfordRice implements DifferentiableFunction {
       System.out.println("ERROR: The value of V/F for the RachfordRice equation could not be determined.");
       System.out.println("       Typically this is because the bounds for the root solver did not necessarily");
       System.out.println("       bound the root.");
-      System.exit(1);
+      System.exit(1); 
     }
     
     int i;

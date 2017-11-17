@@ -111,5 +111,5 @@ public class Test_BubblePoint extends TestCase {
     assertTrue(bubblePoint > 367.3 && bubblePoint < 367.7);
     
   }
-  
-}
+
+} 

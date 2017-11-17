@@ -390,6 +390,8 @@ public class Species implements Function{
     this.zValue = result;
   }
   
+
+  
   public double testFunction(double z){   
     double result = 0.0;
     

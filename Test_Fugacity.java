@@ -1,4 +1,4 @@
-import junit.framework.TestCase;
+ import junit.framework.TestCase;
 
 public class Test_Fugacity extends TestCase {
   
@@ -62,7 +62,7 @@ public class Test_Fugacity extends TestCase {
   }
   
   public void testCrossSpeciesCriticalPressure() {
-   Fugacity testFugacityStream = new Fugacity(createTestObject());
+    Fugacity testFugacityStream = new Fugacity(createTestObject());
     
     double[][] testCriticalPressures;
     int n = testFugacityStream.getFlowStream().getFlowSpecies().size();
@@ -105,9 +105,9 @@ public class Test_Fugacity extends TestCase {
     double[][] testBValues;
     testBValues = testFugacityStream.bValues();
     
-    assertTrue(testBValues[0][0] > -0.001380 && testBValues[0][0] < -0.001370);
-    assertTrue(testBValues[1][1] > -0.001875 && testBValues[1][1] < -0.001870);
-    assertTrue(testBValues[1][0] > -0.001615 && testBValues[1][0] < -0.001608);
+    assertTrue(testBValues[0][0] > -0.001377 && testBValues[0][0] < -0.001373); 
+    assertTrue(testBValues[1][1] > -0.001873 && testBValues[1][1] < -0.001869);  
+    assertTrue(testBValues[1][0] > -0.001611 && testBValues[1][0] < -0.001607);
   }
   
   public void testFugacityCoefficients() {
@@ -122,7 +122,7 @@ public class Test_Fugacity extends TestCase {
     for(i = 0; i < testFugacityStream.getFlowStream().getFlowSpecies().size(); i++){
       results[i] = testFugacityStream.getFlowStream().getFlowSpecies().get(i).getMixtureFugacityCoefficient();
     }
-    
+     
     assertTrue(results[0] < 0.989 && results[0] > 0.985);
     assertTrue(results[1] < 0.985 && results[1] > 0.981);
   }
@@ -188,39 +188,41 @@ public class Test_Fugacity extends TestCase {
     modifiedStream.largePhi();
     modifiedStream.activityCoefficient();
     boolean areTheyDifferent = false;
-    areTheyDifferent = (modifiedStream.nonIdealComputed(unmodifiedStream));
+    areTheyDifferent = (modifiedStream.nonIdealParamsDiff(unmodifiedStream)); //needs to be changed to reflect the nature of the test
     assertTrue(areTheyDifferent == true);
     
   }
   
-  private FlowStream createTestObject() {
+  public static FlowStream createTestObject() {
     FlowStream testStream = new FlowStream();
     
     FlowSpecies methylEthylKetone = new FlowSpecies();
     methylEthylKetone.setCriticalTemperature(535.5);
     methylEthylKetone.setCriticalPressure(4150000.);
     methylEthylKetone.setCriticalZ(0.249);
-    methylEthylKetone.setCriticalVolume(267.0);
+    methylEthylKetone.setCriticalVolume(0.000267);
     methylEthylKetone.setAcentricFactor(0.323); 
     methylEthylKetone.setVapourMoleFraction(0.5);
     methylEthylKetone.setLiquidMoleFraction(0.5);
+    methylEthylKetone.setOverallMoleFraction(0.5);
     methylEthylKetone.setAntoineConstants(new AntoineCoefficients(10., 1400., -35., 0.0, 1000.0));
     
     FlowSpecies toluene = new FlowSpecies();
     toluene.setCriticalTemperature(591.8);
     toluene.setCriticalPressure(4106000.);
     toluene.setCriticalZ(0.264);
-    toluene.setCriticalVolume(316.0);
+    toluene.setCriticalVolume(0.000316);
     toluene.setAcentricFactor(0.262); 
     toluene.setVapourMoleFraction(0.5);
     toluene.setLiquidMoleFraction(0.5);
+    toluene.setOverallMoleFraction(0.5);
     toluene.setAntoineConstants(new AntoineCoefficients(9., 1300., -30., 0.0, 1000.0));
     
     testStream.addFlowSpecies(methylEthylKetone);
     testStream.addFlowSpecies(toluene); 
     testStream.setTemperature(300.);
     testStream.setPressure(101325);
-     
+    
     
     return testStream;
   }

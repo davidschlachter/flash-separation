@@ -137,6 +137,18 @@ public class FlowStream {
     
   }
   
+      public boolean isIdeal(){
+        boolean isIdeal = true;
+        for(int i = 0; i < this.getFlowSpecies().size(); i++){
+  if(this.getFlowSpecies().get(i).getActivityCoefficient() != 1.0 
+       && this.getFlowSpecies().get(i).getMixtureFugacityCoefficient() != 1.0 
+       && this.getFlowSpecies().get(i).getBeta() != 0.0 
+       && this.getFlowSpecies().get(i).getQValue() != 0.0
+       && this.getFlowSpecies().get(i).getZValue() != 1.0) isIdeal = false;
+        }
+  return isIdeal;
+  }
+  
   //Clone method
   public FlowStream clone() {
     return new FlowStream(this);
