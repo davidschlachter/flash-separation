@@ -8,11 +8,10 @@ public class Controller {
     // Acceptable error
     double error = 0.001; // K
     
-    
-    RachfordRice rachfordRice = new RachfordRice(outlet);
     double unknownTemperature;
     // First problem type: both inlet and outlet temperatures are specified
-    if (outlet.getTemperature() > 0.0 && inlet.getTemperature() > 0.0) {
+    if (outlet.getTemperature() > 0.0000001 && inlet.getTemperature() > 0.0000001) {
+      RachfordRice rachfordRice = new RachfordRice(outlet);
       outlet = rachfordRice.solve();
     } else {
       // Second and third problem types: one of the temperatures is missing, and the
@@ -45,6 +44,7 @@ public class Controller {
       
       double putativeAdiabaticTemperature = RiddersMethod.calc(new Enthalpy(specifiedStream, unspecifiedStream), 0.01, 1000.0, 0.001);
       
+      int i = 0, maxIterations = 10;
       while (Math.abs(putativeAdiabaticTemperature - guessTemp) > error) {
         guessTemp = putativeAdiabaticTemperature;
         
@@ -52,6 +52,8 @@ public class Controller {
         unspecifiedStream = new RachfordRice(unspecifiedStream).solve();
         
         putativeAdiabaticTemperature = RiddersMethod.calc(new Enthalpy(specifiedStream, unspecifiedStream), 0.01, 1000.0, 0.001);
+        i++;
+        if (i > maxIterations) break;
       }
       
       Enthalpy enthalpy = new Enthalpy(inlet, outlet);
