@@ -35,7 +35,9 @@ public class Test_Controller extends TestCase {
     assertTrue("RachfordRice.calc()", ethanolVapourMoleFraction > 0.3068 && ethanolVapourMoleFraction < 0.3088);
   }
   
-  // Test an ideal adiabatic flash. Source: http://demonstrations.wolfram.com/AdiabaticFlashDrumWithBinaryLiquidFeed/
+  // Test an ideal adiabatic flash. Source: https://www.youtube.com/watch?v=Aw4VsloWVjM and
+  // https://www.youtube.com/watch?v=EhLpYbP9st0. Note that the adiabatic flash temperature has been adjusted
+  // by about 1 K from the given example to match the results for this system in Test_Enthalpy.
   public void testIdealAdiabaticFlash() {
     FlowSpecies ethanol = new FlowSpecies();
     FlowSpecies methanol = new FlowSpecies();
