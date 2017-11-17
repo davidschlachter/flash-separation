@@ -292,6 +292,10 @@ public class Test_RachfordRice extends TestCase {
     System.out.println("y3: "+mcpVapourMoleFraction);
     System.out.println("x4: "+benzeneLiquidMoleFraction);
     System.out.println("y4: "+benzeneVapourMoleFraction);
+    double sumY = nHexaneLiquidMoleFraction+ethanolLiquidMoleFraction+mcpLiquidMoleFraction+benzeneLiquidMoleFraction;
+    System.out.println("sum of y's is: "+sumY);
+    double sumX = nHexaneVapourMoleFraction+ethanolVapourMoleFraction+benzeneVapourMoleFraction+mcpVapourMoleFraction;
+    System.out.println("sum of x's is: "+sumX);
     
   }
 }
