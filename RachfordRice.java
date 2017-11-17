@@ -29,6 +29,7 @@ public class RachfordRice implements DifferentiableFunction {
       System.out.println("WARNING: Stream temperature is not in the two-phase equilibrium region. Rachford Rice"+
                          "equation is unlikely to converge!");
       System.out.println("         Bubble point and dew point were: "+bubblePointTemperature+" "+dewPointTemperature);
+      System.out.println("Calling method is: "+Thread.currentThread().getStackTrace()[2].getMethodName());
     }
     
     double vOverF = NewtonRaphson.calc(this, 0.5, 0.1);
