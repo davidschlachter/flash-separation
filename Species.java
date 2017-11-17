@@ -294,6 +294,14 @@ public class Species implements Function{
     return this.heatOfVapourization;
   }
   
+  // Use the Watson correlation (see reference 5 in doi 10.1002/aic.690110226) to return the heat
+  // of vapourization at a given temperature
+  public double getHeatOfVapourization(double temperature) {
+    double reducedTemperature = temperature/this.criticalTemperature;
+    double standardReducedTemperature = 298.15/this.criticalTemperature;
+    return Math.pow((1-reducedTemperature)/(1-standardReducedTemperature),0.38)*this.heatOfVapourization;
+  }
+  
   public double getCriticalTemperature() {
     return this.criticalTemperature;
   }

@@ -78,7 +78,7 @@ public class PresetSpecies {
     waterAntoine.add(new AntoineCoefficients(11.21534661, 2354.731, 7.559, 293, 343)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     waterAntoine.add(new AntoineCoefficients(9.660016612, 1435.264, -64.848, 255.9, 378.999)); // http://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4&Type=ANTOINE&Plot=on#ANTOINE
     water.setAntoineConstants(waterAntoine);
-    water.setHeatOfVapourization(40714.5); // http://gchem.cm.utexas.edu/data/section2.php?target=heat-transition.php
+    water.setHeatOfVapourization(43990.); // doi 10.1002/aic.690110226
     water.setCriticalTemperature(647.0);
     water.setAcentricFactor(0.345); // Source: Smith & Van Ness, Appendix B
     flowSpecies.add(water);

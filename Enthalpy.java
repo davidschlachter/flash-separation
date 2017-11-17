@@ -27,7 +27,7 @@ public class Enthalpy implements Function {
     int i;
     double initialTemperature = -1.0;
     double finalTemperature = -1.0;
-    double bubbleTemperature = -1.0;
+    double outletBubbleTemperature = -1.0, inletBubbleTemperature = -1.0;
     
     double vapourMoleFraction, liquidMoleFraction, heatofVapourization, result = 0.0;
     
@@ -69,8 +69,8 @@ public class Enthalpy implements Function {
         result = result + outletVapourFlowRate * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
       }
     } else {
-      BubblePoint bubblePoint = new BubblePoint(this.inlet);
-      bubbleTemperature = bubblePoint.calc();
+      outletBubbleTemperature = new BubblePoint(this.outlet).calc();
+      inletBubbleTemperature = new BubblePoint(this.inlet).calc();
       
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
         inletVapourMoleFraction = this.inlet.getFlowSpecies().get(i).getVapourMoleFraction();
@@ -85,28 +85,31 @@ public class Enthalpy implements Function {
         
         heatofVapourization = this.outlet.getFlowSpecies().get(i).getHeatOfVapourization();
         
+        //
         // If some of the liquid has vapourized
+        //
         if (inletLiquidFlowRate > outletLiquidFlowRate) {
-          result += inletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-                                                               initialTemperature, bubbleTemperature, "liquid");
-          result += outletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-                                                                bubbleTemperature, finalTemperature, "vapour");
-          result += (inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization;
-          /*System.out.println("For species #" + i + ", liquid change is: " + inletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-                                                              /initialTemperature, bubbleTemperature, "liquid") + ", vapour change is: "+outletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-                                                                bubbleTemperature, finalTemperature, "vapour")+"and hov change is: "+(inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization);*/
+          // How much liquid is left in the end? Calculate its change in enthalpy
+          result += outletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),  initialTemperature, finalTemperature, "liquid");
+          // How much liquid changed phase? Calculate it's enthalpy change by going to standard conditions, vaporizing, then going to final conditions
+          result += (inletLiquidFlowRate-outletLiquidFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, 298.15, "liquid");
+          result += (inletLiquidFlowRate-outletLiquidFlowRate)*heatofVapourization; // Standard H.o.V.
+          result += (inletLiquidFlowRate-outletLiquidFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), 298.15, finalTemperature, "vapour");
+          // How much vapour was in the inlet and just changed temperature?
+          result += inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
         }
-        // If the liquid has all condensed
+        //
+        // If some of the vapour has condensed
+        //
         if (inletLiquidFlowRate < outletLiquidFlowRate) {
-          result += outletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-                                                                bubbleTemperature, finalTemperature, "liquid");
-          result += inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-                                                               initialTemperature, bubbleTemperature, "vapour");
-          result -= (outletLiquidFlowRate-inletLiquidFlowRate)*heatofVapourization;
-          /*System.out.println("For species #" + i + ", liquid change is: " + outletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-bubbleTemperature, finalTemperature, "liquid") + ", vapour change is: "+inletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i),
-          initialTemperature, bubbleTemperature, "vapour")+"and hov change is: "+(-(outletLiquidFlowRate-inletLiquidFlowRate)*heatofVapourization));*/
-          
+          // How much vapour is left in the end? Calculate its change in enthalpy
+          result += outletVapourFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
+          // How much vapour changed phase? Calculate it's enthalpy change by going to standard conditions, condensing, then going to final conditions
+          result += (inletVapourFlowRate-outletVapourFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, 298.15, "vapour");
+          result -= (inletVapourFlowRate-outletVapourFlowRate)*heatofVapourization;
+          result += (inletVapourFlowRate-outletVapourFlowRate)*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), 298.15, finalTemperature, "liquid");
+          // How much liquid was in the inlet and just changed temperature?
+          result += inletLiquidFlowRate*HeatCapacity.integrate(this.inlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
         }
       }
     }

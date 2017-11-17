@@ -300,4 +300,12 @@ public class Test_Species extends TestCase {
     
     assertTrue(testSp.equals(presetSpecies.get(0)));
   }
+  
+  public void testHeatOfVapourization() {
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    FlowSpecies water = new FlowSpecies(presetSpecies.get(4));
+    assertTrue("getHeatOfVapourization()", water.getHeatOfVapourization() > 43989. && water.getHeatOfVapourization() < 43991.);
+    assertTrue("getHeatOfVapourization(temp)", water.getHeatOfVapourization(573.15) > 24384. && water.getHeatOfVapourization(573.15) < 24386.);
+  }
+  
 }
