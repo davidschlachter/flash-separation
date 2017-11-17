@@ -22,6 +22,15 @@ public class RachfordRice implements DifferentiableFunction {
   // Solve the composition of the given flow stream
   public FlowStream solve() {
     
+    double dewPointTemperature = new DewPoint(this.flowStream).calc();
+    double bubblePointTemperature = new BubblePoint(this.flowStream).calc();
+    if (this.flowStream.getTemperature() < bubblePointTemperature || this.flowStream.getTemperature() > dewPointTemperature
+          || bubblePointTemperature > dewPointTemperature) {
+      System.out.println("WARNING: Stream temperature is not in the two-phase equilibrium region. Rachford Rice"+
+                         "equation is unlikely to converge!");
+      System.out.println("         Bubble point and dew point were: "+bubblePointTemperature+" "+dewPointTemperature);
+    }
+    
     double vOverF = NewtonRaphson.calc(this, 0.5, 0.1);
     
     
@@ -29,7 +38,7 @@ public class RachfordRice implements DifferentiableFunction {
       System.out.println("ERROR: The value of V/F for the RachfordRice equation could not be determined.");
       System.out.println("       Typically this is because the bounds for the root solver did not necessarily");
       System.out.println("       bound the root.");
-      //System.exit(1); 
+      //System.exit(1);
       return this.flowStream;
     }
     

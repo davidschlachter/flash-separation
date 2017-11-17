@@ -18,6 +18,10 @@ public class RiddersMethod extends RootFinder {
       fM = func.testFunction(xM);
       xR = xM + (xM - xL)*(Math.signum(fL - fU)*fM)/(Math.sqrt(fM*fM - fL*fU));
       fR = func.testFunction(xR);
+      if (Double.isNaN(xR)) {
+        System.out.println("ERROR: xR in Ridder's method returned Not a Number (NaN)");
+        return xR;
+      }
       if(xR < xM)
       {
         if(fL*fR < 0) xU = xR;

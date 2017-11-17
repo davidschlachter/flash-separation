@@ -12,9 +12,11 @@ public class Test_Controller extends TestCase {
     FlowSpecies water = new FlowSpecies();
     water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
     water.setOverallMoleFraction(0.5);
+    water.setCriticalTemperature(647.0);
     FlowSpecies ethanol = new FlowSpecies();
     ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
     ethanol.setOverallMoleFraction(0.5);
+    ethanol.setCriticalTemperature(514.0);
     outletStream.addFlowSpecies(water);
     outletStream.addFlowSpecies(ethanol);
     outletStream.setPressure(101325.0);
@@ -84,6 +86,8 @@ public class Test_Controller extends TestCase {
     double ethanolLiquidMoleFraction = outlet.getFlowSpecies().get(1).getLiquidMoleFraction();
     double ethanolVapourMoleFraction = outlet.getFlowSpecies().get(1).getVapourMoleFraction();
     
+    System.out.println("Outlet temperature for adiabatic flash: " + outlet.getTemperature());
+    System.out.println("Mole fractions: " + methanolLiquidMoleFraction + " " + methanolVapourMoleFraction + " " +
                        ethanolLiquidMoleFraction + " " + ethanolVapourMoleFraction+"\n");
     
     assertTrue("Controller.calc()", outlet.getTemperature() > 378.0 && outlet.getTemperature() < 340.0);

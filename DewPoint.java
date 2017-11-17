@@ -27,7 +27,7 @@ public class DewPoint implements Function {
     int i;
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       if (this.flowStream.getFlowSpecies().get(i).getCriticalTemperature() == 0.0) {
-        System.out.println("ERROR: Critical temperature is not specified.");
+        System.out.println("ERROR: Critical temperature is not specified for species "+this.flowStream.getFlowSpecies().get(i).getSpeciesName());
         System.exit(1);
       }
       if (flowStream.getTemperature() > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
