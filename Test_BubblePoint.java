@@ -133,8 +133,6 @@ public class Test_BubblePoint extends TestCase {
     test.setTemperature(298.15); // Required for bubble point intial guess
     test.setMolarFlowRate(1.0);
     
-    test = new RachfordRice(test).solve();
-    
     double bubblePoint = new BubblePoint(test).calc();
     
     assertTrue(bubblePoint > 84.3+273.15 && bubblePoint < 84.5+273.15);

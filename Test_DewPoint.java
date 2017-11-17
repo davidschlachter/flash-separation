@@ -173,4 +173,30 @@ public class Test_DewPoint extends TestCase {
     
   }
   
+  // Test the ideal dew point against this example from LearnChemE:
+  // https://www.youtube.com/watch?v=_26D3TDKH8Y
+  public void testIdealLearnChemEDewPoint() {
+    FlowSpecies component1 = new FlowSpecies();
+    FlowSpecies component2 = new FlowSpecies();
+    // Antoine coefficients converted with http://www.envmodels.com/freetools.php?menu=antoine
+    component1.setAntoineConstants(new AntoineCoefficients(9.01762, 1203.531, -53.262));
+    component2.setAntoineConstants(new AntoineCoefficients(9.08295, 1346.773, -53.457));
+    // So that calculations work!
+    component1.setCriticalTemperature(1000.0);
+    component2.setCriticalTemperature(1000.0);
+    component1.setOverallMoleFraction(0.65);
+    component2.setOverallMoleFraction(0.35);
+    
+    FlowStream test = new FlowStream();
+    test.addFlowSpecies(component1);
+    test.addFlowSpecies(component2);
+    test.setPressure(19998.35526);
+    test.setTemperature(298.15); // Required for dew point intial guess
+    test.setMolarFlowRate(1.0);
+    
+    double dewPoint = new DewPoint(test).calc();
+
+    assertTrue(dewPoint > 48.21+273.15 && dewPoint < 48.23+273.15);
+  }
+  
 }
