@@ -111,5 +111,33 @@ public class Test_BubblePoint extends TestCase {
     assertTrue(bubblePoint > 367.3 && bubblePoint < 367.7);
     
   }
+  
+  // Test the ideal bubble point against this example from LearnChemE:
+  // https://www.youtube.com/watch?v=0nOPZQHPpyk
+  public void testIdealLearnChemEBubblePoint() {
+    FlowSpecies component1 = new FlowSpecies();
+    FlowSpecies component2 = new FlowSpecies();
+    // Antoine coefficients converted with http://www.envmodels.com/freetools.php?menu=antoine
+    component1.setAntoineConstants(new AntoineCoefficients(9.21041, 1278.99725, -49.15));
+    component2.setAntoineConstants(new AntoineCoefficients(9.16698, 1278.12866, -64.15));
+    // So that calculations work!
+    component1.setCriticalTemperature(1000.0);
+    component2.setCriticalTemperature(1000.0);
+    component1.setOverallMoleFraction(0.40);
+    component2.setOverallMoleFraction(0.60);
+    
+    FlowStream test = new FlowStream();
+    test.addFlowSpecies(component1);
+    test.addFlowSpecies(component2);
+    test.setPressure(85*1000);
+    test.setTemperature(298.15); // Required for bubble point intial guess
+    test.setMolarFlowRate(1.0);
+    
+    test = new RachfordRice(test).solve();
+    
+    double bubblePoint = new BubblePoint(test).calc();
+    
+    assertTrue(bubblePoint > 84.3+273.15 && bubblePoint < 84.5+273.15);
+  }
 
 } 
