@@ -65,6 +65,8 @@ public class RachfordRice implements DifferentiableFunction {
       
     }
     
+    this.flowStream.setVapourFraction(vOverF);
+    
     return this.flowStream;
     
   }
