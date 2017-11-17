@@ -1,4 +1,6 @@
 import junit.framework.TestCase;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Test_RachfordRice extends TestCase {
   
@@ -40,6 +42,38 @@ public class Test_RachfordRice extends TestCase {
     double testFunction = testRachfordRice.testFunction(0.5);
     
     assertTrue("RachfordRice.testFunction()", testFunction > 0.207 && testFunction < 0.209);
+  }
+  
+  // Test the ideal Rachford Rice solution against this example from LearnChemE:
+  // https://www.youtube.com/watch?v=bs2T5oCfRak&t=64s
+  public void testIdealLearnChemEFlash() {
+    FlowSpecies component1 = new FlowSpecies();
+    FlowSpecies component2 = new FlowSpecies();
+    // Antoine coefficients converted with http://www.envmodels.com/freetools.php?menu=antoine
+    component1.setAntoineConstants(new AntoineCoefficients(9.51442, 1307.22639, -23.15));
+    component2.setAntoineConstants(new AntoineCoefficients(9.08012, 1172.5951, -68.15));
+    // So that calculations work!
+    component1.setCriticalTemperature(1000.0);
+    component2.setCriticalTemperature(1000.0);
+    component1.setOverallMoleFraction(0.60);
+    component2.setOverallMoleFraction(0.40);
+    List<FlowSpecies> species = new ArrayList<FlowSpecies>();
+    species.add(component1);
+    species.add(component2);
+    
+    FlowStream test = new FlowStream();
+    test.setFlowSpecies(species);
+    test.setTemperature(150+273.15);
+    test.setPressure(1210*1000);
+    test.setMolarFlowRate(1.0);
+    
+    test = new RachfordRice(test).solve();
+
+    assertTrue(test.getFlowSpecies().get(0).getLiquidMoleFraction() > 0.52 &&
+               test.getFlowSpecies().get(0).getLiquidMoleFraction() < 0.54);
+    assertTrue(test.getFlowSpecies().get(0).getVapourMoleFraction() > 0.76 &&
+               test.getFlowSpecies().get(0).getVapourMoleFraction() < 0.78);
+    assertTrue(test.getVapourFraction() > 0.30 && test.getVapourFraction() < 0.32);
   }
   
   // Test the RachfordRice solution for a stream. Source: Excel calculation
