@@ -2,7 +2,9 @@ public class PengRobinson{
   
   private FlowStream flowStream;
   
-  //probably still needs some sort of constructor
+  public PengRobinson(FlowStream flowStream){
+  this.flowStream = flowStream;
+  }
   
   //individual component calculated parameters
   public void kappaI(){
@@ -49,15 +51,15 @@ public class PengRobinson{
     double result = 0.0;
     
     for(int i=0; i<n; i++){
-      criticalPressure = flowStream.getFlowSpecies().get(i).getCriticalPressure;
-      criticalTemp = flowStream.getFlowSpecies().get(i).getCriticalTemperature();
+      double criticalPressure = flowStream.getFlowSpecies().get(i).getCriticalPressure();
+      double criticalTemp = flowStream.getFlowSpecies().get(i).getCriticalTemperature();
       result = (0.0778*r*criticalTemp)/criticalPressure;
       flowStream.getFlowSpecies().get(i).setBI(result);
     }
   }
   
   //mixture parameters
-  public double[] aij(){
+  public double[][] aij(){
     int n=flowStream.getFlowSpecies().size();
     double[][] results = new double[n][n];
     
@@ -114,7 +116,7 @@ public class PengRobinson{
     double t = flowStream.getTemperature();
     double b = flowStream.getSmallBX();
     double result = (b*p)/(r*t);
-    flowStream.getLargeBX(result);
+    flowStream.setLargeBX(result);
   }
   
   public void solveZCubicLiquid(){
@@ -139,23 +141,24 @@ public class PengRobinson{
       double z0 = 2*Math.sqrt(p1)*Math.cos(theta/3.0)-(c2/3.0);
       double z1 = 2*Math.sqrt(p1)*Math.cos((2*Math.PI+theta)/3.0)-(c2/3.0);
       double z2 = 2*Math.sqrt(p1)*Math.cos((4*Math.PI+theta)/3.0)-(c2/3.0);
-      double zL = Math.min(z0, z1, z2);
-      double zV = Math.mac(z0, z1, z2);
+      double zL = Math.min(z0, Math.min(z1, z2));
+      double zV = Math.max(z0, Math.max(z1, z2));
       flowStream.setZL(zL);
-      flowStream.setzV(zV);
+      flowStream.setZV(zV);
     }
+  }
     
     public void liquidFugacity(){
       double smallB = flowStream.getSmallBX();
       double a = flowStream.getLargeAX();
       double b = flowStream.getLargeBX();
       double zL = flowStream.getZL();
-      n = flowStream.getFlowSpecies().size();
+      int n = flowStream.getFlowSpecies().size();
       double[][] aij = aij();
       
       for(int i=0; i<n; i++){
         double lnPhiL = 0.0;
-        bi = flowStream.getFlowSpecies().get(i).getBI();
+        double bi = flowStream.getFlowSpecies().get(i).getBI();
         lnPhiL+=(bi/b)*(zL-1);
         lnPhiL-=Math.log(zL-b);
         double sumTerm = 0.0;
@@ -169,8 +172,6 @@ public class PengRobinson{
       }
       
     }
-    
-  }
   
   //mixture parameters for calculating vapour fugacity
   public void flowStreamSmallAYValue(){
@@ -215,7 +216,7 @@ public class PengRobinson{
     double t = flowStream.getTemperature();
     double b = flowStream.getSmallBY();
     double result = (b*p)/(r*t);
-    flowStream.getLargeBY(result);
+    flowStream.setLargeBY(result);
   }
   
   public void solveZCubicVapour(){
@@ -240,10 +241,10 @@ public class PengRobinson{
       double z0 = 2*Math.sqrt(p1)*Math.cos(theta/3.0)-(c2/3.0);
       double z1 = 2*Math.sqrt(p1)*Math.cos((2*Math.PI+theta)/3.0)-(c2/3.0);
       double z2 = 2*Math.sqrt(p1)*Math.cos((4*Math.PI+theta)/3.0)-(c2/3.0);
-      double zL = Math.min(z0, z1, z2);
-      double zV = Math.mac(z0, z1, z2);
+      double zL = Math.min(z0, Math.min(z1, z2));
+      double zV = Math.max(z0, Math.max(z1, z2));
       flowStream.setZL(zL);
-      flowStream.setzV(zV);
+      flowStream.setZV(zV);
     }
     }
   
@@ -252,12 +253,12 @@ public class PengRobinson{
       double a = flowStream.getLargeAY();
       double b = flowStream.getLargeBY();
       double zV = flowStream.getZV();
-      n = flowStream.getFlowSpecies().size();
+      int n = flowStream.getFlowSpecies().size();
       double[][] aij = aij();
       
       for(int i=0; i<n; i++){
         double lnPhiV = 0.0;
-        bi = flowStream.getFlowSpecies().get(i).getBI();
+        double bi = flowStream.getFlowSpecies().get(i).getBI();
         lnPhiV+=(bi/b)*(zV-1);
         lnPhiV-=Math.log(zV-b);
         double sumTerm = 0.0;
@@ -265,7 +266,7 @@ public class PengRobinson{
           double yj = flowStream.getFlowSpecies().get(j).getVapourMoleFraction();
           sumTerm += yj * aij[i][j];
         }
-        lnPhiV-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/b))*Math.log((zL+(1+Math.sqrt(2)*b))/(zL+(1-Math.sqrt(2))));
+        lnPhiV-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/b))*Math.log((zV+(1+Math.sqrt(2)*b))/(zV+(1-Math.sqrt(2))));
         double phiV = Math.exp(lnPhiV);
         flowStream.getFlowSpecies().get(i).setVapourFugacity(phiV);
       }

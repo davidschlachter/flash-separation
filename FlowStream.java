@@ -15,6 +15,16 @@ public class FlowStream {
   private double temperature = 0.0;
   private double pressure = 0.0;
   private double vapourFraction = 0.0;
+  private double smallAX = 0.0;  
+  private double smallBX = 0.0;
+  private double largeAX = 0.0;
+  private double largeBX = 0.0;
+  private double smallAY = 0.0;
+  private double smallBY = 0.0;
+  private double largeAY = 0.0;
+  private double largeBY = 0.0;
+  private double zL = 0.0;
+  private double zV = 0.0;
   
   // Default constructor
   public FlowStream() {
@@ -79,6 +89,46 @@ public class FlowStream {
     }
   }
   
+  public void setSmallAX(double smallAX){
+    this.smallAX = smallAX;
+  }
+  
+  public void setSmallBX(double smallBX){
+    this.smallBX = smallBX;
+  }
+  
+  public void setLargeAX(double largeAX){
+    this.largeAX = largeAX;
+  }
+  
+  public void setLargeBX(double largeBX){
+    this.largeBX = largeBX;
+  }
+  
+  public void setSmallAY(double smallAY){
+    this.smallAY = smallAY;
+  }
+  
+  public void setSmallBY(double smallBY){
+    this.smallBY = smallBY;
+  }
+  
+  public void setLargeAY(double largeAY){
+    this.largeAY = largeAY;
+  }
+  
+  public void setLargeBY(double largeBY){
+    this.largeBY = largeBY;
+  }
+  
+  public void setZL(double zL){
+    this.zL = zL;
+  }
+  
+  public void setZV(double zV){
+    this.zV=zV;
+  }
+  
   
   // Getters
   public List<FlowSpecies> getFlowSpecies() {
@@ -99,6 +149,46 @@ public class FlowStream {
   
   public double getVapourFraction() {
     return this.vapourFraction;
+  }
+  
+  public double getSmallAX(){
+    return this.smallAX;
+  }
+  
+  public double getSmallBX(){
+    return this.smallBX;
+  }
+  
+  public double getLargeAX(){
+    return this.largeAX;
+  }
+  
+  public double getLargeBX(){
+    return this.largeBX;
+  }
+  
+    public double getSmallAY(){
+    return this.smallAY;
+  }
+  
+  public double getSmallBY(){
+    return this.smallBY;
+  }
+  
+  public double getLargeAY(){
+    return this.largeAY;
+  }
+  
+  public double getLargeBY(){
+    return this.largeBY;
+  }
+  
+  public double getZL(){
+    return this.zL;
+  }
+  
+  public double getZV(){
+    return this.zV;
   }
   
   // Equals
@@ -137,16 +227,16 @@ public class FlowStream {
     
   }
   
-      public boolean isIdeal(){
-        boolean isIdeal = true;
-        for(int i = 0; i < this.getFlowSpecies().size(); i++){
-  if(this.getFlowSpecies().get(i).getActivityCoefficient() != 1.0 
-       && this.getFlowSpecies().get(i).getMixtureFugacityCoefficient() != 1.0 
-       && this.getFlowSpecies().get(i).getBeta() != 0.0 
-       && this.getFlowSpecies().get(i).getQValue() != 0.0
-       && this.getFlowSpecies().get(i).getZValue() != 1.0) isIdeal = false;
-        }
-  return isIdeal;
+  public boolean isIdeal(){
+    boolean isIdeal = true;
+    for(int i = 0; i < this.getFlowSpecies().size(); i++){
+      if(this.getFlowSpecies().get(i).getActivityCoefficient() != 1.0 
+           && this.getFlowSpecies().get(i).getMixtureFugacityCoefficient() != 1.0 
+           && this.getFlowSpecies().get(i).getBeta() != 0.0 
+           && this.getFlowSpecies().get(i).getQValue() != 0.0
+           && this.getFlowSpecies().get(i).getZValue() != 1.0) isIdeal = false;
+    }
+    return isIdeal;
   }
   
   //Clone method

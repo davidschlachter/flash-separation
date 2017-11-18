@@ -72,6 +72,9 @@ public class Species implements Function{
   //individual liquid fugacity for PR
   private double liquidFugacity = 0.0;
   
+  //individual Ki value for PR EOS
+  private double ki = 0.0;
+  
   
   
   // Constructor
@@ -281,8 +284,12 @@ public class Species implements Function{
     this.liquidFugacity = liquidFugacity;
   }
   
-  pubic void setVapourFugacity(double vapourFugacity){
+  public void setVapourFugacity(double vapourFugacity){
     this.vapourFugacity = vapourFugacity;
+  }
+  
+  public void setKi(double ki){
+    this.ki = ki;
   }
   
   // Getters
@@ -399,7 +406,7 @@ public class Species implements Function{
   }
   
   public double getAI(){
-    return this.ai
+    return this.ai;
   }
   
   public double getBI(){
@@ -412,6 +419,10 @@ public class Species implements Function{
   
   public double getVapourFugacity(){
     return this.vapourFugacity;
+  }
+  
+  public double getKi(){
+    return this.ki;
   }
   
   //Equals
@@ -465,6 +476,8 @@ public class Species implements Function{
     result = RiddersMethod.calc(this, bounds[0], bounds[1], accuracy);
     this.zValue = result;
   }
+  
+  
   
   
   
