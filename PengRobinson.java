@@ -4,6 +4,7 @@ public class PengRobinson{
   
   //probably still needs some sort of constructor
   
+  //individual component calculated parameters
   public void kappaI(){
     int n = flowStream.getFlowSpecies().size();
     double result = 0.0;
@@ -53,6 +54,66 @@ public class PengRobinson{
       result = (0.0778*r*criticalTemp)/criticalPressure;
       flowStream.getFlowSpecies().get(i).setBI(result);
     }
+  }
+  
+  //mixture parameters
+  public double[] aij(){
+    int n=flowStream.getFlowSpecies().size();
+    double[][] results = new double[n][n];
+    
+    for(int i=0; i<n; i++){
+      for(int j=0; j<n; j++){
+        double ai = flowStream.getFlowSpecies().get(i).getAI();
+        double aj = flowStream.getFlowSpecies().get(j).getAI();
+        results[i][j]=Math.pow((ai*aj),0.5);
+      }
+    }
+    return results;
+  }
+  
+  public void flowStreamSmallAValue(){
+    int n = flowStream.getFlowSpecies().size();
+    double[][] aij = aij();
+    double result = 0.0;
+    
+    for(int i=0; i<n; i++){
+      for(int j=0; j<n; j++){
+        double xi = flowStream.getFlowSpecies().get(i).getLiquidMoleFraction();
+        double xj = flowStream.getFlowSpecies().get(j).getLiquidMoleFraction();
+        result+=aij[i][j]*xi*xj;
+      }
+    }
+    flowStream.setSmallA(result);
+  }
+  
+  public void flowStreamSmallBValue(){
+    int n = flowStream.getFlowSpecies().size();
+    double result = 0.0;
+    
+    for(int i=0; i<n; i++){
+      double xi = flowStream.getFlowSpecies().get(i).getLiquidMoleFraction();
+      double bi = flowStream.getFlowSpecies().get(i).getBI();
+      result+=xi*bi;
+    }
+    flowStream.setSmallB(result);
+  }
+  
+  public void flowStreamLargeAValue(){
+    double r = 8.3145;
+    double p = flowStream.getPressure();
+    double t = flowStream.getTemperature();
+    double a = flowStream.getSmallA();
+    double result = (a*p)/(Math.pow((r*t),2));
+    flowStream.setLargeA(result);
+  }
+  
+  public void flowStreamLargeBValue(){
+    double r = 8.3145;
+    double p = flowStream.getPressure();
+    double t = flowStream.getTemperature();
+    double b = flowStream.getSmallB();
+    double result = (b*p)/(r*t);
+    flowStream.getLargeB(result);
   }
   
 }
