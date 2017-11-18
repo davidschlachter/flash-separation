@@ -112,6 +112,7 @@ public class RachfordRice implements DifferentiableFunction {
       largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
       kMinusOne = (activityCoefficient * saturationPressure)/(pressure * largePhi)-1;
       
+      
       result = result - (overallMoleFraction * Math.pow(kMinusOne, 2))/(Math.pow((1+x*kMinusOne),2));
       
     }

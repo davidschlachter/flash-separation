@@ -28,31 +28,51 @@ public class Species implements Function{
   private double criticalPressure = 0.0;
   
   //Critical volume for computation of non-ideal case
-  private double criticalVolume = 0.0;
+  private double criticalVolume = 0.0;  //SRK relic
   
   //Critical Z-value for computation of non-ideal case
-  private double criticalZ = 0.0;
+  private double criticalZ = 0.0;  //SRK relic
   
   //Accentricity value for computation of non-ideal case
   private double acentricFactor = 0.0;
   
   //Z value for computation of individual fugacity coefficient. Do not confuse with criticalZ value
-  private double zValue = 1.0;
+  private double zValue = 1.0;  //SRK relic
   
   //Beta values for computation of individual fugacity coefficient. Not Bij values. 
-  private double beta = 0.0;
+  private double beta = 0.0;  //SRK relic
   
   //Q values for computation of individual fugacity coefficient
-  private double qValue = 0.0;
+  private double qValue = 0.0;  //SRK relic
   
   //activity coefficient for nonideal liquid behaviour
-  private double activityCoefficient = 1.0;
+  private double activityCoefficient = 1.0;  //SRK relic
   
   //fugacity coefficient for nonideal behaviour
-  private double mixtureFugacityCoefficient = 1.0;
+  private double mixtureFugacityCoefficient = 1.0;  //SRK relic
   
   //large phi for nonideal handling
-  private double largePhi = 1.0;
+  private double largePhi = 1.0;  //SRK relic
+  
+  //individual component kapp values for PR calculations
+  private double kappa = 0.0;
+  
+  //individual species alpha value for PR calculations
+  private double alpha = 0.0;
+  
+  //individual a values for PR calculations
+  private double ai = 0.0;
+  
+  //individual b value for PR calculations
+  private double bi = 0.0;
+  
+  //individual vapour fugacity for PR
+  private double vapourFugacity = 0.0;
+  
+  //individual liquid fugacity for PR
+  private double liquidFugacity = 0.0;
+  
+  
   
   // Constructor
   public Species() {}
@@ -241,6 +261,30 @@ public class Species implements Function{
     }
   }
   
+  public void setKappa(double kappa){    // TODO: develop restrictions on setters for PR
+    this.kappa = kappa;
+  }
+  
+  public void setAlpha(double alpha){
+    this.alpha = alpha;
+  }
+  
+  public void setAI(double ai){
+    this.ai = ai;
+  }
+  
+  public void setBI(double bi){
+    this.bi=bi;
+  }
+  
+  public void setLiquidFugacity(double liquidFugacity){
+    this.liquidFugacity = liquidFugacity;
+  }
+  
+  pubic void setVapourFugacity(double vapourFugacity){
+    this.vapourFugacity = vapourFugacity;
+  }
+  
   // Getters
   
   public double[] getVapourHeatCapacityConstants() {
@@ -346,6 +390,30 @@ public class Species implements Function{
     return this.largePhi;
   }
   
+  public double getKappa(){
+    return this.kappa;
+  }
+  
+  public double getAlpha(){
+    return this.alpha;
+  }
+  
+  public double getAI(){
+    return this.ai
+  }
+  
+  public double getBI(){
+    return this.bi;
+  }
+  
+  public double getLiquidFugacity(){
+    return this.liquidFugacity;
+  }
+  
+  public double getVapourFugacity(){
+    return this.vapourFugacity;
+  }
+  
   //Equals
   public boolean equals(Species other) {
     
@@ -398,7 +466,7 @@ public class Species implements Function{
     this.zValue = result;
   }
   
-
+  
   
   public double testFunction(double z){   
     double result = 0.0;

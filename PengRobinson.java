@@ -71,7 +71,8 @@ public class PengRobinson{
     return results;
   }
   
-  public void flowStreamSmallAValue(){
+  //mixture parameters for calculating liquid fugacity
+  public void flowStreamSmallAXValue(){
     int n = flowStream.getFlowSpecies().size();
     double[][] aij = aij();
     double result = 0.0;
@@ -83,10 +84,10 @@ public class PengRobinson{
         result+=aij[i][j]*xi*xj;
       }
     }
-    flowStream.setSmallA(result);
+    flowStream.setSmallAX(result);
   }
   
-  public void flowStreamSmallBValue(){
+  public void flowStreamSmallBXValue(){
     int n = flowStream.getFlowSpecies().size();
     double result = 0.0;
     
@@ -95,25 +96,180 @@ public class PengRobinson{
       double bi = flowStream.getFlowSpecies().get(i).getBI();
       result+=xi*bi;
     }
-    flowStream.setSmallB(result);
+    flowStream.setSmallBX(result);
   }
   
-  public void flowStreamLargeAValue(){
+  public void flowStreamLargeAXValue(){
     double r = 8.3145;
     double p = flowStream.getPressure();
     double t = flowStream.getTemperature();
-    double a = flowStream.getSmallA();
+    double a = flowStream.getSmallAX();
     double result = (a*p)/(Math.pow((r*t),2));
-    flowStream.setLargeA(result);
+    flowStream.setLargeAX(result);
   }
   
-  public void flowStreamLargeBValue(){
+  public void flowStreamLargeBXValue(){
     double r = 8.3145;
     double p = flowStream.getPressure();
     double t = flowStream.getTemperature();
-    double b = flowStream.getSmallB();
+    double b = flowStream.getSmallBX();
     double result = (b*p)/(r*t);
-    flowStream.getLargeB(result);
+    flowStream.getLargeBX(result);
   }
+  
+  public void solveZCubicLiquid(){
+    double b = flowStream.getLargeBX();
+    double a = flowStream.getLargeAX();
+    double c0 = Math.pow(b,3.0)+Math.pow(b,2.0)-(a*b);
+    double c1 = a-3*Math.pow(b,2.0)-2.0*b;
+    double c2 = b-1;
+    
+    double q1 = ((c2*c1)/6.0)-c0/2-(Math.pow(c2,3)/27.0);
+    double p1 = Math.pow(c2,2)/9.0-c1/3.0;
+    double d = Math.pow(q1,2.0)-Math.pow(p1,3.0);
+    
+    if(d>=0){
+      System.out.println("The system has one real root");
+      double z = Math.pow((q1+Math.pow(d,0.5)),(1.0/3.0))+Math.pow((q1-Math.pow(d,0.5)),(1.0/3.0))-(c2/3.0);
+      flowStream.setZL(z);
+    }else{
+      double t1 = (Math.pow(q1,2.0))/(Math.pow(p1,3.0));
+      double t2 = Math.pow((1-t1),0.5)/Math.sqrt(t1)*q1/Math.abs(q1);
+      double theta = Math.atan(t2);
+      double z0 = 2*Math.sqrt(p1)*Math.cos(theta/3.0)-(c2/3.0);
+      double z1 = 2*Math.sqrt(p1)*Math.cos((2*Math.PI+theta)/3.0)-(c2/3.0);
+      double z2 = 2*Math.sqrt(p1)*Math.cos((4*Math.PI+theta)/3.0)-(c2/3.0);
+      double zL = Math.min(z0, z1, z2);
+      double zV = Math.mac(z0, z1, z2);
+      flowStream.setZL(zL);
+      flowStream.setzV(zV);
+    }
+    
+    public void liquidFugacity(){
+      double smallB = flowStream.getSmallBX();
+      double a = flowStream.getLargeAX();
+      double b = flowStream.getLargeBX();
+      double zL = flowStream.getZL();
+      n = flowStream.getFlowSpecies().size();
+      double[][] aij = aij();
+      
+      for(int i=0; i<n; i++){
+        double lnPhiL = 0.0;
+        bi = flowStream.getFlowSpecies().get(i).getBI();
+        lnPhiL+=(bi/b)*(zL-1);
+        lnPhiL-=Math.log(zL-b);
+        double sumTerm = 0.0;
+        for(int j=0; j<n; j++){
+          double xj = flowStream.getFlowSpecies().get(j).getLiquidMoleFraction();
+          sumTerm += xj * aij[i][j];
+        }
+        lnPhiL-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/b))*Math.log((zL+(1+Math.sqrt(2)*b))/(zL+(1-Math.sqrt(2))));
+        double phiL = Math.exp(lnPhiL);
+        flowStream.getFlowSpecies().get(i).setLiquidFugacity(phiL);
+      }
+      
+    }
+    
+  }
+  
+  //mixture parameters for calculating vapour fugacity
+  public void flowStreamSmallAYValue(){
+    int n = flowStream.getFlowSpecies().size();
+    double[][] aij = aij();
+    double result = 0.0;
+    
+    for(int i=0; i<n; i++){
+      for(int j=0; j<n; j++){
+        double yi = flowStream.getFlowSpecies().get(i).getVapourMoleFraction();
+        double yj = flowStream.getFlowSpecies().get(j).getVapourMoleFraction();
+        result+=aij[i][j]*yi*yj;
+      }
+    }
+    flowStream.setSmallAY(result);
+  }
+  
+  public void flowStreamSmallBYValue(){
+    int n = flowStream.getFlowSpecies().size();
+    double result = 0.0;
+    
+    for(int i=0; i<n; i++){
+      double yi = flowStream.getFlowSpecies().get(i).getVapourMoleFraction();
+      double bi = flowStream.getFlowSpecies().get(i).getBI();
+      result+=yi*bi;
+    }
+    flowStream.setSmallBY(result);
+  }
+  
+  public void flowStreamLargeAYValue(){
+    double r = 8.3145;
+    double p = flowStream.getPressure();
+    double t = flowStream.getTemperature();
+    double a = flowStream.getSmallAY();
+    double result = (a*p)/(Math.pow((r*t),2));
+    flowStream.setLargeAY(result);
+  }
+  
+  public void flowStreamLargeBYValue(){
+    double r = 8.3145;
+    double p = flowStream.getPressure();
+    double t = flowStream.getTemperature();
+    double b = flowStream.getSmallBY();
+    double result = (b*p)/(r*t);
+    flowStream.getLargeBY(result);
+  }
+  
+  public void solveZCubicVapour(){
+    double b = flowStream.getLargeBY();
+    double a = flowStream.getLargeAY();
+    double c0 = Math.pow(b,3.0)+Math.pow(b,2.0)-(a*b);
+    double c1 = a-3*Math.pow(b,2.0)-2.0*b;
+    double c2 = b-1;
+    
+    double q1 = ((c2*c1)/6.0)-c0/2-(Math.pow(c2,3)/27.0);
+    double p1 = Math.pow(c2,2)/9.0-c1/3.0;
+    double d = Math.pow(q1,2.0)-Math.pow(p1,3.0);
+    
+    if(d>=0){
+      System.out.println("The system has one real root");
+      double z = Math.pow((q1+Math.pow(d,0.5)),(1.0/3.0))+Math.pow((q1-Math.pow(d,0.5)),(1.0/3.0))-(c2/3.0);
+      flowStream.setZV(z);
+    }else{
+      double t1 = (Math.pow(q1,2.0))/(Math.pow(p1,3.0));
+      double t2 = Math.pow((1-t1),0.5)/Math.sqrt(t1)*q1/Math.abs(q1);
+      double theta = Math.atan(t2);
+      double z0 = 2*Math.sqrt(p1)*Math.cos(theta/3.0)-(c2/3.0);
+      double z1 = 2*Math.sqrt(p1)*Math.cos((2*Math.PI+theta)/3.0)-(c2/3.0);
+      double z2 = 2*Math.sqrt(p1)*Math.cos((4*Math.PI+theta)/3.0)-(c2/3.0);
+      double zL = Math.min(z0, z1, z2);
+      double zV = Math.mac(z0, z1, z2);
+      flowStream.setZL(zL);
+      flowStream.setzV(zV);
+    }
+    }
+  
+  public void vapourFugacity(){
+      double smallB = flowStream.getSmallBY();
+      double a = flowStream.getLargeAY();
+      double b = flowStream.getLargeBY();
+      double zV = flowStream.getZV();
+      n = flowStream.getFlowSpecies().size();
+      double[][] aij = aij();
+      
+      for(int i=0; i<n; i++){
+        double lnPhiV = 0.0;
+        bi = flowStream.getFlowSpecies().get(i).getBI();
+        lnPhiV+=(bi/b)*(zV-1);
+        lnPhiV-=Math.log(zV-b);
+        double sumTerm = 0.0;
+        for(int j=0; j<n; j++){
+          double yj = flowStream.getFlowSpecies().get(j).getVapourMoleFraction();
+          sumTerm += yj * aij[i][j];
+        }
+        lnPhiV-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/b))*Math.log((zL+(1+Math.sqrt(2)*b))/(zL+(1-Math.sqrt(2))));
+        double phiV = Math.exp(lnPhiV);
+        flowStream.getFlowSpecies().get(i).setVapourFugacity(phiV);
+      }
+      
+    }
   
 }
