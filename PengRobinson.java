@@ -3,7 +3,17 @@ public class PengRobinson{
   private FlowStream flowStream;
   
   public PengRobinson(FlowStream flowStream){
-  this.flowStream = flowStream;
+    this.flowStream = flowStream;
+  }
+  
+  //flowstream getter
+  public FlowStream getFlowStream(){
+    return this.flowStream;
+  }
+  
+  //flowstream setter
+  public void setFlowStream(FlowStream flowStream){
+    this.flowStream = flowStream;
   }
   
   //individual component calculated parameters
@@ -40,7 +50,7 @@ public class PengRobinson{
       double criticalTemp = flowStream.getFlowSpecies().get(i).getCriticalTemperature();
       double criticalPressure = flowStream.getFlowSpecies().get(i).getCriticalPressure();
       double alpha = flowStream.getFlowSpecies().get(i).getAlpha();
-      result = (0.45724*Math.pow((r*criticalTemp),2)*alpha)/criticalPressure;
+      result = (0.45724*(Math.pow((r*criticalTemp),2))*alpha)/criticalPressure;
       flowStream.getFlowSpecies().get(i).setAI(result);
     }
   }
@@ -147,31 +157,31 @@ public class PengRobinson{
       flowStream.setZV(zV);
     }
   }
+  
+  public void liquidFugacity(){
+    double smallB = flowStream.getSmallBX();
+    double a = flowStream.getLargeAX();
+    double b = flowStream.getLargeBX();
+    double zL = flowStream.getZL();
+    int n = flowStream.getFlowSpecies().size();
+    double[][] aij = aij();
     
-    public void liquidFugacity(){
-      double smallB = flowStream.getSmallBX();
-      double a = flowStream.getLargeAX();
-      double b = flowStream.getLargeBX();
-      double zL = flowStream.getZL();
-      int n = flowStream.getFlowSpecies().size();
-      double[][] aij = aij();
-      
-      for(int i=0; i<n; i++){
-        double lnPhiL = 0.0;
-        double bi = flowStream.getFlowSpecies().get(i).getBI();
-        lnPhiL+=(bi/b)*(zL-1);
-        lnPhiL-=Math.log(zL-b);
-        double sumTerm = 0.0;
-        for(int j=0; j<n; j++){
-          double xj = flowStream.getFlowSpecies().get(j).getLiquidMoleFraction();
-          sumTerm += xj * aij[i][j];
-        }
-        lnPhiL-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/b))*Math.log((zL+(1+Math.sqrt(2)*b))/(zL+(1-Math.sqrt(2))));
-        double phiL = Math.exp(lnPhiL);
-        flowStream.getFlowSpecies().get(i).setLiquidFugacity(phiL);
+    for(int i=0; i<n; i++){
+      double lnPhiL = 0.0;
+      double bi = flowStream.getFlowSpecies().get(i).getBI();
+      lnPhiL+=(bi/b)*(zL-1);
+      lnPhiL-=Math.log(zL-b);
+      double sumTerm = 0.0;
+      for(int j=0; j<n; j++){
+        double xj = flowStream.getFlowSpecies().get(j).getLiquidMoleFraction();
+        sumTerm += xj * aij[i][j];
       }
-      
+      lnPhiL-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/b))*Math.log((zL+(1+Math.sqrt(2)*b))/(zL+(1-Math.sqrt(2))));
+      double phiL = Math.exp(lnPhiL);
+      flowStream.getFlowSpecies().get(i).setLiquidFugacity(phiL);
     }
+    
+  }
   
   //mixture parameters for calculating vapour fugacity
   public void flowStreamSmallAYValue(){
@@ -246,31 +256,31 @@ public class PengRobinson{
       flowStream.setZL(zL);
       flowStream.setZV(zV);
     }
-    }
+  }
   
   public void vapourFugacity(){
-      double smallB = flowStream.getSmallBY();
-      double a = flowStream.getLargeAY();
-      double b = flowStream.getLargeBY();
-      double zV = flowStream.getZV();
-      int n = flowStream.getFlowSpecies().size();
-      double[][] aij = aij();
-      
-      for(int i=0; i<n; i++){
-        double lnPhiV = 0.0;
-        double bi = flowStream.getFlowSpecies().get(i).getBI();
-        lnPhiV+=(bi/b)*(zV-1);
-        lnPhiV-=Math.log(zV-b);
-        double sumTerm = 0.0;
-        for(int j=0; j<n; j++){
-          double yj = flowStream.getFlowSpecies().get(j).getVapourMoleFraction();
-          sumTerm += yj * aij[i][j];
-        }
-        lnPhiV-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/b))*Math.log((zV+(1+Math.sqrt(2)*b))/(zV+(1-Math.sqrt(2))));
-        double phiV = Math.exp(lnPhiV);
-        flowStream.getFlowSpecies().get(i).setVapourFugacity(phiV);
+    double smallB = flowStream.getSmallBY();
+    double a = flowStream.getLargeAY();
+    double b = flowStream.getLargeBY();
+    double zV = flowStream.getZV();
+    int n = flowStream.getFlowSpecies().size();
+    double[][] aij = aij();
+    
+    for(int i=0; i<n; i++){
+      double lnPhiV = 0.0;
+      double bi = flowStream.getFlowSpecies().get(i).getBI();
+      lnPhiV+=(bi/b)*(zV-1);
+      lnPhiV-=Math.log(zV-b);
+      double sumTerm = 0.0;
+      for(int j=0; j<n; j++){
+        double yj = flowStream.getFlowSpecies().get(j).getVapourMoleFraction();
+        sumTerm += yj * aij[i][j];
       }
-      
+      lnPhiV-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/b))*Math.log((zV+(1+Math.sqrt(2)*b))/(zV+(1-Math.sqrt(2))));
+      double phiV = Math.exp(lnPhiV);
+      flowStream.getFlowSpecies().get(i).setVapourFugacity(phiV);
     }
+    
+  }
   
 }
