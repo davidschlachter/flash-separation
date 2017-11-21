@@ -178,35 +178,29 @@ public class ConsoleUI {
     double bubblePointTemperature = bubblePoint.calc();
     if (outletStream.getTemperature() > 0.01 && inletStream.getTemperature() > 0.01) {
       if (outletStream.getTemperature() < bubblePointTemperature) {
-        output.println("ERROR: The specified outlet temperature is below the bubble point -- no separation will occur!");
+        output.println("WARNING: The specified outlet temperature is below the bubble point -- no separation will occur!");
         output.println("(Bubble point is: " + bubblePointTemperature + ")");
-        System.exit(1);
-        return true;
       }
       if (outletStream.getTemperature() > dewPointTemperature) {
-        output.println("ERROR: The specified outlet temperature is above the dew point -- no separation will occur!");
+        output.println("WARNING: The specified outlet temperature is above the dew point -- no separation will occur!");
         output.println("(Dew point is: " + dewPointTemperature + ")");
-        System.exit(1);
-        return true;
       }
     } else if (inletStream.getTemperature() < 0.01) {
       if (inletStream.getTemperature() > bubblePointTemperature) {
-        output.println("ERROR: The specified inlet temperature is below the bubble point -- no separation will occur!");
+        output.println("WARNING: The specified inlet temperature is below the bubble point -- no separation will occur!");
         output.println("(Bubble point is: " + bubblePointTemperature + ")");
-        System.exit(1);
-        return true;
       }
     } else if (outletStream.getTemperature() < 0.01) {
       if (outletStream.getTemperature() < dewPointTemperature) {
-        output.println("ERROR: The specified outlet temperature is above the dew point -- no separation will occur!");
+        output.println("WARNING: The specified outlet temperature is above the dew point -- no separation will occur!");
         output.println("(Dew point is: " + dewPointTemperature + ")");
-        System.exit(1);
-        return true;
       }
     }
     
     // Calculate what's missing in the stream(s)
-    Controller.calc(inletStream, outletStream);
+    FlowStream[] processedStreams = Controller.calc(inletStream, outletStream);
+    inletStream = processedStreams[0];
+    outletStream = processedStreams[1];
     
     
     // Print the final results
