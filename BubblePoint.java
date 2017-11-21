@@ -21,7 +21,7 @@ public class BubblePoint implements Function {
     double result =  RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
     int i = 0;
     while (Double.isNaN(result)) {
-      bounds = RootFinder.getBounds(this, bounds[1], 1.0, true);
+      bounds = RootFinder.getBounds(this, bounds[1], 1.0, 1.0);
       result =  RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
       if (i > 10) break;
     }

@@ -379,7 +379,7 @@ public class ConsoleUI {
     
   }
   
-  private void printStreams(Scanner scan, PrintWriter output, FlowStream inletStream, FlowStream outletStream) {
+  public static void printStreams(Scanner scan, PrintWriter output, FlowStream inletStream, FlowStream outletStream) {
     int i;
     String speciesName;
     double liquidMoleFraction, vapourMoleFraction, overallMoleFraction;

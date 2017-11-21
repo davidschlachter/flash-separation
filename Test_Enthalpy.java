@@ -38,8 +38,8 @@ public class Test_Enthalpy extends TestCase {
     outletStream.setVapourFraction(1.0);
     
     Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
-    double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
-    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
+    double theEnthalpy = enthalpy.calc();
+    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).calc();
     
     
     // Note that real change is closer to 890 J/mol, but the correlation is a bit off
@@ -74,8 +74,8 @@ public class Test_Enthalpy extends TestCase {
     outletStream.setVapourFraction(0.0);
     
     Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
-    double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
-    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
+    double theEnthalpy = enthalpy.calc();
+    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).calc();
     
     assertTrue(theEnthalpy > 9006.0 && theEnthalpy < 9080.0);
     assertTrue(theReverseEnthalpy > -9080.0 && theReverseEnthalpy < -9006.0);
@@ -107,8 +107,8 @@ public class Test_Enthalpy extends TestCase {
     outletStream.setVapourFraction(1.0);
     
     Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
-    double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
-    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
+    double theEnthalpy = enthalpy.calc();
+    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).calc();
     
     //System.out.println("The phase change enthalpy change is: "+theEnthalpy+" "+theReverseEnthalpy);
     assertTrue(theEnthalpy > 47464.0 && theEnthalpy < 49401.0);
@@ -141,8 +141,8 @@ public class Test_Enthalpy extends TestCase {
     outletStream.setVapourFraction(1.0);
     
     Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
-    double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
-    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
+    double theEnthalpy = enthalpy.calc();
+    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).calc();
     
     //System.out.println("The pressure change phase change enthalpy change is: "+theEnthalpy+" "+theReverseEnthalpy);
     assertTrue(theEnthalpy > 38868. && theEnthalpy < 40454.);
@@ -176,8 +176,8 @@ public class Test_Enthalpy extends TestCase {
     outletStream.setVapourFraction(0.5); // Half of the water is vapourized
     
     Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
-    double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
-    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
+    double theEnthalpy = enthalpy.calc();
+    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).calc();
     
     //System.out.println("The VLE/subcooled liquid enthalpy change is: "+theEnthalpy+" "+theReverseEnthalpy);
     assertTrue(theEnthalpy > 25860.7 && theEnthalpy < 26916.3);
@@ -212,8 +212,8 @@ public class Test_Enthalpy extends TestCase {
     outletStream.setVapourFraction(1.0); // All of the water is vapourized
     
     Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
-    double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
-    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
+    double theEnthalpy = enthalpy.calc();
+    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).calc();
     
     //System.out.println("The VLE/superheated vapour enthalpy change is: "+theEnthalpy+" "+theReverseEnthalpy);
     assertTrue(theEnthalpy > 21603.5 && theEnthalpy < 22485.3);
@@ -247,8 +247,8 @@ public class Test_Enthalpy extends TestCase {
     outletStream.setVapourFraction(0.75); // 75% of the water is vapourized
     
     Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
-    double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
-    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
+    double theEnthalpy = enthalpy.calc();
+    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).calc();
     
     //System.out.println("The VLE enthalpy change is: "+theEnthalpy+" "+theReverseEnthalpy);
     assertTrue(theEnthalpy > 19923.4 && theEnthalpy < 20736.6);
@@ -292,8 +292,8 @@ public class Test_Enthalpy extends TestCase {
     outletStream.setVapourFraction(1.0);
     
     Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
-    double theEnthalpy = enthalpy.testFunction(outletStream.getTemperature());
-    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).testFunction(inletStream.getTemperature());
+    double theEnthalpy = enthalpy.calc();
+    double theReverseEnthalpy = new Enthalpy(outletStream, inletStream).calc();
     
     //System.out.println("The VLE mixture enthalpy change is: "+theEnthalpy+" "+theReverseEnthalpy);
     assertTrue(theEnthalpy > 96500.94 && theEnthalpy < 100439.75);
@@ -332,7 +332,7 @@ public class Test_Enthalpy extends TestCase {
     
   }
   
-  // Test sourced from https://www.youtube.com/watch?v=Aw4VsloWVjM&t=3s -- verify that the solution is actually adiabatic!
+  // Test sourced from https://www.youtube.com/watch?v=Aw4VsloWVjM -- verify that the solution is actually adiabatic!
   // NOTE: This test is only here so that we can validate that this transition IS actually adiabatic -- if it is, we
   // can use this system to test our Controller.
   public void testIdealAdiabaticFlash() {
@@ -367,25 +367,22 @@ public class Test_Enthalpy extends TestCase {
     inlet.setTemperature(423.0);
     inlet.getFlowSpecies().get(0).setLiquidMoleFraction(methanol.getOverallMoleFraction());
     inlet.getFlowSpecies().get(1).setLiquidMoleFraction(ethanol.getOverallMoleFraction());
-    // Hack so that enthalpy works :)
-    inlet.setVapourFraction(0.00000001);
-    inlet.getFlowSpecies().get(0).setVapourMoleFraction(0.5);
-    inlet.getFlowSpecies().get(1).setVapourMoleFraction(0.5);
-    // </hack>
     inlet.setPressure(20.0 * 100000);
     outlet.setPressure(2.0 * 100000);
-    outlet.getFlowSpecies().get(0).setLiquidMoleFraction(0.27);
-    outlet.getFlowSpecies().get(1).setLiquidMoleFraction(0.73);
-    outlet.getFlowSpecies().get(0).setVapourMoleFraction(0.38);
-    outlet.getFlowSpecies().get(1).setVapourMoleFraction(0.62);
-    outlet.setVapourFraction(0.26);
-    outlet.setTemperature(366.581); // LearnChemE finds 365.0 as the adiabatic solution, but we have this ¯\_(ツ)_/¯
+    outlet.getFlowSpecies().get(0).setLiquidMoleFraction(0.273);
+    outlet.getFlowSpecies().get(1).setLiquidMoleFraction(0.727);
+    outlet.getFlowSpecies().get(0).setVapourMoleFraction(0.375);
+    outlet.getFlowSpecies().get(1).setVapourMoleFraction(0.625);
+    outlet.setVapourFraction(0.265);
+    outlet.setTemperature(365.0); // LearnChemE finds 365.0 as the adiabatic solution, but we have this ¯\_(ツ)_/¯
+    System.out.println("\nSTARTING THE ADIABATIC ENTHALPY TEST!");
+    double theEnthalpy = new Enthalpy(inlet, outlet).calc();
+    double theReverseEnthalpy = new Enthalpy(outlet, inlet).calc();
     
-    double theEnthalpy = new Enthalpy(inlet, outlet).testFunction(outlet.getTemperature());
-    double theReverseEnthalpy = new Enthalpy(outlet, inlet).testFunction(inlet.getTemperature());
+    System.out.println("The enthalpy in the adiabatic test was: "+theEnthalpy+ " " + theReverseEnthalpy+"\n");
     
-    assertTrue(theEnthalpy > -100.0 && theEnthalpy < 100.0);
-    assertTrue(theReverseEnthalpy < 100.0 && theReverseEnthalpy > -100.0);
+    assertTrue(theEnthalpy > -10.0 && theEnthalpy < 10.0);
+    assertTrue(theReverseEnthalpy < 10.0 && theReverseEnthalpy > -10.0);
     
   }
   

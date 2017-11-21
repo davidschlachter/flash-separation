@@ -14,11 +14,17 @@ public class RootFinder {
     for(int i=0; i<JMAX; i++) {
       lowBounds[0] -= step;
       highBounds[1] += step;
-      
-      testLowProduct = func.testFunction(lowBounds[0])*func.testFunction(lowBounds[1]);
       testHighProduct = func.testFunction(highBounds[0])*func.testFunction(highBounds[1]);
-      if(testLowProduct<0) return lowBounds;
-      else if(testHighProduct<0) return highBounds;
+      testLowProduct = func.testFunction(lowBounds[0])*func.testFunction(lowBounds[1]);
+      
+      if(testLowProduct<0) {
+        //System.out.println("Bounds are: "+lowBounds[0]+" "+lowBounds[1]+" with product "+testLowProduct);
+        return lowBounds;
+      }
+      else if(testHighProduct<0) {
+        //System.out.println("Bounds are: "+highBounds[0]+" "+highBounds[1]+" with product "+testHighProduct);
+        return highBounds;
+      }
       else {
         lowBounds[1] = lowBounds[0];
         highBounds[0] = highBounds[1];
@@ -30,17 +36,19 @@ public class RootFinder {
   }
   
   //Static method to return bounds for a root, searching either forward (true) or backward (false)
-  public static double[] getBounds(Function func, double initialGuess, double step, boolean onlyForward) {
+  public static double[] getBounds(Function func, double initialGuess, double step, double direction) {
     double[] bounds = {initialGuess, initialGuess};
     
     double testProduct = 0.0;
     
     for(int i=0; i<JMAX; i++) {
       
-      if (onlyForward == true) {
+      if (direction > 0.0) {
         bounds[1] += step;
-      } else {
+      } else if (direction < 0.0) {
         bounds[0] -= step;
+      } else {
+        bounds[1] = (Math.pow(-1.0, i)*step)*i + bounds[0];
       }
       
       testProduct = func.testFunction(bounds[0])*func.testFunction(bounds[1]);
@@ -48,9 +56,9 @@ public class RootFinder {
         return bounds;
       }
       else {
-        if (onlyForward == true) {
+        if (direction > 0.0) {
           bounds[0] = bounds[1];
-        } else {
+        } else if (direction < 0.0) {
           bounds[1] = bounds[0];
         }
       }

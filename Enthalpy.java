@@ -22,8 +22,40 @@ public class Enthalpy implements Function {
     return this.outlet;
   }
   
+  // For the root finder!
+  public double testFunction(double testTemp) {
+    boolean inletSpecified;
+    // Determine and set missing temperature
+    FlowStream unspecifiedStream, specifiedStream;
+    if (this.outlet.getTemperature() > 0.0 && this.inlet.getTemperature() == 0.0) {
+      unspecifiedStream = this.inlet;
+      specifiedStream = this.outlet;
+      inletSpecified = false;
+    } else if (this.inlet.getTemperature() > 0.0 && this.outlet.getTemperature() == 0.0) {
+      unspecifiedStream = this.outlet;
+      specifiedStream = this.inlet;
+      inletSpecified = true;
+    } else {
+      // Satisfy the compiler re initializing all variables  :)
+      unspecifiedStream = this.outlet;
+      specifiedStream = this.inlet;
+      inletSpecified = true;
+      // Print an error... the problem here isn't anything we're expecting!
+      System.out.println("ERROR: Both temperatures are specified!");
+      System.exit(1);
+    }
+    
+    // Calculate the enthalpy difference!
+    unspecifiedStream.setTemperature(testTemp);
+    unspecifiedStream = new RachfordRice(unspecifiedStream).solve();
+    if (inletSpecified == true) this.outlet = unspecifiedStream; else this.inlet = unspecifiedStream;
+    double difference = this.calc();
+    unspecifiedStream.setTemperature(0.0);
+    return difference;
+  }
+  
   // Calculate the enthalpy change between the inlet and the outlet streams
-  public double testFunction(double testTemp){
+  public double calc() {
     int i;
     double initialTemperature = -1.0;
     double finalTemperature = -1.0;
@@ -40,29 +72,22 @@ public class Enthalpy implements Function {
     inletFlowRate = this.inlet.getMolarFlowRate();
     outletFlowRate = this.inlet.getMolarFlowRate();
     
-    if (this.inlet.getTemperature() < 0.01) {
-      initialTemperature = testTemp;
-      finalTemperature = this.outlet.getTemperature();
-    } else if (this.outlet.getTemperature() < 0.01) {
-      finalTemperature = testTemp;
-      initialTemperature = this.inlet.getTemperature();
-    } else {
-      finalTemperature = this.outlet.getTemperature();
-      initialTemperature = this.inlet.getTemperature();
-    }
+    finalTemperature = this.outlet.getTemperature();
+    initialTemperature = this.inlet.getTemperature();
+    
     
     if (this.inlet.getFlowSpecies().size() != this.outlet.getFlowSpecies().size()) {
       System.out.println("Inlet and outlet streams do not have same number of species."); 
       System.exit(1);
     }
     
-    if(this.inlet.getVapourFraction() == 0.0 && this.outlet.getVapourFraction() == 0.0) {
+    if (this.inlet.getVapourFraction() == 0.0 && this.outlet.getVapourFraction() == 0.0) {
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
         outletLiquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
         outletLiquidFlowRate = outletFlowRate*(1-outletVapourFraction)*outletLiquidMoleFraction;
         result = result + outletLiquidFlowRate * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
       }
-    } else if(this.inlet.getVapourFraction() == 1.0 && this.outlet.getVapourFraction() == 1.0) {
+    } else if (this.inlet.getVapourFraction() == 1.0 && this.outlet.getVapourFraction() == 1.0) {
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
         outletVapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
         outletVapourFlowRate = outletFlowRate*outletVapourFraction*outletVapourMoleFraction;

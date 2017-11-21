@@ -6,7 +6,7 @@ public class Controller {
   public static void calc(FlowStream inlet, FlowStream outlet) {
     
     // Acceptable error
-    double error = 0.001; // K
+    double error = 0.001;
     
     double unknownTemperature;
     // First problem type: both inlet and outlet temperatures are specified
@@ -16,13 +16,8 @@ public class Controller {
     } else {
       // Second and third problem types: one of the temperatures is missing, and the
       // flash is adiabatic
-      double dewPointTemperature = new DewPoint(outlet).calc();
-      double bubblePointTemperature = new BubblePoint(outlet).calc();
       
-      // Guess for the final temperature
-      double guessTemp = (dewPointTemperature + bubblePointTemperature)/2;
-      
-      // Determine and set missing temperature
+      // Determine missing temperature for initial guess
       FlowStream unspecifiedStream, specifiedStream;
       if (outlet.getTemperature() > 0.0 && inlet.getTemperature() == 0.0) {
         unspecifiedStream = inlet;
@@ -38,26 +33,20 @@ public class Controller {
         System.out.println("ERROR: Both temperatures are specified!");
         System.exit(1);
       }
-      // Initial guess for stream temperature
-      unspecifiedStream.setTemperature(guessTemp);
-      unspecifiedStream = new RachfordRice(unspecifiedStream).solve();
-      
-      double putativeAdiabaticTemperature = RiddersMethod.calc(new Enthalpy(specifiedStream, unspecifiedStream), 0.01, 1000.0, 0.001);
-      
-      int i = 0, maxIterations = 10;
-      while (Math.abs(putativeAdiabaticTemperature - guessTemp) > error) {
-        guessTemp = putativeAdiabaticTemperature;
-        
-        unspecifiedStream.setTemperature(guessTemp);
-        unspecifiedStream = new RachfordRice(unspecifiedStream).solve();
-        
-        putativeAdiabaticTemperature = RiddersMethod.calc(new Enthalpy(specifiedStream, unspecifiedStream), 0.01, 1000.0, 0.001);
-        i++;
-        if (i > maxIterations) break;
-      }
       
       Enthalpy enthalpy = new Enthalpy(inlet, outlet);
-      unknownTemperature = RiddersMethod.calc(enthalpy, 0.01, 1000.0, 0.001);
+      double[] bounds = RootFinder.getBounds(enthalpy, specifiedStream.getTemperature(), 10.0, 0.0);
+      double solvedFinalTemperaure = RiddersMethod.calc(enthalpy, bounds[0], bounds[1], 0.0001);
+      int i = 0;
+      while (Double.isNaN(solvedFinalTemperaure)) {
+        bounds = RootFinder.getBounds(enthalpy, bounds[0], 1.0, 0.0);
+        solvedFinalTemperaure =  RiddersMethod.calc(enthalpy, bounds[0], bounds[1], 0.001);
+        if (i > 1) bounds = RootFinder.getBounds(enthalpy, bounds[0], 1.0);
+        if (i > 2) break;
+        i++;
+      }
+      enthalpy.getOutlet().setTemperature(solvedFinalTemperaure);
+      double enthalpy3 = enthalpy.calc();
       
     }
     

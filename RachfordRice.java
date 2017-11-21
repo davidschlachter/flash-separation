@@ -22,6 +22,8 @@ public class RachfordRice implements DifferentiableFunction {
   // Solve the composition of the given flow stream
   public FlowStream solve() {
     
+    int i;
+    
     double dewPointTemperature = new DewPoint(this.flowStream).calc();
     double bubblePointTemperature = new BubblePoint(this.flowStream).calc();
     if (this.flowStream.getTemperature() < bubblePointTemperature || this.flowStream.getTemperature() > dewPointTemperature
@@ -40,10 +42,23 @@ public class RachfordRice implements DifferentiableFunction {
       System.out.println("       Typically this is because the bounds for the root solver did not necessarily");
       System.out.println("       bound the root.");
       //System.exit(1);
+      if (this.flowStream.getTemperature() > dewPointTemperature) {
+        for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
+          this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(0.0);
+          this.flowStream.getFlowSpecies().get(i).setVapourMoleFraction(this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction());
+        }
+        this.flowStream.setVapourFraction(1.0);
+      } else if (this.flowStream.getTemperature() < bubblePointTemperature) {
+        for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
+          this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction());
+          this.flowStream.getFlowSpecies().get(i).setVapourMoleFraction(0.0);
+        }
+        this.flowStream.setVapourFraction(0.0);
+      }
       return this.flowStream;
     }
     
-    int i;
+    
     double overallMoleFraction, saturationPressure, kMinusOne;
     double liquidMoleFraction, vapourMoleFraction, pressure;
     double activityCoefficient, largePhi;
@@ -67,7 +82,17 @@ public class RachfordRice implements DifferentiableFunction {
     
     this.flowStream.setVapourFraction(vOverF);
     
-    return this.flowStream;
+    // Check if the numbers add up!
+    double liquidFlow = 0., vapourFlow = 0.;
+    for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
+      liquidFlow += this.flowStream.getFlowSpecies().get(i).getLiquidMoleFraction()*(1-vOverF)*this.flowStream.getMolarFlowRate();
+      vapourFlow += this.flowStream.getFlowSpecies().get(i).getVapourMoleFraction()*vOverF*this.flowStream.getMolarFlowRate();
+    }
+    if (Math.abs(((liquidFlow+vapourFlow)-this.flowStream.getMolarFlowRate())/this.flowStream.getMolarFlowRate()) > 0.0001) {
+      System.out.println("\nERROR: Flow rates are inconsistent!!\nvOverF was found to be: " + vOverF);
+    }
+    
+    return new FlowStream(this.flowStream);
     
   }
   
