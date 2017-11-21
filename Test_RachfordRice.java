@@ -68,7 +68,7 @@ public class Test_RachfordRice extends TestCase {
     test.setMolarFlowRate(1.0);
     
     test = new RachfordRice(test).solve();
-
+    
     assertTrue(test.getFlowSpecies().get(0).getLiquidMoleFraction() > 0.52 &&
                test.getFlowSpecies().get(0).getLiquidMoleFraction() < 0.54);
     assertTrue(test.getFlowSpecies().get(0).getVapourMoleFraction() > 0.76 &&
@@ -76,36 +76,6 @@ public class Test_RachfordRice extends TestCase {
     assertTrue(test.getVapourFraction() > 0.30 && test.getVapourFraction() < 0.32);
   }
   
-  // Test the RachfordRice solution for a stream. Source: Excel calculation
-  public void testSolution() {
-    FlowStream testStream = new FlowStream();
-    
-    FlowSpecies water = new FlowSpecies();
-    water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
-    water.setOverallMoleFraction(0.5);
-    FlowSpecies ethanol = new FlowSpecies();
-    ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
-    ethanol.setOverallMoleFraction(0.5);
-    ethanol.setCriticalTemperature(514.0);
-    water.setCriticalTemperature(647.0);
-    testStream.addFlowSpecies(water);
-    testStream.addFlowSpecies(ethanol);
-    testStream.setPressure(101325.0);
-    testStream.setTemperature(368.0);
-    
-    RachfordRice testRachfordRice = new RachfordRice(testStream);
-    FlowStream solvedFlowStream = testRachfordRice.solve();
-    
-    double waterLiquidMoleFraction = solvedFlowStream.getFlowSpecies().get(0).getLiquidMoleFraction();
-    double waterVapourMoleFraction = solvedFlowStream.getFlowSpecies().get(0).getVapourMoleFraction();
-    double ethanolLiquidMoleFraction = solvedFlowStream.getFlowSpecies().get(1).getLiquidMoleFraction();
-    double ethanolVapourMoleFraction = solvedFlowStream.getFlowSpecies().get(1).getVapourMoleFraction();
-    
-    assertTrue("RachfordRice.calc()", waterLiquidMoleFraction > 0.8338 && waterLiquidMoleFraction < 0.8358);
-    assertTrue("RachfordRice.calc()", waterVapourMoleFraction > 0.6912 && waterVapourMoleFraction < 0.6932);
-    assertTrue("RachfordRice.calc()", ethanolLiquidMoleFraction > 0.1642 && ethanolLiquidMoleFraction < 0.1662);
-    assertTrue("RachfordRice.calc()", ethanolVapourMoleFraction > 0.3068 && ethanolVapourMoleFraction < 0.3088);
-  }
   
   /*  public void testNonIdealSolution() {
    FlowStream testStream = new FlowStream();
@@ -245,7 +215,7 @@ public class Test_RachfordRice extends TestCase {
    } */
   
   public void testLargerFlowStream(){
-    System.out.println("\nStarting testLargerFlowStream");
+    //System.out.println("\nStarting testLargerFlowStream");
     FlowStream testStream = new FlowStream();
     
     FlowSpecies nHexane = new FlowSpecies();
@@ -284,14 +254,14 @@ public class Test_RachfordRice extends TestCase {
     double benzeneLiquidMoleFraction = solvedFlowStream.getFlowSpecies().get(3).getLiquidMoleFraction();
     double benzeneVapourMoleFraction = solvedFlowStream.getFlowSpecies().get(3).getVapourMoleFraction();
     
-    System.out.println("x1: "+nHexaneLiquidMoleFraction);
+    /*System.out.println("x1: "+nHexaneLiquidMoleFraction);
     System.out.println("y1: "+nHexaneVapourMoleFraction);
     System.out.println("x2: "+ethanolLiquidMoleFraction);
     System.out.println("y2: "+ethanolVapourMoleFraction);
     System.out.println("x3: "+mcpLiquidMoleFraction);
     System.out.println("y3: "+mcpVapourMoleFraction);
     System.out.println("x4: "+benzeneLiquidMoleFraction);
-    System.out.println("y4: "+benzeneVapourMoleFraction);
+    System.out.println("y4: "+benzeneVapourMoleFraction);*/
     
   }
 }
