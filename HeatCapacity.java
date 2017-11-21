@@ -1,7 +1,7 @@
 public class HeatCapacity {
   
   public static double integrate(Species species, double initialTemperature, double finalTemperature, String state) {
-  
+    
     double[] constants;
     
     if (state.equals("liquid")) {
@@ -11,6 +11,17 @@ public class HeatCapacity {
     } else {
       System.out.println("ERROR: State of heat capacity fluid (liquid/vapour) could not be determined!");
       constants = new double[] {0.0}; // So that constants is always initialized -- avoids compiler error
+      System.exit(1);
+    }
+    
+    // Check if all the constants for integration are empty
+    boolean areEmpty = true;
+    int i;
+    for (i = 0; i < constants.length; i++) {
+      if (constants[0] != 0.0) areEmpty = false;
+    }
+    if (areEmpty) {
+      System.out.println("ERROR: No constants available to perform integration!");
       System.exit(1);
     }
     
