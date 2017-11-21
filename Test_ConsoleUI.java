@@ -90,14 +90,14 @@ public class Test_ConsoleUI extends TestCase {
     assertTrue("ConsoleUI outlet stream properties", output.contains("Outlet:" + newline + "  Temperature: 333.0" +
                                                                      newline + "  Pressure: 101325.0" + newline +
                                                                      "  Mass flow rate: 10.0" + newline +
-                                                                     "  Total vapour fraction: 0.5"));
+                                                                     "  Total vapour fraction: 0.0"));
     assertTrue("ConsoleUI outlet mole fractions", output.contains("Ethane  0.000  0.000  0.367" + newline +
                                                                   "            Pentane  0.000  0.000  0.633"));
     assertTrue("ConsoleUI properties prompt", output.contains("  Temperature (K): " + newline + "  Pressure (Pa): " +
                                                               newline + "  Mass flow rate (kg/s): " + newline + "" +
                                                               newline + "For the outlet stream, enter the following " + 
                                                               "properties if known:" + newline + "  Temperature (K): "
-                                                              + newline + "  Pressure (Pa):"));
+                                                                + newline + "  Pressure (Pa):"));
     assertTrue("ConsoleUI mole fractions prompt", output.contains("Mole fraction of Ethane: " + newline +
                                                                   "  Mole fraction of Ethane: " + newline +
                                                                   "  Mole fraction of Pentane: " + newline + "" +
