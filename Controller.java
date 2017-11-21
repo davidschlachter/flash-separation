@@ -38,13 +38,7 @@ public class Controller {
       double[] bounds = RootFinder.getBounds(enthalpy, specifiedStream.getTemperature(), 10.0, 0.0);
       double solvedFinalTemperaure = RiddersMethod.calc(enthalpy, bounds[0], bounds[1], 0.0001, true);
       int i = 0;
-      while (Double.isNaN(solvedFinalTemperaure)) {
-        bounds = RootFinder.getBounds(enthalpy, bounds[0], 1.0, 0.0);
-        solvedFinalTemperaure =  RiddersMethod.calc(enthalpy, bounds[0], bounds[1], 0.001);
-        if (i > 1) bounds = RootFinder.getBounds(enthalpy, bounds[0], 1.0);
-        if (i > 2) break;
-        i++;
-      }
+     
       enthalpy.getOutlet().setTemperature(solvedFinalTemperaure);
       double enthalpy3 = enthalpy.calc();
       
