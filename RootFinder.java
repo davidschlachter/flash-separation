@@ -52,6 +52,7 @@ public class RootFinder {
       }
       
       testProduct = func.testFunction(bounds[0])*func.testFunction(bounds[1]);
+      //System.out.println("Bounds are: "+bounds[0]+" "+bounds[1]+" with product "+testProduct);
       if (testProduct<0) {
         return bounds;
       }

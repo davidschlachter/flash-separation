@@ -45,7 +45,7 @@ public class Test_RachfordRice extends TestCase {
   }
   
   // Test the ideal Rachford Rice solution against this example from LearnChemE:
-  // https://www.youtube.com/watch?v=bs2T5oCfRak&t=64s
+  // https://www.youtube.com/watch?v=bs2T5oCfRak
   public void testIdealLearnChemEFlash() {
     FlowSpecies component1 = new FlowSpecies();
     FlowSpecies component2 = new FlowSpecies();

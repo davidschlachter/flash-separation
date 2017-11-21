@@ -1,3 +1,6 @@
+//import java.util.Scanner;
+//import java.io.PrintWriter;
+
 public class Enthalpy implements Function {
   
   private FlowStream inlet;
@@ -83,17 +86,20 @@ public class Enthalpy implements Function {
     
     if (this.inlet.getVapourFraction() == 0.0 && this.outlet.getVapourFraction() == 0.0) {
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
+        //System.out.println("No vapour in enthalpy!");
         outletLiquidMoleFraction = this.outlet.getFlowSpecies().get(i).getLiquidMoleFraction();
         outletLiquidFlowRate = outletFlowRate*(1-outletVapourFraction)*outletLiquidMoleFraction;
         result = result + outletLiquidFlowRate * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "liquid");
       }
     } else if (this.inlet.getVapourFraction() == 1.0 && this.outlet.getVapourFraction() == 1.0) {
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
+        //System.out.println("No liquid in enthalpy!");
         outletVapourMoleFraction = this.outlet.getFlowSpecies().get(i).getVapourMoleFraction();
         outletVapourFlowRate = outletFlowRate*outletVapourFraction*outletVapourMoleFraction;
         result = result + outletVapourFlowRate * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
       }
     } else {
+      //System.out.println("System is multiphase");
       outletBubbleTemperature = new BubblePoint(this.outlet).calc();
       inletBubbleTemperature = new BubblePoint(this.inlet).calc();
       
@@ -138,7 +144,8 @@ public class Enthalpy implements Function {
         }
       }
     }
-    
+    //System.out.println("Enthalpy difference: result was "+result);
+    //ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), this.inlet, this.outlet);
     return result;
     
   }
