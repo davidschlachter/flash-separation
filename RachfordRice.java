@@ -23,38 +23,28 @@ public class RachfordRice implements DifferentiableFunction {
   public FlowStream solve() {
     
     int i;
-    
     double dewPointTemperature = new DewPoint(this.flowStream).calc();
     double bubblePointTemperature = new BubblePoint(this.flowStream).calc();
-    if (this.flowStream.getTemperature() < bubblePointTemperature || this.flowStream.getTemperature() > dewPointTemperature
-          || bubblePointTemperature > dewPointTemperature) {
-      System.out.println("WARNING: Stream temperature is not in the two-phase equilibrium region. Rachford Rice"+
-                         "equation is unlikely to converge!");
-      System.out.println("         Bubble point and dew point were: "+bubblePointTemperature+" "+dewPointTemperature);
-      System.out.println("Calling method is: "+Thread.currentThread().getStackTrace()[2].getMethodName());
-    }
-    
     double vOverF = NewtonRaphson.calc(this, 0.5, 0.1);
     
-    
-    if (Double.isNaN(vOverF)) {
-      System.out.println("ERROR: The value of V/F for the RachfordRice equation could not be determined.");
-      System.out.println("       Typically this is because the bounds for the root solver did not necessarily");
-      System.out.println("       bound the root.");
-      //System.exit(1);
-      if (this.flowStream.getTemperature() > dewPointTemperature) {
+    if (this.flowStream.getTemperature() > dewPointTemperature) {
         for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
           this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(0.0);
           this.flowStream.getFlowSpecies().get(i).setVapourMoleFraction(this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction());
         }
         this.flowStream.setVapourFraction(1.0);
+        return this.flowStream;
       } else if (this.flowStream.getTemperature() < bubblePointTemperature) {
         for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
           this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction());
           this.flowStream.getFlowSpecies().get(i).setVapourMoleFraction(0.0);
         }
         this.flowStream.setVapourFraction(0.0);
+        return this.flowStream;
       }
+    
+    if (Double.isNaN(vOverF)) {
+      System.out.println("WARNING: The value of V/F for the RachfordRice equation could not be determined.");
       return this.flowStream;
     }
     

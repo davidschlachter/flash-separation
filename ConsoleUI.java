@@ -404,7 +404,7 @@ public class ConsoleUI {
     output.println("  Temperature: " + outletStream.getTemperature());
     output.println("  Pressure: " + outletStream.getPressure());
     output.println("  Mass flow rate: " + outletStream.getMolarFlowRate());
-    output.println("  Total vapour fraction: " + inletStream.getVapourFraction());
+    output.println("  Total vapour fraction: " + outletStream.getVapourFraction());
     output.println("  Species and mole fractions: ");
     output.printf("    %15s  %5s  %5s  %5s%n", "Name", "liq", "vap", "total");
     output.println("----------------------------------------");

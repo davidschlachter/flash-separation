@@ -36,7 +36,7 @@ public class Controller {
       
       Enthalpy enthalpy = new Enthalpy(inlet, outlet);
       double[] bounds = RootFinder.getBounds(enthalpy, specifiedStream.getTemperature(), 10.0, 0.0);
-      double solvedFinalTemperaure = RiddersMethod.calc(enthalpy, bounds[0], bounds[1], 0.0001);
+      double solvedFinalTemperaure = RiddersMethod.calc(enthalpy, bounds[0], bounds[1], 0.0001, true);
       int i = 0;
       while (Double.isNaN(solvedFinalTemperaure)) {
         bounds = RootFinder.getBounds(enthalpy, bounds[0], 1.0, 0.0);

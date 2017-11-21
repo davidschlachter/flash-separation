@@ -40,7 +40,7 @@ public class Test_Controller extends TestCase {
   // Test an ideal adiabatic flash. Source: https://www.youtube.com/watch?v=Aw4VsloWVjM and
   // https://www.youtube.com/watch?v=EhLpYbP9st0. Note that the adiabatic flash temperature has been adjusted
   // by about 1 K from the given example to match the results for this system in Test_Enthalpy.
-  public void donttestIdealAdiabaticFlash() {
+  public void testIdealAdiabaticFlash() {
     FlowSpecies ethanol = new FlowSpecies();
     FlowSpecies methanol = new FlowSpecies();
     
@@ -87,7 +87,7 @@ public class Test_Controller extends TestCase {
     System.out.println("Mole fractions: " + methanolLiquidMoleFraction + " " + methanolVapourMoleFraction + " " +
                        ethanolLiquidMoleFraction + " " + ethanolVapourMoleFraction+"\n");
     
-    assertTrue("Controller.calc()", outlet.getTemperature() > 366.45 && outlet.getTemperature() < 366.75); // Expecting 366.581
+    assertTrue("Controller.calc()", outlet.getTemperature() > 366.45 && outlet.getTemperature() < 366.75); // Expecting 366.581, LearnChemE gets 365.0
     assertTrue("Controller.calc()", ethanolLiquidMoleFraction > 0.72 && ethanolLiquidMoleFraction < 0.74);
     assertTrue("Controller.calc()", ethanolVapourMoleFraction > 0.61 && ethanolVapourMoleFraction < 0.63);
     assertTrue("Controller.calc()", methanolVapourMoleFraction > 0.37 && methanolLiquidMoleFraction < 0.39);
