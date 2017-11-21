@@ -4,37 +4,38 @@ import java.util.ArrayList;
 
 public class Test_Controller extends TestCase {
   
-  // Test the RachfordRice solution for a fully specified ideal stream (T_in, T_out). Source: Excel calculation
-  // (This test is identical testSolution in Test_RachfordRice)
+  // Test the RachfordRice solution for a fully specified ideal stream (T_in, T_out). Source: LearnChemE
+  // (This test is identical to testIdealLearnChemEFlash in Test_RachfordRice)
   public void testIdealBothTemperatures() {
-    FlowStream outletStream = new FlowStream();
+    FlowSpecies component1 = new FlowSpecies();
+    FlowSpecies component2 = new FlowSpecies();
+    component1.setAntoineConstants(new AntoineCoefficients(9.51442, 1307.22639, -23.15));
+    component2.setAntoineConstants(new AntoineCoefficients(9.08012, 1172.5951, -68.15));
+    component1.setCriticalTemperature(1000.0); // Just so that it's condensable, not specified in original problem
+    component2.setCriticalTemperature(1000.0);
+    component1.setOverallMoleFraction(0.60);
+    component2.setOverallMoleFraction(0.40);
+    List<FlowSpecies> species = new ArrayList<FlowSpecies>();
+    species.add(component1);
+    species.add(component2);
     
-    FlowSpecies water = new FlowSpecies();
-    water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
-    water.setOverallMoleFraction(0.5);
-    water.setCriticalTemperature(647.0);
-    FlowSpecies ethanol = new FlowSpecies();
-    ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
-    ethanol.setOverallMoleFraction(0.5);
-    ethanol.setCriticalTemperature(514.0);
-    outletStream.addFlowSpecies(water);
-    outletStream.addFlowSpecies(ethanol);
-    outletStream.setPressure(101325.0);
-    outletStream.setTemperature(368.0);
+    FlowStream outlet = new FlowStream();
+    outlet.setFlowSpecies(species);
+    outlet.setTemperature(150+273.15);
+    outlet.setPressure(1210*1000);
+    outlet.setMolarFlowRate(1.0);
     
-    FlowStream inletStream = new FlowStream(outletStream);
+    FlowStream inlet = new FlowStream(outlet);
     
-    Controller.calc(inletStream, outletStream);
+    FlowStream[] processedStreams = Controller.calc(inlet, outlet);
+    inlet = processedStreams[0];
+    outlet = processedStreams[1];
     
-    double waterLiquidMoleFraction = outletStream.getFlowSpecies().get(0).getLiquidMoleFraction();
-    double waterVapourMoleFraction = outletStream.getFlowSpecies().get(0).getVapourMoleFraction();
-    double ethanolLiquidMoleFraction = outletStream.getFlowSpecies().get(1).getLiquidMoleFraction();
-    double ethanolVapourMoleFraction = outletStream.getFlowSpecies().get(1).getVapourMoleFraction();
-    
-    assertTrue("RachfordRice.calc()", waterLiquidMoleFraction > 0.8338 && waterLiquidMoleFraction < 0.8358);
-    assertTrue("RachfordRice.calc()", waterVapourMoleFraction > 0.6912 && waterVapourMoleFraction < 0.6932);
-    assertTrue("RachfordRice.calc()", ethanolLiquidMoleFraction > 0.1642 && ethanolLiquidMoleFraction < 0.1662);
-    assertTrue("RachfordRice.calc()", ethanolVapourMoleFraction > 0.3068 && ethanolVapourMoleFraction < 0.3088);
+    assertTrue(outlet.getFlowSpecies().get(0).getLiquidMoleFraction() > 0.52 &&
+               outlet.getFlowSpecies().get(0).getLiquidMoleFraction() < 0.54);
+    assertTrue(outlet.getFlowSpecies().get(0).getVapourMoleFraction() > 0.76 &&
+               outlet.getFlowSpecies().get(0).getVapourMoleFraction() < 0.78);
+    assertTrue(outlet.getVapourFraction() > 0.30 && outlet.getVapourFraction() < 0.32);
   }
   
   // Test an ideal adiabatic flash. Source: https://www.youtube.com/watch?v=Aw4VsloWVjM and
@@ -76,18 +77,16 @@ public class Test_Controller extends TestCase {
     inlet.setPressure(20.0 * 100000);
     outlet.setPressure(2.0 * 100000);
     
-    Controller.calc(inlet, outlet);
+    FlowStream[] processedStreams = Controller.calc(inlet, outlet);
+    inlet = processedStreams[0];
+    outlet = processedStreams[1];
     
     double methanolLiquidMoleFraction = outlet.getFlowSpecies().get(0).getLiquidMoleFraction();
     double methanolVapourMoleFraction = outlet.getFlowSpecies().get(0).getVapourMoleFraction();
     double ethanolLiquidMoleFraction = outlet.getFlowSpecies().get(1).getLiquidMoleFraction();
     double ethanolVapourMoleFraction = outlet.getFlowSpecies().get(1).getVapourMoleFraction();
     
-    System.out.println("Outlet temperature for adiabatic flash: " + outlet.getTemperature());
-    System.out.println("Mole fractions: " + methanolLiquidMoleFraction + " " + methanolVapourMoleFraction + " " +
-                       ethanolLiquidMoleFraction + " " + ethanolVapourMoleFraction+"\n");
-    
-    assertTrue("Controller.calc()", outlet.getTemperature() > 366.45 && outlet.getTemperature() < 366.75); // Expecting 366.581, LearnChemE gets 365.0
+    assertTrue("Controller.calc()", Math.abs(outlet.getTemperature() - 365.5571) < 0.1); // Expecting 365.5571 (see Test_Enthalpy)
     assertTrue("Controller.calc()", ethanolLiquidMoleFraction > 0.72 && ethanolLiquidMoleFraction < 0.74);
     assertTrue("Controller.calc()", ethanolVapourMoleFraction > 0.61 && ethanolVapourMoleFraction < 0.63);
     assertTrue("Controller.calc()", methanolVapourMoleFraction > 0.37 && methanolLiquidMoleFraction < 0.39);
