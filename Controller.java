@@ -3,9 +3,8 @@
 
 public class Controller {
   
-  public static void calc(FlowStream inlet, FlowStream outlet) {
+  public static FlowStream[] calc(FlowStream inlet, FlowStream outlet) {
     
-    // Acceptable error
     double error = 0.001;
     
     double unknownTemperature;
@@ -13,6 +12,7 @@ public class Controller {
     if (outlet.getTemperature() > 0.0000001 && inlet.getTemperature() > 0.0000001) {
       RachfordRice rachfordRice = new RachfordRice(outlet);
       outlet = rachfordRice.solve();
+      return new FlowStream[] {new FlowStream(inlet), new FlowStream(outlet)};
     } else {
       // Second and third problem types: one of the temperatures is missing, and the
       // flash is adiabatic
@@ -22,9 +22,11 @@ public class Controller {
       if (outlet.getTemperature() > 0.0 && inlet.getTemperature() == 0.0) {
         unspecifiedStream = inlet;
         specifiedStream = outlet;
+        //System.out.println("Controller: Unspecified stream is the inlet.");
       } else if (inlet.getTemperature() > 0.0 && outlet.getTemperature() == 0.0) {
         unspecifiedStream = outlet;
         specifiedStream = inlet;
+        //System.out.println("Controller: Unspecified stream is the outlet.");
       } else {
         // Satisfy the compiler re initializing all variables  :)
         unspecifiedStream = outlet;
@@ -36,12 +38,11 @@ public class Controller {
       
       Enthalpy enthalpy = new Enthalpy(inlet, outlet);
       double[] bounds = RootFinder.getBounds(enthalpy, specifiedStream.getTemperature(), 10.0, 0.0);
-      double solvedFinalTemperaure = RiddersMethod.calc(enthalpy, bounds[0], bounds[1], 0.0001, true);
-      int i = 0;
+      double solvedFinalTemperaure = RiddersMethod.calc(enthalpy, bounds[0], bounds[1], 0.0001, false);
+      //double solvedFinalTemperaure = Incremental.calc(enthalpy, bounds[0], bounds[1], 0.0001);
      
       enthalpy.getOutlet().setTemperature(solvedFinalTemperaure);
-      double enthalpy3 = enthalpy.calc();
-      
+      return new FlowStream[] {new FlowStream(inlet), new FlowStream(enthalpy.getOutlet())};
     }
     
   }
