@@ -19,18 +19,22 @@ public class Controller {
       
       // Determine missing temperature for initial guess
       FlowStream unspecifiedStream, specifiedStream;
+      boolean inletSpecified;
       if (outlet.getTemperature() > 0.0 && inlet.getTemperature() == 0.0) {
         unspecifiedStream = inlet;
         specifiedStream = outlet;
+        inletSpecified = false;
         //System.out.println("Controller: Unspecified stream is the inlet.");
       } else if (inlet.getTemperature() > 0.0 && outlet.getTemperature() == 0.0) {
         unspecifiedStream = outlet;
         specifiedStream = inlet;
+        inletSpecified = true;
         //System.out.println("Controller: Unspecified stream is the outlet.");
       } else {
         // Satisfy the compiler re initializing all variables  :)
         unspecifiedStream = outlet;
         specifiedStream = inlet;
+        inletSpecified = true;
         // Print an error... the problem here isn't anything we're expecting!
         System.out.println("ERROR: Both temperatures are specified!");
         System.exit(1);
@@ -40,9 +44,12 @@ public class Controller {
       double[] bounds = RootFinder.getBounds(enthalpy, specifiedStream.getTemperature(), 10.0, 0.0);
       double solvedFinalTemperaure = RiddersMethod.calc(enthalpy, bounds[0], bounds[1], 0.0001, false);
       //double solvedFinalTemperaure = Incremental.calc(enthalpy, bounds[0], bounds[1], 0.0001);
-     
-      enthalpy.getOutlet().setTemperature(solvedFinalTemperaure);
-      return new FlowStream[] {new FlowStream(inlet), new FlowStream(enthalpy.getOutlet())};
+      
+      if (inletSpecified == true) enthalpy.getOutlet().setTemperature(solvedFinalTemperaure);
+      else enthalpy.getInlet().setTemperature(solvedFinalTemperaure);
+      
+      
+      return new FlowStream[] {new FlowStream(enthalpy.getInlet()), new FlowStream(enthalpy.getOutlet())};
     }
     
   }

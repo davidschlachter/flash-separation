@@ -6,7 +6,7 @@ public class Enthalpy implements Function {
   private FlowStream inlet;
   private FlowStream outlet;
   
-  public Enthalpy(FlowStream inlet, FlowStream outlet) { 
+  public Enthalpy(FlowStream inlet, FlowStream outlet) {
     this.inlet = new FlowStream(inlet);
     this.outlet = new FlowStream(outlet);
   }
@@ -51,7 +51,14 @@ public class Enthalpy implements Function {
     // Calculate the enthalpy difference!
     unspecifiedStream.setTemperature(testTemp);
     unspecifiedStream = new RachfordRice(unspecifiedStream).solve();
-    if (inletSpecified == true) this.outlet = unspecifiedStream; else this.inlet = unspecifiedStream;
+    specifiedStream = new RachfordRice(specifiedStream).solve(); // TODO this is probably too slow!
+    if (inletSpecified == true) {
+      this.outlet = unspecifiedStream;
+      this.inlet = specifiedStream;
+    } else {
+      this.inlet = unspecifiedStream;
+      this.outlet = specifiedStream;
+    }
     double difference = this.calc();
     unspecifiedStream.setTemperature(0.0);
     return difference;
