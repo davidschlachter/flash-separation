@@ -278,13 +278,14 @@ public class ConsoleUI {
     output.println("\nAdding a custom species.\n");
     while(true){
       while(true){
-        output.println("Enter the name of the custom species (names should not include spaces):\n");
-        
-        String speciesName = scan.next();
+        output.println("Enter the name of the custom species:\n");
+        scan.nextLine();
+        String speciesName = scan.nextLine();
         if(speciesName.length() != 0){
           customSpecies.setSpeciesName(speciesName);
           this.theseSpecies.add(customSpecies);
         }
+        
         output.println("\n Enter Vapour heat capacity coefficients for A, B, C, and D:");        
         nextConstant1 = getADouble("A:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
         nextConstant2 = getADouble("B:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
@@ -313,13 +314,12 @@ public class ConsoleUI {
         nextConstant1 = getADouble("Critical temperature for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
         customSpecies.setCriticalTemperature(nextConstant1);
         
-        
         output.println("Will the simulation be run in ideal-gas mode?");
         output.println("[y]es / [n]o");
         ideal = scan.next().charAt(0);
         
         if(ideal == 'n'){
-          
+          scan.nextLine(); // Go to next line
           output.println("Enter the critical pressure: ");
           nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
           customSpecies.setCriticalPressure(nextConstant1);
