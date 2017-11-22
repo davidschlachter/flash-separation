@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.io.PrintWriter;
+import java.util.InputMismatchException;
 
 public class ConsoleUI {
   
@@ -417,9 +418,13 @@ public class ConsoleUI {
     String nextString;
     
     while (true) {
-      output.println(message);
-      userInput = scan.nextDouble();
-      if (userInput >= lowerBound && userInput <= upperBound) break;
+      try {
+        output.println(message);
+        userInput = scan.nextDouble();
+        if (userInput >= lowerBound && userInput <= upperBound) break;
+      } catch (InputMismatchException e) {
+        scan.nextLine();
+      }
     }
     
     return userInput;
@@ -431,8 +436,8 @@ public class ConsoleUI {
     String nextString;
     double userInput = 0.0;
     
-    if (permitEmpty == true ) {
-      while (true) {
+    while (true) {
+      try {
         output.println(message);
         nextString = scan.nextLine();
         if (nextString.isEmpty()) {
@@ -446,6 +451,8 @@ public class ConsoleUI {
           }
           break;
         }
+      } catch (InputMismatchException e) {
+        scan.nextLine();
       }
     }
     return userInput;
