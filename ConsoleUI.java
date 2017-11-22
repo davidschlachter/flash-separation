@@ -269,6 +269,11 @@ public class ConsoleUI {
   private void addCustomSpecies(Scanner scan, PrintWriter output) {
     FlowSpecies customSpecies = new FlowSpecies();
     char ideal;
+    double nextConstant1;
+    double nextConstant2;
+    double nextConstant3;
+    double nextConstant4;
+    double nextConstant5;
     
     output.println("\nAdding a custom species.\n");
     while(true){
@@ -280,41 +285,34 @@ public class ConsoleUI {
           customSpecies.setSpeciesName(speciesName);
           this.theseSpecies.add(customSpecies);
         }
-        output.println("\nEnter vapour heat capacity coefficient A:");
-        double double1 = scan.nextDouble();
-        output.println("\nEnter vapour heat capacity coefficient B:");
-        double double2 = scan.nextDouble();
-        output.println("\nEnter vapour heat capacity coefficient C:");
-        double double3 = scan.nextDouble();
-        output.println("\nEnter vapour heat capacity coefficient D:");
-        double double4 = scan.nextDouble();
-        customSpecies.setVapourHeatCapacityConstants(double1, double2, double3, double4);
+        output.println("\n Enter Vapour heat capacity coefficients for A, B, C, and D:");        
+        nextConstant1 = getADouble("A:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant2 = getADouble("B:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant3 = getADouble("C:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant4 = getADouble("D:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        customSpecies.setVapourHeatCapacityConstants(nextConstant1, nextConstant2, nextConstant3, nextConstant4);
+               
         
-        output.println("\nEnter liquid heat capacity coefficient A:");
-        double1 = scan.nextDouble();
-        output.println("\nEnter liquid heat capacity coefficient B:");
-        double2 = scan.nextDouble();
-        output.println("\nEnter liquid heat capacity coefficient C:");
-        double3 = scan.nextDouble();
-        output.println("\nEnter liquid heat capacity coefficient D:");
-        double4 = scan.nextDouble();
-        customSpecies.setLiquidHeatCapacityConstants(double1, double2, double3, double4);
+        output.println("\n Enter Liquid heat capacity coefficients for A, B, C, and D:");
+        nextConstant1 = getADouble("A:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant2 = getADouble("B:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant3 = getADouble("C:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant4 = getADouble("D:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        customSpecies.setLiquidHeatCapacityConstants(nextConstant1, nextConstant2, nextConstant3, nextConstant4);
         
-        output.println("\nEnter Antoine equation constant A (units of Pa, K):");
-        double1 = scan.nextDouble();
-        output.println("\nEnter Antoine equation constant B (units of Pa, K):");
-        double2 = scan.nextDouble();
-        output.println("\nEnter Antoine equation constant C (units of Pa, K):");
-        double3 = scan.nextDouble();
-        output.println("\nEnter the lower temperature bound for these constants (K):");
-        double4 = scan.nextDouble();
-        output.println("\nEnter the upper temperature bound for these constants (K):");
-        double double5 = scan.nextDouble();
-        customSpecies.setAntoineConstants(new AntoineCoefficients(double1, double2, double3, double4, double5));
+        output.println("\nEnter Antoine equation constant (units of Pa, K) for A, B, and C :");
+        nextConstant1 = getADouble("A:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant2 = getADouble("B:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant3 = getADouble("C:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant4 = getADouble("Lower T:", 0.0, Double.MAX_VALUE, scan, output, true);
+        nextConstant5 = getADouble("Upper T:", 0.0, Double.MAX_VALUE, scan, output, true);
+        customSpecies.setAntoineConstants(new AntoineCoefficients(nextConstant1, nextConstant2, nextConstant3, nextConstant4, nextConstant5));
         
-        output.println("Enter the critical temperature for "+customSpecies.getSpeciesName()+":");
-        double1 = scan.nextDouble();
-        customSpecies.setCriticalTemperature(double1);
+              
+        output.println("Enter the critical temperature: ");  
+        nextConstant1 = getADouble("Critical temperature for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
+        customSpecies.setCriticalTemperature(nextConstant1);
+        
         
         output.println("Will the simulation be run in ideal-gas mode?");
         output.println("[y]es / [n]o");
@@ -322,21 +320,25 @@ public class ConsoleUI {
         
         if(ideal == 'n'){
           
-          output.println("Enter the critical pressure for "+customSpecies.getSpeciesName()+":");
-          double1 = scan.nextDouble();
-          customSpecies.setCriticalPressure(double1);
+          output.println("Enter the critical pressure: ");
+          nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
+          customSpecies.setCriticalPressure(nextConstant1);
           
-          output.println("Enter the critical volume for "+customSpecies.getSpeciesName()+":");
-          double1 = scan.nextDouble();
-          customSpecies.setCriticalVolume(double1);
           
-          output.println("Enter the critical Z-value for "+customSpecies.getSpeciesName()+":");
-          double1 = scan.nextDouble();
-          customSpecies.setCriticalZ(double1);
+          output.println("Enter the critical volume: ");
+          nextConstant1 = getADouble("Critical volume for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
+          customSpecies.setCriticalVolume(nextConstant1);
+         
+          
+          output.println("Enter the critical Z-value: ");
+          nextConstant1 = getADouble("Critical Z-value for "+customSpecies.getSpeciesName()+":", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+          customSpecies.setCriticalZ(nextConstant1);
+         
           
           output.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
-          double1 = scan.nextDouble();
-          customSpecies.setAcentricFactor(double1);
+          nextConstant1 = getADouble("Acentric factor for "+customSpecies.getSpeciesName()+":", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+          customSpecies.setAcentricFactor(nextConstant1);
+          
         } else {}
         
         double[] verificationPrint4 = new double[4];
