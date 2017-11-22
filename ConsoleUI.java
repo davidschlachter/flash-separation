@@ -205,8 +205,12 @@ public class ConsoleUI {
     
     
     // Print the final results
-    output.println("\nRESULTS: \n");
+    output.println("Composition of the inlet and outlet streams: \n");
     this.printStreams(scan, output, inletStream, outletStream);
+    
+    // Heat required to maintain operating temperature
+    output.println("Heat required to maintain operating temperature: \n");
+    output.println(new Enthalpy(inletStream, outletStream).calc());
     
     scan.close();
     return true;
