@@ -93,4 +93,58 @@ public class Test_Controller extends TestCase {
     assertTrue("Controller.calc()", methanolLiquidMoleFraction > 0.26 && methanolLiquidMoleFraction < 0.28);
   }
   
+  // Reverse of the previous test from LearnChemE, but for the third problem type
+  // (unknown feed temperature)
+  public void testReverseIdealAdiabaticFlash() {
+    FlowSpecies ethanol = new FlowSpecies();
+    FlowSpecies methanol = new FlowSpecies();
+    
+    ethanol.setSpeciesName("Ethanol");
+    methanol.setSpeciesName("Methanol");
+    methanol.setOverallMoleFraction(0.30);
+    ethanol.setOverallMoleFraction(0.70);
+    // Antoine
+    List<AntoineCoefficients> methanolAntoine = new ArrayList<AntoineCoefficients>();
+    methanol.setAntoineConstants(new AntoineCoefficients(10.2049, 1582, -33.15));
+    ethanol.setAntoineConstants(new AntoineCoefficients(10.2349, 1593, -47.15));
+    // Heat capacities
+    methanol.setVapourHeatCapacityConstants(52., 0., 0., 0.);
+    methanol.setLiquidHeatCapacityConstants(110., 0., 0., 0.);
+    ethanol.setLiquidHeatCapacityConstants(165., 0., 0., 0.);
+    ethanol.setVapourHeatCapacityConstants(80., 0., 0., 0.);
+    // Other
+    methanol.setCriticalTemperature(513.0);
+    methanol.setHeatOfVapourization(35300.0);
+    ethanol.setCriticalTemperature(514.0);
+    ethanol.setHeatOfVapourization(38600.0);
+    
+    FlowStream inlet = new FlowStream();
+    inlet.addFlowSpecies(methanol);
+    inlet.addFlowSpecies(ethanol);
+    inlet.setMolarFlowRate(1.0);
+    
+    FlowStream outlet = new FlowStream(inlet);
+    
+    inlet.getFlowSpecies().get(0).setLiquidMoleFraction(methanol.getOverallMoleFraction());
+    inlet.getFlowSpecies().get(1).setLiquidMoleFraction(ethanol.getOverallMoleFraction());
+    inlet.setPressure(20.0 * 100000); // This isn't required in the problem statement, not sure if this is important
+    outlet.setPressure(2.0 * 100000);
+    outlet.setTemperature(365.5571);
+    
+    FlowStream[] processedStreams = Controller.calc(inlet, outlet);
+    inlet = processedStreams[0];
+    outlet = processedStreams[1];
+    
+    double methanolLiquidMoleFraction = outlet.getFlowSpecies().get(0).getLiquidMoleFraction();
+    double methanolVapourMoleFraction = outlet.getFlowSpecies().get(0).getVapourMoleFraction();
+    double ethanolLiquidMoleFraction = outlet.getFlowSpecies().get(1).getLiquidMoleFraction();
+    double ethanolVapourMoleFraction = outlet.getFlowSpecies().get(1).getVapourMoleFraction();
+    
+    assertTrue("Controller.calc()", Math.abs(inlet.getTemperature() - 423.0) < 1.0);
+    assertTrue("Controller.calc()", ethanolLiquidMoleFraction > 0.72 && ethanolLiquidMoleFraction < 0.74);
+    assertTrue("Controller.calc()", ethanolVapourMoleFraction > 0.61 && ethanolVapourMoleFraction < 0.63);
+    assertTrue("Controller.calc()", methanolVapourMoleFraction > 0.37 && methanolLiquidMoleFraction < 0.39);
+    assertTrue("Controller.calc()", methanolLiquidMoleFraction > 0.26 && methanolLiquidMoleFraction < 0.28);
+  }
+  
 }
