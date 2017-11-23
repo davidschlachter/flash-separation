@@ -91,8 +91,8 @@ public class PengRobinson implements Function{
     
     for(int i=0; i<n; i++){
       for(int j=0; j<n; j++){
-        double xi = flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
-        double xj = flowStream.getFlowSpecies().get(j).getOverallMoleFraction();
+        double xi = flowStream.getFlowSpecies().get(i).getLiquidMoleFraction();
+        double xj = flowStream.getFlowSpecies().get(j).getLiquidMoleFraction();
         result+=aij[i][j]*xi*xj;
       }
     }
@@ -104,7 +104,7 @@ public class PengRobinson implements Function{
     double result = 0.0;
     
     for(int i=0; i<n; i++){
-      double xi = flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
+      double xi = flowStream.getFlowSpecies().get(i).getLiquidMoleFraction();
       double bi = flowStream.getFlowSpecies().get(i).getBI();
       result+=xi*bi;
     }
@@ -184,14 +184,14 @@ public class PengRobinson implements Function{
     for(int i=0; i<n; i++){
       double lnPhiL = 0.0;
       double bi = flowStream.getFlowSpecies().get(i).getBI();
-      lnPhiL+=(bi/b)*(zL-1);
+      lnPhiL+=(bi/smallB)*(zL-1);
       lnPhiL-=Math.log(zL-b);
       double sumTerm = 0.0;
       for(int j=0; j<n; j++){
         double xj = flowStream.getFlowSpecies().get(j).getLiquidMoleFraction();
         sumTerm += xj * aij[i][j];
       }
-      lnPhiL-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/b))*Math.log((zL+(1+Math.sqrt(2)*b))/(zL+(1-Math.sqrt(2))));
+      lnPhiL-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/smallB))*Math.log((zL+(1+Math.sqrt(2))*b)/(zL+(1-Math.sqrt(2))*b));
       double phiL = Math.exp(lnPhiL);
       flowStream.getFlowSpecies().get(i).setLiquidFugacity(phiL);
     }
@@ -300,14 +300,14 @@ public class PengRobinson implements Function{
     for(int i=0; i<n; i++){
       double lnPhiV = 0.0;
       double bi = flowStream.getFlowSpecies().get(i).getBI();
-      lnPhiV+=(bi/b)*(zV-1);
+      lnPhiV+=(bi/smallB)*(zV-1);
       lnPhiV-=Math.log(zV-b);
       double sumTerm = 0.0;
       for(int j=0; j<n; j++){
         double yj = flowStream.getFlowSpecies().get(j).getVapourMoleFraction();
         sumTerm += yj * aij[i][j];
       }
-      lnPhiV-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/b))*Math.log((zV+(1+Math.sqrt(2)*b))/(zV+(1-Math.sqrt(2))));
+      lnPhiV-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/smallB))*Math.log((zV+(1+Math.sqrt(2))*b)/(zV+(1-Math.sqrt(2))*b));
       double phiV = Math.exp(lnPhiV);
       flowStream.getFlowSpecies().get(i).setVapourFugacity(phiV);
     }

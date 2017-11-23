@@ -27,6 +27,7 @@ public class DewPressure implements Function{
       double yi = flowStream.getFlowSpecies().get(i).getOverallMoleFraction(); //make sure this assumption is correct
       double omega = flowStream.getFlowSpecies().get(i).getAcentricFactor();
       double ki = Math.exp(Math.log(pc/p)+Math.log(10)*(7.0/3.0)*(1+omega)*(1-(tc/t)));
+      flowStream.getFlowSpecies().get(i).setVapourMoleFraction(yi);
       flowStream.getFlowSpecies().get(i).setKi(ki);
       flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(yi/ki);
       
@@ -50,26 +51,34 @@ public class DewPressure implements Function{
     
     double error = 0.0;
     
-    do{
-      error = 0.0;
+    //do{
+      //error = 0.0;
       nonIdealStream.getFlowStream().setPressure(p);
       nonIdealStream.flowStreamSmallAXValue();
       nonIdealStream.flowStreamSmallBXValue();
       nonIdealStream.flowStreamLargeAXValue();
       nonIdealStream.flowStreamLargeBXValue();
-      nonIdealStream.solveZCubic();
+      nonIdealStream.solveZCubicLiquid();
+      nonIdealStream.solveZCubicVapour();
+      //System.out.println("
       nonIdealStream.liquidFugacity();
       nonIdealStream.vapourFugacity();
-      for(int i=0;i<n; i++){
+      System.out.println("Liquid Fugacity 1: "+nonIdealStream.getFlowStream().getFlowSpecies().get(0).getLiquidFugacity()+
+                         "\nVapour Fugacity 1: "+nonIdealStream.getFlowStream().getFlowSpecies().get(0).getVapourFugacity());
+      System.out.println("Liquid Fugacity 2: "+nonIdealStream.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity()+
+                         "\nVapour Fugacity 2: "+nonIdealStream.getFlowStream().getFlowSpecies().get(1).getVapourFugacity());
+      System.out.println("Z_L: "+nonIdealStream.getFlowStream().getZL());
+      System.out.println("Z_V: "+nonIdealStream.getFlowStream().getZV());
+      /*for(int i=0;i<n; i++){
         double yi = nonIdealStream.getFlowStream().getFlowSpecies().get(i).getOverallMoleFraction();
         double phiL = nonIdealStream.getFlowStream().getFlowSpecies().get(i).getLiquidFugacity();
         double phiV = nonIdealStream.getFlowStream().getFlowSpecies().get(i).getVapourFugacity();
         double xiOld = nonIdealStream.getFlowStream().getFlowSpecies().get(i).getLiquidMoleFraction();
         nonIdealStream.getFlowStream().getFlowSpecies().get(i).setLiquidMoleFraction((yi*phiV)/phiL);
-        error += Math.abs(xiOld - nonIdealStream.getFlowStream().getFlowSpecies().get(i).getLiquidMoleFraction()); 
+        //error += Math.abs(xiOld - nonIdealStream.getFlowStream().getFlowSpecies().get(i).getLiquidMoleFraction()); 
         
-      }
-    }while(error > 0.001);
+      }*/
+    //}while(error > 0.001);
     
     //iterate over P with the equation P=sum(piSat*xi)
     
