@@ -86,7 +86,14 @@ public class DewPressure implements Function{
     for(int i=0; i<n; i++){
       result+=nonIdealStream.getFlowStream().getFlowSpecies().get(i).getLiquidMoleFraction();
     }
+<<<<<<< HEAD
+    return (result-1); 
+  } 
+  
+} 
+=======
     return result-1; 
   } 
   
 }
+>>>>>>> 29d686df97bbf4a5be7c2aae0d1fb8e50927bfcf
