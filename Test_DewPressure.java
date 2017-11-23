@@ -1,4 +1,4 @@
-/*import junit.framework.TestCase;
+import junit.framework.TestCase;
 
 public class Test_DewPressure extends TestCase {
   
@@ -30,4 +30,4 @@ public class Test_DewPressure extends TestCase {
     System.out.println("END OF DEW PRESSURE TEST");
   }
   
-} */
+} 

@@ -1,4 +1,4 @@
-/*public class DewPressure implements Function{
+public class DewPressure implements Function{
   
   private FlowStream flowStream;
   
@@ -75,7 +75,7 @@
     for(int i=0; i<n; i++){
       result+=nonIdealStream.getFlowStream().getFlowSpecies().get(i).getLiquidMoleFraction();
     }
-    return result; 
+    return (result-1); 
   } 
   
-} */
+} 
