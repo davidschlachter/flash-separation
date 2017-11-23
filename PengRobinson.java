@@ -129,6 +129,35 @@ public class PengRobinson implements Function{
     flowStream.setLargeBX(result);
   }
   
+  public void solveZCubicLiquid(){
+    double b = flowStream.getLargeBX();
+    double a = flowStream.getLargeAX();
+    double c0 = Math.pow(b,3.0)+Math.pow(b,2.0)-(a*b);
+    double c1 = a-3*Math.pow(b,2.0)-2.0*b;
+    double c2 = b-1;
+    
+    double q1 = ((c2*c1)/6.0)-c0/2-(Math.pow(c2,3)/27.0);
+    double p1 = Math.pow(c2,2)/9.0-c1/3.0;
+    double d = Math.pow(q1,2.0)-Math.pow(p1,3.0);
+    
+    if(d>=0){
+      System.out.println("The system has one real root");
+      double z = Math.pow((q1+Math.pow(d,0.5)),(1.0/3.0))+Math.pow((q1-Math.pow(d,0.5)),(1.0/3.0))-(c2/3.0);
+      flowStream.setZL(z);
+    }else{
+      double t1 = (Math.pow(q1,2.0))/(Math.pow(p1,3.0));
+      double t2 = Math.pow((1-t1),0.5)/Math.sqrt(t1)*q1/Math.abs(q1);
+      double theta = Math.atan(t2);
+      double z0 = 2*Math.sqrt(p1)*Math.cos(theta/3.0)-(c2/3.0);
+      double z1 = 2*Math.sqrt(p1)*Math.cos((2*Math.PI+theta)/3.0)-(c2/3.0);
+      double z2 = 2*Math.sqrt(p1)*Math.cos((4*Math.PI+theta)/3.0)-(c2/3.0);
+      double zL = Math.min(z0, Math.min(z1, z2));
+      double zV = Math.max(z0, Math.max(z1, z2));
+      flowStream.setZL(zL);
+      flowStream.setZV(zV);
+    }
+  }
+  
   public void solveZCubic(){
     double firstGuess = 0.95;
     int count = 0;
@@ -216,7 +245,7 @@ public class PengRobinson implements Function{
     flowStream.setLargeBY(result);
   }
   
-  public void solveZCubicVapour(){
+  public void solveZCubicVapourDifferent(){
     double firstGuess = 1.0;
     int count = 0;
     double[] bounds = RootFinder.getBounds(this, firstGuess, 0.01);
@@ -231,6 +260,34 @@ public class PengRobinson implements Function{
     
   }
   
+  public void solveZCubicVapour(){
+    double b = flowStream.getLargeBY();
+    double a = flowStream.getLargeAY();
+    double c0 = Math.pow(b,3.0)+Math.pow(b,2.0)-(a*b);
+    double c1 = a-3*Math.pow(b,2.0)-2.0*b;
+    double c2 = b-1;
+    
+    double q1 = ((c2*c1)/6.0)-c0/2-(Math.pow(c2,3)/27.0);
+    double p1 = Math.pow(c2,2)/9.0-c1/3.0;
+    double d = Math.pow(q1,2.0)-Math.pow(p1,3.0);
+    
+    if(d>=0){
+      System.out.println("The system has one real root");
+      double z = Math.pow((q1+Math.pow(d,0.5)),(1.0/3.0))+Math.pow((q1-Math.pow(d,0.5)),(1.0/3.0))-(c2/3.0);
+      flowStream.setZV(z);
+    }else{
+      double t1 = (Math.pow(q1,2.0))/(Math.pow(p1,3.0));
+      double t2 = Math.pow((1-t1),0.5)/Math.sqrt(t1)*q1/Math.abs(q1);
+      double theta = Math.atan(t2);
+      double z0 = 2*Math.sqrt(p1)*Math.cos(theta/3.0)-(c2/3.0);
+      double z1 = 2*Math.sqrt(p1)*Math.cos((2*Math.PI+theta)/3.0)-(c2/3.0);
+      double z2 = 2*Math.sqrt(p1)*Math.cos((4*Math.PI+theta)/3.0)-(c2/3.0);
+      double zL = Math.min(z0, Math.min(z1, z2));
+      double zV = Math.max(z0, Math.max(z1, z2));
+      flowStream.setZL(zL);
+      flowStream.setZV(zV);
+    }
+  }
   
   public void vapourFugacity(){
     double smallB = flowStream.getSmallBY();

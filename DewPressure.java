@@ -32,7 +32,8 @@ public class DewPressure implements Function{
       
     } 
     double result = 0.0;
-    result = RiddersMethod.calc(this, 0.0, 1000000000.0, 1000.0);  //maybe these bounds are no good. review this laterget
+    //double[] bounds = RootFinder.getBounds(this, 1.0, 100.0, 1.0);
+    result = RiddersMethod.calc(this, 1.0, 1000000.0, 0.01, true);  //maybe these bounds are no good. review this laterget
     return result;
   }
   
@@ -50,6 +51,7 @@ public class DewPressure implements Function{
     double error = 0.0;
     
     do{
+      error = 0.0;
       nonIdealStream.getFlowStream().setPressure(p);
       nonIdealStream.flowStreamSmallAXValue();
       nonIdealStream.flowStreamSmallBXValue();
@@ -75,7 +77,14 @@ public class DewPressure implements Function{
     for(int i=0; i<n; i++){
       result+=nonIdealStream.getFlowStream().getFlowSpecies().get(i).getLiquidMoleFraction();
     }
+<<<<<<< HEAD
     return (result-1); 
   } 
   
 } 
+=======
+    return result-1; 
+  } 
+  
+}
+>>>>>>> 29d686df97bbf4a5be7c2aae0d1fb8e50927bfcf
