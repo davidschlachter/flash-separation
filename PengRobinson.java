@@ -154,7 +154,7 @@ public class PengRobinson implements Function{
       double zL = Math.min(z0, Math.min(z1, z2));
       double zV = Math.max(z0, Math.max(z1, z2));
       flowStream.setZL(zL);
-      flowStream.setZV(zV);
+     // flowStream.setZV(zV);
     }
   }
   
@@ -242,6 +242,7 @@ public class PengRobinson implements Function{
     double t = flowStream.getTemperature();
     double b = flowStream.getSmallBY();
     double result = (b*p)/(r*t);
+    System.out.println("LArge B value is: "+b);
     flowStream.setLargeBY(result);
   }
   
@@ -284,7 +285,7 @@ public class PengRobinson implements Function{
       double z2 = 2*Math.sqrt(p1)*Math.cos((4*Math.PI+theta)/3.0)-(c2/3.0);
       double zL = Math.min(z0, Math.min(z1, z2));
       double zV = Math.max(z0, Math.max(z1, z2));
-      flowStream.setZL(zL);
+      //flowStream.setZL(zL);
       flowStream.setZV(zV);
     }
   }

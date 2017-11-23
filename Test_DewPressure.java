@@ -30,8 +30,4 @@ public class Test_DewPressure extends TestCase {
     System.out.println("END OF DEW PRESSURE TEST");
   }
   
-<<<<<<< HEAD
 } 
-=======
-}
->>>>>>> 29d686df97bbf4a5be7c2aae0d1fb8e50927bfcf
