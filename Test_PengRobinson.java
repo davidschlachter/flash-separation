@@ -53,6 +53,98 @@ public class Test_PengRobinson extends TestCase {
     
   }
   
+  public void testAIJ(){
+    
+    PengRobinson testPeng = createTestPeng();
+    testPeng.kappaI();
+    testPeng.alphaI();
+    testPeng.individualA();
+    testPeng.individualB();
+    double[][] testResult = testPeng.aij();
+    assertTrue(testResult[0][0] < 0.986 && testResult [0][0] > 0.984);
+    assertTrue(testResult[1][1] < 2.296 && testResult [1][1] > 2.291);
+    assertTrue(testResult[0][1] < 1.52 && testResult [0][1] > 1.50);
+    
+  }
+  
+  public void testSmallAX(){
+    
+    PengRobinson testPeng = createTestPeng();
+    testPeng.kappaI();
+    testPeng.alphaI();
+    testPeng.individualA();
+    testPeng.individualB();
+    testPeng.aij();
+    testPeng.flowStreamSmallAXValue();
+    System.out.println("AX value is: "+testPeng.getFlowStream().getSmallAX());
+    assertTrue(testPeng.getFlowStream().getSmallAX() < 1.51 &&
+               testPeng.getFlowStream().getSmallAX() > 1.50);
+    
+  }
+  
+  public void testSmallBX(){
+    
+    PengRobinson testPeng = createTestPeng();
+    testPeng.kappaI();
+    testPeng.alphaI();
+    testPeng.individualA();
+    testPeng.individualB();
+    testPeng.aij();
+    testPeng.flowStreamSmallBXValue();
+    System.out.println("BX value is: "+testPeng.getFlowStream().getSmallBX());
+    assertTrue(testPeng.getFlowStream().getSmallBX() < 3.5e-5 &&
+               testPeng.getFlowStream().getSmallBX() > 3.3e-5);
+    
+  }
+  
+  public void testLargeAX(){
+    
+    PengRobinson testPeng = createTestPeng();
+    testPeng.kappaI();
+    testPeng.alphaI();
+    testPeng.individualA();
+    testPeng.individualB();
+    testPeng.aij();
+    testPeng.flowStreamSmallAXValue();
+    testPeng.flowStreamLargeAXValue();
+    assertTrue(testPeng.getFlowStream().getLargeAX() < 0.025 &&
+               testPeng.getFlowStream().getLargeAX() > 0.024);
+    
+  }
+  
+  public void testLargeBX(){
+    
+    
+    PengRobinson testPeng = createTestPeng();
+    testPeng.kappaI();
+    testPeng.alphaI();
+    testPeng.individualA();
+    testPeng.individualB();
+    testPeng.aij();
+    testPeng.flowStreamSmallBXValue();
+    testPeng.flowStreamLargeBXValue();
+    System.out.println("BX IS: "+testPeng.getFlowStream().getLargeBX());
+    assertTrue(testPeng.getFlowStream().getLargeBX() < 0.00145 &&
+               testPeng.getFlowStream().getLargeBX() > 0.00135);
+    
+  }
+  
+  public void testCubicZSolve(){
+    
+    PengRobinson testPeng = createTestPeng();
+    testPeng.kappaI();
+    testPeng.alphaI();
+    testPeng.individualA();
+    testPeng.individualB();
+    testPeng.aij();
+    testPeng.flowStreamSmallBXValue();
+    testPeng.flowStreamLargeBXValue();
+    System.out.println("BEGINNING OF TEST CUBC SOLVE");
+    testPeng.solveZCubic();
+    System.out.println("END OF TEST CUBC SOLVE");
+    
+  }
+  
   private PengRobinson createTestPeng(){
     FlowStream testStream = new FlowStream();
     
@@ -70,7 +162,7 @@ public class Test_PengRobinson extends TestCase {
     ethanol.setAcentricFactor(0.645);
     testStream.addFlowSpecies(water);
     testStream.addFlowSpecies(ethanol);
-    testStream.setTemperature(298.0);
+    testStream.setTemperature(298.15);
     testStream.setPressure(101325.0);
     
     PengRobinson testPeng = new PengRobinson(testStream);

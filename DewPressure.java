@@ -1,4 +1,4 @@
-public class DewPressure implements Function{
+/*public class DewPressure implements Function{
   
   private FlowStream flowStream;
   
@@ -51,12 +51,11 @@ public class DewPressure implements Function{
     
     do{
       nonIdealStream.getFlowStream().setPressure(p);
-      nonIdealStream.flowStreamSmallAYValue();
-      nonIdealStream.flowStreamSmallBYValue();
-      nonIdealStream.flowStreamLargeAYValue();
-      nonIdealStream.flowStreamLargeBYValue();
-      nonIdealStream.solveZCubicLiquid();
-      nonIdealStream.solveZCubicVapour();
+      nonIdealStream.flowStreamSmallAXValue();
+      nonIdealStream.flowStreamSmallBXValue();
+      nonIdealStream.flowStreamLargeAXValue();
+      nonIdealStream.flowStreamLargeBXValue();
+      nonIdealStream.solveZCubic();
       nonIdealStream.liquidFugacity();
       nonIdealStream.vapourFugacity();
       for(int i=0;i<n; i++){
@@ -77,6 +76,6 @@ public class DewPressure implements Function{
       result+=nonIdealStream.getFlowStream().getFlowSpecies().get(i).getLiquidMoleFraction();
     }
     return result; 
-  }
+  } 
   
-}
+} */
