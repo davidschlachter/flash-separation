@@ -141,7 +141,7 @@ public class PengRobinson implements Function{
     double d = Math.pow(q1,2.0)-Math.pow(p1,3.0);
     
     if(d>=0){
-      System.out.println("The system has one real root");
+      //System.out.println("The system has one real root");
       double z = Math.pow((q1+Math.pow(d,0.5)),(1.0/3.0))+Math.pow((q1-Math.pow(d,0.5)),(1.0/3.0))-(c2/3.0);
       flowStream.setZL(z);
     }else{
@@ -242,7 +242,7 @@ public class PengRobinson implements Function{
     double t = flowStream.getTemperature();
     double b = flowStream.getSmallBY();
     double result = (b*p)/(r*t);
-    System.out.println("LArge B value is: "+b);
+    //System.out.println("LArge B value is: "+b);
     flowStream.setLargeBY(result);
   }
   
@@ -273,7 +273,7 @@ public class PengRobinson implements Function{
     double d = Math.pow(q1,2.0)-Math.pow(p1,3.0);
     
     if(d>=0){
-      System.out.println("The system has one real root");
+      //System.out.println("The system has one real root");
       double z = Math.pow((q1+Math.pow(d,0.5)),(1.0/3.0))+Math.pow((q1-Math.pow(d,0.5)),(1.0/3.0))-(c2/3.0);
       flowStream.setZV(z);
     }else{
