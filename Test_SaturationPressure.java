@@ -1,4 +1,6 @@
 import junit.framework.TestCase;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Test_SaturationPressure extends TestCase {
   
@@ -25,6 +27,22 @@ public class Test_SaturationPressure extends TestCase {
     pentane.setAntoineConstants(new AntoineCoefficients(8.9892, 1070.617, -40.454));
     double satPressure = SaturationPressure.calc(pentane,300.0);
     assertTrue("SaturationPressure.calc(pentane,300.0)", (satPressure > 73154.2 && satPressure < 73155.0));
+  }
+  
+  // Test that we're getting the best Antoine coefficients if the temperature is out of range
+  public void testOutOfBoundsSatPressure() {
+    Species testSpecies = new Species();
+    List<AntoineCoefficients> testSpeciesAntoine = new ArrayList<AntoineCoefficients>();
+    testSpeciesAntoine.add(new AntoineCoefficients(2.0, 0.0, 0.0,  20.0, 100.0));
+    testSpeciesAntoine.add(new AntoineCoefficients(3.0, 0.0, 0.0, 100.1, 200.0));
+    testSpeciesAntoine.add(new AntoineCoefficients(4.0, 0.0, 0.0, 200.1, 300.0));
+    testSpecies.setAntoineConstants(testSpeciesAntoine);
+    
+    assertTrue(Math.abs(SaturationPressure.calc(testSpecies, 50.0) - 100.0) < 0.1);
+    assertTrue(Math.abs(SaturationPressure.calc(testSpecies, 150.0) - 1000.0) < 0.1);
+    assertTrue(Math.abs(SaturationPressure.calc(testSpecies, 250.0) - 10000.0) < 0.1);
+    assertTrue(Math.abs(SaturationPressure.calc(testSpecies, 10.0) - 100.0) < 0.1);
+    assertTrue(Math.abs(SaturationPressure.calc(testSpecies, 400.0) - 10000.0) < 0.1);
   }
   
 }
