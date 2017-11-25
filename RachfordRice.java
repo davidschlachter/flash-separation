@@ -1,3 +1,6 @@
+import java.util.Scanner;
+import java.io.PrintWriter;
+
 public class RachfordRice implements DifferentiableFunction {
   
   private FlowStream flowStream;
@@ -52,16 +55,20 @@ public class RachfordRice implements DifferentiableFunction {
     
     double overallMoleFraction, saturationPressure, kMinusOne;
     double liquidMoleFraction, vapourMoleFraction, pressure;
-    double activityCoefficient, largePhi;
+    double liquidFugacity, vapourFugacity;
     
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), this.flowStream.getTemperature());
-      activityCoefficient = this.flowStream.getFlowSpecies().get(i).getActivityCoefficient();
-      largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
+      liquidFugacity = this.flowStream.getFlowSpecies().get(i).getLiquidFugacity();
+      vapourFugacity = this.flowStream.getFlowSpecies().get(i).getVapourFugacity();
       pressure = this.flowStream.getPressure();
-      kMinusOne = (activityCoefficient * saturationPressure)/(pressure * largePhi)-1;
+      if(this.flowStream.getIsIdeal()==true){
+        kMinusOne = (saturationPressure)/(pressure)-1;
+      } else {
+        kMinusOne = (liquidFugacity/vapourFugacity)-1;
+      }
       
       liquidMoleFraction = overallMoleFraction/(1 + vOverF*kMinusOne);
       this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(liquidMoleFraction);
@@ -94,19 +101,56 @@ public class RachfordRice implements DifferentiableFunction {
     
     double temperature = this.flowStream.getTemperature();
     double pressure = this.flowStream.getPressure();
-    double overallMoleFraction, saturationPressure, activityCoefficient, largePhi;
+    double overallMoleFraction, saturationPressure, liquidFugacity, vapourFugacity;
     double kMinusOne;
     
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
-      activityCoefficient = this.flowStream.getFlowSpecies().get(i).getActivityCoefficient();
-      largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
-      kMinusOne = (saturationPressure)/(pressure)-1;
+      liquidFugacity = this.flowStream.getFlowSpecies().get(i).getLiquidFugacity();
+      vapourFugacity = this.flowStream.getFlowSpecies().get(i).getVapourFugacity();
+      if(this.flowStream.getIsIdeal()==true){
+        kMinusOne = (saturationPressure)/(pressure)-1;
+      } else {
+        PengRobinson nonIdealStream = new PengRobinson(this.flowStream);
+        nonIdealStream.nonIdealCalcs();
+        liquidFugacity = nonIdealStream.getFlowStream().getZL();
+        vapourFugacity = nonIdealStream.getFlowStream().getZV();
+        if(i==0){
+          //System.out.println("Large BX is equal to: "+nonIdealStream.getFlowStream().getLargeBX());
+          //System.out.println("Large BY to: "+nonIdealStream.getFlowStream().getLargeBY());  
+        }
+        kMinusOne = ((liquidFugacity)/(vapourFugacity))-1;
+      }
+      result += (overallMoleFraction*kMinusOne)/(1 + x*kMinusOne) ;
       
-      result = (result + (overallMoleFraction*kMinusOne)/(1 + x*kMinusOne)) ;
-      
+    }
+    
+    if (this.flowStream.getIsIdeal() == false && Double.isNaN(x) == false) {
+      System.out.println("Setting parameters now in testFunction, and V/F here is "+x);
+      double liquidMoleFraction, vapourMoleFraction;
+      for (i = 0; i < this.flowStream.getFlowSpecies().size(); i++) {
+        
+        overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
+        saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), this.flowStream.getTemperature());
+        liquidFugacity = this.flowStream.getFlowSpecies().get(i).getLiquidFugacity();
+        vapourFugacity = this.flowStream.getFlowSpecies().get(i).getVapourFugacity();
+        pressure = this.flowStream.getPressure();
+        if(this.flowStream.getIsIdeal()==true){
+          kMinusOne = (saturationPressure)/(pressure)-1;
+        } else {
+          kMinusOne = (liquidFugacity/vapourFugacity)-1;   //TODO: Find out why liquid fugacity is coming up as zero!
+        }
+        
+        liquidMoleFraction = overallMoleFraction/(1 + x*kMinusOne);
+        this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(liquidMoleFraction);
+        
+        vapourMoleFraction = (kMinusOne + 1) * this.flowStream.getFlowSpecies().get(i).getLiquidMoleFraction();
+        this.flowStream.getFlowSpecies().get(i).setVapourMoleFraction(vapourMoleFraction);
+      }
+
+      ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), this.flowStream, this.flowStream);
     }
     
     return result; 
@@ -116,7 +160,7 @@ public class RachfordRice implements DifferentiableFunction {
   public double testDerivative(double x) {
     
     double result = 0.0;
-    double overallMoleFraction, kMinusOne, saturationPressure, activityCoefficient, largePhi;
+    double overallMoleFraction, kMinusOne, saturationPressure, liquidFugacity, vapourFugacity;
     double temperature = this.flowStream.getTemperature();
     double pressure = this.flowStream.getPressure();
     
@@ -124,13 +168,16 @@ public class RachfordRice implements DifferentiableFunction {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
-      activityCoefficient = this.flowStream.getFlowSpecies().get(i).getActivityCoefficient();
-      largePhi = this.flowStream.getFlowSpecies().get(i).getLargePhi();
+      liquidFugacity = this.flowStream.getFlowSpecies().get(i).getLiquidFugacity();
+      vapourFugacity = this.flowStream.getFlowSpecies().get(i).getVapourFugacity();
+      if(this.flowStream.getIsIdeal()==true){
+        kMinusOne = (saturationPressure)/(pressure)-1;
+      } else {
+        kMinusOne = ((liquidFugacity)/(vapourFugacity))-1;
+      }
       
-      kMinusOne = (saturationPressure)/(pressure)-1;
       
-      
-      result = result - (overallMoleFraction * Math.pow(kMinusOne, 2))/(Math.pow((1+x*kMinusOne),2));
+      result -= (overallMoleFraction * Math.pow(kMinusOne, 2))/(Math.pow((1+x*kMinusOne),2));
       
     }
     
