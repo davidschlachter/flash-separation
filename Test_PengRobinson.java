@@ -76,7 +76,6 @@ public class Test_PengRobinson extends TestCase {
     testPeng.individualB();
     testPeng.aij();
     testPeng.flowStreamSmallAXValue();
-    System.out.println("AX value is: "+testPeng.getFlowStream().getSmallAX());
     assertTrue(testPeng.getFlowStream().getSmallAX() < 1.51 &&
                testPeng.getFlowStream().getSmallAX() > 1.50);
     
@@ -91,7 +90,6 @@ public class Test_PengRobinson extends TestCase {
     testPeng.individualB();
     testPeng.aij();
     testPeng.flowStreamSmallBXValue();
-    System.out.println("BX value is: "+testPeng.getFlowStream().getSmallBX());
     assertTrue(testPeng.getFlowStream().getSmallBX() < 3.5e-5 &&
                testPeng.getFlowStream().getSmallBX() > 3.3e-5);
     
@@ -123,25 +121,8 @@ public class Test_PengRobinson extends TestCase {
     testPeng.aij();
     testPeng.flowStreamSmallBXValue();
     testPeng.flowStreamLargeBXValue();
-    System.out.println("BX IS: "+testPeng.getFlowStream().getLargeBX());
     assertTrue(testPeng.getFlowStream().getLargeBX() < 0.00145 &&
                testPeng.getFlowStream().getLargeBX() > 0.00135);
-    
-  }
-  
-  public void testCubicZSolve(){
-    
-    PengRobinson testPeng = createTestPeng();
-    testPeng.kappaI();
-    testPeng.alphaI();
-    testPeng.individualA();
-    testPeng.individualB();
-    testPeng.aij();
-    testPeng.flowStreamSmallBXValue();
-    testPeng.flowStreamLargeBXValue();
-    System.out.println("BEGINNING OF TEST CUBC SOLVE");
-    testPeng.solveZCubic();
-    System.out.println("END OF TEST CUBC SOLVE");
     
   }
   
@@ -151,12 +132,16 @@ public class Test_PengRobinson extends TestCase {
     FlowSpecies water = new FlowSpecies();
     water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
     water.setOverallMoleFraction(0.55);
+    water.setLiquidMoleFraction(0.55);
+    water.setVapourMoleFraction(0.55);
     water.setCriticalTemperature(647.0);
     water.setCriticalPressure(22055000.0);
     water.setAcentricFactor(0.345);
     FlowSpecies ethanol = new FlowSpecies();
     ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
     ethanol.setOverallMoleFraction(0.45);
+    ethanol.setLiquidMoleFraction(0.45);
+    ethanol.setVapourMoleFraction(0.45);
     ethanol.setCriticalTemperature(514.0);
     ethanol.setCriticalPressure(6148000.0);
     ethanol.setAcentricFactor(0.645);

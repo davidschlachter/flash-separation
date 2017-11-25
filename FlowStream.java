@@ -25,6 +25,7 @@ public class FlowStream {
   private double largeBY = 0.0;
   private double zL = 0.0;
   private double zV = 0.0;
+  private boolean isIdeal = true;
   
   // Default constructor
   public FlowStream() {
@@ -129,6 +130,10 @@ public class FlowStream {
     this.zV=zV;
   }
   
+  public void setIsIdeal(boolean isIdeal){
+    this.isIdeal=isIdeal;
+  }
+  
   
   // Getters
   public List<FlowSpecies> getFlowSpecies() {
@@ -167,7 +172,7 @@ public class FlowStream {
     return this.largeBX;
   }
   
-    public double getSmallAY(){
+  public double getSmallAY(){
     return this.smallAY;
   }
   
@@ -189,6 +194,10 @@ public class FlowStream {
   
   public double getZV(){
     return this.zV;
+  }
+  
+  public boolean getIsIdeal(){
+    return this.isIdeal;
   }
   
   // Equals
@@ -227,17 +236,6 @@ public class FlowStream {
     
   }
   
-  public boolean isIdeal(){
-    boolean isIdeal = true;
-    for(int i = 0; i < this.getFlowSpecies().size(); i++){
-      if(this.getFlowSpecies().get(i).getActivityCoefficient() != 1.0 
-           && this.getFlowSpecies().get(i).getMixtureFugacityCoefficient() != 1.0 
-           && this.getFlowSpecies().get(i).getBeta() != 0.0 
-           && this.getFlowSpecies().get(i).getQValue() != 0.0
-           && this.getFlowSpecies().get(i).getZValue() != 1.0) isIdeal = false;
-    }
-    return isIdeal;
-  }
   
   //Clone method
   public FlowStream clone() {

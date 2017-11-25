@@ -59,9 +59,9 @@ public class DewPoint implements Function {
     this.flowStream.setTemperature(temperature);
     Fugacity fugacity = new Fugacity(this.flowStream);  //this has just been added and may not work yet
     
-    if(this.flowStream.isIdeal() == false){
-    fugacity.computeNonIdealParameters();
-    }
+    //if(this.flowStream.isIdeal() == false){
+    //fugacity.computeNonIdealParameters();
+    //}
     
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       

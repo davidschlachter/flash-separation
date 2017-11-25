@@ -22,7 +22,8 @@ public class Test_DewPressure extends TestCase {
     ethanol.setAcentricFactor(0.645);
     testStream.addFlowSpecies(water);
     testStream.addFlowSpecies(ethanol);
-    testStream.setTemperature(298.0);
+    testStream.setPressure(101325.0);
+    testStream.setTemperature(298.15);
     
     DewPressure testDewPressure = new DewPressure(testStream);
     double dewPressure = testDewPressure.solve();

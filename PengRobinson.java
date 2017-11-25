@@ -1,4 +1,4 @@
-public class PengRobinson implements Function{
+public class PengRobinson{
   
   private FlowStream flowStream;
   
@@ -158,21 +158,6 @@ public class PengRobinson implements Function{
     }
   }
   
-  public void solveZCubic(){
-    double firstGuess = 0.95;
-    int count = 0;
-    double[] bounds = RootFinder.getBounds(this, firstGuess, 0.01);
-    double result =  RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
-    while(result > 1 && count < 10){
-    bounds = RootFinder.getBounds(this, firstGuess - 0.1, 0.01);
-    result = RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);  //thids shit is all fucked up
-    count++;
-    }
-    System.out.println("Z result is: "+result);
-    System.out.println("count is: "+count); 
-    
-  }
-  
   public void liquidFugacity(){
     double smallB = flowStream.getSmallBX();
     double a = flowStream.getLargeAX();
@@ -246,20 +231,6 @@ public class PengRobinson implements Function{
     flowStream.setLargeBY(result);
   }
   
-  public void solveZCubicVapourDifferent(){
-    double firstGuess = 1.0;
-    int count = 0;
-    double[] bounds = RootFinder.getBounds(this, firstGuess, 0.01);
-    double result =  RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
-    while(result > 1 && count < 10){
-    bounds = RootFinder.getBounds(this, firstGuess - 0.1, 0.01);
-    result = RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);  //this shit is all fucked up
-    count++;
-    }
-    System.out.println("Z result is: "+result);
-    System.out.println("count is: "+count); 
-    
-  }
   
   public void solveZCubicVapour(){
     double b = flowStream.getLargeBY();
@@ -312,16 +283,6 @@ public class PengRobinson implements Function{
       double phiV = Math.exp(lnPhiV);
       flowStream.getFlowSpecies().get(i).setVapourFugacity(phiV);
     }
-    
-  }
-  
-    
-    public double testFunction(double z){
-    
-    double a = this.flowStream.getLargeAX();
-    double b = this.flowStream.getLargeBX();
-    double result = z*z*z+(b-1)*z*z+(a-3.0*b*b-2.0*b)*z+(b*b*b+b*b-a*b);
-    return result;
     
   }
   
