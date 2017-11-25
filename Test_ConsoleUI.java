@@ -107,4 +107,26 @@ public class Test_ConsoleUI extends TestCase {
                                                                   "  Mole fraction of Pentane:"));
   }
   
+  public void testAddCustomSpecies() {
+    String input = "a\n" // "Add species"
+      + "0\n" // Add the first species
+      + "a\n" // Add another species
+      + "-0.1\n" // Try to set an invalid species
+      + "a\n" // Add another species
+      + "6\n" // Try to set an invalid species
+      + "a\n" // Add another species
+      + "1\n"
+      + "q\n"; // Quit
+    
+    StringWriter stringWriter = new StringWriter();
+    
+    ConsoleUI console = new ConsoleUI();
+    console.run(new Scanner(input), new PrintWriter(stringWriter)); //I'm unsure why this doesn't work --> need to check
+    
+    String newline = System.getProperty("line.separator");
+    
+    String output = stringWriter.toString();
+    
+    assertTrue("ConsoleUI add species", output.contains("Ethane" + newline + "  Pentane" + newline));
+  }
 }
