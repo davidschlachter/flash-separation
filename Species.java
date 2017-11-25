@@ -315,7 +315,10 @@ public class Species implements Function{
   }
   
   public double[] getAntoineConstants(double temperature) {
-    int i;
+    int i; // Number of Antoine coefficients
+    int j=0; // Set number
+    double[] allTimeMin = new double[2]; // allTimeMin stores an upper and a lower bound
+    double[] allTimeMax = new double[2]; // allTimeMax stores an upper and a lower bound
     AntoineCoefficients thisSet;
     double[] antoineConstants = new double[3];
     
@@ -328,9 +331,28 @@ public class Species implements Function{
         antoineConstants[2] = thisSet.getC();
         return antoineConstants;
       }
+      else {
+        if (thisSet.getLowerTemperatureBound() < allTimeMin[1]) {
+          allTimeMin[1] = thisSet.getLowerTemperatureBound();
+          allTimeMin[0] = i;
+        }
+        else if (thisSet.getUpperTemperatureBound() > allTimeMax[1]) {
+          allTimeMax[1] = thisSet.getUpperTemperatureBound();
+          allTimeMax[0] = i;
+        }
+      }
     }
+    // Check if the temperature is greater than stored max. and min. values
+    if (temperature < allTimeMin[1]) {
+      j = (int) Math.round(allTimeMin[0]);
+    }
+    else if (temperature > allTimeMax[1]) {
+      j = (int) Math.round(allTimeMax[0]);
+    }
+    
     // If no match could be found, return the first set
-    thisSet = this.antoineCoefficients.get(0);
+    thisSet = this.antoineCoefficients.get(j);
+    
     antoineConstants[0] = thisSet.getA();
     antoineConstants[1] = thisSet.getB();
     antoineConstants[2] = thisSet.getC();
