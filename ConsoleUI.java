@@ -41,23 +41,8 @@ public class ConsoleUI {
         output.print("\n");
       }
       
-      while (true) {
-        try {
-          output.println("Select an action: [a]dd species   [r]emove species   [d]one\n");
-          if (firstRun == false) {
-            scan.nextLine();
-          }
-          firstRun = true;
-          choice = scan.nextLine().charAt(0);
-          break;
-        } catch (InputMismatchException e) {
-          output.println("\nWARNING: Invalid input\n");
-          //scan.nextLine();
-        } catch (StringIndexOutOfBoundsException e) {
-          output.println("\nWARNING: Empty input\n");
-          //scan.nextLine();
-        }
-      }
+      if (firstRun == false) scan.nextLine();
+      choice = getAChar("Select an action: [a]dd species   [r]emove species   [d]one\n", scan, output);
       
       if (choice == 'a') this.addSpecies(scan, output);
       if (choice == 'r') this.removeSpecies(scan, output);
@@ -477,6 +462,25 @@ public class ConsoleUI {
       }
     }
     return userInput;
+  }
+  
+  private char getAChar(String message, Scanner scan, PrintWriter output) {
+    char choice;
+    boolean firstRun = true;
+    while (true) {
+      try {
+        output.println(message);
+        choice = scan.nextLine().charAt(0);
+        break;
+      } catch (InputMismatchException e) {
+        output.println("\nWARNING: Invalid input\n");
+        //scan.nextLine();
+      } catch (StringIndexOutOfBoundsException e) {
+        output.println("\nWARNING: Empty input\n");
+        //scan.nextLine();
+      }
+    }
+    return choice;
   }
   
 }
