@@ -40,14 +40,24 @@ public class ConsoleUI {
         }
         output.print("\n");
       }
-      output.println("Select an action: [a]dd species   [r]emove species   [d]one\n");
       
-      if (firstRun == false) {
-        scan.nextLine();
-      } else {
-        firstRun = false;
+      while (true) {
+        try {
+          output.println("Select an action: [a]dd species   [r]emove species   [d]one\n");
+          if (firstRun == false) {
+            scan.nextLine();
+          }
+          firstRun = true;
+          choice = scan.nextLine().charAt(0);
+          break;
+        } catch (InputMismatchException e) {
+          output.println("\nWARNING: Invalid input\n");
+          //scan.nextLine();
+        } catch (StringIndexOutOfBoundsException e) {
+          output.println("\nWARNING: Empty input\n");
+          //scan.nextLine();
+        }
       }
-      choice = scan.nextLine().charAt(0);
       
       if (choice == 'a') this.addSpecies(scan, output);
       if (choice == 'r') this.removeSpecies(scan, output);
@@ -55,6 +65,8 @@ public class ConsoleUI {
       if (choice == 'd') {
         if (this.theseSpecies.size() == 0) {System.exit(1);} else {break;}
       }
+      firstRun = false;
+      
     }
     
     FlowStream inletStream  = new FlowStream();
@@ -292,7 +304,7 @@ public class ConsoleUI {
         nextConstant3 = getADouble("C:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
         nextConstant4 = getADouble("D:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
         customSpecies.setVapourHeatCapacityConstants(nextConstant1, nextConstant2, nextConstant3, nextConstant4);
-               
+        
         
         output.println("\n Enter Liquid heat capacity coefficients for A, B, C, and D:");
         nextConstant1 = getADouble("A:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
@@ -309,7 +321,7 @@ public class ConsoleUI {
         nextConstant5 = getADouble("Upper T:", 0.0, Double.MAX_VALUE, scan, output, true);
         customSpecies.setAntoineConstants(new AntoineCoefficients(nextConstant1, nextConstant2, nextConstant3, nextConstant4, nextConstant5));
         
-              
+        
         output.println("Enter the critical temperature: ");  
         nextConstant1 = getADouble("Critical temperature for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
         customSpecies.setCriticalTemperature(nextConstant1);
@@ -328,12 +340,12 @@ public class ConsoleUI {
           output.println("Enter the critical volume: ");
           nextConstant1 = getADouble("Critical volume for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
           customSpecies.setCriticalVolume(nextConstant1);
-         
+          
           
           output.println("Enter the critical Z-value: ");
           nextConstant1 = getADouble("Critical Z-value for "+customSpecies.getSpeciesName()+":", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
           customSpecies.setCriticalZ(nextConstant1);
-         
+          
           
           output.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
           nextConstant1 = getADouble("Acentric factor for "+customSpecies.getSpeciesName()+":", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
@@ -426,6 +438,9 @@ public class ConsoleUI {
     while (true) {
       try {
         output.println(message);
+        while(!scan.hasNextDouble()) {
+          scan.next();
+        }
         userInput = scan.nextDouble();
         if (userInput >= lowerBound && userInput <= upperBound) break;
       } catch (InputMismatchException e) {
