@@ -130,8 +130,8 @@ public class PengRobinson{
   }
   
   public void solveZCubicLiquid(){
-    double b = flowStream.getLargeBX();
-    double a = flowStream.getLargeAX();
+    double b = this.flowStream.getLargeBX();
+    double a = this.flowStream.getLargeAX();
     double c0 = Math.pow(b,3.0)+Math.pow(b,2.0)-(a*b);
     double c1 = a-3*Math.pow(b,2.0)-2.0*b;
     double c2 = b-1;
@@ -143,19 +143,60 @@ public class PengRobinson{
     if(d>=0){
       //System.out.println("The system has one real root");
       double z = Math.pow((q1+Math.pow(d,0.5)),(1.0/3.0))+Math.pow((q1-Math.pow(d,0.5)),(1.0/3.0))-(c2/3.0);
-      flowStream.setZL(z);
+      this.flowStream.setZL(z);
     }else{
       double t1 = (Math.pow(q1,2.0))/(Math.pow(p1,3.0));
-      double t2 = Math.pow((1-t1),0.5)/Math.sqrt(t1)*q1/Math.abs(q1);
+      double t2 = (Math.sqrt(1-t1)/Math.sqrt(t1))*q1/Math.abs(q1);
       double theta = Math.atan(t2);
       double z0 = 2*Math.sqrt(p1)*Math.cos(theta/3.0)-(c2/3.0);
       double z1 = 2*Math.sqrt(p1)*Math.cos((2*Math.PI+theta)/3.0)-(c2/3.0);
       double z2 = 2*Math.sqrt(p1)*Math.cos((4*Math.PI+theta)/3.0)-(c2/3.0);
-      double zL = Math.min(z0, Math.min(z1, z2));
-      double zV = Math.max(z0, Math.max(z1, z2));
-      flowStream.setZL(zL);
-     // flowStream.setZV(zV);
+      double[] z = new double[3];
+      if(z0<z1 && z0<z2) {
+        z[0] = z0;
+        if(z1<z2) {
+          z[1] = z1;
+          z[2] = z2;
+        }
+        else {
+          z[1] = z[2];
+          z[2] = z1;
+        }
+      }
+      else if(z1<z0 && z1<z2) {
+        z[0] = z1;
+        if(z0<z2) {
+          z[1] = z0;
+          z[2] = z2;
+        }
+        else {
+          z[1] = z2;
+          z[2] = z0;
+        }
+      }
+      else {
+        z[0] = z2;
+        if(z0<z1) {
+          z[1] = z0;
+          z[2] = z1;
+        }
+        else {
+          z[1] = z1;
+          z[2] = z0;
+        }
+      }
+      //double zL = Math.min(z0, Math.min(z1, z2));
+      //double zV = Math.max(z0, Math.max(z1, z2));
+      //double zL;
+      // Check that minimum is greater than zero (ish)
+      /*if(z[0] > 0) zL = z[0];
+      else if(z[1] > 0) zL = z[1];
+      else zL = z[2];*/
+      this.flowStream.setZL(z[1]);
+      //this.flowStream.setZV(z[2]);
+      System.out.println("Three roots of zL are: "+z[0]+", "+z[1]+" and "+z[2]);
     }
+    
   }
   
   public void liquidFugacity(){
@@ -254,10 +295,11 @@ public class PengRobinson{
       double z0 = 2*Math.sqrt(p1)*Math.cos(theta/3.0)-(c2/3.0);
       double z1 = 2*Math.sqrt(p1)*Math.cos((2*Math.PI+theta)/3.0)-(c2/3.0);
       double z2 = 2*Math.sqrt(p1)*Math.cos((4*Math.PI+theta)/3.0)-(c2/3.0);
-      double zL = Math.min(z0, Math.min(z1, z2));
+      //double zL = Math.min(z0, Math.min(z1, z2));
       double zV = Math.max(z0, Math.max(z1, z2));
       //flowStream.setZL(zL);
       flowStream.setZV(zV);
+      System.out.println("Three roots of zV are: "+z0+", "+z1+" and "+z2);
     }
   }
   
