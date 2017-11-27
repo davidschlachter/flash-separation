@@ -96,7 +96,7 @@ public class PengRobinson{
            flowStream.getFlowSpecies().get(i).getVapourMoleFraction() == 0.0 &&
            flowStream.getFlowSpecies().get(i).getOverallMoleFraction() > 0.0){
           xi = flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
-          xj = flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
+          xj = flowStream.getFlowSpecies().get(j).getOverallMoleFraction();
         } else{
           xi = flowStream.getFlowSpecies().get(i).getLiquidMoleFraction();
           xj = flowStream.getFlowSpecies().get(j).getLiquidMoleFraction();
@@ -168,7 +168,6 @@ public class PengRobinson{
       double z0 = 2*Math.sqrt(p1)*Math.cos(theta/3.0)-(c2/3.0);
       double z1 = 2*Math.sqrt(p1)*Math.cos((2*Math.PI+theta)/3.0)-(c2/3.0);
       double z2 = 2*Math.sqrt(p1)*Math.cos((4*Math.PI+theta)/3.0)-(c2/3.0);
-<<<<<<< HEAD
       double[] z = new double[3];
       if(z0<z1 && z0<z2) {
         z[0] = z0;
@@ -213,12 +212,10 @@ public class PengRobinson{
       this.flowStream.setZL(z[1]);
       //this.flowStream.setZV(z[2]);
       System.out.println("Three roots of zL are: "+z[0]+", "+z[1]+" and "+z[2]);
-=======
       double zL = Math.min(z0, Math.min(z1, z2));
       double zV = Math.max(z0, Math.max(z1, z2));
       flowStream.setZL(zL);
       // flowStream.setZV(zV);
->>>>>>> cb563e88a51cb99023d1daf6266155813f400339
     }
     
   }
@@ -239,10 +236,10 @@ public class PengRobinson{
       lnPhiL-=Math.log(zL-b);
       double sumTerm = 0.0;
       for(int j=0; j<n; j++){
-        if(flowStream.getFlowSpecies().get(i).getLiquidMoleFraction() == 0.0 &&
-           flowStream.getFlowSpecies().get(i).getVapourMoleFraction() == 0.0 &&
-           flowStream.getFlowSpecies().get(i).getOverallMoleFraction() > 0.0){
-          xj = flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
+        if(flowStream.getFlowSpecies().get(j).getLiquidMoleFraction() == 0.0 &&
+           flowStream.getFlowSpecies().get(j).getVapourMoleFraction() == 0.0 &&
+           flowStream.getFlowSpecies().get(j).getOverallMoleFraction() > 0.0){
+          xj = flowStream.getFlowSpecies().get(j).getOverallMoleFraction();
         } else {
           xj = flowStream.getFlowSpecies().get(j).getLiquidMoleFraction();
         }

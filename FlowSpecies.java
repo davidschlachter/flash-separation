@@ -31,7 +31,7 @@ public class FlowSpecies extends Species {
   };
   
   public boolean setLiquidMoleFraction(double liquidMoleFraction, boolean restrict) {
-    if(restrict==true) {
+    if(restrict) {
       if (liquidMoleFraction >= 0.0 && liquidMoleFraction <= 1.0) {
         this.liquidMoleFraction = liquidMoleFraction;
         return true;
@@ -47,8 +47,8 @@ public class FlowSpecies extends Species {
   
   public boolean setLiquidMoleFraction(double liquidMoleFraction) {
     boolean restrict = true;
-    setLiquidMoleFraction(liquidMoleFraction, restrict);
-    return true; //will returning output of above method still set liquid mole fraction?
+    return setLiquidMoleFraction(liquidMoleFraction, restrict);
+    //return true; //will returning output of above method still set liquid mole fraction?
   }
   
   public boolean setVapourMoleFraction(double vapourMoleFraction) {
