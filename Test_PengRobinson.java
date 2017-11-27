@@ -38,6 +38,8 @@ public class Test_PengRobinson extends TestCase {
                testPeng.getFlowStream().getFlowSpecies().get(0).getAI() > 0.984);
     assertTrue(testPeng.getFlowStream().getFlowSpecies().get(1).getAI() < 2.296 && 
                testPeng.getFlowStream().getFlowSpecies().get(1).getAI() > 2.291); 
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(2).getAI() < 2.296 && 
+               testPeng.getFlowStream().getFlowSpecies().get(2).getAI() > 2.291);
     
     
   }

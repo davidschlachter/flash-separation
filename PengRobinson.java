@@ -346,14 +346,9 @@ public class PengRobinson{
       double z2 = 2*Math.sqrt(p1)*Math.cos((4*Math.PI+theta)/3.0)-(c2/3.0);
       //double zL = Math.min(z0, Math.min(z1, z2));
       double zV = Math.max(z0, Math.max(z1, z2));
-<<<<<<< HEAD
-      flowStream.setZL(zL);
-      //flowStream.setZV(zV);
-=======
       //flowStream.setZL(zL);
       flowStream.setZV(zV);
       System.out.println("Three roots of zV are: "+z0+", "+z1+" and "+z2);
->>>>>>> 36ba242999d5c7839728521c185f5302cf026b94
     }
   }
   
