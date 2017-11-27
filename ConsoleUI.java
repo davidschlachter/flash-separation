@@ -165,7 +165,7 @@ public class ConsoleUI {
     this.printStreams(scan, output, inletStream, outletStream);
     
     choice = ' ';
-    while (choice != 'y' && choice != 'n') {
+    while (choice != 'y' && choice != 'n' && choice != 'q') {
       choice = getAChar("\nAre the stream properties correct?\n  [y]es   [n]o\n", scan, output);
     }
     if (choice == 'n') return false;
