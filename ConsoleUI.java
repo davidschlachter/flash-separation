@@ -45,12 +45,15 @@ public class ConsoleUI {
       choice = getAChar("Select an action: [a]dd species   [r]emove species   [d]one\n", scan, output);
       
       if (choice == 'a') this.addSpecies(scan, output);
-      if (choice == 'r') this.removeSpecies(scan, output);
+      if (choice == 'r') {
+        if (this.theseSpecies.size() != 0) this.removeSpecies(scan, output);
+        else continue;
+      }
       if (choice == 'q') return true;  // Exit option for testing
       if (choice == 'd') {
         if (this.theseSpecies.size() == 0) {
           output.println("ERROR: Must select at least one species to continue.");
-            continue;
+          continue;
         } else {
           break;
         }
@@ -237,28 +240,29 @@ public class ConsoleUI {
     }
     
     
-  };
+  }
   
   private void removeSpecies(Scanner scan, PrintWriter output) {
     int i, choice;
     
     while (true) {
       output.println("\nPlease select a species to remove from the list:\n");
-      
       for (i = 0; i < this.theseSpecies.size(); i++) {
         output.println("  " + i + " " + this.theseSpecies.get(i).getSpeciesName());
       }
       output.print("\n");
       
+      while(!scan.hasNextInt()) {
+        scan.next();
+      }
       choice = scan.nextInt();
       
-      if (choice >= 0 && choice < this.presetSpecies.size()) break;
-      
+      if (choice >= 0 && choice < this.theseSpecies.size()) break;
     }
     
     this.theseSpecies.remove(choice);
     
-  };
+  }
   
   private void addCustomSpecies(Scanner scan, PrintWriter output) {
     FlowSpecies customSpecies = new FlowSpecies();
