@@ -6,10 +6,12 @@ public class Test_PengRobinson extends TestCase {
     PengRobinson testPeng = createTestPeng();
     testPeng.kappaI();
     
-    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(0).getKappa() < 0.876 && 
-               testPeng.getFlowStream().getFlowSpecies().get(0).getKappa() > 0.872);
-    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(1).getKappa() < 1.259 && 
-               testPeng.getFlowStream().getFlowSpecies().get(1).getKappa() > 1.255);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(0).getKappa() < 0.7425 && 
+               testPeng.getFlowStream().getFlowSpecies().get(0).getKappa() > 0.7415);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(1).getKappa() < 0.8225 && 
+               testPeng.getFlowStream().getFlowSpecies().get(1).getKappa() > 0.7975);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(2).getKappa() < 0.8850 && 
+               testPeng.getFlowStream().getFlowSpecies().get(2).getKappa() > 0.8750);
     
   }
   
@@ -18,11 +20,12 @@ public class Test_PengRobinson extends TestCase {
     testPeng.kappaI();
     testPeng.alphaI();
     
-    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(0).getAlpha() < 1.65 && 
-               testPeng.getFlowStream().getFlowSpecies().get(0).getAlpha() > 1.63);
-    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(1).getAlpha() < 1.69 && 
-               testPeng.getFlowStream().getFlowSpecies().get(1).getAlpha() > 1.67);
-    
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(0).getAlpha() < 1.273 && 
+               testPeng.getFlowStream().getFlowSpecies().get(0).getAlpha() > 1.267);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(1).getAlpha() < 1.363 && 
+               testPeng.getFlowStream().getFlowSpecies().get(1).getAlpha() > 1.357);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(2).getAlpha() < 1.443 && 
+               testPeng.getFlowStream().getFlowSpecies().get(2).getAlpha() > 1.437);
   }
   
   public void testAI(){
@@ -129,25 +132,22 @@ public class Test_PengRobinson extends TestCase {
   private PengRobinson createTestPeng(){
     FlowStream testStream = new FlowStream();
     
-    FlowSpecies water = new FlowSpecies();
-    water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
-    water.setOverallMoleFraction(0.55);
-    water.setLiquidMoleFraction(0.55);
-    water.setVapourMoleFraction(0.55);
-    water.setCriticalTemperature(647.0);
-    water.setCriticalPressure(22055000.0);
-    water.setAcentricFactor(0.345);
-    FlowSpecies ethanol = new FlowSpecies();
-    ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
-    ethanol.setOverallMoleFraction(0.45);
-    ethanol.setLiquidMoleFraction(0.45);
-    ethanol.setVapourMoleFraction(0.45);
-    ethanol.setCriticalTemperature(514.0);
-    ethanol.setCriticalPressure(6148000.0);
-    ethanol.setAcentricFactor(0.645);
-    testStream.addFlowSpecies(water);
-    testStream.addFlowSpecies(ethanol);
-    testStream.setTemperature(298.15);
+    FlowSpecies pentane = new FlowSpecies();
+    pentane.setCriticalPressure(3369000.0);
+    pentane.setCriticalTemperature(469.7);
+    pentane.setAcentricFactor(0.249);
+    FlowSpecies hexane = new FlowSpecies();
+    hexane.setCriticalPressure(3012000.0);
+    hexane.setCriticalTemperature(507.4);
+    hexane.setAcentricFactor(0.305);
+    FlowSpecies heptane = new FlowSpecies();
+    heptane.setCriticalPressure(2736000.0);
+    heptane.setCriticalTemperature(540.3);
+    heptane.setAcentricFactor(0.349);
+    testStream.addFlowSpecies(pentane);
+    testStream.addFlowSpecies(hexane);
+    testStream.addFlowSpecies(heptane);
+    testStream.setTemperature(322.29);
     testStream.setPressure(101325.0);
     
     PengRobinson testPeng = new PengRobinson(testStream);

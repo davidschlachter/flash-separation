@@ -29,7 +29,7 @@ public class RachfordRice implements DifferentiableFunction {
     double dewPointTemperature = new DewPoint(this.flowStream).calc();
     double bubblePointTemperature = new BubblePoint(this.flowStream).calc();
     //System.out.println("Got dewpoint "+dewPointTemperature+" and bubblepoint "+bubblePointTemperature);
-    double vOverF = NewtonRaphson.calc(this, 0.5, 0.1);
+    double vOverF = NewtonRaphson.calc(this, 0.85, 0.1);
     
     if (this.flowStream.getTemperature() > dewPointTemperature) {
       for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
@@ -140,7 +140,7 @@ public class RachfordRice implements DifferentiableFunction {
         if(this.flowStream.getIsIdeal()==true){
           kMinusOne = (saturationPressure)/(pressure)-1;
         } else {
-          kMinusOne = (liquidFugacity/vapourFugacity)-1;   //TODO: Find out why liquid fugacity is coming up as zero!
+            kMinusOne = (liquidFugacity/vapourFugacity)-1;   //TODO: Find out why liquid fugacity is coming up as zero!
         }
         
         liquidMoleFraction = overallMoleFraction/(1 + x*kMinusOne);
@@ -149,7 +149,17 @@ public class RachfordRice implements DifferentiableFunction {
         vapourMoleFraction = (kMinusOne + 1) * this.flowStream.getFlowSpecies().get(i).getLiquidMoleFraction();
         this.flowStream.getFlowSpecies().get(i).setVapourMoleFraction(vapourMoleFraction);
       }
-
+      /* System.out.println("zL here is: "+this.flowStream.getZL());
+       System.out.println("Liquid fugacity here is: "+this.flowStream.getFlowSpecies().get(0).getLiquidFugacity());
+       System.out.println("Liquid fugacity here is: "+this.flowStream.getFlowSpecies().get(1).getLiquidFugacity());
+       System.out.println("Liquid fugacity here is: "+this.flowStream.getFlowSpecies().get(2).getLiquidFugacity());
+       System.out.println("Liquid fugacity here is: "+this.flowStream.getFlowSpecies().get(3).getLiquidFugacity());
+       System.out.println("Large BX here is: "+this.flowStream.getLargeBX());
+       System.out.println("Large BX here is: "+this.flowStream.getLargeBX());
+       System.out.println("Small AX here is: "+this.flowStream.getSmallAX());
+       for(int z=0; z<this.flowStream.getFlowSpecies().size();z++){
+       System.out.println("individual b"+z+" is: "+this.flowStream.getFlowSpecies().get(z).getBI());
+       } */
       ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), this.flowStream, this.flowStream);
     }
     
@@ -173,7 +183,7 @@ public class RachfordRice implements DifferentiableFunction {
       if(this.flowStream.getIsIdeal()==true){
         kMinusOne = (saturationPressure)/(pressure)-1;
       } else {
-        kMinusOne = ((liquidFugacity)/(vapourFugacity))-1;
+          kMinusOne = ((liquidFugacity)/(vapourFugacity))-1;
       }
       
       
