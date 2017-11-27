@@ -81,6 +81,21 @@ public class FlowStream {
     }
   }
   
+  public boolean setPressure(double pressure, boolean restrict) {
+    if(restrict == true){
+      if (pressure >= 0) {
+        this.pressure = pressure;
+        return true;
+      } else {
+        return false;
+      }
+    }
+    else {
+      this.pressure = pressure;
+      return true;
+    }
+  }
+  
   public boolean setPressure(double pressure) {
     if (pressure >= 0) {
       this.pressure = pressure;
