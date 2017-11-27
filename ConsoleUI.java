@@ -3,6 +3,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.PrintWriter;
 import java.util.InputMismatchException;
+import java.lang.NumberFormatException;
+import java.lang.StringIndexOutOfBoundsException;
 
 public class ConsoleUI {
   
@@ -227,6 +229,9 @@ public class ConsoleUI {
       output.println("------------------------");
       output.println("  " + i + " New species...\n");
       
+      while (!scan.hasNextInt()) {
+        scan.next();
+      }
       choice = scan.nextInt();
       
       if (choice >= 0 && choice <= this.presetSpecies.size()) break;
