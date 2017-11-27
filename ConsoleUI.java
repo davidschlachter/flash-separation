@@ -455,7 +455,7 @@ public class ConsoleUI {
         else {
           userInput = Double.parseDouble(nextString);
           if (lowerBound != upperBound) {
-            if (userInput <= lowerBound || userInput >= upperBound) continue;
+            if (userInput < lowerBound || userInput > upperBound) continue;
           }
           break;
         }
