@@ -66,6 +66,12 @@ public class Species implements Function{
   //individual b value for PR calculations
   private double bi = 0.0;
   
+  //individual LargeA for PR calcs
+  private double speciesA = 0.0;
+  
+  //individual LargeA for PR calcs
+  private double speciesB = 0.0;
+  
   //individual vapour fugacity for PR
   private double vapourFugacity = 0.0;
   
@@ -74,8 +80,6 @@ public class Species implements Function{
   
   //individual Ki value for PR EOS
   private double ki = 0.0;
-  
-  
   
   // Constructor
   public Species() {}
@@ -280,6 +284,14 @@ public class Species implements Function{
     this.bi=bi;
   }
   
+  public void setSpeciesA(double speciesA){
+    this.speciesA = speciesA;
+  }
+  
+  public void setSpeciesB(double speciesB){
+    this.speciesB = speciesB;
+  }
+  
   public void setLiquidFugacity(double liquidFugacity){
     this.liquidFugacity = liquidFugacity;
   }
@@ -289,7 +301,7 @@ public class Species implements Function{
   }
   
   public void setKi(double ki){
-    this.ki = ki;
+  this.ki=ki;
   }
   
   // Getters
@@ -435,6 +447,14 @@ public class Species implements Function{
     return this.bi;
   }
   
+  public double getSpeciesA(){
+    return this.speciesA;
+  }
+  
+  public double getSpeciesB(){
+    return this.speciesB;
+  }
+  
   public double getLiquidFugacity(){
     return this.liquidFugacity;
   }
@@ -446,6 +466,7 @@ public class Species implements Function{
   public double getKi(){
     return this.ki;
   }
+  
   
   //Equals
   public boolean equals(Species other) {

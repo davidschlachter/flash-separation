@@ -27,11 +27,11 @@ public class Test_DewPressure extends TestCase {
     testStream.setPressure(101325.0);
     testStream.setTemperature(298.15);
     
-    DewPressure testDewPressure = new DewPressure(testStream);
+   // DewPressure testDewPressure = new DewPressure(testStream);
     
     System.out.println("*********************************************************\nBEGINNING OF DEW PRESSURE TEST");
-    double dewPressure = testDewPressure.solve();
-    System.out.println("The dew pressure was found to be: "+dewPressure+" Pascals.");
+ //   double dewPressure = testDewPressure.solve();
+ //   System.out.println("The dew pressure was found to be: "+dewPressure+" Pascals.");
     System.out.println("END OF DEW PRESSURE TEST\n*********************************************************");
   }
   

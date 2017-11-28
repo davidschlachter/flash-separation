@@ -26,6 +26,8 @@ public class FlowStream {
   private double zL = 0.0;
   private double zV = 0.0;
   private boolean isIdeal = true;
+  private double streamA = 0.0;
+  private double streamB = 0.0;
   
   // Default constructor
   public FlowStream() {
@@ -149,6 +151,14 @@ public class FlowStream {
     this.isIdeal=isIdeal;
   }
   
+  public void setStreamA(double streamA){
+    this.streamA = streamA;
+  }
+  
+  public void setStreamB(double streamB){
+    this.streamB = streamB;
+  }
+  
   
   // Getters
   public List<FlowSpecies> getFlowSpecies() {
@@ -209,6 +219,14 @@ public class FlowStream {
   
   public double getZV(){
     return this.zV;
+  }
+  
+  public double getStreamA(){
+    return this.streamA;
+  }
+  
+  public double getStreamB(){
+    return this.streamB;
   }
   
   public boolean getIsIdeal(){
