@@ -3,8 +3,13 @@ public class RootFinder {
   //Max number of iterations
   public static final int JMAX = 1000;
   
-  //Static method to return bounds for a root, searching both forward and backward
+  // Non-verbose getBounds that searches both forward and backward
   public static double[] getBounds(Function func, double initialGuess, double step) {
+    return RootFinder.getBounds(func, initialGuess, step, false);
+  }
+  
+  // Verbose getBounds that searches both forward and backward
+  public static double[] getBounds(Function func, double initialGuess, double step, boolean verbose) {
     double[] lowBounds = {initialGuess, initialGuess};
     double[] highBounds = {initialGuess, initialGuess};
     
@@ -18,11 +23,11 @@ public class RootFinder {
       testLowProduct = func.testFunction(lowBounds[0])*func.testFunction(lowBounds[1]);
       
       if(testLowProduct<0) {
-        //System.out.println("Bounds are: "+lowBounds[0]+" "+lowBounds[1]+" with product "+testLowProduct);
+        if (verbose == true) System.out.println("Low bounds are: "+lowBounds[0]+" "+lowBounds[1]+" with product "+testLowProduct);
         return lowBounds;
       }
       else if(testHighProduct<0) {
-        //System.out.println("Bounds are: "+highBounds[0]+" "+highBounds[1]+" with product "+testHighProduct);
+        if (verbose == true) System.out.println("High bounds are: "+highBounds[0]+" "+highBounds[1]+" with product "+testHighProduct);
         return highBounds;
       }
       else {
@@ -31,14 +36,17 @@ public class RootFinder {
       }
     }
     
-    System.out.println("WARNING: Exceeded maximum number of iterations.");
+    if (verbose == true) System.out.println("WARNING: Exceeded maximum number of iterations.");
     return highBounds; // have to figure out what a good idea to do here is
   }
   
-  //Static method to return bounds for a root, searching either forward (true) or backward (false)
   public static double[] getBounds(Function func, double initialGuess, double step, double direction) {
+  return RootFinder.getBounds(func, initialGuess, step, direction, false);
+  }
+  
+  //Static method to return bounds for a root, searching either forward (true) or backward (false)
+  public static double[] getBounds(Function func, double initialGuess, double step, double direction, boolean verbose) {
     double[] bounds = {initialGuess, initialGuess};
-    
     double testProduct = 0.0;
     
     for(int i=0; i<JMAX; i++) {
@@ -52,7 +60,7 @@ public class RootFinder {
       }
       
       testProduct = func.testFunction(bounds[0])*func.testFunction(bounds[1]);
-      //System.out.println("Bounds are: "+bounds[0]+" "+bounds[1]+" with product "+testProduct);
+      if (verbose == true) System.out.println("Bounds are: "+bounds[0]+" "+bounds[1]+" with product "+testProduct);
       if (testProduct<0) {
         return bounds;
       }
@@ -65,7 +73,7 @@ public class RootFinder {
       }
     }
     
-    System.out.println("WARNING: Exceeded maximum number of iterations.");
+    if (verbose == true) System.out.println("WARNING: Exceeded maximum number of iterations.");
     return bounds; // have to figure out what a good idea to do here is
   }
   

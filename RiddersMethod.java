@@ -24,14 +24,11 @@ public class RiddersMethod extends RootFinder {
       fL = func.testFunction(xL);
       fU = func.testFunction(xU);
       fM = func.testFunction(xM);
-      if (verbose == true) {
-        System.out.println("Ridders Method: xL="+xL+" f(xL)="+fL+", xM="+xM+" f(xM)="+fM+", xU="+xU+" f(xU)="+fU);
-      }
+      if (verbose == true) System.out.println("Ridders Method: xL="+xL+" f(xL)="+fL+", xM="+xM+" f(xM)="+fM+", xU="+xU+" f(xU)="+fU);
       xR = xM + (xM - xL)*(Math.signum(fL - fU)*fM)/(Math.sqrt(fM*fM - fL*fU));
-      //System.out.println("xR is: "+xR);
       fR = func.testFunction(xR);
       if (Double.isNaN(xR)) {
-        System.out.println("ERROR: xR in Ridder's method returned Not a Number (NaN)");
+        if (verbose == true) System.out.println("WARNING: xR in Ridder's method returned Not a Number (NaN)");
         return xR;
       }
       if(xR < xM)
