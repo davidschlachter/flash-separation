@@ -69,14 +69,7 @@ public class Test_FlowSpecies extends TestCase {
     testFlowSpecies.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
     testFlowSpecies.setCriticalTemperature(1.0);
     testFlowSpecies.setCriticalPressure(1.0);
-    testFlowSpecies.setCriticalVolume(1.0);
-    testFlowSpecies.setCriticalZ(1.0);
     testFlowSpecies.setAcentricFactor(1.0);
-    testFlowSpecies.setZValue(1.0);
-    testFlowSpecies.setBeta(1.0);
-    testFlowSpecies.setQValue(1.0);
-    testFlowSpecies.setActivityCoefficient(1.0);
-    testFlowSpecies.setMixtureFugacityCoefficient(1.0);
     
     FlowSpecies equalFlowSpecies = new FlowSpecies();
     equalFlowSpecies.setVapourMoleFraction(0.5);
@@ -88,14 +81,7 @@ public class Test_FlowSpecies extends TestCase {
     equalFlowSpecies.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
     equalFlowSpecies.setCriticalTemperature(1.0);
     equalFlowSpecies.setCriticalPressure(1.0);
-    equalFlowSpecies.setCriticalVolume(1.0);
-    equalFlowSpecies.setCriticalZ(1.0);
     equalFlowSpecies.setAcentricFactor(1.0);
-    equalFlowSpecies.setZValue(1.0);
-    equalFlowSpecies.setBeta(1.0);
-    equalFlowSpecies.setQValue(1.0);
-    equalFlowSpecies.setActivityCoefficient(1.0);
-    equalFlowSpecies.setMixtureFugacityCoefficient(1.0);
     
     FlowSpecies inequalFlowSpecies = new FlowSpecies();
     inequalFlowSpecies.setVapourMoleFraction(0.1);
@@ -107,14 +93,7 @@ public class Test_FlowSpecies extends TestCase {
     inequalFlowSpecies.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
     inequalFlowSpecies.setCriticalTemperature(1.0);
     inequalFlowSpecies.setCriticalPressure(1.0);
-    inequalFlowSpecies.setCriticalVolume(1.0);
-    inequalFlowSpecies.setCriticalZ(1.0);
     inequalFlowSpecies.setAcentricFactor(1.0);
-    inequalFlowSpecies.setZValue(1.0);
-    inequalFlowSpecies.setBeta(1.0);
-    inequalFlowSpecies.setQValue(1.0);
-    inequalFlowSpecies.setActivityCoefficient(1.0);
-    inequalFlowSpecies.setMixtureFugacityCoefficient(1.0);
     
     assertTrue("FlowSpecies.equals(equalSpecies)", testFlowSpecies.equals(equalFlowSpecies));
     assertFalse("FlowSpecies.equals(inequalSpecies)", testFlowSpecies.equals(inequalFlowSpecies));

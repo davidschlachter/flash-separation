@@ -34,12 +34,12 @@ public class Test_PengRobinson extends TestCase {
     testPeng.alphaI();
     testPeng.individualA();
     
-    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(0).getAI() < 0.986 && 
-               testPeng.getFlowStream().getFlowSpecies().get(0).getAI() > 0.984);
-    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(1).getAI() < 2.296 && 
-               testPeng.getFlowStream().getFlowSpecies().get(1).getAI() > 2.291); 
-    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(2).getAI() < 2.296 && 
-               testPeng.getFlowStream().getFlowSpecies().get(2).getAI() > 2.291);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(0).getAI() < 2630800.0 && 
+               testPeng.getFlowStream().getFlowSpecies().get(0).getAI() > 2630000.0);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(1).getAI() < 3677000.0 && 
+               testPeng.getFlowStream().getFlowSpecies().get(1).getAI() > 3675000.0); 
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(2).getAI() < 4859500.0 && 
+               testPeng.getFlowStream().getFlowSpecies().get(2).getAI() > 4858000.0);
     
     
   }
@@ -51,10 +51,46 @@ public class Test_PengRobinson extends TestCase {
     testPeng.alphaI();
     testPeng.individualB();
     
-    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(0).getBI() < 1.91e-5 && 
-               testPeng.getFlowStream().getFlowSpecies().get(0).getBI() > 1.87e-5);
-    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(1).getBI() < 5.44e-5 && 
-               testPeng.getFlowStream().getFlowSpecies().get(1).getBI() > 5.37e-5); 
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(0).getBI() < 90.3 && 
+               testPeng.getFlowStream().getFlowSpecies().get(0).getBI() > 89.9);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(1).getBI() < 109.5 && 
+               testPeng.getFlowStream().getFlowSpecies().get(1).getBI() > 108.7);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(2).getBI() < 128.0 && 
+               testPeng.getFlowStream().getFlowSpecies().get(2).getBI() > 127.2);
+    
+  }
+  
+  public void testSpeciesA(){
+    
+    PengRobinson testPeng = createTestPeng();
+    testPeng.kappaI();
+    testPeng.alphaI();
+    testPeng.individualA(); 
+    testPeng.speciesA();
+    
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(0).getSpeciesA() < 0.038 && 
+               testPeng.getFlowStream().getFlowSpecies().get(0).getSpeciesA() > 0.036);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(1).getSpeciesA() < 0.06 && 
+               testPeng.getFlowStream().getFlowSpecies().get(1).getSpeciesA() > 0.045);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(2).getSpeciesA() < 0.078 && 
+               testPeng.getFlowStream().getFlowSpecies().get(2).getSpeciesA() > 0.062);
+    
+  }
+  
+  public void testSpeciesB(){
+    
+    PengRobinson testPeng = createTestPeng();
+    testPeng.kappaI();
+    testPeng.alphaI();
+    testPeng.individualB(); 
+    testPeng.speciesB();
+    
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(0).getSpeciesB() < 0.0035 && 
+               testPeng.getFlowStream().getFlowSpecies().get(0).getSpeciesB() > 0.00335);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(1).getSpeciesB() < 0.0042 && 
+               testPeng.getFlowStream().getFlowSpecies().get(1).getSpeciesB() > 0.00405);
+    assertTrue(testPeng.getFlowStream().getFlowSpecies().get(2).getSpeciesB() < 0.00495 && 
+               testPeng.getFlowStream().getFlowSpecies().get(2).getSpeciesB() > 0.00475);
     
   }
   
@@ -64,71 +100,64 @@ public class Test_PengRobinson extends TestCase {
     testPeng.kappaI();
     testPeng.alphaI();
     testPeng.individualA();
-    testPeng.individualB();
+    testPeng.speciesA();
     double[][] testResult = testPeng.aij();
-    assertTrue(testResult[0][0] < 0.986 && testResult [0][0] > 0.984);
-    assertTrue(testResult[1][1] < 2.296 && testResult [1][1] > 2.291);
-    assertTrue(testResult[0][1] < 1.52 && testResult [0][1] > 1.50);
+    
+    assertTrue(testResult[0][0] < 0.038 && testResult [0][0] > 0.0365);
+    assertTrue(testResult[0][1] < 0.0445 && testResult [0][1] > 0.0435);
+    assertTrue(testResult[0][2] < 0.055 && testResult [0][2] > 0.045);
+    assertTrue(testResult[1][0] < 0.0445 && testResult [0][1] > 0.0435);
+    assertTrue(testResult[1][1] < 0.054 && testResult [1][1] > 0.048);
+    assertTrue(testResult[1][2] < 0.0625 && testResult [1][2] > 0.0575);
+    assertTrue(testResult[2][0] < 0.055 && testResult [0][2] > 0.045);
+    assertTrue(testResult[2][1] < 0.0625 && testResult [1][2] > 0.0575);
+    assertTrue(testResult[2][2] < 0.06925 && testResult [2][2] > 0.06825);
     
   }
   
-  public void testSmallAX(){
+  public void testStreamA(){
     
     PengRobinson testPeng = createTestPeng();
     testPeng.kappaI();
     testPeng.alphaI();
     testPeng.individualA();
-    testPeng.individualB();
-    testPeng.aij();
-    testPeng.flowStreamSmallAXValue();
-    assertTrue(testPeng.getFlowStream().getSmallAX() < 1.51 &&
-               testPeng.getFlowStream().getSmallAX() > 1.50);
+    testPeng.speciesA();
+    testPeng.streamA();
+    assertTrue(testPeng.getFlowStream().getStreamA() < 0.045 && testPeng.getFlowStream().getStreamA() > 0.035);
     
   }
   
-  public void testSmallBX(){
+  public void testStreamB(){
     
     PengRobinson testPeng = createTestPeng();
     testPeng.kappaI();
     testPeng.alphaI();
-    testPeng.individualA();
     testPeng.individualB();
-    testPeng.aij();
-    testPeng.flowStreamSmallBXValue();
-    assertTrue(testPeng.getFlowStream().getSmallBX() < 3.5e-5 &&
-               testPeng.getFlowStream().getSmallBX() > 3.3e-5);
+    testPeng.speciesB();
+    testPeng.streamB();
+    assertTrue(testPeng.getFlowStream().getStreamB() < 0.0037 && testPeng.getFlowStream().getStreamB() > 0.0033);
     
   }
   
-  public void testLargeAX(){
-    
-    PengRobinson testPeng = createTestPeng();
-    testPeng.kappaI();
-    testPeng.alphaI();
-    testPeng.individualA();
-    testPeng.individualB();
-    testPeng.aij();
-    testPeng.flowStreamSmallAXValue();
-    testPeng.flowStreamLargeAXValue();
-    assertTrue(testPeng.getFlowStream().getLargeAX() < 0.025 &&
-               testPeng.getFlowStream().getLargeAX() > 0.024);
-    
-  }
+  public void testSolveFugacities(){
   
-  public void testLargeBX(){
-    
-    
-    PengRobinson testPeng = createTestPeng();
-    testPeng.kappaI();
-    testPeng.alphaI();
-    testPeng.individualA();
-    testPeng.individualB();
-    testPeng.aij();
-    testPeng.flowStreamSmallBXValue();
-    testPeng.flowStreamLargeBXValue();
-    assertTrue(testPeng.getFlowStream().getLargeBX() < 0.00145 &&
-               testPeng.getFlowStream().getLargeBX() > 0.00135);
-    
+  PengRobinson testPeng = createTestPeng();
+  testPeng.nonIdealCalcs();
+  
+  double pentaneVap = testPeng.getFlowStream().getFlowSpecies().get(0).getVapourFugacity();
+  double pentaneLiq = testPeng.getFlowStream().getFlowSpecies().get(0).getLiquidFugacity();
+  double hexaneVap = testPeng.getFlowStream().getFlowSpecies().get(1).getVapourFugacity();
+  double hexaneLiq = testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity();
+  double heptaneVap = testPeng.getFlowStream().getFlowSpecies().get(2).getVapourFugacity();
+  double heptaneLiq = testPeng.getFlowStream().getFlowSpecies().get(2).getLiquidFugacity();
+  
+  assertTrue(pentaneVap < 0.969 && pentaneVap > 0.963);
+  assertTrue(pentaneLiq < 1.49 && pentaneLiq > 1.41);
+  assertTrue(hexaneVap < 0.959 && hexaneVap > 0.948);
+  assertTrue(hexaneLiq < 0.55 && hexaneLiq > 0.45);
+  assertTrue(heptaneVap < 0.945 && heptaneVap > 0.935);
+  assertTrue(heptaneLiq < 0.19 && heptaneLiq > 0.18);
+  
   }
   
   private PengRobinson createTestPeng(){
@@ -138,14 +167,17 @@ public class Test_PengRobinson extends TestCase {
     pentane.setCriticalPressure(3369000.0);
     pentane.setCriticalTemperature(469.7);
     pentane.setAcentricFactor(0.249);
+    pentane.setOverallMoleFraction(0.8168);
     FlowSpecies hexane = new FlowSpecies();
     hexane.setCriticalPressure(3012000.0);
     hexane.setCriticalTemperature(507.4);
     hexane.setAcentricFactor(0.305);
+    hexane.setOverallMoleFraction(0.1501);
     FlowSpecies heptane = new FlowSpecies();
     heptane.setCriticalPressure(2736000.0);
     heptane.setCriticalTemperature(540.3);
     heptane.setAcentricFactor(0.349);
+    heptane.setOverallMoleFraction(0.0331);
     testStream.addFlowSpecies(pentane);
     testStream.addFlowSpecies(hexane);
     testStream.addFlowSpecies(heptane);

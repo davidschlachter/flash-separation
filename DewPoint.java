@@ -57,20 +57,13 @@ public class DewPoint implements Function {
     double activityCoefficient, overallMoleFraction, saturationPressure, largePhi;
     
     this.flowStream.setTemperature(temperature);
-    Fugacity fugacity = new Fugacity(this.flowStream);  //this has just been added and may not work yet
-    
-    //if(this.flowStream.isIdeal() == false){
-    //fugacity.computeNonIdealParameters();
-    //}
     
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
-      overallMoleFraction = fugacity.getFlowStream().getFlowSpecies().get(i).getOverallMoleFraction();
-      saturationPressure = SaturationPressure.calc(fugacity.getFlowStream().getFlowSpecies().get(i), temperature);
-      activityCoefficient = fugacity.getFlowStream().getFlowSpecies().get(i).getActivityCoefficient();
-      largePhi = fugacity.getFlowStream().getFlowSpecies().get(i).getLargePhi();
+      overallMoleFraction = flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
+      saturationPressure = SaturationPressure.calc(flowStream.getFlowSpecies().get(i), temperature);
       
-      result = result + (overallMoleFraction * largePhi * pressure / (activityCoefficient * saturationPressure));
+      result = result + (overallMoleFraction *pressure / (saturationPressure));
       
     }
     

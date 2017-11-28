@@ -108,19 +108,13 @@ public class RachfordRice implements DifferentiableFunction {
       
       overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
-      liquidFugacity = this.flowStream.getFlowSpecies().get(i).getLiquidFugacity();
-      vapourFugacity = this.flowStream.getFlowSpecies().get(i).getVapourFugacity();
       if(this.flowStream.getIsIdeal()==true){
         kMinusOne = (saturationPressure)/(pressure)-1;
       } else {
         PengRobinson nonIdealStream = new PengRobinson(this.flowStream);
         nonIdealStream.nonIdealCalcs();
-        liquidFugacity = nonIdealStream.getFlowStream().getZL();
-        vapourFugacity = nonIdealStream.getFlowStream().getZV();
-        if(i==0){
-          //System.out.println("Large BX is equal to: "+nonIdealStream.getFlowStream().getLargeBX());
-          //System.out.println("Large BY to: "+nonIdealStream.getFlowStream().getLargeBY());  
-        }
+        liquidFugacity = nonIdealStream.getFlowStream().getFlowSpecies().get(i).getLiquidFugacity();
+        vapourFugacity = nonIdealStream.getFlowStream().getFlowSpecies().get(i).getVapourFugacity();
         kMinusOne = ((liquidFugacity)/(vapourFugacity))-1;
       }
       result += (overallMoleFraction*kMinusOne)/(1 + x*kMinusOne) ;
@@ -137,11 +131,7 @@ public class RachfordRice implements DifferentiableFunction {
         liquidFugacity = this.flowStream.getFlowSpecies().get(i).getLiquidFugacity();
         vapourFugacity = this.flowStream.getFlowSpecies().get(i).getVapourFugacity();
         pressure = this.flowStream.getPressure();
-        if(this.flowStream.getIsIdeal()==true){
-          kMinusOne = (saturationPressure)/(pressure)-1;
-        } else {
             kMinusOne = (liquidFugacity/vapourFugacity)-1;   //TODO: Find out why liquid fugacity is coming up as zero!
-        }
         
         liquidMoleFraction = overallMoleFraction/(1 + x*kMinusOne);
         this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(liquidMoleFraction);

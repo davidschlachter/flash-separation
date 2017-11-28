@@ -26,6 +26,8 @@ public class FlowStream {
   private double zL = 0.0;
   private double zV = 0.0;
   private boolean isIdeal = true;
+  private double streamA = 0.0;
+  private double streamB = 0.0;
   
   // Default constructor
   public FlowStream() {
@@ -149,6 +151,14 @@ public class FlowStream {
     this.isIdeal=isIdeal;
   }
   
+  public void setStreamA(double streamA){
+    this.streamA = streamA;
+  }
+  
+  public void setStreamB(double streamB){
+    this.streamB = streamB;
+  }
+  
   
   // Getters
   public List<FlowSpecies> getFlowSpecies() {
@@ -211,6 +221,14 @@ public class FlowStream {
     return this.zV;
   }
   
+  public double getStreamA(){
+    return this.streamA;
+  }
+  
+  public double getStreamB(){
+    return this.streamB;
+  }
+  
   public boolean getIsIdeal(){
     return this.isIdeal;
   }
@@ -241,10 +259,6 @@ public class FlowStream {
       if (Math.abs((sourceSpecies.getVapourMoleFraction() - targetSpecies.getVapourMoleFraction())/sourceSpecies.getVapourMoleFraction()) > error) equals = false;
       if (Math.abs((sourceSpecies.getCriticalPressure() - targetSpecies.getCriticalPressure())/sourceSpecies.getCriticalPressure()) > error) equals = false;
       if (Math.abs((sourceSpecies.getCriticalTemperature() - targetSpecies.getCriticalTemperature())/sourceSpecies.getCriticalTemperature()) > error) equals = false;
-      if (Math.abs((sourceSpecies.getCriticalVolume() - targetSpecies.getCriticalVolume())/sourceSpecies.getCriticalVolume()) > error) equals = false;
-      if (Math.abs((sourceSpecies.getLargePhi() - targetSpecies.getLargePhi())/sourceSpecies.getLargePhi()) > error) equals = false;
-      if (Math.abs((sourceSpecies.getActivityCoefficient() - targetSpecies.getActivityCoefficient())/sourceSpecies.getActivityCoefficient()) > error) equals = false;  //check to make sure all parameters are equal
-      if (Math.abs((sourceSpecies.getMixtureFugacityCoefficient() - targetSpecies.getMixtureFugacityCoefficient())/sourceSpecies.getMixtureFugacityCoefficient()) > error) equals = false;
     }
     
     return equals;

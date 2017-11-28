@@ -1,4 +1,4 @@
-public class DewPressure implements Function{
+/* public class DewPressure implements Function{
   
   private FlowStream flowStream;
   
@@ -72,17 +72,17 @@ public class DewPressure implements Function{
       nonIdealStream.flowStreamLargeAXValue();
       nonIdealStream.flowStreamLargeBXValue();
       nonIdealStream.flowStreamSmallAYValue();
-      /*System.out.println("aX in dewpresure method is: "+copyFlowStream.getSmallAX());
+      System.out.println("aX in dewpresure method is: "+copyFlowStream.getSmallAX());
       System.out.println("bX in dewpresure method is: "+copyFlowStream.getSmallBX());
       System.out.println("AX in dewpresure method is: "+copyFlowStream.getLargeAX());
-      System.out.println("BX in dewpresure method is: "+copyFlowStream.getLargeBX());*/
+      System.out.println("BX in dewpresure method is: "+copyFlowStream.getLargeBX());
       nonIdealStream.flowStreamSmallBYValue();
       nonIdealStream.flowStreamLargeAYValue();
       nonIdealStream.flowStreamLargeBYValue();
       /*System.out.println("aY in dewpresure method is: "+copyFlowStream.getSmallAY());
       System.out.println("bY in dewpresure method is: "+copyFlowStream.getSmallBY());
       System.out.println("AY in dewpresure method is: "+copyFlowStream.getLargeAY());
-      System.out.println("BY in dewpresure method is: "+copyFlowStream.getLargeBY());*/
+      System.out.println("BY in dewpresure method is: "+copyFlowStream.getLargeBY());
       nonIdealStream.solveZCubicLiquid();
       nonIdealStream.solveZCubicVapour();
       System.out.println("Z_L: "+nonIdealStream.getFlowStream().getZL());
@@ -115,4 +115,4 @@ public class DewPressure implements Function{
     return (result-1); 
   } 
   
-}
+} */

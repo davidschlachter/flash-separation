@@ -165,7 +165,7 @@ public class ConsoleUI {
     this.printStreams(scan, output, inletStream, outletStream);
     
     choice = ' ';
-    while (choice != 'y' && choice != 'n') {
+    while (choice != 'y' && choice != 'n' && choice != 'q') {
       choice = getAChar("\nAre the stream properties correct?\n  [y]es   [n]o\n", scan, output);
     }
     if (choice == 'n') return false;
@@ -319,6 +319,7 @@ public class ConsoleUI {
         
         ideal = ' ';
         while (ideal != 'y' && ideal != 'n') {
+          scan.nextLine();
           ideal = getAChar("\nWill the simulation be run in ideal-gas mode?\n  [y]es   [n]o\n", scan, output);
         }
         
@@ -327,16 +328,6 @@ public class ConsoleUI {
           output.println("Enter the critical pressure: ");
           nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
           customSpecies.setCriticalPressure(nextConstant1);
-          
-          
-          output.println("Enter the critical volume: ");
-          nextConstant1 = getADouble("Critical volume for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
-          customSpecies.setCriticalVolume(nextConstant1);
-          
-          
-          output.println("Enter the critical Z-value: ");
-          nextConstant1 = getADouble("Critical Z-value for "+customSpecies.getSpeciesName()+":", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-          customSpecies.setCriticalZ(nextConstant1);
           
           
           output.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
@@ -361,14 +352,13 @@ public class ConsoleUI {
         if (ideal == 'n') {
           output.println("Critical temperature:             "+customSpecies.getCriticalTemperature()+" K");
           output.println("Critical pressure:                "+customSpecies.getCriticalPressure()+" Pa");
-          output.println("Critical volume:                  "+customSpecies.getCriticalVolume()+" m^3/mol");
-          output.println("Critical Z-value:                 "+customSpecies.getCriticalZ());
           output.println("Acentric factor:                  "+customSpecies.getAcentricFactor()+"\n");
         }
         output.println("\n------------------------------------------------\n");
         
         char choice = ' '; 
         while (choice != 'y' && choice != 'n') {
+          scan.nextLine();
           choice = getAChar("\nAre the custom species properties correct?\n  [y]es   [n]o\n", scan, output);
         }
         if (choice == 'y') break;

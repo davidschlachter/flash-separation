@@ -108,24 +108,6 @@ public class Test_Species extends TestCase {
     assertTrue("Species.setCriticalPressure()", testSpecies.getCriticalPressure() == criticalPressure);
   }
   
-  public void testCriticalVolume() {
-    Species testSpecies = new Species();
-    double criticalVolume = 100.0;
-    
-    assertFalse("Species.setCriticalVolume(-1.0)", testSpecies.setCriticalVolume(-1.0));
-    assertEquals("Species.setCriticalVolume(1.0)", true, testSpecies.setCriticalVolume(criticalVolume));
-    assertTrue("Species.setCriticalVolume()", testSpecies.getCriticalVolume() == criticalVolume);
-  }
-  
-  public void testCriticalZ() {
-    Species testSpecies = new Species();
-    double criticalZ = 1.0;
-    
-    assertFalse("Species.setCriticalZ(-1.0)", testSpecies.setCriticalZ(-1.0));
-    assertEquals("Species.setCriticalZ(1.0)", true, testSpecies.setCriticalZ(criticalZ));
-    assertTrue("Species.setCriticalZ()", testSpecies.getCriticalZ() == criticalZ);
-  }
-  
   public void testAcentricFactor() {
     Species testSpecies = new Species();
     double acentricFactor = 0.5;
@@ -134,60 +116,6 @@ public class Test_Species extends TestCase {
     assertFalse("Species.setAcentricFactor(1.1)", testSpecies.setAcentricFactor(1.1));
     assertEquals("Species.setAcentricFactor(1.0)", true, testSpecies.setAcentricFactor(acentricFactor));
     assertTrue("Species.setAcentricFactor()", testSpecies.getAcentricFactor() == acentricFactor);
-  }
-  
-  public void testZValue() {
-    Species testSpecies = new Species();
-    double zValue = 0.5;
-    
-    assertFalse("Species.setZValue(-1.0)", testSpecies.setZValue(-1.0));
-    assertEquals("Species.setZValue(1.0)", true, testSpecies.setZValue(zValue));
-    assertTrue("Species.setZValue()", testSpecies.getZValue() == zValue);
-  }
-  
-  public void testBeta() {
-    Species testSpecies = new Species();
-    double beta = 0.5;
-    
-    assertFalse("Species.setBeta(-1.0)", testSpecies.setBeta(-1.0));
-    assertEquals("Species.setBeta(1.0)", true, testSpecies.setBeta(beta));
-    assertTrue("Species.setBeta()", testSpecies.getBeta() == beta);
-  }
-  
-  public void testQValue() {
-    Species testSpecies = new Species();
-    double qValue = 0.5;
-    
-    assertFalse("Species.setQValue(-1.0)", testSpecies.setQValue(-1.0));
-    assertEquals("Species.setQValue(1.0)", true, testSpecies.setQValue(qValue));
-    assertTrue("Species.setQValue()", testSpecies.getQValue() == qValue);
-  }
-  
-  public void testActivityCoefficient() {
-    Species testSpecies = new Species();
-    double activityCoefficient = 0.5;
-    
-    assertFalse("Species.setActivityCoefficient(-1.0)", testSpecies.setActivityCoefficient(-1.0));
-    assertEquals("Species.setActivityCoefficient(1.0)", true, testSpecies.setActivityCoefficient(activityCoefficient));
-    assertTrue("Species.setActivityCoefficient()", testSpecies.getActivityCoefficient() == activityCoefficient);
-  }
-  
-  public void testMixtureFugacityCoefficient() {
-    Species testSpecies = new Species();
-    double mixtureFugacityCoefficient = 0.5;
-    
-    assertFalse("Species.setMixtureFugacityCoefficient(-1.0)", testSpecies.setMixtureFugacityCoefficient(-1.0));
-    assertEquals("Species.setMixtureFugacityCoefficient(1.0)", true, testSpecies.setMixtureFugacityCoefficient(mixtureFugacityCoefficient));
-    assertTrue("Species.setMixtureFugacityCoefficient()", testSpecies.getMixtureFugacityCoefficient() == mixtureFugacityCoefficient);
-  }
-  
-  public void testLargePhi() {
-    Species testSpecies = new Species();
-    double largePhi = 0.5;
-    
-    assertFalse("Species.setLargePhi(-1.0)", testSpecies.setLargePhi(-1.0));
-    assertEquals("Species.setLargePhi(1.0)", true, testSpecies.setLargePhi(largePhi));
-    assertTrue("Species.setLargePhi()", testSpecies.getLargePhi() == largePhi);
   }
   
   public void testClone() {
@@ -199,14 +127,7 @@ public class Test_Species extends TestCase {
     testSpecies.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
     testSpecies.setCriticalTemperature(1.0);
     testSpecies.setCriticalPressure(1.0);
-    testSpecies.setCriticalVolume(1.0);
-    testSpecies.setCriticalZ(1.0);
     testSpecies.setAcentricFactor(1.0);
-    testSpecies.setZValue(1.0);
-    testSpecies.setBeta(1.0);
-    testSpecies.setQValue(1.0);
-    testSpecies.setActivityCoefficient(1.0);
-    testSpecies.setMixtureFugacityCoefficient(1.0);
     
     double testVapourHeatCapacityConstants[] = testSpecies.getVapourHeatCapacityConstants();
     double testLiquidHeatCapacityConstants[] = testSpecies.getLiquidHeatCapacityConstants();
@@ -231,14 +152,7 @@ public class Test_Species extends TestCase {
     assertEquals("Species.cloneAntoineC", testAntoineConstants[2], cloneAntoineConstants[2]);
     assertEquals("Species.cloneCriticalTemperature", testSpecies.getCriticalTemperature(), cloneSpecies.getCriticalTemperature());
     assertEquals("Species.cloneCriticalPressure", testSpecies.getCriticalPressure(), cloneSpecies.getCriticalPressure());
-    assertEquals("Species.cloneCriticalVolume", testSpecies.getCriticalVolume(), cloneSpecies.getCriticalVolume());
-    assertEquals("Species.cloneCriticalZ", testSpecies.getCriticalZ(), cloneSpecies.getCriticalZ());
     assertEquals("Species.cloneAcentricFactor", testSpecies.getAcentricFactor(), cloneSpecies.getAcentricFactor());
-    assertEquals("Species.cloneZValue", testSpecies.getZValue(), cloneSpecies.getZValue());
-    assertEquals("Species.cloneBeta", testSpecies.getBeta(), cloneSpecies.getBeta());
-    assertEquals("Species.cloneQValue", testSpecies.getQValue(), cloneSpecies.getQValue());
-    assertEquals("Species.cloneActivityCoefficient", testSpecies.getActivityCoefficient(), cloneSpecies.getActivityCoefficient());
-    assertEquals("Species.cloneMixutreFugacityCoefficient", testSpecies.getMixtureFugacityCoefficient(), cloneSpecies.getMixtureFugacityCoefficient());
   }
   
   public void testEquals() {
@@ -249,14 +163,7 @@ public class Test_Species extends TestCase {
     testSpecies.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
     testSpecies.setCriticalTemperature(1.0);
     testSpecies.setCriticalPressure(1.0);
-    testSpecies.setCriticalVolume(1.0);
-    testSpecies.setCriticalZ(1.0);
     testSpecies.setAcentricFactor(1.0);
-    testSpecies.setZValue(1.0);
-    testSpecies.setBeta(1.0);
-    testSpecies.setQValue(1.0);
-    testSpecies.setActivityCoefficient(1.0);
-    testSpecies.setMixtureFugacityCoefficient(1.0);
     
     Species equalSpecies = new Species();
     equalSpecies.setSpeciesName("TeSt");
@@ -265,14 +172,7 @@ public class Test_Species extends TestCase {
     equalSpecies.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
     equalSpecies.setCriticalTemperature(1.0);
     equalSpecies.setCriticalPressure(1.0);
-    equalSpecies.setCriticalVolume(1.0);
-    equalSpecies.setCriticalZ(1.0);
     equalSpecies.setAcentricFactor(1.0);
-    equalSpecies.setZValue(1.0);
-    equalSpecies.setBeta(1.0);
-    equalSpecies.setQValue(1.0);
-    equalSpecies.setActivityCoefficient(1.0);
-    equalSpecies.setMixtureFugacityCoefficient(1.0);
     
     Species inequalSpecies = new Species();
     inequalSpecies.setSpeciesName("differentTest");
@@ -281,14 +181,7 @@ public class Test_Species extends TestCase {
     inequalSpecies.setAntoineConstants(new AntoineCoefficients(1.0, 1.0, 1.0));
     inequalSpecies.setCriticalTemperature(1.0);
     inequalSpecies.setCriticalPressure(1.0);
-    inequalSpecies.setCriticalVolume(1.0);
-    inequalSpecies.setCriticalZ(1.0);
     inequalSpecies.setAcentricFactor(1.0);
-    inequalSpecies.setZValue(1.0);
-    inequalSpecies.setBeta(1.0);
-    inequalSpecies.setQValue(1.0);
-    inequalSpecies.setActivityCoefficient(1.0);
-    inequalSpecies.setMixtureFugacityCoefficient(1.0);
     
     assertTrue("Species.equals(equalSpecies)", testSpecies.equals(equalSpecies));
     assertFalse("Species.equals(inequalSpecies)", testSpecies.equals(inequalSpecies));
