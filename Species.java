@@ -93,8 +93,8 @@ public class Species{
   }
   
   public void setAntoineConstants(AntoineCoefficients source) throws IllegalArgumentException {
-    //this.antoineCoefficients = new ArrayList<AntoineCoefficients>(); //not sure if this line is needed
     if(source==null) throw new IllegalArgumentException("Error! Antoine coefficients input is empty.");
+    this.antoineCoefficients = new ArrayList<AntoineCoefficients>();
     this.antoineCoefficients.add(new AntoineCoefficients(source));
   }
   
