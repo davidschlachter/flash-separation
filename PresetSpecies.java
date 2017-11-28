@@ -24,6 +24,7 @@ public class PresetSpecies {
     ethane.setAntoineConstants(ethaneAntoine);
     ethane.setHeatOfVapourization(15500.3); // Average of http://webbook.nist.gov/cgi/cbook.cgi?ID=C74840&Mask=4
     ethane.setCriticalTemperature(305.3);
+    ethane.setCriticalPressure(4900000); // TODO Add critical pressures for all species
     ethane.setAcentricFactor(0.100); // Source: Smith & Van Ness, Appendix B
     flowSpecies.add(ethane);
     
