@@ -79,7 +79,12 @@ public class Test_RachfordRice extends TestCase {
   }
   
   
+
    /*public void testNonIdealSolution() {
+=======
+  /*  public void testNonIdealSolution() {
+      System.out.println("Starting testNonIdealSolution.");
+>>>>>>> ffc22b6c99073d002154fc11ba8a84a6cc9de2fb
    FlowStream testStream = new FlowStream();
    
    FlowSpecies nHexane = new FlowSpecies();
@@ -93,7 +98,7 @@ public class Test_RachfordRice extends TestCase {
    ethanol.setOverallMoleFraction(0.4);
    ethanol.setCriticalTemperature(513.9);
    ethanol.setCriticalPressure(6148000.);
-   ethanol.setAcentricFactor(0.645);
+   ethanol.setAcentricFactor(0.645); 
    FlowSpecies mcp = new FlowSpecies();
    mcp.setAntoineConstants(new AntoineCoefficients(8.98773, 1186.059, -47.108, 1., 1000.));
    mcp.setOverallMoleFraction(0.2);
@@ -114,11 +119,13 @@ public class Test_RachfordRice extends TestCase {
    testStream.setIsIdeal(false);
    testStream.setMolarFlowRate(10.0);
    testStream.setPressure(101325.0);
-   testStream.setTemperature(348.5);
+   testStream.setTemperature(330.0);
+   
    
    FlowStream solvedStream = new RachfordRice(testStream).solve();
    ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), solvedStream, solvedStream);
    
+
    }*/
   
   public void testLargerFlowStream(){
@@ -159,7 +166,7 @@ public class Test_RachfordRice extends TestCase {
     double mcpLiquidMoleFraction = solvedFlowStream.getFlowSpecies().get(2).getLiquidMoleFraction();
     double mcpVapourMoleFraction = solvedFlowStream.getFlowSpecies().get(2).getVapourMoleFraction();
     double benzeneLiquidMoleFraction = solvedFlowStream.getFlowSpecies().get(3).getLiquidMoleFraction();
-    double benzeneVapourMoleFraction = solvedFlowStream.getFlowSpecies().get(3).getVapourMoleFraction();
+    double benzeneVapourMoleFraction = solvedFlowStream.getFlowSpecies().get(3).getVapourMoleFraction(); 
     
     /*System.out.println("x1: "+nHexaneLiquidMoleFraction);
     System.out.println("y1: "+nHexaneVapourMoleFraction);

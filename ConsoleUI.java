@@ -3,6 +3,8 @@ import java.util.List;
 import java.util.Scanner;
 import java.io.PrintWriter;
 import java.util.InputMismatchException;
+import java.lang.NumberFormatException;
+import java.lang.StringIndexOutOfBoundsException;
 
 public class ConsoleUI {
   
@@ -40,21 +42,26 @@ public class ConsoleUI {
         }
         output.print("\n");
       }
-      output.println("Select an action: [a]dd species   [r]emove species   [d]one\n");
       
-      if (firstRun == false) {
-        scan.nextLine();
-      } else {
-        firstRun = false;
-      }
-      choice = scan.nextLine().charAt(0);
+      if (firstRun == false) scan.nextLine();
+      choice = getAChar("Select an action: [a]dd species   [r]emove species   [d]one\n", scan, output);
       
       if (choice == 'a') this.addSpecies(scan, output);
-      if (choice == 'r') this.removeSpecies(scan, output);
+      if (choice == 'r') {
+        if (this.theseSpecies.size() != 0) this.removeSpecies(scan, output);
+        else continue;
+      }
       if (choice == 'q') return true;  // Exit option for testing
       if (choice == 'd') {
-        if (this.theseSpecies.size() == 0) {System.exit(1);} else {break;}
+        if (this.theseSpecies.size() == 0) {
+          output.println("ERROR: Must select at least one species to continue.");
+          continue;
+        } else {
+          break;
+        }
       }
+      firstRun = false;
+      
     }
     
     FlowStream inletStream  = new FlowStream();
@@ -86,47 +93,43 @@ public class ConsoleUI {
     //
     // Are these the same as the overall mole fractions? If not, do the right thing  :) 
     //
-    while (true) {
-      
-      output.println("\nIs the input stream entirely in the liquid phase?");
-      output.println("  [y]es   [n]o\n");
-      scan.nextLine();
-      choice = scan.nextLine().charAt(0);
-      if (choice == 'y') {
-        for (i = 0; i < inletStream.getFlowSpecies().size(); i++) {
-          moleFraction = inletStream.getFlowSpecies().get(i).getLiquidMoleFraction();
-          inletStream.getFlowSpecies().get(i).setOverallMoleFraction(moleFraction);
-        }
-        inletStream.setVapourFraction(0.0);
-        break;
+    choice = ' ';
+    scan.nextLine();
+    while (choice != 'y' && choice != 'n') {
+      choice = getAChar("\nIs the input stream entirely in the liquid phase?\n  [y]es   [n]o\n", scan, output);
+    }
+    if (choice == 'y') {
+      for (i = 0; i < inletStream.getFlowSpecies().size(); i++) {
+        moleFraction = inletStream.getFlowSpecies().get(i).getLiquidMoleFraction();
+        inletStream.getFlowSpecies().get(i).setOverallMoleFraction(moleFraction);
       }
-      if (choice == 'n') {
-        output.println("\nFor each species in the inlet stream, please set the vapour mole fractions: \n");
-        moleFraction = -1.0;
-        moleFractionSum = 0.0;
-        while (true) {
-          for (i = 0; i < inletStream.getFlowSpecies().size(); i++) {
-            moleFraction = getADouble("  Mole fraction of " + inletStream.getFlowSpecies().get(i).getSpeciesName() + ": ", 0.0, 1.0, scan, output);
-            inletStream.getFlowSpecies().get(i).setVapourMoleFraction(moleFraction);
-            moleFractionSum += moleFraction; 
-          }
-          if (moleFractionSum > 0.9999 && moleFractionSum < 1.0001) {
-            break;
-          } else {
-            output.println("\nERROR: Mole fractions must add to 1.0 -- please try again!\n");
-            moleFractionSum = 0.0;
-          }
-        }
-        moleFraction = getADouble("\nWhat fraction of the feed is in the vapour phase?", 0.0, 1.0, scan, output);
-        inletStream.setVapourFraction(moleFraction);
+      inletStream.setVapourFraction(0.0);
+    }
+    if (choice == 'n') {
+      output.println("\nFor each species in the inlet stream, please set the vapour mole fractions: \n");
+      moleFraction = -1.0;
+      moleFractionSum = 0.0;
+      while (true) {
         for (i = 0; i < inletStream.getFlowSpecies().size(); i++) {
-          moleFraction = inletStream.getFlowSpecies().get(i).getLiquidMoleFraction() * (1.0 - inletStream.getVapourFraction())
-            + inletStream.getFlowSpecies().get(i).getVapourMoleFraction() * inletStream.getVapourFraction();
-          inletStream.getFlowSpecies().get(i).setOverallMoleFraction(moleFraction);
+          moleFraction = getADouble("  Mole fraction of " + inletStream.getFlowSpecies().get(i).getSpeciesName() + ": ", 0.0, 1.0, scan, output);
+          inletStream.getFlowSpecies().get(i).setVapourMoleFraction(moleFraction);
+          moleFractionSum += moleFraction; 
         }
-        nextString = scan.nextLine();
+        if (moleFractionSum > 0.9999 && moleFractionSum < 1.0001) {
+          break;
+        } else {
+          output.println("\nERROR: Mole fractions must add to 1.0 -- please try again!\n");
+          moleFractionSum = 0.0;
+        }
       }
-      break;
+      moleFraction = getADouble("\nWhat fraction of the feed is in the vapour phase?", 0.0, 1.0, scan, output);
+      inletStream.setVapourFraction(moleFraction);
+      for (i = 0; i < inletStream.getFlowSpecies().size(); i++) {
+        moleFraction = inletStream.getFlowSpecies().get(i).getLiquidMoleFraction() * (1.0 - inletStream.getVapourFraction())
+          + inletStream.getFlowSpecies().get(i).getVapourMoleFraction() * inletStream.getVapourFraction();
+        inletStream.getFlowSpecies().get(i).setOverallMoleFraction(moleFraction);
+      }
+      nextString = scan.nextLine();
     }
     
     //
@@ -153,7 +156,7 @@ public class ConsoleUI {
     outletStream.setTemperature(nextDouble);
     nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, true);
     outletStream.setPressure(nextDouble);
-    outletStream.setMolarFlowRate(inletStream.getMolarFlowRate());
+    outletStream.setMolarFlowRate(inletStream.getMolarFlowRate()); // Assume no reaction
     
     //
     // Show the summary of the stream properties, and confirm if they are okay!
@@ -161,22 +164,18 @@ public class ConsoleUI {
     output.println("\nSummary of stream properties entered:");
     this.printStreams(scan, output, inletStream, outletStream);
     
-    while (true) {
-      output.println("\nAre the stream properties correct?");
-      output.println("  [y]es   [n]o");
-      choice = scan.nextLine().charAt(0);
-      if (choice == 'y') break;
-      if (choice == 'n') return false;
-      if (choice == 'q') return true;  // Exit option for testing
+    choice = ' ';
+    while (choice != 'y' && choice != 'n') {
+      choice = getAChar("\nAre the stream properties correct?\n  [y]es   [n]o\n", scan, output);
     }
+    if (choice == 'n') return false;
+    if (choice == 'q') return true;  // Exit option for testing
     
     //
     // Check that the flash is possible! (outlet temperature is between dew and bubble point)
     //
-    DewPoint dewPoint = new DewPoint(outletStream);
-    double dewPointTemperature = dewPoint.calc();
-    BubblePoint bubblePoint = new BubblePoint(outletStream);
-    double bubblePointTemperature = bubblePoint.calc();
+    double dewPointTemperature = new DewPoint(outletStream).calc();
+    double bubblePointTemperature = new BubblePoint(outletStream).calc();
     if (outletStream.getTemperature() > 0.01 && inletStream.getTemperature() > 0.01) {
       if (outletStream.getTemperature() < bubblePointTemperature) {
         output.println("WARNING: The specified outlet temperature is below the bubble point -- no separation will occur!");
@@ -198,14 +197,14 @@ public class ConsoleUI {
       }
     }
     
-    // Calculate what's missing in the stream(s)
+    // Solve the system using the Controller class
     FlowStream[] processedStreams = Controller.calc(inletStream, outletStream);
     inletStream = processedStreams[0];
     outletStream = processedStreams[1];
     
     
     // Print the final results
-    output.println("Composition of the inlet and outlet streams: \n");
+    output.println("Composition of the inlet and solved outlet streams: \n");
     this.printStreams(scan, output, inletStream, outletStream);
     
     // Heat required to maintain operating temperature
@@ -230,6 +229,9 @@ public class ConsoleUI {
       output.println("------------------------");
       output.println("  " + i + " New species...\n");
       
+      while (!scan.hasNextInt()) {
+        scan.next();
+      }
       choice = scan.nextInt();
       
       if (choice >= 0 && choice <= this.presetSpecies.size()) break;
@@ -243,28 +245,29 @@ public class ConsoleUI {
     }
     
     
-  };
+  }
   
   private void removeSpecies(Scanner scan, PrintWriter output) {
     int i, choice;
     
     while (true) {
       output.println("\nPlease select a species to remove from the list:\n");
-      
       for (i = 0; i < this.theseSpecies.size(); i++) {
         output.println("  " + i + " " + this.theseSpecies.get(i).getSpeciesName());
       }
       output.print("\n");
       
+      while (!scan.hasNextInt()) {
+        scan.next();
+      }
       choice = scan.nextInt();
       
-      if (choice >= 0 && choice < this.presetSpecies.size()) break;
-      
+      if (choice >= 0 && choice < this.theseSpecies.size()) break;
     }
     
     this.theseSpecies.remove(choice);
     
-  };
+  }
   
   private void addCustomSpecies(Scanner scan, PrintWriter output) {
     FlowSpecies customSpecies = new FlowSpecies();
@@ -276,49 +279,50 @@ public class ConsoleUI {
     double nextConstant5;
     
     output.println("\nAdding a custom species.\n");
-    while(true){
-      while(true){
+    while (true) {
+      while (true) {
         output.println("Enter the name of the custom species:\n");
         scan.nextLine();
         String speciesName = scan.nextLine();
-        if(speciesName.length() != 0){
+        if (speciesName.length() != 0) {
           customSpecies.setSpeciesName(speciesName);
           this.theseSpecies.add(customSpecies);
         }
         
         output.println("\n Enter Vapour heat capacity coefficients for A, B, C, and D:");        
-        nextConstant1 = getADouble("A:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant2 = getADouble("B:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant3 = getADouble("C:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant4 = getADouble("D:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant1 = getADouble("A:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant2 = getADouble("B:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant3 = getADouble("C:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant4 = getADouble("D:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
         customSpecies.setVapourHeatCapacityConstants(nextConstant1, nextConstant2, nextConstant3, nextConstant4);
-               
+        
         
         output.println("\n Enter Liquid heat capacity coefficients for A, B, C, and D:");
-        nextConstant1 = getADouble("A:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant2 = getADouble("B:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant3 = getADouble("C:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant4 = getADouble("D:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant1 = getADouble("A:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant2 = getADouble("B:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant3 = getADouble("C:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant4 = getADouble("D:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
         customSpecies.setLiquidHeatCapacityConstants(nextConstant1, nextConstant2, nextConstant3, nextConstant4);
         
         output.println("\nEnter Antoine equation constant (units of Pa, K) for A, B, and C :");
-        nextConstant1 = getADouble("A:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant2 = getADouble("B:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant3 = getADouble("C:", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant1 = getADouble("A:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant2 = getADouble("B:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+        nextConstant3 = getADouble("C:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
         nextConstant4 = getADouble("Lower T:", 0.0, Double.MAX_VALUE, scan, output, true);
         nextConstant5 = getADouble("Upper T:", 0.0, Double.MAX_VALUE, scan, output, true);
         customSpecies.setAntoineConstants(new AntoineCoefficients(nextConstant1, nextConstant2, nextConstant3, nextConstant4, nextConstant5));
         
-              
+        
         output.println("Enter the critical temperature: ");  
         nextConstant1 = getADouble("Critical temperature for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
         customSpecies.setCriticalTemperature(nextConstant1);
         
-        output.println("Will the simulation be run in ideal-gas mode?");
-        output.println("[y]es / [n]o");
-        ideal = scan.next().charAt(0);
+        ideal = ' ';
+        while (ideal != 'y' && ideal != 'n') {
+          ideal = getAChar("\nWill the simulation be run in ideal-gas mode?\n  [y]es   [n]o\n", scan, output);
+        }
         
-        if(ideal == 'n'){
+        if (ideal == 'n') {
           scan.nextLine(); // Go to next line
           output.println("Enter the critical pressure: ");
           nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
@@ -328,18 +332,18 @@ public class ConsoleUI {
           output.println("Enter the critical volume: ");
           nextConstant1 = getADouble("Critical volume for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
           customSpecies.setCriticalVolume(nextConstant1);
-         
+          
           
           output.println("Enter the critical Z-value: ");
-          nextConstant1 = getADouble("Critical Z-value for "+customSpecies.getSpeciesName()+":", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+          nextConstant1 = getADouble("Critical Z-value for "+customSpecies.getSpeciesName()+":", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
           customSpecies.setCriticalZ(nextConstant1);
-         
+          
           
           output.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
-          nextConstant1 = getADouble("Acentric factor for "+customSpecies.getSpeciesName()+":", Double.MIN_VALUE, Double.MAX_VALUE, scan, output, true);
+          nextConstant1 = getADouble("Acentric factor for "+customSpecies.getSpeciesName()+":", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
           customSpecies.setAcentricFactor(nextConstant1);
           
-        } else {}
+        }
         
         double[] verificationPrint4 = new double[4];
         double[] verificationPrint3 = new double[3]; //can i avoid initializing two arrays to accomodate different lengths?
@@ -354,30 +358,24 @@ public class ConsoleUI {
                        " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
         verificationPrint3 = customSpecies.getAntoineConstants(1.0); // Hacky -- should use a real number / accurate range
         output.println("Antoine equation constants:        A="+verificationPrint3[0]+" B="+verificationPrint3[1]+" C="+verificationPrint3[2]);
-        if(ideal == 'n'){
+        if (ideal == 'n') {
           output.println("Critical temperature:             "+customSpecies.getCriticalTemperature()+" K");
           output.println("Critical pressure:                "+customSpecies.getCriticalPressure()+" Pa");
           output.println("Critical volume:                  "+customSpecies.getCriticalVolume()+" m^3/mol");
           output.println("Critical Z-value:                 "+customSpecies.getCriticalZ());
           output.println("Acentric factor:                  "+customSpecies.getAcentricFactor()+"\n");
-        } else{}
+        }
         output.println("\n------------------------------------------------\n");
         
-        char choice; 
-        output.println("\nAre the stream properties correct?");
-        output.println("  [y]es   [n]o");
-        choice = scan.next().charAt(0);
+        char choice = ' '; 
+        while (choice != 'y' && choice != 'n') {
+          choice = getAChar("\nAre the custom species properties correct?\n  [y]es   [n]o\n", scan, output);
+        }
         if (choice == 'y') break;
         if (choice == 'n') this.theseSpecies.remove(customSpecies) ;
       }
-      
-      
       break;
-      
     }
-    
-    
-    
   }
   
   public static void printStreams(Scanner scan, PrintWriter output, FlowStream inletStream, FlowStream outletStream) {
@@ -426,6 +424,9 @@ public class ConsoleUI {
     while (true) {
       try {
         output.println(message);
+        while (!scan.hasNextDouble()) {
+          scan.next();
+        }
         userInput = scan.nextDouble();
         if (userInput >= lowerBound && userInput <= upperBound) break;
       } catch (InputMismatchException e) {
@@ -439,13 +440,14 @@ public class ConsoleUI {
   
   private double getADouble(String message, double lowerBound, double upperBound, Scanner scan, PrintWriter output, boolean permitEmpty) {
     
-    String nextString;
+    String nextString = " ";
     double userInput = 0.0;
     
     while (true) {
       try {
         output.println(message);
         nextString = scan.nextLine();
+        
         if (nextString.isEmpty()) {
           userInput = 0.0;
           break;
@@ -453,15 +455,39 @@ public class ConsoleUI {
         else {
           userInput = Double.parseDouble(nextString);
           if (lowerBound != upperBound) {
-            if (userInput <= lowerBound || userInput >= upperBound) continue;
+            if (userInput < lowerBound || userInput > upperBound) continue;
           }
           break;
         }
       } catch (InputMismatchException e) {
+        output.println("ERROR: Please input a valid number.");
         scan.nextLine();
+      } catch (NumberFormatException e) {
+        output.println("ERROR: Please input a valid number.");
+      } catch (Exception e) {
+        output.println("ERROR: "+e.toString());
       }
     }
     return userInput;
+  }
+  
+  private char getAChar(String message, Scanner scan, PrintWriter output) {
+    char choice;
+    boolean firstRun = true;
+    while (true) {
+      try {
+        output.println(message);
+        choice = scan.nextLine().charAt(0);
+        break;
+      } catch (InputMismatchException e) {
+        output.println("\nWARNING: Invalid input\n");
+        //scan.nextLine();
+      } catch (StringIndexOutOfBoundsException e) {
+        output.println("\nWARNING: Empty input\n");
+        //scan.nextLine();
+      }
+    }
+    return choice;
   }
   
 }

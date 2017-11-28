@@ -236,9 +236,15 @@ public class PengRobinson{
       lnPhiL-=Math.log(zL-b);
       double sumTerm = 0.0;
       for(int j=0; j<n; j++){
+
         if(flowStream.getFlowSpecies().get(j).getLiquidMoleFraction() == 0.0 &&
            flowStream.getFlowSpecies().get(j).getVapourMoleFraction() == 0.0 &&
            flowStream.getFlowSpecies().get(j).getOverallMoleFraction() > 0.0){
+
+        if(flowStream.getFlowSpecies().get(i).getLiquidMoleFraction() == 0.0 &&
+           flowStream.getFlowSpecies().get(i).getVapourMoleFraction() == 0.0 &&
+           flowStream.getFlowSpecies().get(i).getOverallMoleFraction() > 0.0){
+
           xj = flowStream.getFlowSpecies().get(j).getOverallMoleFraction();
         } else {
           xj = flowStream.getFlowSpecies().get(j).getLiquidMoleFraction();
@@ -248,6 +254,13 @@ public class PengRobinson{
       lnPhiL-=(a/(2*Math.sqrt(2)*b))*(((2*sumTerm)/a)-(bi/smallB))*Math.log((zL+(1+Math.sqrt(2))*b)/(zL+(1-Math.sqrt(2))*b));
       double phiL = Math.exp(lnPhiL);
       flowStream.getFlowSpecies().get(i).setLiquidFugacity(phiL);
+      System.out.println("phi here is :"+lnPhiL);
+      System.out.println("sumTerm fugacity here is: "+sumTerm);
+     /* System.out.println("B[1] here is: "+bi);
+      System.out.println("Large A here is: "+a);
+      System.out.println("small B here is: "+smallB);;
+      System.out.println("Large B here is: "+b); */
+    }
     }
     
   }
@@ -365,7 +378,7 @@ public class PengRobinson{
         if(flowStream.getFlowSpecies().get(i).getLiquidMoleFraction() == 0.0 &&
            flowStream.getFlowSpecies().get(i).getVapourMoleFraction() == 0.0 &&
            flowStream.getFlowSpecies().get(i).getOverallMoleFraction() > 0.0){
-          yj = flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
+          yj = flowStream.getFlowSpecies().get(j).getOverallMoleFraction();
         } else {
           yj = flowStream.getFlowSpecies().get(j).getVapourMoleFraction();
         }
