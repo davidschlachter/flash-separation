@@ -319,6 +319,7 @@ public class ConsoleUI {
         
         ideal = ' ';
         while (ideal != 'y' && ideal != 'n') {
+          scan.nextLine();
           ideal = getAChar("\nWill the simulation be run in ideal-gas mode?\n  [y]es   [n]o\n", scan, output);
         }
         
@@ -357,6 +358,7 @@ public class ConsoleUI {
         
         char choice = ' '; 
         while (choice != 'y' && choice != 'n') {
+          scan.nextLine();
           choice = getAChar("\nAre the custom species properties correct?\n  [y]es   [n]o\n", scan, output);
         }
         if (choice == 'y') break;
