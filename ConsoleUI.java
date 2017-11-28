@@ -329,16 +329,6 @@ public class ConsoleUI {
           customSpecies.setCriticalPressure(nextConstant1);
           
           
-          output.println("Enter the critical volume: ");
-          nextConstant1 = getADouble("Critical volume for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
-          customSpecies.setCriticalVolume(nextConstant1);
-          
-          
-          output.println("Enter the critical Z-value: ");
-          nextConstant1 = getADouble("Critical Z-value for "+customSpecies.getSpeciesName()+":", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-          customSpecies.setCriticalZ(nextConstant1);
-          
-          
           output.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
           nextConstant1 = getADouble("Acentric factor for "+customSpecies.getSpeciesName()+":", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
           customSpecies.setAcentricFactor(nextConstant1);
@@ -361,8 +351,6 @@ public class ConsoleUI {
         if (ideal == 'n') {
           output.println("Critical temperature:             "+customSpecies.getCriticalTemperature()+" K");
           output.println("Critical pressure:                "+customSpecies.getCriticalPressure()+" Pa");
-          output.println("Critical volume:                  "+customSpecies.getCriticalVolume()+" m^3/mol");
-          output.println("Critical Z-value:                 "+customSpecies.getCriticalZ());
           output.println("Acentric factor:                  "+customSpecies.getAcentricFactor()+"\n");
         }
         output.println("\n------------------------------------------------\n");

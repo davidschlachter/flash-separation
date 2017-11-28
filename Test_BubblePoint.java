@@ -89,15 +89,11 @@ public class Test_BubblePoint extends TestCase {
     water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
     water.setOverallMoleFraction(0.75);
     water.setCriticalTemperature(647.0);
-    water.setActivityCoefficient(0.953);
-    water.setLargePhi(1.043);
     
     FlowSpecies ethanol = new FlowSpecies();
     ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
     ethanol.setOverallMoleFraction(0.25);
     ethanol.setCriticalTemperature(514.0);
-    ethanol.setActivityCoefficient(0.968);
-    ethanol.setLargePhi(1.003);
     
     testStream.addFlowSpecies(water);
     testStream.addFlowSpecies(ethanol);

@@ -83,60 +83,7 @@ public class Test_DewPoint extends TestCase {
     double answer = pentaneDew.calc();
     assertTrue("pentaneDew.calc()",answer > 338.7 && answer < 339.0);
   }
-  
-  // Test for a non-ideal calculation
-  public void testNonIdealCalc(){
-    FlowStream testStream = new FlowStream();
-    
-    // Test function result for water and ethanol at 1 atm, 300 K under NONIDEAL CONDITIONS!
-    FlowSpecies water = new FlowSpecies();
-    water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
-    water.setOverallMoleFraction(0.75);
-    water.setVapourMoleFraction(0.75);
-    water.setLiquidMoleFraction(0.75);
-    water.setCriticalTemperature(647.0);
-    water.setCriticalPressure(225055000.);
-    water.setCriticalZ(0.229);
-    water.setCriticalVolume(0.0000559);
-    water.setAcentricFactor(0.345);
-    
-    FlowSpecies ethanol = new FlowSpecies();
-    ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
-    ethanol.setOverallMoleFraction(0.25);
-    ethanol.setVapourMoleFraction(0.25);
-    ethanol.setLiquidMoleFraction(0.25);
-    ethanol.setCriticalTemperature(514.0);
-    ethanol.setCriticalPressure(6148000.);
-    ethanol.setCriticalZ(0.240);
-    ethanol.setCriticalVolume(0.000167);
-    ethanol.setAcentricFactor(0.645);
-    
-    testStream.addFlowSpecies(water);
-    testStream.addFlowSpecies(ethanol);
-    testStream.setPressure(10132500.0);
-    testStream.setTemperature(367.5);
-    
-    Fugacity testObject = new Fugacity(testStream);
-    testObject.computeNonIdealParameters();
-    
-    System.out.println("Water activity coefficient is: "+testObject.getFlowStream().getFlowSpecies().get(0).getActivityCoefficient());
-    System.out.println("Ethanol activity coefficient is: "+testObject.getFlowStream().getFlowSpecies().get(1).getActivityCoefficient());
-    System.out.println("Water large phi is: "+testObject.getFlowStream().getFlowSpecies().get(0).getLargePhi());
-    System.out.println("Ethanol large phi is: "+testObject.getFlowStream().getFlowSpecies().get(1).getLargePhi());
-    System.out.println("Water Q is: "+testObject.getFlowStream().getFlowSpecies().get(0).getQValue());
-    System.out.println("Ethanol Q is: "+testObject.getFlowStream().getFlowSpecies().get(1).getQValue());
-    System.out.println("Water beta is: "+testObject.getFlowStream().getFlowSpecies().get(0).getBeta());
-    System.out.println("Ethanol beta is: "+testObject.getFlowStream().getFlowSpecies().get(1).getBeta());
-    System.out.println("Water Z is: "+testObject.getFlowStream().getFlowSpecies().get(0).getZValue());
-    System.out.println("Ethanol Z is: "+testObject.getFlowStream().getFlowSpecies().get(1).getZValue());
-    System.out.println("Water MFC is: "+testObject.getFlowStream().getFlowSpecies().get(0).getMixtureFugacityCoefficient());
-    System.out.println("Ethanol MFC phi is: "+testObject.getFlowStream().getFlowSpecies().get(1).getMixtureFugacityCoefficient());
-    
-    DewPoint testDewPoint = new DewPoint(testObject.getFlowStream());
-    double dewPoint = testDewPoint.calc();
-    System.out.println("DEWPOINT IS: "+dewPoint);
-    
-  }
+
   
   // Test the an ideal dew point calculation with a non-condensing species included
   // Problem is example 7.21 from  CHEMICAL AND ENERGY PROCESS ENGINEERING

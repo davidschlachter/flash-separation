@@ -6,7 +6,7 @@ import java.util.List;
  * 
  */
 
-public class Species implements Function{
+public class Species{
   
   // Species name
   private String speciesName;
@@ -279,40 +279,8 @@ public class Species implements Function{
     return this.criticalPressure;
   }
   
-  public double getCriticalVolume() {
-    return this.criticalVolume;
-  }
-  
-  public double getCriticalZ() {
-    return this.criticalZ;
-  }
-  
   public double getAcentricFactor() {
     return this.acentricFactor;
-  }
-  
-  public double getZValue(){
-    return this.zValue;
-  } 
-  
-  public double getBeta(){
-    return this.beta;
-  }
-  
-  public double getQValue(){
-    return this.qValue;
-  }
-  
-  public double getActivityCoefficient(){
-    return this.activityCoefficient;
-  }
-  
-  public double getMixtureFugacityCoefficient(){
-    return this.mixtureFugacityCoefficient;
-  }
-  
-  public double getLargePhi(){
-    return this.largePhi;
   }
   
   public double getKappa(){
@@ -347,10 +315,6 @@ public class Species implements Function{
     return this.vapourFugacity;
   }
   
-  public double getKi(){
-    return this.ki;
-  }
-  
   
   //Equals
   public boolean equals(Species other) {
@@ -380,39 +344,13 @@ public class Species implements Function{
        this.heatOfVapourization == other.heatOfVapourization &&
        this.criticalTemperature == other.criticalTemperature &&
        this.criticalPressure == other.criticalPressure &&
-       this.criticalVolume == other.criticalVolume &&
-       this.criticalZ == other.criticalZ &&
-       this.acentricFactor == other.acentricFactor &&
-       this.zValue == other.zValue &&
-       this.beta == other.beta &&
-       this.qValue == other.qValue &&
-       this.activityCoefficient == other.activityCoefficient &&
-       this.mixtureFugacityCoefficient == other.mixtureFugacityCoefficient) return true;
+       this.acentricFactor == other.acentricFactor) return true;
     else return false;
   }
   
   // Clone method
   public Species clone() {
     return new Species(this);
-  }
-  
-  public void zValue(){
-    double[] bounds = RootFinder.getBounds(this, 0.75, 0.01);
-    double accuracy = 0.0001;
-    double result = 0.0;
-    result = RiddersMethod.calc(this, bounds[0], bounds[1], accuracy);
-    this.zValue = result;
-  }
-  
-  
-  
-  
-  
-  public double testFunction(double z){   
-    double result = 0.0;
-    
-    result =  (-1*z) + this.beta + z*(this.beta+z)*((1+this.beta-z)/(this.qValue*this.beta)); 
-    return result;
   }
   
 }
