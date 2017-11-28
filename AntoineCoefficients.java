@@ -1,9 +1,12 @@
+import java.lang.IllegalArgumentException;
+
 public class AntoineCoefficients {
   
   private double a, b, c;
   private double lowerTemperatureBound, upperTemperatureBound;
   
-  public AntoineCoefficients(double a, double b, double c, double lowerTemperatureBound, double upperTemperatureBound) {
+  public AntoineCoefficients(double a, double b, double c, double lowerTemperatureBound, double upperTemperatureBound)
+  throws IllegalArgumentException {
     this.a = a;
     this.b = b;
     this.c = c;
@@ -11,8 +14,7 @@ public class AntoineCoefficients {
       this.lowerTemperatureBound = lowerTemperatureBound;
       this.upperTemperatureBound = upperTemperatureBound;
     } else {
-      System.out.println("Upper and lower temperature bounds must both be above absolute zero.");
-      System.exit(1);
+      throw new IllegalArgumentException("Upper and lower temperature bounds must both be above absolute zero.");
     }
   }
   
