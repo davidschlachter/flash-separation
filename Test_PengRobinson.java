@@ -142,15 +142,7 @@ public class Test_PengRobinson extends TestCase {
   public void testSolveFugacities(){
   
   PengRobinson testPeng = createTestPeng();
-  testPeng.kappaI();
-  testPeng.alphaI();
-  testPeng.individualA();
-  testPeng.individualB();
-  testPeng.speciesA();
-  testPeng.speciesB();
-  testPeng.streamA();
-  testPeng.streamB();
-  testPeng.solveFugacities();
+  testPeng.nonIdealCalcs();
   
   System.out.println("Vapour fugacity of pentane is: "+testPeng.getFlowStream().getFlowSpecies().get(0).getVapourFugacity());
   System.out.println("Vapour fugacity of hexane is: "+testPeng.getFlowStream().getFlowSpecies().get(1).getVapourFugacity());
@@ -159,65 +151,6 @@ public class Test_PengRobinson extends TestCase {
   System.out.println("Liquid fugacity of hexane is: "+testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity());
   System.out.println("Liquid fugacity of heptane is: "+testPeng.getFlowStream().getFlowSpecies().get(2).getLiquidFugacity());
   
-  }
-  
-  public void testSmallAX(){
-    
-    PengRobinson testPeng = createTestPeng();
-    testPeng.kappaI();
-    testPeng.alphaI();
-    testPeng.individualA();
-    testPeng.individualB();
-    testPeng.aij();
-    testPeng.flowStreamSmallAXValue();
-    assertTrue(testPeng.getFlowStream().getSmallAX() < 1.51 &&
-               testPeng.getFlowStream().getSmallAX() > 1.50);
-    
-  }
-  
-  public void testSmallBX(){
-    
-    PengRobinson testPeng = createTestPeng();
-    testPeng.kappaI();
-    testPeng.alphaI();
-    testPeng.individualA();
-    testPeng.individualB();
-    testPeng.aij();
-    testPeng.flowStreamSmallBXValue();
-    assertTrue(testPeng.getFlowStream().getSmallBX() < 3.5e-5 &&
-               testPeng.getFlowStream().getSmallBX() > 3.3e-5);
-    
-  }
-  
-  public void testLargeAX(){
-    
-    PengRobinson testPeng = createTestPeng();
-    testPeng.kappaI();
-    testPeng.alphaI();
-    testPeng.individualA();
-    testPeng.individualB();
-    testPeng.aij();
-    testPeng.flowStreamSmallAXValue();
-    testPeng.flowStreamLargeAXValue();
-    assertTrue(testPeng.getFlowStream().getLargeAX() < 0.025 &&
-               testPeng.getFlowStream().getLargeAX() > 0.024);
-    
-  }
-  
-  public void testLargeBX(){
-    
-    
-    PengRobinson testPeng = createTestPeng();
-    testPeng.kappaI();
-    testPeng.alphaI();
-    testPeng.individualA();
-    testPeng.individualB();
-    testPeng.aij();
-    testPeng.flowStreamSmallBXValue();
-    testPeng.flowStreamLargeBXValue();
-    assertTrue(testPeng.getFlowStream().getLargeBX() < 0.00145 &&
-               testPeng.getFlowStream().getLargeBX() > 0.00135);
-    
   }
   
   private PengRobinson createTestPeng(){

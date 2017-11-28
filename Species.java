@@ -27,32 +27,9 @@ public class Species implements Function{
   //Critical Pressure for computation of non-ideal case
   private double criticalPressure = 0.0;
   
-  //Critical volume for computation of non-ideal case
-  private double criticalVolume = 0.0;  //SRK relic
-  
-  //Critical Z-value for computation of non-ideal case
-  private double criticalZ = 0.0;  //SRK relic
   
   //Accentricity value for computation of non-ideal case
   private double acentricFactor = 0.0;
-  
-  //Z value for computation of individual fugacity coefficient. Do not confuse with criticalZ value
-  private double zValue = 1.0;  //SRK relic
-  
-  //Beta values for computation of individual fugacity coefficient. Not Bij values. 
-  private double beta = 0.0;  //SRK relic
-  
-  //Q values for computation of individual fugacity coefficient
-  private double qValue = 0.0;  //SRK relic
-  
-  //activity coefficient for nonideal liquid behaviour
-  private double activityCoefficient = 1.0;  //SRK relic
-  
-  //fugacity coefficient for nonideal behaviour
-  private double mixtureFugacityCoefficient = 1.0;  //SRK relic
-  
-  //large phi for nonideal handling
-  private double largePhi = 1.0;  //SRK relic
   
   //individual component kapp values for PR calculations
   private double kappa = 0.0;
@@ -78,9 +55,6 @@ public class Species implements Function{
   //individual liquid fugacity for PR
   private double liquidFugacity = 0.0;
   
-  //individual Ki value for PR EOS
-  private double ki = 0.0;
-  
   // Constructor
   public Species() {}
   
@@ -105,14 +79,7 @@ public class Species implements Function{
     this.heatOfVapourization = source.heatOfVapourization;
     this.criticalTemperature = source.criticalTemperature;
     this.criticalPressure = source.criticalPressure;
-    this.criticalVolume = source.criticalVolume;
-    this.criticalZ = source.criticalZ;
     this.acentricFactor = source.acentricFactor;
-    this.zValue = source.zValue;
-    this.beta = source.beta;
-    this.qValue = source.qValue;
-    this.activityCoefficient = source.activityCoefficient;
-    this.mixtureFugacityCoefficient = source.mixtureFugacityCoefficient;
   }
   
   // Setters
@@ -177,26 +144,6 @@ public class Species implements Function{
     }
   }
   
-  public boolean setCriticalVolume (double criticalVolume) {
-    if (criticalVolume > 0.0) {
-      this.criticalVolume = criticalVolume;
-      return true;
-    } else {
-      System.out.println("All specific volumes must be in mol/m3. Enter a positive value for critical specific volume.");
-      return false;
-    }
-  }
-  
-  public boolean setCriticalZ (double criticalZ) {
-    if (criticalZ > 0.0) {
-      this.criticalZ = criticalZ;
-      return true;
-    } else {
-      System.out.println("All Z-values must be positive.");
-      return false;
-    }
-  }
-  
   public boolean setAcentricFactor (double acentricFactor) {
     if (acentricFactor >= -1.0 && acentricFactor <= 1.0 ) {
       this.acentricFactor = acentricFactor;
@@ -206,66 +153,6 @@ public class Species implements Function{
       return false;
     }
     
-  }
-  
-  public boolean setZValue(double zValue){
-    if(zValue > 0){
-      this.zValue = zValue;
-      return true;
-    } else {
-      System.out.println("Z value for a pure species cannot be 0.");
-      return false;
-    }
-  }
-  
-  public boolean setBeta(double beta){
-    if(beta > 0){
-      this.beta = beta;
-      return true;
-    } else {
-      System.out.println("Beta value must be positive.");
-      return false;
-    }
-  }
-  
-  public boolean setQValue(double qValue){
-    if(qValue > 0){
-      this.qValue = qValue;
-      return true;
-    } else {
-      System.out.println("Q value must be positive.");
-      return false;
-    }
-  }
-  
-  public boolean setActivityCoefficient(double activityCoefficient){
-    if(activityCoefficient > 0.0){
-      this.activityCoefficient = activityCoefficient;
-      return true;
-    } else {
-      System.out.println("Activity coefficient must be greater than 0 (was: " + activityCoefficient + ")");
-      return false;
-    }
-  }
-  
-  public boolean setMixtureFugacityCoefficient(double mixtureFugacityCoefficient){
-    if(mixtureFugacityCoefficient > 0.0){
-      this.mixtureFugacityCoefficient = mixtureFugacityCoefficient;
-      return true;
-    } else {
-      System.out.println("Fugacity Coefficient must be greater than 0 (was: "+mixtureFugacityCoefficient+")");
-      return false;
-    }
-  }
-  
-  public boolean setLargePhi(double largePhi){
-    if(largePhi > 0.0){
-      this.largePhi = largePhi;
-      return true;
-    } else {
-      System.out.println("Large phi must be greater than 0.");
-      return false;
-    }
   }
   
   public void setKappa(double kappa){    // TODO: develop restrictions on setters for PR
@@ -299,10 +186,7 @@ public class Species implements Function{
   public void setVapourFugacity(double vapourFugacity){
     this.vapourFugacity = vapourFugacity;
   }
-  
-  public void setKi(double ki){
-  this.ki=ki;
-  }
+
   
   // Getters
   
