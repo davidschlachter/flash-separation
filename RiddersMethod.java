@@ -31,7 +31,7 @@ public class RiddersMethod extends RootFinder {
       //System.out.println("xR is: "+xR);
       fR = func.testFunction(xR);
       if (Double.isNaN(xR)) {
-        System.out.println("ERROR: xR in Ridder's method returned Not a Number (NaN)");
+        if (verbose == true) System.out.println("WARNING: xR in Ridder's method returned Not a Number (NaN)");
         return xR;
       }
       if(xR < xM)
