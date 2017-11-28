@@ -79,7 +79,7 @@ public class Test_RachfordRice extends TestCase {
   }
   
   
-  /*  public void testNonIdealSolution() {
+    public void testNonIdealSolution() {
       System.out.println("Starting testNonIdealSolution.");
    FlowStream testStream = new FlowStream();
    
@@ -121,7 +121,7 @@ public class Test_RachfordRice extends TestCase {
    FlowStream solvedStream = new RachfordRice(testStream).solve();
    ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), solvedStream, solvedStream);
    
-   } */
+   } 
   
   public void testLargerFlowStream(){
     //System.out.println("\nStarting testLargerFlowStream");

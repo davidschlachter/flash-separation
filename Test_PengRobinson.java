@@ -144,12 +144,19 @@ public class Test_PengRobinson extends TestCase {
   PengRobinson testPeng = createTestPeng();
   testPeng.nonIdealCalcs();
   
-  System.out.println("Vapour fugacity of pentane is: "+testPeng.getFlowStream().getFlowSpecies().get(0).getVapourFugacity());
-  System.out.println("Vapour fugacity of hexane is: "+testPeng.getFlowStream().getFlowSpecies().get(1).getVapourFugacity());
-  System.out.println("Vapour fugacity of heptane is: "+testPeng.getFlowStream().getFlowSpecies().get(2).getVapourFugacity());
-  System.out.println("Liquid fugacity of pentane is: "+testPeng.getFlowStream().getFlowSpecies().get(0).getLiquidFugacity());
-  System.out.println("Liquid fugacity of hexane is: "+testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity());
-  System.out.println("Liquid fugacity of heptane is: "+testPeng.getFlowStream().getFlowSpecies().get(2).getLiquidFugacity());
+  double pentaneVap = testPeng.getFlowStream().getFlowSpecies().get(0).getVapourFugacity();
+  double pentaneLiq = testPeng.getFlowStream().getFlowSpecies().get(0).getLiquidFugacity();
+  double hexaneVap = testPeng.getFlowStream().getFlowSpecies().get(1).getVapourFugacity();
+  double hexaneLiq = testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity();
+  double heptaneVap = testPeng.getFlowStream().getFlowSpecies().get(2).getVapourFugacity();
+  double heptaneLiq = testPeng.getFlowStream().getFlowSpecies().get(2).getLiquidFugacity();
+  
+  assertTrue(pentaneVap < 0.969 && pentaneVap > 0.963);
+  assertTrue(pentaneLiq < 1.49 && pentaneLiq > 1.41);
+  assertTrue(hexaneVap < 0.959 && hexaneVap > 0.948);
+  assertTrue(hexaneLiq < 0.55 && hexaneLiq > 0.45);
+  assertTrue(heptaneVap < 0.945 && heptaneVap > 0.935);
+  assertTrue(heptaneLiq < 0.19 && heptaneLiq > 0.18);
   
   }
   
