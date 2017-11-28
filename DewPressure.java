@@ -38,7 +38,7 @@
     double result = 0.0;
     //double[] bounds = RootFinder.getBounds(this, 9, 500.0);
     //System.out.println("Root boundaries found are: "+bounds[0]+" and "+bounds[1]);
-    result = RiddersMethod.calc(this, flowStream.getPressure()-100, flowStream.getPressure()+100, 0.1, true);  //maybe these bounds are no good. review this laterget
+    result = RiddersMethod.calc(this, flowStream.getPressure()-100, flowStream.getPressure()+100, 0.00001, true);  //maybe these bounds are no good. review this laterget
     return result;
   }
   
