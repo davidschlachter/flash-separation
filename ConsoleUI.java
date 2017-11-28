@@ -313,18 +313,16 @@ public class ConsoleUI {
         customSpecies.setAntoineConstants(new AntoineCoefficients(nextConstant1, nextConstant2, nextConstant3, nextConstant4, nextConstant5));
         
         
-        output.println("Enter the critical temperature: ");  
+        output.println("Enter the critical temperature: ");          
         nextConstant1 = getADouble("Critical temperature for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
         customSpecies.setCriticalTemperature(nextConstant1);
         
         ideal = ' ';
-        while (ideal != 'y' && ideal != 'n') {
-          scan.nextLine();
+        while (ideal != 'y' && ideal != 'n') {          
           ideal = getAChar("\nWill the simulation be run in ideal-gas mode?\n  [y]es   [n]o\n", scan, output);
-        }
+         }
         
         if (ideal == 'n') {
-          scan.nextLine(); // Go to next line
           output.println("Enter the critical pressure: ");
           nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
           customSpecies.setCriticalPressure(nextConstant1);
@@ -357,8 +355,7 @@ public class ConsoleUI {
         output.println("\n------------------------------------------------\n");
         
         char choice = ' '; 
-        while (choice != 'y' && choice != 'n') {
-          scan.nextLine();
+        while (choice != 'y' && choice != 'n') {          
           choice = getAChar("\nAre the custom species properties correct?\n  [y]es   [n]o\n", scan, output);
         }
         if (choice == 'y') break;
