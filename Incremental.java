@@ -7,7 +7,7 @@ public class Incremental extends RootFinder {
     double i;
     double f=0.0;
     // Do 1000 steps from x1 to x2
-    for (i = x1; i < x2; i = i+((x1-x2)/steps)) {
+    for (i = x1; i < x2; i = i+((x2-x1)/steps)) {
       f = func.testFunction(i);
       System.out.println(i+"\t"+f);
     }
