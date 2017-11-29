@@ -168,8 +168,12 @@ public class Test_RachfordRice extends TestCase {
     idealStream.setIsIdeal(true);
     
     FlowStream solvedNonIdealStream = new RachfordRice(inletStream).solve();
+    /*System.out.println("********************* NON-IDEAL RESULTS ****************************");
+    ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), solvedNonIdealStream, solvedNonIdealStream);*/
     
     FlowStream solvedIdealStream = new RachfordRice(new FlowStream(idealStream)).solve();
+    /*System.out.println("*********************   IDEAL RESULTS   ****************************");
+    ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), solvedIdealStream, solvedIdealStream);*/
     
     // First, test expected results for the ideal solution
     assertTrue(Math.abs(solvedIdealStream.getVapourFraction() - 0.75207) < 0.01);
@@ -180,6 +184,57 @@ public class Test_RachfordRice extends TestCase {
     assertTrue(Math.abs(solvedNonIdealStream.getVapourFraction() - 0.7538) < 0.01);
     assertTrue(Math.abs(solvedNonIdealStream.getFlowSpecies().get(0).getLiquidMoleFraction() - 0.0723) < 0.01);
     assertTrue(Math.abs(solvedNonIdealStream.getFlowSpecies().get(0).getVapourMoleFraction() - 0.9050) < 0.01);
+  }
+  
+  // Test if we handle non-condensable components properly. Reference is UniSim, with
+  // Antoine fluid package for ideal, and Peng-Robinson for non-ideal
+  // Accuracy isn't too high here for the assert statements since UniSim tends to give unreproducible
+  // results -- purpose of this test is to validate handling of non-condensing components rather than
+  // validation against a particular solution
+  public void testNonCondensingComponentSolution() {
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    FlowStream inletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(0)));  // Ethane
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.5);
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(1)));  // Pentane
+    inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.3);
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(5)));  // Nitrogen
+    inletStream.getFlowSpecies().get(2).setOverallMoleFraction(0.2);
+    
+    inletStream.setIsIdeal(false);
+    inletStream.setMolarFlowRate(1.0);
+    inletStream.setPressure(100000.0); // 1 bar
+    inletStream.setTemperature(254.0);
+    
+    FlowStream idealStream = new FlowStream(inletStream);
+    idealStream.setIsIdeal(true);
+    
+    FlowStream solvedNonIdealStream = new RachfordRice(inletStream).solve();
+    /*System.out.println("********************* NON-IDEAL RESULTS ****************************");
+    ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), solvedNonIdealStream, solvedNonIdealStream);*/
+    
+    FlowStream solvedIdealStream = new RachfordRice(new FlowStream(idealStream)).solve();
+    /*System.out.println("*********************   IDEAL RESULTS   ****************************");
+    ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), solvedIdealStream, solvedIdealStream);*/
+    
+    // First, test expected results for the ideal solution
+    assertTrue(Math.abs(solvedIdealStream.getVapourFraction() - 0.7577) < 0.1);
+    assertTrue(Math.abs(solvedIdealStream.getFlowSpecies().get(0).getLiquidMoleFraction() - 0.0442) < 0.1);
+    assertTrue(Math.abs(solvedIdealStream.getFlowSpecies().get(0).getVapourMoleFraction() - 0.6457) < 0.1);
+    assertTrue(Math.abs(solvedIdealStream.getFlowSpecies().get(1).getLiquidMoleFraction() - 0.9553) < 0.1);
+    assertTrue(Math.abs(solvedIdealStream.getFlowSpecies().get(1).getVapourMoleFraction() - 0.0904) < 0.1);
+    assertTrue(Math.abs(solvedIdealStream.getFlowSpecies().get(2).getLiquidMoleFraction() - 0.0000) < 0.1);
+    assertTrue(Math.abs(solvedIdealStream.getFlowSpecies().get(2).getVapourMoleFraction() - 0.2638) < 0.1);
+    
+    // Next, test for the expected non-ideal results
+    assertTrue(Math.abs(solvedNonIdealStream.getVapourFraction() - 0.7603) < 0.1);
+    assertTrue(Math.abs(solvedNonIdealStream.getFlowSpecies().get(0).getLiquidMoleFraction() - 0.0482) < 0.1);
+    assertTrue(Math.abs(solvedNonIdealStream.getFlowSpecies().get(0).getVapourMoleFraction() - 0.6424) < 0.1);
+    assertTrue(Math.abs(solvedNonIdealStream.getFlowSpecies().get(1).getLiquidMoleFraction() - 0.9513) < 0.1);
+    assertTrue(Math.abs(solvedNonIdealStream.getFlowSpecies().get(1).getVapourMoleFraction() - 0.0947) < 0.1);
+    assertTrue(Math.abs(solvedNonIdealStream.getFlowSpecies().get(2).getLiquidMoleFraction() - 0.0000) < 0.1);
+    assertTrue(Math.abs(solvedNonIdealStream.getFlowSpecies().get(2).getVapourMoleFraction() - 0.2629) < 0.1);
   }
   
 }
