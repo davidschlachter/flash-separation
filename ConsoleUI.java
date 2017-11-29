@@ -24,7 +24,6 @@ public class ConsoleUI {
     char choice;
     double nextDouble;
     String nextString;
-    boolean firstRun = true;
     
     //
     // Get the list of species that will be simulated
@@ -58,8 +57,6 @@ public class ConsoleUI {
           break;
         }
       }
-      firstRun = false;
-      
     }
     
     FlowStream inletStream  = new FlowStream();
@@ -197,10 +194,15 @@ public class ConsoleUI {
     }
     
     // Solve the system using the Controller class
-    FlowStream[] processedStreams = Controller.calc(inletStream, outletStream);
-    inletStream = processedStreams[0];
-    outletStream = processedStreams[1];
-    
+    try {
+      FlowStream[] processedStreams = Controller.calc(inletStream, outletStream);
+      inletStream = processedStreams[0];
+      outletStream = processedStreams[1];
+    }
+    catch (IllegalArgumentException e) {
+      System.out.println(e.getMessage());
+      return false;
+    }
     
     // Print the final results
     output.println("Composition of the inlet and solved outlet streams: \n");
