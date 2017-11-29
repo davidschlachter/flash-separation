@@ -24,6 +24,7 @@ public class ConsoleUI {
     char choice;
     double nextDouble;
     String nextString;
+    boolean isIdeal;
     
     //
     // Get the list of species that will be simulated
@@ -46,17 +47,21 @@ public class ConsoleUI {
       if (choice == 'a') this.addSpecies(scan, output);
       if (choice == 'r') {
         if (this.theseSpecies.size() != 0) this.removeSpecies(scan, output);
-        else continue;
+        else {
+          output.println("There are no species to remove.\n");
+          continue;
+        }
       }
       if (choice == 'q') return true;  // Exit option for testing
       if (choice == 'd') {
         if (this.theseSpecies.size() == 0) {
-          output.println("ERROR: Must select at least one species to continue.");
+          output.println("ERROR: Must select at least one species to continue.\n");
           continue;
         } else {
           break;
         }
       }
+      else output.println("Invalid entry. Please try again.\n");
     }
     
     FlowStream inletStream  = new FlowStream();
@@ -191,6 +196,30 @@ public class ConsoleUI {
         output.println("WARNING: The specified outlet temperature is above the dew point -- no separation will occur!");
         output.println("(Dew point is: " + dewPointTemperature + ")");
       }
+    }
+    
+    //
+    // Determine if the system is ideal or non-ideal
+    //
+    choice = ' ';
+    while(true) {
+      choice = getAChar("\nWould you like to solve using ideal assumptions?\n  [y]es   [n]o\n", scan, output);
+      if(choice == 'y' || choice == 'n' || choice == 'q') break;
+      else {
+        output.println("That is an invalid choice. Please try again.\n");
+      }
+    }
+    switch(choice) {
+      case 'y': 
+        inletStream.setIsIdeal(true);
+        outletStream.setIsIdeal(true);
+        break;
+      case 'n': 
+        inletStream.setIsIdeal(false);
+        outletStream.setIsIdeal(false);
+        break;
+      case 'q': 
+        return true; //for testing
     }
     
     // Solve the system using the Controller class

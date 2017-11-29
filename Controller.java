@@ -5,7 +5,7 @@ public class Controller {
   
   public static FlowStream[] calc(FlowStream inlet, FlowStream outlet) {
     
-    double error = 0.001;
+    double error = 0.0001;
     
     double unknownTemperature;
     // First problem type: both inlet and outlet temperatures are specified
@@ -42,7 +42,7 @@ public class Controller {
       
       Enthalpy enthalpy = new Enthalpy(inlet, outlet);
       double[] bounds = RootFinder.getBounds(enthalpy, specifiedStream.getTemperature(), 10.0, 0.0);
-      double solvedFinalTemperaure = RiddersMethod.calc(enthalpy, bounds[0], bounds[1], 0.0001, false);
+      double solvedFinalTemperaure = RiddersMethod.calc(enthalpy, bounds[0], bounds[1], error, false);
       //double solvedFinalTemperaure = Incremental.calc(enthalpy, bounds[0], bounds[1], 0.0001);
       
       if (inletSpecified == true) enthalpy.getOutlet().setTemperature(solvedFinalTemperaure);
