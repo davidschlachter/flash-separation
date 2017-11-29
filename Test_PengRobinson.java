@@ -122,8 +122,8 @@ public class Test_PengRobinson extends TestCase {
     testPeng.alphaI();
     testPeng.individualA();
     testPeng.speciesA();
-    testPeng.streamA();
-    assertTrue(testPeng.getFlowStream().getStreamA() < 0.045 && testPeng.getFlowStream().getStreamA() > 0.035);
+    testPeng.streamAX();
+    assertTrue(testPeng.getFlowStream().getStreamAX() < 0.045 && testPeng.getFlowStream().getStreamAX() > 0.035);
     
   }
   
@@ -134,8 +134,8 @@ public class Test_PengRobinson extends TestCase {
     testPeng.alphaI();
     testPeng.individualB();
     testPeng.speciesB();
-    testPeng.streamB();
-    assertTrue(testPeng.getFlowStream().getStreamB() < 0.0037 && testPeng.getFlowStream().getStreamB() > 0.0033);
+    testPeng.streamBX();
+    assertTrue(testPeng.getFlowStream().getStreamBX() < 0.0037 && testPeng.getFlowStream().getStreamBX() > 0.0033);
     
   }
   

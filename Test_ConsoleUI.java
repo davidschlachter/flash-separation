@@ -109,24 +109,49 @@ public class Test_ConsoleUI extends TestCase {
   
   public void testAddCustomSpecies() {
     String input = "a\n" // "Add species"
-      + "0\n" // Add the first species
-      + "a\n" // Add another species
-      + "-0.1\n" // Try to set an invalid species
-      + "a\n" // Add another species
-      + "6\n" // Try to set an invalid species
-      + "a\n" // Add another species
-      + "1\n"
+      + "0\n"
+      + "a\n"
+      + "6\n" // Add custom species
+      + "\n" // No name entered
+      + "\n" 
+      + "testSpecies\n"
+      + "10\n" //Vapour Heat capacities
+      + "0.13"
+      + "-0.00002\n"
+      + "0.0\n"
+      + "100\n" //Liquid heat capacities
+      + "-0.1\n"
+      + "0.0007\n"
+      + "0.00003\n"
+      + "10\n" //Antoine coefficients
+      + "800\n"
+      + "-10\n"
+      + "300\n" //Lower T
+      + "400\n" //Upper T
+      + "390\n" //Critical T
+      + "y\n" //Ideal-gas mode?
+      + "y\n" //Check
+      + "\n"
+      + "d\n" //done
+      + "1.0\n"
+      + "y\n"
+      + "\n" // No feed temperature
+      + "101325\n"
+      + "10\n"
+      + "333\n"
+      + "101325\n"
+      + "y\n"
       + "q\n"; // Quit
     
     StringWriter stringWriter = new StringWriter();
     
     ConsoleUI console = new ConsoleUI();
-    console.run(new Scanner(input), new PrintWriter(stringWriter)); //I'm unsure why this doesn't work --> need to check
+    console.run(new Scanner(input), new PrintWriter(stringWriter));
     
     String newline = System.getProperty("line.separator");
     
     String output = stringWriter.toString();
     
-    assertTrue("ConsoleUI add species", output.contains("Ethane" + newline + "  Pentane" + newline));
+    assertTrue("ConsoleUI add species", output.contains("Ethanol" + newline + "  testSpecies" + newline));
   }
 }

@@ -47,13 +47,16 @@ public class ConsoleUI {
       choice = getAChar("Select an action: [a]dd species   [r]emove species   [d]one\n", scan, output);
       
       if (choice == 'a') this.addSpecies(scan, output);
-      if (choice == 'r') {
+      if (choice == 'r') 
+      {
         if (this.theseSpecies.size() != 0) this.removeSpecies(scan, output);
         else continue;
       }
       if (choice == 'q') return true;  // Exit option for testing
-      if (choice == 'd') {
-        if (this.theseSpecies.size() == 0) {
+      if (choice == 'd') 
+      {
+        if (this.theseSpecies.size() == 0) 
+        {
           output.println("ERROR: Must select at least one species to continue.");
           continue;
         } else {
@@ -287,6 +290,9 @@ public class ConsoleUI {
         if (speciesName.length() != 0) {
           customSpecies.setSpeciesName(speciesName);
           this.theseSpecies.add(customSpecies);
+        } else {
+          System.out.println("ERROR: Please enter a name with one or more characters.");
+          scan.nextLine();
         }
         
         output.println("\n Enter Vapour heat capacity coefficients for A, B, C, and D:");        

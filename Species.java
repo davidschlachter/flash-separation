@@ -6,7 +6,7 @@ import java.util.List;
  * 
  */
 
-public class Species{
+public class Species {
   
   // Species name
   private String speciesName;
@@ -34,7 +34,7 @@ public class Species{
   // Constructor
   public Species() {}
   
-  //Copy Constructor
+  // Copy Ccnstructor
   public Species (Species source) {
     int i;
     this.speciesName = source.speciesName;
@@ -100,7 +100,7 @@ public class Species{
     }
   }
   
-  public boolean setCriticalTemperature (double criticalTemperature) {
+  public boolean setCriticalTemperature(double criticalTemperature) {
     if (criticalTemperature > 0.0) {
       this.criticalTemperature = criticalTemperature;
       return true;
@@ -128,7 +128,6 @@ public class Species{
       System.out.println("All accentricities must be between -1.0 and 1.0. Enter an appropriate value for the acentric factor.");
       return false;
     }
-    
   }
   
   // Getters
@@ -226,7 +225,7 @@ public class Species{
     return this.acentricFactor;
   }
   
-  //Equals
+  // Equals
   public boolean equals(Species other) {
     
     if(this.antoineCoefficients.size() == other.antoineCoefficients.size()) {
@@ -262,5 +261,4 @@ public class Species{
   public Species clone() {
     return new Species(this);
   }
-  
 }

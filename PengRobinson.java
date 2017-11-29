@@ -113,7 +113,7 @@ public class PengRobinson{
     return results;
   }
   
-  public void streamA(){
+  public void streamAX(){
     
     double[][] aij = aij();
     int n = flowStream.getFlowSpecies().size();
@@ -130,20 +130,26 @@ public class PengRobinson{
       z=this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
       result+= intermediate[i]*z;
     }
-    flowStream.setStreamA(result);
+    flowStream.setStreamAX(result);
   }
   
-  public void streamB(){
+  public void streamBX(){
     
     int n = flowStream.getFlowSpecies().size();
     double result = 0.0;
-    double z, b;
+    double x, b;
     for(int i=0; i<n; i++){
-      z=this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
-      b=this.flowStream.getFlowSpecies().get(i).getSpeciesB();
-      result+=z*b;
+      if(this.flowStream.getFlowSpecies().get(i).getLiquidMoleFraction() == 0 &&
+         this.flowStream.getFlowSpecies().get(i).getVapourMoleFraction() == 0 &&
+         this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction() != 0){
+        x=this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
+      }else{
+          x=this.flowStream.getFlowSpecies().get(i).getLiquidMoleFraction();
+        }
+        b=this.flowStream.getFlowSpecies().get(i).getSpeciesB();
+        result+=x*b;
     }
-    flowStream.setStreamB(result);
+    flowStream.setStreamBX(result);
   }
   
   
@@ -153,11 +159,13 @@ public class PengRobinson{
     double liquidSum=0.0;
     double vapourSum=0.0;
     double sumTerm=0.0;
-    double b = flowStream.getStreamB();
-    double a = flowStream.getStreamA();
-    double c0 = Math.pow(b,3.0)+Math.pow(b,2.0)-(a*b);
-    double c1 = a-3*Math.pow(b,2.0)-2.0*b;
-    double c2 = b-1;
+    double bx = flowStream.getStreamBX();
+    double ax = flowStream.getStreamAX();
+//    double ay = flowStream.getStreamAY();
+//    double by = flowStream.getStreamBY();
+    double c0 = Math.pow(bx,3.0)+Math.pow(bx,2.0)-(ax*bx);
+    double c1 = ax-3*Math.pow(bx,2.0)-2.0*bx;
+    double c2 = bx-1;
     double pi = Math.PI;
     double[][] aij = aij();
     
@@ -172,54 +180,56 @@ public class PengRobinson{
       root = p+q;
       System.out.println("ONLY ONE ROOT! figure out what this means and fix.");  //gotta finish this up
     }else{
-        m = 2*Math.sqrt(-p1/3.0);
-        qpm = 3.0*q1/p1/m;
-        tripleTheta = Math.acos(qpm);
-        theta = tripleTheta/3.0;
-        root0 = m*Math.cos(theta);
-        root1 = m*Math.cos(theta+4.0*pi/3.0);
-        root2 = m*Math.cos(theta+2.0*pi/3.0);
-        int n = this.flowStream.getFlowSpecies().size();
-        z0=root0-c2/3.0;
-        z1=root1-c2/3.0;
-        z2=root2-c2/3.0;
-        zmin=Math.min(z0, Math.min(z1, z2));
-        zmax=Math.max(z0, Math.max(z1, z2));
-        pressure = this.flowStream.getPressure();
-        vapourMixtureFugacity = pressure*1e-6*Math.exp(zmax-1-Math.log(zmax-b)-a/b/2.8284*Math.log((zmax+2.4142*b)/(zmax-0.4142*b)));
-        liquidMixtureFugacity = pressure*1e-6*Math.exp(zmin-1-Math.log(zmin-b)-a/b/2.8284*Math.log((zmin+2.4142*b)/(zmin-0.4142*b))); 
-        for(int i=0;i<n;i++){  
-          bi=flowStream.getFlowSpecies().get(i).getSpeciesB();
-          vapourSum+=(bi/b)*(zmax-1);
-          liquidSum+=(bi/b)*(zmin-1);
-          vapourSum-=Math.log(zmax-b);
-          liquidSum-=Math.log(zmin-b);
-          for(int j=0;j<n;j++){
-            sumTerm+=this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction() * aij[j][i];
-          }
-          vapourSum-=(a/(2.8284*b))*Math.log((zmax+2.4124*b)/(zmax-0.4124*b))*((2.0*sumTerm/a)-(bi/b));
-          liquidSum-=(a/(2.8284*b))*Math.log((zmin+2.4124*b)/(zmin-0.4124*b))*((2.0*sumTerm/a)-(bi/b));
-            sumTerm=0.0;
-          this.flowStream.getFlowSpecies().get(i).setVapourFugacity(Math.exp(vapourSum));
-          this.flowStream.getFlowSpecies().get(i).setLiquidFugacity(Math.exp(liquidSum));
-          liquidSum=0.0;
-          vapourSum=0.0;
+      m = 2*Math.sqrt(-p1/3.0);
+      qpm = 3.0*q1/p1/m;
+      tripleTheta = Math.acos(qpm);
+      theta = tripleTheta/3.0;
+      root0 = m*Math.cos(theta);
+      root1 = m*Math.cos(theta+4.0*pi/3.0);
+      root2 = m*Math.cos(theta+2.0*pi/3.0);
+      int n = this.flowStream.getFlowSpecies().size();
+      z0=root0-c2/3.0;
+      z1=root1-c2/3.0;
+      z2=root2-c2/3.0;
+      zmin=Math.min(z0, Math.min(z1, z2));
+      zmax=Math.max(z0, Math.max(z1, z2));
+      pressure = this.flowStream.getPressure();
+      vapourMixtureFugacity = pressure*1e-6*Math.exp(zmax-1-Math.log(zmax-bx)-ax/bx/2.8284*Math.log((zmax+2.4142*bx)/(zmax-0.4142*bx)));
+      liquidMixtureFugacity = pressure*1e-6*Math.exp(zmin-1-Math.log(zmin-bx)-ax/bx/2.8284*Math.log((zmin+2.4142*bx)/(zmin-0.4142*bx))); 
+      for(int i=0;i<n;i++){  
+        bi=flowStream.getFlowSpecies().get(i).getSpeciesB();
+        vapourSum+=(bi/bx)*(zmax-1);
+        liquidSum+=(bi/bx)*(zmin-1);
+        vapourSum-=Math.log(zmax-bx);
+        liquidSum-=Math.log(zmin-bx);
+        for(int j=0;j<n;j++){
+          sumTerm+=this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction() * aij[j][i];
         }
-
+        vapourSum-=(ax/(2.8284*bx))*Math.log((zmax+2.4124*bx)/(zmax-0.4124*bx))*((2.0*sumTerm/ax)-(bi/bx));
+        liquidSum-=(ax/(2.8284*bx))*Math.log((zmin+2.4124*bx)/(zmin-0.4124*bx))*((2.0*sumTerm/ax)-(bi/bx));
+        sumTerm=0.0;
+        this.flowStream.getFlowSpecies().get(i).setVapourFugacity(Math.exp(vapourSum));
+        this.flowStream.getFlowSpecies().get(i).setLiquidFugacity(Math.exp(liquidSum));
+        liquidSum=0.0;
+        vapourSum=0.0;
+      }
+      
     }
   }
   
   public void nonIdealCalcs(){
     
-  this.kappaI();
-  this.alphaI();
-  this.individualA();
-  this.individualB();
-  this.speciesA();
-  this.speciesB();
-  this.streamA();
-  this.streamB();
-  this.solveFugacities();
+    this.kappaI();
+    this.alphaI();
+    this.individualA();
+    this.individualB();
+    this.speciesA();
+    this.speciesB();
+    this.streamAX();
+    this.streamBX();
+   // this.streamAY();
+   // this.streamBY();
+    this.solveFugacities();
     
   }
   
