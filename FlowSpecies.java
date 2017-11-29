@@ -1,38 +1,34 @@
-import java.lang.IllegalArgumentException;
-
 /**
  * Add flow data to Species object
  */
-
 public class FlowSpecies extends Species {
   
-  // Mole fractions
   private double overallMoleFraction = 0.0;
   private double liquidMoleFraction = 0.0;
   private double vapourMoleFraction = 0.0;
   
-  // Individual component kapp values for PR calculations
+  //individual component kapp values for PR calculations
   private double kappa = 0.0;
   
-  // Individual species alpha value for PR calculations
+  //individual species alpha value for PR calculations
   private double alpha = 0.0;
   
-  // Individual a values for PR calculations
+  //individual a values for PR calculations
   private double ai = 0.0;
   
-  // Individual b value for PR calculations
+  //individual b value for PR calculations
   private double bi = 0.0;
   
-  // Individual LargeA for PR calcs
+  //individual LargeA for PR calcs
   private double speciesA = 0.0;
   
-  // Individual LargeA for PR calcs
+  //individual LargeA for PR calcs
   private double speciesB = 0.0;
   
-  // Individual vapour fugacity for PR
+  //individual vapour fugacity for PR
   private double vapourFugacity = 0.0;
   
-  // Individual liquid fugacity for PR
+  //individual liquid fugacity for PR
   private double liquidFugacity = 0.0;
   
   //Constructor
@@ -40,51 +36,63 @@ public class FlowSpecies extends Species {
     super();
   }
   
-  // Copy constructor
-  public FlowSpecies (FlowSpecies source) throws IllegalArgumentException {
+  //Copy Constructor
+  public FlowSpecies (FlowSpecies source) {
     super(source);
-    if(overallMoleFraction < 0 ||
-       liquidMoleFraction < 0 ||
-       vapourMoleFraction < 0) throw new IllegalArgumentException("Could not construct flow species. "+
-                                                                  "Mole fractions must be between 0 and 1.");
-    else {
-      this.overallMoleFraction = source.overallMoleFraction;
-      this.liquidMoleFraction = source.liquidMoleFraction;
-      this.vapourMoleFraction = source.vapourMoleFraction;
-    }
-  }
-  
-  // Clone method
-  public FlowSpecies clone() {
-    return new FlowSpecies(this);
-  }
+    this.overallMoleFraction = source.overallMoleFraction;
+    this.liquidMoleFraction = source.liquidMoleFraction;
+    this.vapourMoleFraction = source.vapourMoleFraction;
+    this.kappa = source.kappa;
+    this.alpha = source.alpha;
+    this.ai = source.ai;
+    this.bi = source.bi;
+    this.speciesA = source.speciesA;
+    this.speciesB = source.speciesB;
+    this.vapourFugacity = source.vapourFugacity;
+    this.liquidFugacity = source.liquidFugacity;
+   }
   
   // Setters
-  public void setOverallMoleFraction(double overallMoleFraction) throws IllegalArgumentException {
-    if(overallMoleFraction < 0.0 || overallMoleFraction > 1.0) {
-      throw new IllegalArgumentException("Overall mole fraction could not be set. "+
-                                         "Mole fractions must be between 0 and 1.");
+  public boolean setOverallMoleFraction(double overallMoleFraction) {
+    if (overallMoleFraction >= 0.0 && overallMoleFraction <= 1.0) {
+      this.overallMoleFraction = overallMoleFraction;
+      return true;
+    } else {
+      return false;
     }
-    else this.overallMoleFraction = overallMoleFraction;
   }
   
-  public void setLiquidMoleFraction(double liquidMoleFraction) throws IllegalArgumentException {
-    if(liquidMoleFraction < 0.0 || liquidMoleFraction > 1.0) {
-      throw new IllegalArgumentException("Liquid mole fraction could not be set. "+
-                                         "Mole fractions must be between 0 and 1.");
+  public boolean setLiquidMoleFraction(double liquidMoleFraction, boolean restrict) {
+    if(restrict) {
+      if (liquidMoleFraction >= 0.0 && liquidMoleFraction <= 1.0) {
+        this.liquidMoleFraction = liquidMoleFraction;
+        return true;
+      } else {
+        return false;
+      }
     }
-    else this.liquidMoleFraction = liquidMoleFraction;
+    else {
+      this.liquidMoleFraction = liquidMoleFraction;
+      return true;
+    }
   }
   
-  public void setVapourMoleFraction(double vapourMoleFraction) throws IllegalArgumentException {
-    if (vapourMoleFraction < 0.0 && vapourMoleFraction > 1.0) {
-      throw new IllegalArgumentException("Vapour mole fraction could not be set. "+
-                                         "Mole fraction must be between 0 and 1.");
-    }
-    else this.vapourMoleFraction = vapourMoleFraction;
+  public boolean setLiquidMoleFraction(double liquidMoleFraction) {
+    boolean restrict = true;
+    return setLiquidMoleFraction(liquidMoleFraction, restrict);
+    //return true; //will returning output of above method still set liquid mole fraction?
   }
   
-  public void setKappa(double kappa){
+  public boolean setVapourMoleFraction(double vapourMoleFraction) {
+    if (vapourMoleFraction >= 0.0 && vapourMoleFraction <= 1.0) {
+      this.vapourMoleFraction = vapourMoleFraction;
+      return true;
+    } else {
+      return false;
+    }
+  }
+  
+  public void setKappa(double kappa){    // TODO: develop restrictions on setters for PR
     this.kappa = kappa;
   }
   
@@ -97,7 +105,7 @@ public class FlowSpecies extends Species {
   }
   
   public void setBI(double bi){
-    this.bi = bi;
+    this.bi=bi;
   }
   
   public void setSpeciesA(double speciesA){
@@ -161,12 +169,25 @@ public class FlowSpecies extends Species {
     return this.vapourFugacity;
   }
   
-  // Equals
+  //Equals
   public boolean equals(FlowSpecies other) {
     super.equals(other);
     if(this.overallMoleFraction == other.overallMoleFraction &&
        this.liquidMoleFraction == other.liquidMoleFraction &&
-       this.vapourMoleFraction == other.vapourMoleFraction) return true;
+       this.vapourMoleFraction == other.vapourMoleFraction &&
+       this.kappa == other.kappa &&
+       this.alpha == other.alpha &&
+       this.ai == other.ai &&
+       this.bi == other.bi &&
+       this.speciesA == other.speciesA &&
+       this.liquidFugacity == other.liquidFugacity &&
+       this.vapourFugacity == other.vapourFugacity) return true;
     else return false;
   }
+  
+  // Clone method
+  public FlowSpecies clone() {
+    return new FlowSpecies(this);
+  }
+  
 }
