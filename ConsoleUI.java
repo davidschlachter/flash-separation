@@ -309,94 +309,99 @@ public class ConsoleUI {
     double nextConstant5;
     
     output.println("\nAdding a custom species.\n");
-    while (true) {
+    scan.nextLine();
+    while(true) {
       while (true) {
         output.println("Enter the name of the custom species:\n");
-        scan.nextLine();
         String speciesName = scan.nextLine();
-        if (speciesName.length() != 0) {
+        if(speciesName.length() == 0) {
+          output.println("Error! Please enter a name of at least one character.\n");
+        }
+        else {
           customSpecies.setSpeciesName(speciesName);
-          this.theseSpecies.add(customSpecies);
+          this.theseSpecies.add(customSpecies); 
+          
+          output.println("\n Enter Vapour heat capacity coefficients for A, B, C, and D:");        
+          nextConstant1 = getADouble("A:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+          nextConstant2 = getADouble("B:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+          nextConstant3 = getADouble("C:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+          nextConstant4 = getADouble("D:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+          customSpecies.setVapourHeatCapacityConstants(nextConstant1, nextConstant2, nextConstant3, nextConstant4);
+          
+          
+          output.println("\n Enter Liquid heat capacity coefficients for A, B, C, and D:");
+          nextConstant1 = getADouble("A:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+          nextConstant2 = getADouble("B:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+          nextConstant3 = getADouble("C:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+          nextConstant4 = getADouble("D:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+          customSpecies.setLiquidHeatCapacityConstants(nextConstant1, nextConstant2, nextConstant3, nextConstant4);
+          
+          output.println("\nEnter Antoine equation constant (units of Pa, K) for A, B, and C :");
+          nextConstant1 = getADouble("A:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+          nextConstant2 = getADouble("B:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+          nextConstant3 = getADouble("C:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+          nextConstant4 = getADouble("Lower T:", 0.0, Double.MAX_VALUE, scan, output, true);
+          nextConstant5 = getADouble("Upper T:", 0.0, Double.MAX_VALUE, scan, output, true);
+          customSpecies.setAntoineConstants(new AntoineCoefficients(nextConstant1, nextConstant2, nextConstant3, nextConstant4, nextConstant5));
+          
+          
+          output.println("Enter the critical temperature: ");          
+          nextConstant1 = getADouble(" Critical temperature for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
+          customSpecies.setCriticalTemperature(nextConstant1);
+          
+          ideal = ' ';
+          while (ideal != 'y' && ideal != 'n') {          
+            ideal = getAChar("\nWill the simulation be run in ideal-gas mode?\n  [y]es   [n]o\n", scan, output);
+          }
+          
+          if (ideal == 'n') {
+            
+            scan.nextLine();
+            
+            output.println("Enter the critical pressure: ");
+            nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
+            customSpecies.setCriticalPressure(nextConstant1);
+            
+            
+            output.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
+            nextConstant1 = getADouble("Acentric factor for "+customSpecies.getSpeciesName()+":", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
+            customSpecies.setAcentricFactor(nextConstant1);
+            
+          }
+          
+          double[] verificationPrint4 = new double[4];
+          double[] verificationPrint3 = new double[3]; //can i avoid initializing two arrays to accomodate different lengths?
+          
+          output.println("Are these properties correct?\n");
+          output.println("------------------------------------------------\n");
+          verificationPrint4 = customSpecies.getVapourHeatCapacityConstants();
+          output.println("Vapour heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
+                         " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
+          verificationPrint4 = customSpecies.getLiquidHeatCapacityConstants();
+          output.println("Liquid heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
+                         " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
+          verificationPrint3 = customSpecies.getAntoineConstants(1.0); // Hacky -- should use a real number / accurate range
+          output.println("Antoine equation constants:        A="+verificationPrint3[0]+" B="+verificationPrint3[1]+" C="+verificationPrint3[2]);
+          if (ideal == 'n') {
+            output.println("Critical temperature:             "+customSpecies.getCriticalTemperature()+" K");
+            output.println("Critical pressure:                "+customSpecies.getCriticalPressure()+" Pa");
+            output.println("Acentric factor:                  "+customSpecies.getAcentricFactor()+"\n");
+          }
+          output.println("\n------------------------------------------------\n");
+          
+          char choice = ' '; 
+          while (choice != 'y' && choice != 'n') {          
+            choice = getAChar("\nAre the custom species properties correct?\n  [y]es   [n]o\n", scan, output);
+          }
+          if (choice == 'y') break;
+          if (choice == 'n') this.theseSpecies.remove(customSpecies) ;
         }
         
-        output.println("\n Enter Vapour heat capacity coefficients for A, B, C, and D:");        
-        nextConstant1 = getADouble("A:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant2 = getADouble("B:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant3 = getADouble("C:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant4 = getADouble("D:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-        customSpecies.setVapourHeatCapacityConstants(nextConstant1, nextConstant2, nextConstant3, nextConstant4);
-        
-        
-        output.println("\n Enter Liquid heat capacity coefficients for A, B, C, and D:");
-        nextConstant1 = getADouble("A:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant2 = getADouble("B:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant3 = getADouble("C:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant4 = getADouble("D:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-        customSpecies.setLiquidHeatCapacityConstants(nextConstant1, nextConstant2, nextConstant3, nextConstant4);
-        
-        output.println("\nEnter Antoine equation constant (units of Pa, K) for A, B, and C :");
-        nextConstant1 = getADouble("A:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant2 = getADouble("B:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant3 = getADouble("C:", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-        nextConstant4 = getADouble("Lower T:", 0.0, Double.MAX_VALUE, scan, output, true);
-        nextConstant5 = getADouble("Upper T:", 0.0, Double.MAX_VALUE, scan, output, true);
-        customSpecies.setAntoineConstants(new AntoineCoefficients(nextConstant1, nextConstant2, nextConstant3, nextConstant4, nextConstant5));
-        
-        
-        output.println("Enter the critical temperature: ");          
-        nextConstant1 = getADouble("Critical temperature for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
-        customSpecies.setCriticalTemperature(nextConstant1);
-        
-        ideal = ' ';
-        while (ideal != 'y' && ideal != 'n') {          
-          ideal = getAChar("\nWill the simulation be run in ideal-gas mode?\n  [y]es   [n]o\n", scan, output);
-         }
-        
-        if (ideal == 'n') {
-          
-          scan.nextLine();
-          
-          output.println("Enter the critical pressure: ");
-          nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
-          customSpecies.setCriticalPressure(nextConstant1);
-          
-          
-          output.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
-          nextConstant1 = getADouble("Acentric factor for "+customSpecies.getSpeciesName()+":", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
-          customSpecies.setAcentricFactor(nextConstant1);
-          
-        }
-        
-        double[] verificationPrint4 = new double[4];
-        double[] verificationPrint3 = new double[3]; //can i avoid initializing two arrays to accomodate different lengths?
-        
-        output.println("Are these properties correct?\n");
-        output.println("------------------------------------------------\n");
-        verificationPrint4 = customSpecies.getVapourHeatCapacityConstants();
-        output.println("Vapour heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
-                       " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
-        verificationPrint4 = customSpecies.getLiquidHeatCapacityConstants();
-        output.println("Liquid heat capacity coefficients: A="+verificationPrint4[0]+" B="+verificationPrint4[1]+
-                       " C="+verificationPrint4[2]+" D="+verificationPrint4[3]);
-        verificationPrint3 = customSpecies.getAntoineConstants(1.0); // Hacky -- should use a real number / accurate range
-        output.println("Antoine equation constants:        A="+verificationPrint3[0]+" B="+verificationPrint3[1]+" C="+verificationPrint3[2]);
-        if (ideal == 'n') {
-          output.println("Critical temperature:             "+customSpecies.getCriticalTemperature()+" K");
-          output.println("Critical pressure:                "+customSpecies.getCriticalPressure()+" Pa");
-          output.println("Acentric factor:                  "+customSpecies.getAcentricFactor()+"\n");
-        }
-        output.println("\n------------------------------------------------\n");
-        
-        char choice = ' '; 
-        while (choice != 'y' && choice != 'n') {          
-          choice = getAChar("\nAre the custom species properties correct?\n  [y]es   [n]o\n", scan, output);
-        }
-        if (choice == 'y') break;
-        if (choice == 'n') this.theseSpecies.remove(customSpecies) ;
       }
       break;
     }
   }
+  
   
   public static void printStreams(Scanner scan, PrintWriter output, FlowStream inletStream, FlowStream outletStream) {
     int i;
