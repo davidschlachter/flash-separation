@@ -78,31 +78,55 @@ public class Test_RachfordRice extends TestCase {
     assertTrue(test.getVapourFraction() > 0.30 && test.getVapourFraction() < 0.32);
   }
   
-  public void testNonIdealSolution() {
-    System.out.println("Starting testNonIdealSolution.");
-    
-    List<FlowSpecies> presetSpecies = PresetSpecies.get();
-    FlowStream inletStream = new FlowStream();
-    
-    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(0)));
-    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.2);
-    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(1)));
-    inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.3);
-    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(2)));
-    inletStream.getFlowSpecies().get(2).setOverallMoleFraction(0.5);
-    
-    inletStream.setIsIdeal(false);
-    inletStream.setMolarFlowRate(10.0);
-    inletStream.setPressure(101325.0);
-    inletStream.setTemperature(41.49+273.15);
-    
-    
-    FlowStream solvedStream = new RachfordRice(inletStream).solve();
-    
-    FlowStream idealStream = new FlowStream(inletStream);
-    inletStream.setIsIdeal(true);
-    solvedStream = new RachfordRice(inletStream).solve();
-  }
+  
+
+   /*public void testNonIdealSolution() {
+=======
+  /*  public void testNonIdealSolution() {
+      System.out.println("Starting testNonIdealSolution.");
+>>>>>>> ffc22b6c99073d002154fc11ba8a84a6cc9de2fb
+   FlowStream testStream = new FlowStream();
+   
+   FlowSpecies nHexane = new FlowSpecies();
+   nHexane.setAntoineConstants(new AntoineCoefficients(9.00165, 1170.87529, -48.833, 1., 1000.));
+   nHexane.setOverallMoleFraction(0.25);
+   nHexane.setCriticalTemperature(507.6);
+   nHexane.setCriticalPressure(3025000.);
+   nHexane.setAcentricFactor(0.301);
+   FlowSpecies ethanol = new FlowSpecies();
+   ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 1., 1000.));
+   ethanol.setOverallMoleFraction(0.4);
+   ethanol.setCriticalTemperature(513.9);
+   ethanol.setCriticalPressure(6148000.);
+   ethanol.setAcentricFactor(0.645); 
+   FlowSpecies mcp = new FlowSpecies();
+   mcp.setAntoineConstants(new AntoineCoefficients(8.98773, 1186.059, -47.108, 1., 1000.));
+   mcp.setOverallMoleFraction(0.2);
+   mcp.setCriticalTemperature(532.73);
+   mcp.setCriticalPressure(3784000.);
+   mcp.setAcentricFactor(0.2302);
+   FlowSpecies benzene = new FlowSpecies();
+   benzene.setAntoineConstants(new AntoineCoefficients(8.9854, 1184.23854, -55.578, 1., 1000.));
+   benzene.setOverallMoleFraction(0.15);
+   benzene.setCriticalTemperature(562.2);
+   benzene.setCriticalPressure(4898000.);
+   benzene.setAcentricFactor(0.210); 
+   
+   testStream.addFlowSpecies(nHexane);
+   testStream.addFlowSpecies(ethanol);
+   testStream.addFlowSpecies(mcp);
+   testStream.addFlowSpecies(benzene);
+   testStream.setIsIdeal(false);
+   testStream.setMolarFlowRate(10.0);
+   testStream.setPressure(101325.0);
+   testStream.setTemperature(330.0);
+   
+   
+   FlowStream solvedStream = new RachfordRice(testStream).solve();
+   ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), solvedStream, solvedStream);
+   
+
+   }*/
   
   public void testLargerFlowStream(){
     //System.out.println("\nStarting testLargerFlowStream");
@@ -144,6 +168,15 @@ public class Test_RachfordRice extends TestCase {
     double benzeneLiquidMoleFraction = solvedFlowStream.getFlowSpecies().get(3).getLiquidMoleFraction();
     double benzeneVapourMoleFraction = solvedFlowStream.getFlowSpecies().get(3).getVapourMoleFraction(); 
     
+    /*System.out.println("x1: "+nHexaneLiquidMoleFraction);
+    System.out.println("y1: "+nHexaneVapourMoleFraction);
+    System.out.println("x2: "+ethanolLiquidMoleFraction);
+    System.out.println("y2: "+ethanolVapourMoleFraction);
+    System.out.println("x3: "+mcpLiquidMoleFraction);
+    System.out.println("y3: "+mcpVapourMoleFraction);
+    System.out.println("x4: "+benzeneLiquidMoleFraction);
+    System.out.println("y4: "+benzeneVapourMoleFraction);*/
+    
   }
-  
+
 }

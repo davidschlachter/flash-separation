@@ -29,7 +29,7 @@ public class RachfordRice implements DifferentiableFunction {
     double dewPointTemperature = new DewPoint(this.flowStream).calc();
     double bubblePointTemperature = new BubblePoint(this.flowStream).calc();
     //System.out.println("Got dewpoint "+dewPointTemperature+" and bubblepoint "+bubblePointTemperature);
-    double vOverF = RiddersMethod.calc(this, 0.0, 1.0, 0.001, false);
+    double vOverF = NewtonRaphson.calc(this, 0.85, 0.1);
     
     if (this.flowStream.getTemperature() > dewPointTemperature) {
       for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
@@ -122,7 +122,7 @@ public class RachfordRice implements DifferentiableFunction {
     }
     
     if (this.flowStream.getIsIdeal() == false && Double.isNaN(x) == false) {
-      //System.out.println("Setting parameters now in testFunction, and V/F here is "+x);
+      System.out.println("Setting parameters now in testFunction, and V/F here is "+x);
       double liquidMoleFraction, vapourMoleFraction;
       for (i = 0; i < this.flowStream.getFlowSpecies().size(); i++) {
         
@@ -150,7 +150,7 @@ public class RachfordRice implements DifferentiableFunction {
        for(int z=0; z<this.flowStream.getFlowSpecies().size();z++){
        System.out.println("individual b"+z+" is: "+this.flowStream.getFlowSpecies().get(z).getBI());
        } */
-      //ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), this.flowStream, this.flowStream);
+      ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), this.flowStream, this.flowStream);
     }
     
     return result; 

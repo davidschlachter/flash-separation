@@ -7,36 +7,36 @@ public class FlowSpecies extends Species {
   private double liquidMoleFraction = 0.0;
   private double vapourMoleFraction = 0.0;
   
-  // Individual component kapp values for PR calculations
+  //individual component kapp values for PR calculations
   private double kappa = 0.0;
   
-  // Individual species alpha value for PR calculations
+  //individual species alpha value for PR calculations
   private double alpha = 0.0;
   
-  // Individual a values for PR calculations
+  //individual a values for PR calculations
   private double ai = 0.0;
   
-  // Individual b value for PR calculations
+  //individual b value for PR calculations
   private double bi = 0.0;
   
-  // Individual LargeA for PR calcs
+  //individual LargeA for PR calcs
   private double speciesA = 0.0;
   
-  // Individual LargeA for PR calcs
+  //individual LargeA for PR calcs
   private double speciesB = 0.0;
   
-  // Individual vapour fugacity for PR
+  //individual vapour fugacity for PR
   private double vapourFugacity = 0.0;
   
-  // Individual liquid fugacity for PR
+  //individual liquid fugacity for PR
   private double liquidFugacity = 0.0;
   
-  // Constructor
+  //Constructor
   public FlowSpecies() {
     super();
   }
   
-  // Copy constructor
+  //Copy Constructor
   public FlowSpecies (FlowSpecies source) {
     super(source);
     this.overallMoleFraction = source.overallMoleFraction;
@@ -50,7 +50,7 @@ public class FlowSpecies extends Species {
     this.speciesB = source.speciesB;
     this.vapourFugacity = source.vapourFugacity;
     this.liquidFugacity = source.liquidFugacity;
-  }
+   }
   
   // Setters
   public boolean setOverallMoleFraction(double overallMoleFraction) {
@@ -62,13 +62,25 @@ public class FlowSpecies extends Species {
     }
   }
   
-  public boolean setLiquidMoleFraction(double liquidMoleFraction) {
-    if(vapourMoleFraction >= 0.0 && vapourMoleFraction <= 1.0) {
-      this.vapourMoleFraction = vapourMoleFraction;
-      return true;
-    } else {
-      return false;
+  public boolean setLiquidMoleFraction(double liquidMoleFraction, boolean restrict) {
+    if(restrict) {
+      if (liquidMoleFraction >= 0.0 && liquidMoleFraction <= 1.0) {
+        this.liquidMoleFraction = liquidMoleFraction;
+        return true;
+      } else {
+        return false;
+      }
     }
+    else {
+      this.liquidMoleFraction = liquidMoleFraction;
+      return true;
+    }
+  }
+  
+  public boolean setLiquidMoleFraction(double liquidMoleFraction) {
+    boolean restrict = true;
+    return setLiquidMoleFraction(liquidMoleFraction, restrict);
+    //return true; //will returning output of above method still set liquid mole fraction?
   }
   
   public boolean setVapourMoleFraction(double vapourMoleFraction) {
@@ -80,7 +92,7 @@ public class FlowSpecies extends Species {
     }
   }
   
-  public void setKappa(double kappa){
+  public void setKappa(double kappa){    // TODO: develop restrictions on setters for PR
     this.kappa = kappa;
   }
   
@@ -177,4 +189,5 @@ public class FlowSpecies extends Species {
   public FlowSpecies clone() {
     return new FlowSpecies(this);
   }
+  
 }
