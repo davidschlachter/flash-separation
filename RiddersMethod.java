@@ -70,11 +70,11 @@ public class RiddersMethod extends RootFinder {
       }
       error = Math.abs(xR - xR_old)/xR;
       if((j > 0) && (error < xacc)) {
-        System.out.println("Root was found to be "+xR+" evaluated at "+fR);
+        if (verbose == true) System.out.println("Root was found to be "+xR+" evaluated at "+fR);
         return xR;
       }
     }
-    System.out.println("Root was found to be "+xR+" evaluated at "+func.testFunction(xR));
+    if (verbose == true) System.out.println("Root was found to be "+xR+" evaluated at "+func.testFunction(xR));
     return xR;
   }
 }
