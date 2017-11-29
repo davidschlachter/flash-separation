@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.io.PrintWriter;
+import java.lang.IllegalArgumentException;
 
 public class RachfordRice implements DifferentiableFunction {
   
@@ -95,7 +96,8 @@ public class RachfordRice implements DifferentiableFunction {
   }
   
   // Test function for the root finder
-  public double testFunction(double x) {
+  public double testFunction(double x) throws IllegalArgumentException {
+    if(x<0 || x>1) throw new IllegalArgumentException("Error! Rachford-Rice V/F must be between 0 and 1.");
     int i;
     double result = 0.0;
     

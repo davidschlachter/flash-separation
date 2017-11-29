@@ -1,3 +1,5 @@
+import java.lang.IllegalArgumentException;
+
 /**
  * Class that returns the bubble point of a stream of given composition at a given pressure
  */
@@ -29,7 +31,8 @@ public class BubblePoint implements Function {
   }
   
   // Test function for the root finder
-  public double testFunction(double x) {
+  public double testFunction(double x) throws IllegalArgumentException {
+    if(x < 0) throw new IllegalArgumentException("Error! Bubble point calculation input temperature is below zero.");
     int i;
     double result = 0.0;
     

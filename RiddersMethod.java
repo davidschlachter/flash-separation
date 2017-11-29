@@ -1,15 +1,32 @@
 public class RiddersMethod extends RootFinder {
   
-  // Static method to find the root of a Function's testFunction method
+  // Handle illegal arguments into a Function's testFunction method
   public static double calc(Function func, double x1, double x2, double xacc) {
-    // Run Ridders' method in non-verbose mode
     return RiddersMethod.calc(func, x1, x2, xacc, false);
   }
   
-  
-  
-// Verbose version!
+  // Verbose version!
   public static double calc(Function func, double x1, double x2, double xacc, boolean verbose) {
+    try {
+      return RiddersMethod.findRoot(func, x1, x2, xacc, verbose);
+    }
+    catch (IllegalArgumentException e) {
+      System.out.println(e.getMessage());
+      
+      // should probably give the user a second chance to enter parameters. So using scanner?
+      
+      return 69;
+    }
+  }
+  
+  // Static method to find the root of a Function's testFunction method
+  public static double findRoot(Function func, double x1, double x2, double xacc) {
+    // Run Ridders' method in non-verbose mode
+    return RiddersMethod.findRoot(func, x1, x2, xacc, false);
+  }
+  
+  // Verbose version!
+  public static double findRoot(Function func, double x1, double x2, double xacc, boolean verbose) {
     double xL, xU, xM, xR_old, xR, error;
     xL = x1;
     xU = x2;
