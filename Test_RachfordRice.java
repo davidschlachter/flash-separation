@@ -146,4 +146,40 @@ public class Test_RachfordRice extends TestCase {
     
   }
   
+  // Test our solution against one from the program provided by LearnChemE at
+  // https://sourceforge.net/projects/chethermo/files/latest/download
+  // We've independently validated this system with this Peng Robinson solver as well
+  // http://people.ds.cam.ac.uk/pjb10/thermo/mixture.html
+  public void testNonIdealValidatedSolution() {
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    FlowStream inletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(0)));  // Ethane
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.7);
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(1)));  // Pentane
+    inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.3);
+    
+    inletStream.setIsIdeal(false);
+    inletStream.setMolarFlowRate(1.0);
+    inletStream.setPressure(100000.0); // 1 bar
+    inletStream.setTemperature(254.0);
+    
+    FlowStream idealStream = new FlowStream(inletStream);
+    idealStream.setIsIdeal(true);
+    
+    FlowStream solvedNonIdealStream = new RachfordRice(inletStream).solve();
+    
+    FlowStream solvedIdealStream = new RachfordRice(new FlowStream(idealStream)).solve();
+    
+    // First, test expected results for the ideal solution
+    assertTrue(Math.abs(solvedIdealStream.getVapourFraction() - 0.75207) < 0.01);
+    assertTrue(Math.abs(solvedIdealStream.getFlowSpecies().get(0).getLiquidMoleFraction() - 0.062) < 0.01);
+    assertTrue(Math.abs(solvedIdealStream.getFlowSpecies().get(0).getVapourMoleFraction() - 0.910) < 0.01);
+    
+    // Next, test for the expected non-ideal results
+    assertTrue(Math.abs(solvedNonIdealStream.getVapourFraction() - 0.7538) < 0.01);
+    assertTrue(Math.abs(solvedNonIdealStream.getFlowSpecies().get(0).getLiquidMoleFraction() - 0.0723) < 0.01);
+    assertTrue(Math.abs(solvedNonIdealStream.getFlowSpecies().get(0).getVapourMoleFraction() - 0.9050) < 0.01);
+  }
+  
 }
