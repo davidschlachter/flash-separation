@@ -322,6 +322,9 @@ public class ConsoleUI {
          }
         
         if (ideal == 'n') {
+          
+          scan.nextLine();
+          
           output.println("Enter the critical pressure: ");
           nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
           customSpecies.setCriticalPressure(nextConstant1);
