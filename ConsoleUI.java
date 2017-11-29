@@ -26,7 +26,6 @@ public class ConsoleUI {
     String nextString;
     boolean firstRun = true;
     
-    
     //
     // Get the list of species that will be simulated
     //
@@ -40,10 +39,9 @@ public class ConsoleUI {
         for (i = 0; i < this.theseSpecies.size(); i++) {
           output.println("  " + this.theseSpecies.get(i).getSpeciesName());
         }
-        output.print("\n");
+        output.println();
       }
       
-      if (firstRun == false) scan.nextLine();
       choice = getAChar("Select an action: [a]dd species   [r]emove species   [d]one\n", scan, output);
       
       if (choice == 'a') this.addSpecies(scan, output);
@@ -144,6 +142,7 @@ public class ConsoleUI {
     //
     // Set general stream properties (T, P, flowrate)
     //
+    scan.nextLine();
     output.println("\nFor the input stream, enter the following properties if known:");
     nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
     inletStream.setTemperature(nextDouble);
@@ -460,11 +459,10 @@ public class ConsoleUI {
   
   private char getAChar(String message, Scanner scan, PrintWriter output) {
     char choice;
-    boolean firstRun = true;
     while (true) {
       try {
         output.println(message);
-        choice = scan.nextLine().charAt(0);
+        choice = scan.next().charAt(0);
         break;
       } catch (InputMismatchException e) {
         output.println("\nWARNING: Invalid input\n");
