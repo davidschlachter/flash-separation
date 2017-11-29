@@ -8,7 +8,7 @@ public class Test_SaturationPressure extends TestCase {
   public void testCalc() {
     Species testSpecies = new Species();
     
-    // Antoine coefficients for water between 0-100 ºC, with units in Pa, K
+    // Antoine coefficients for water between 0-100 ÂºC, with units in Pa, K
     // source: Wikipedia  :)
     testSpecies.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
     // Temperature in K for the saturation pressure calculation
