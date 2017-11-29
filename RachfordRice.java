@@ -117,7 +117,14 @@ public class RachfordRice implements DifferentiableFunction {
         nonIdealStream.nonIdealCalcs();
         liquidFugacity = nonIdealStream.getFlowStream().getFlowSpecies().get(i).getLiquidFugacity();
         vapourFugacity = nonIdealStream.getFlowStream().getFlowSpecies().get(i).getVapourFugacity();
-        kMinusOne = ((liquidFugacity)/(vapourFugacity))-1;
+        if (this.flowStream.getFlowSpecies().get(i).getLiquidMoleFraction() == 0.0 &&
+            this.flowStream.getFlowSpecies().get(i).getVapourMoleFraction() == 0.0 ) {
+          kMinusOne = (this.flowStream.getFlowSpecies().get(i).getCriticalPressure()*Math.pow(10, 
+                                                                                              (7/3)*(1+this.flowStream.getFlowSpecies().get(i).getAcentricFactor()*(1-
+                                                                                                                                                                    this.flowStream.getFlowSpecies().get(i).getCriticalTemperature()/this.flowStream.getTemperature()))))/this.flowStream.getPressure()-1;
+        } else {
+          kMinusOne = ((liquidFugacity)/(vapourFugacity))-1;
+        }
       }
       result += (overallMoleFraction*kMinusOne)/(1 + x*kMinusOne) ;
       
@@ -133,7 +140,14 @@ public class RachfordRice implements DifferentiableFunction {
         liquidFugacity = this.flowStream.getFlowSpecies().get(i).getLiquidFugacity();
         vapourFugacity = this.flowStream.getFlowSpecies().get(i).getVapourFugacity();
         pressure = this.flowStream.getPressure();
-            kMinusOne = (liquidFugacity/vapourFugacity)-1;   //TODO: Find out why liquid fugacity is coming up as zero!
+        if (this.flowStream.getFlowSpecies().get(i).getLiquidMoleFraction() == 0.0 &&
+            this.flowStream.getFlowSpecies().get(i).getVapourMoleFraction() == 0.0 ) {
+          kMinusOne = (this.flowStream.getFlowSpecies().get(i).getCriticalPressure()*Math.pow(10, 
+                                                                                              (7/3)*(1+this.flowStream.getFlowSpecies().get(i).getAcentricFactor()*(1-
+                                                                                                                                                                    this.flowStream.getFlowSpecies().get(i).getCriticalTemperature()/this.flowStream.getTemperature()))))/this.flowStream.getPressure()-1;
+        } else {
+          kMinusOne = ((liquidFugacity)/(vapourFugacity))-1;
+        }
         
         liquidMoleFraction = overallMoleFraction/(1 + x*kMinusOne);
         this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(liquidMoleFraction);
@@ -175,7 +189,7 @@ public class RachfordRice implements DifferentiableFunction {
       if(this.flowStream.getIsIdeal()==true){
         kMinusOne = (saturationPressure)/(pressure)-1;
       } else {
-          kMinusOne = ((liquidFugacity)/(vapourFugacity))-1;
+        kMinusOne = ((liquidFugacity)/(vapourFugacity))-1;
       }
       
       

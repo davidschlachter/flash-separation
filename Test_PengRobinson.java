@@ -1,3 +1,5 @@
+import java.util.List;
+import java.util.ArrayList;
 import junit.framework.TestCase;
 
 public class Test_PengRobinson extends TestCase {
@@ -141,22 +143,41 @@ public class Test_PengRobinson extends TestCase {
   
   public void testSolveFugacities(){
   
-  PengRobinson testPeng = createTestPeng();
-  testPeng.nonIdealCalcs();
+  List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    FlowStream inletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(0)));  // Ethane
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.7);
+    inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.0722566);
+    inletStream.getFlowSpecies().get(0).setVapourMoleFraction(0.905077);
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(1)));  // Pentane
+    inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.3);
+    inletStream.getFlowSpecies().get(1).setLiquidMoleFraction(0.9277433);
+    inletStream.getFlowSpecies().get(1).setVapourMoleFraction(0.094923);
+    
+    inletStream.setIsIdeal(false);
+    inletStream.setMolarFlowRate(1.0);
+    inletStream.setPressure(100000.0); // 1 bar
+    inletStream.setTemperature(254.0);
+    
+    PengRobinson testPeng = new PengRobinson(inletStream);
+    testPeng.nonIdealCalcs();
   
   double pentaneVap = testPeng.getFlowStream().getFlowSpecies().get(0).getVapourFugacity();
-  double pentaneLiq = testPeng.getFlowStream().getFlowSpecies().get(0).getLiquidFugacity();
+  double pentaneLiq = testPeng.getFlowStream().getFlowSpecies().get(0).getLiquidFugacity(); //ethane
   double hexaneVap = testPeng.getFlowStream().getFlowSpecies().get(1).getVapourFugacity();
-  double hexaneLiq = testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity();
-  double heptaneVap = testPeng.getFlowStream().getFlowSpecies().get(2).getVapourFugacity();
-  double heptaneLiq = testPeng.getFlowStream().getFlowSpecies().get(2).getLiquidFugacity();
+  double hexaneLiq = testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity(); //pentane
+  
+  System.out.println("ethane vapour fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(0).getVapourFugacity());
+  System.out.println("ethane liquid fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(0).getLiquidFugacity());
+  System.out.println("pentane vapour fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(1).getVapourFugacity());
+  System.out.println("pentane liquid fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity());
   
   assertTrue(pentaneVap < 0.969 && pentaneVap > 0.963);
   assertTrue(pentaneLiq < 1.49 && pentaneLiq > 1.41);
   assertTrue(hexaneVap < 0.959 && hexaneVap > 0.948);
   assertTrue(hexaneLiq < 0.55 && hexaneLiq > 0.45);
-  assertTrue(heptaneVap < 0.945 && heptaneVap > 0.935);
-  assertTrue(heptaneLiq < 0.19 && heptaneLiq > 0.18);
+
   
   }
   
