@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.lang.IllegalArgumentException;
 
 /*
  * Species stores the physical properties of a given species
@@ -25,16 +24,41 @@ public class Species{
   // Critical temperature
   private double criticalTemperature = 0.0;
   
-  // Critical Pressure for computation of non-ideal case
+  //Critical Pressure for computation of non-ideal case
   private double criticalPressure = 0.0;
   
-  // Accentricity value for computation of non-ideal case
+  
+  //Accentricity value for computation of non-ideal case
   private double acentricFactor = 0.0;
+  
+  //individual component kapp values for PR calculations
+  private double kappa = 0.0;
+  
+  //individual species alpha value for PR calculations
+  private double alpha = 0.0;
+  
+  //individual a values for PR calculations
+  private double ai = 0.0;
+  
+  //individual b value for PR calculations
+  private double bi = 0.0;
+  
+  //individual LargeA for PR calcs
+  private double speciesA = 0.0;
+  
+  //individual LargeA for PR calcs
+  private double speciesB = 0.0;
+  
+  //individual vapour fugacity for PR
+  private double vapourFugacity = 0.0;
+  
+  //individual liquid fugacity for PR
+  private double liquidFugacity = 0.0;
   
   // Constructor
   public Species() {}
   
-  // Copy constructor
+  //Copy Constructor
   public Species (Species source) {
     int i;
     this.speciesName = source.speciesName;
@@ -58,70 +82,114 @@ public class Species{
     this.acentricFactor = source.acentricFactor;
   }
   
-  // Clone method
-  public Species clone() {
-    return new Species(this);
-  }
-  
   // Setters
   public void setSpeciesName(String speciesName) {
     this.speciesName = speciesName;
   }
   
-  public void setVapourHeatCapacityConstants(double vapourHeatCapacityA, double vapourHeatCapacityB, 
-                                             double vapourHeatCapacityC, double vapourHeatCapacityD) {
-    this.vapourHeatCapacity[0] = vapourHeatCapacityA;
-    this.vapourHeatCapacity[1] = vapourHeatCapacityB;
-    this.vapourHeatCapacity[2] = vapourHeatCapacityC;
-    this.vapourHeatCapacity[3] = vapourHeatCapacityD;
+  public void setVapourHeatCapacityConstants(double heatCapacityA, double heatCapacityB, double heatCapacityC, double heatCapacityD) {
+    this.vapourHeatCapacity[0] = heatCapacityA;
+    this.vapourHeatCapacity[1] = heatCapacityB;
+    this.vapourHeatCapacity[2] = heatCapacityC;
+    this.vapourHeatCapacity[3] = heatCapacityD;
   }
   
-  public void setLiquidHeatCapacityConstants(double liquidHeatCapacityA, double liquidHeatCapacityB, 
-                                             double liquidHeatCapacityC, double liquidHeatCapacityD) {
+  public void setLiquidHeatCapacityConstants(double liquidHeatCapacityA, double liquidHeatCapacityB, double liquidHeatCapacityC, double liquidHeatCapacityD) {
     this.liquidHeatCapacity[0] = liquidHeatCapacityA;
     this.liquidHeatCapacity[1] = liquidHeatCapacityB;
     this.liquidHeatCapacity[2] = liquidHeatCapacityC;
     this.liquidHeatCapacity[3] = liquidHeatCapacityD;
   }
   
-  public void setAntoineConstants(List<AntoineCoefficients> source) throws IllegalArgumentException {
-    if(source==null) throw new IllegalArgumentException("Error! Antoine coefficients list input is empty.");
+  public void setAntoineConstants(List<AntoineCoefficients> source) {
+    int i;
     this.antoineCoefficients = new ArrayList<AntoineCoefficients>();
-    for (int i=0; i<source.size(); i++) {
+    for (i = 0; i < source.size(); i++) {
       this.antoineCoefficients.add(new AntoineCoefficients(source.get(i)));
     }
   }
   
-  public void setAntoineConstants(AntoineCoefficients source) throws IllegalArgumentException {
-    //this.antoineCoefficients = new ArrayList<AntoineCoefficients>(); //not sure if this line is needed
-    if(source==null) throw new IllegalArgumentException("Error! Antoine coefficients input is empty.");
+  public void setAntoineConstants(AntoineCoefficients source) {
+    this.antoineCoefficients = new ArrayList<AntoineCoefficients>();
     this.antoineCoefficients.add(new AntoineCoefficients(source));
   }
   
-  public void setHeatOfVapourization(double heatOfVapourization) throws IllegalArgumentException {
-    if (heatOfVapourization < 0.0) throw new IllegalArgumentException("Error! Heat of vapourization must be positive.");
-    else this.heatOfVapourization = heatOfVapourization;
+  public boolean setHeatOfVapourization(double heatOfVapourization) {
+    if (heatOfVapourization >= 0.0) {
+      this.heatOfVapourization = heatOfVapourization;
+      return true;
+    } else {
+      System.out.println("Enter a positive value for heat of vapourization.");
+      return false;
+    }
   }
   
-  public void setCriticalTemperature (double criticalTemperature) throws IllegalArgumentException {
-    if (criticalTemperature < 0.0) throw new IllegalArgumentException("Error!"+
-                                                                      "Critical temperature [K] must be positive.");
-    else this.criticalTemperature = criticalTemperature;
+  public boolean setCriticalTemperature (double criticalTemperature) {
+    if (criticalTemperature > 0.0) {
+      this.criticalTemperature = criticalTemperature;
+      return true;
+    } else {
+      System.out.println("All temperatures must be in Kelvin. Enter a positive value for temperature.");
+      return false;
+    }
   }
   
-  public void setCriticalPressure (double criticalPressure) throws IllegalArgumentException {
-    if (criticalPressure < 0.0) throw new IllegalArgumentException("Error! Critical pressure [Pa] must be positive.");
-    else this.criticalPressure = criticalPressure;
+  public boolean setCriticalPressure (double criticalPressure) {
+    if (criticalPressure > 0.0) {
+      this.criticalPressure = criticalPressure;
+      return true;
+    } else {
+      System.out.println("All pressures must be in Pascals. Enter a positive value for Pressure."); //TODO: check units and make sure this is appropriate
+      return false;
+    }
   }
   
-  public void setAcentricFactor (double acentricFactor) throws IllegalArgumentException{
-    if (acentricFactor < -1.0 || acentricFactor > 1.0 ) throw new IllegalArgumentException("Error!"+
-                                                                                           "Acentric factor must be "+
-                                                                                           "between -1.0 and 1.0.");
-    else this.acentricFactor = acentricFactor;
+  public boolean setAcentricFactor (double acentricFactor) {
+    if (acentricFactor >= -1.0 && acentricFactor <= 1.0 ) {
+      this.acentricFactor = acentricFactor;
+      return true;
+    } else {
+      System.out.println("All accentricities must be between -1.0 and 1.0. Enter an appropriate value for the acentric factor.");
+      return false;
+    }
+    
   }
+  
+  public void setKappa(double kappa){    // TODO: develop restrictions on setters for PR
+    this.kappa = kappa;
+  }
+  
+  public void setAlpha(double alpha){
+    this.alpha = alpha;
+  }
+  
+  public void setAI(double ai){
+    this.ai = ai;
+  }
+  
+  public void setBI(double bi){
+    this.bi=bi;
+  }
+  
+  public void setSpeciesA(double speciesA){
+    this.speciesA = speciesA;
+  }
+  
+  public void setSpeciesB(double speciesB){
+    this.speciesB = speciesB;
+  }
+  
+  public void setLiquidFugacity(double liquidFugacity){
+    this.liquidFugacity = liquidFugacity;
+  }
+  
+  public void setVapourFugacity(double vapourFugacity){
+    this.vapourFugacity = vapourFugacity;
+  }
+
   
   // Getters
+  
   public double[] getVapourHeatCapacityConstants() {
     double[] vapourHeatCapacityConstants = new double[4];
     vapourHeatCapacityConstants[0] = this.vapourHeatCapacity[0];
@@ -142,9 +210,7 @@ public class Species{
     return liquidHeatCapacityConstants;
   }
   
-  public double[] getAntoineConstants(double temperature) throws IllegalArgumentException {
-    if(temperature<0) throw new IllegalArgumentException("Antoine constants could not be retrieved. "+
-                                                         "Temperature [K] must be positive.");
+  public double[] getAntoineConstants(double temperature) {
     int i; // Number of Antoine coefficients
     int j=0; // Set number
     double[] allTimeMin = new double[2]; // allTimeMin stores an upper and a lower bound
@@ -152,7 +218,7 @@ public class Species{
     AntoineCoefficients thisSet;
     double[] antoineConstants = new double[3];
     
-    for (i=0; i<this.antoineCoefficients.size(); i++) {
+    for (i = 0; i < this.antoineCoefficients.size(); i++) {
       thisSet = this.antoineCoefficients.get(i);
       // Find a set of Antoine coefficients for the given temperature
       if (temperature >= thisSet.getLowerTemperatureBound() && temperature <= thisSet.getUpperTemperatureBound()) {
@@ -172,7 +238,6 @@ public class Species{
         }
       }
     }
-    
     // Check if the temperature is greater than stored max. and min. values
     if (temperature < allTimeMin[1]) {
       j = (int) Math.round(allTimeMin[0]);
@@ -200,9 +265,7 @@ public class Species{
   
   // Use the Watson correlation (see reference 5 in doi 10.1002/aic.690110226) to return the heat
   // of vapourization at a given temperature
-  public double getHeatOfVapourization(double temperature) throws IllegalArgumentException {
-    if(temperature<0) throw new IllegalArgumentException("Heat of vapourization could not be calculated. "+
-                                                         "Temperature [K] must be positive.");
+  public double getHeatOfVapourization(double temperature) {
     double reducedTemperature = temperature/this.criticalTemperature;
     double standardReducedTemperature = 298.15/this.criticalTemperature;
     return Math.pow((1-reducedTemperature)/(1-standardReducedTemperature),0.38)*this.heatOfVapourization;
@@ -219,6 +282,39 @@ public class Species{
   public double getAcentricFactor() {
     return this.acentricFactor;
   }
+  
+  public double getKappa(){
+    return this.kappa;
+  }
+  
+  public double getAlpha(){
+    return this.alpha;
+  }
+  
+  public double getAI(){
+    return this.ai;
+  }
+  
+  public double getBI(){
+    return this.bi;
+  }
+  
+  public double getSpeciesA(){
+    return this.speciesA;
+  }
+  
+  public double getSpeciesB(){
+    return this.speciesB;
+  }
+  
+  public double getLiquidFugacity(){
+    return this.liquidFugacity;
+  }
+  
+  public double getVapourFugacity(){
+    return this.vapourFugacity;
+  }
+  
   
   //Equals
   public boolean equals(Species other) {
@@ -251,4 +347,10 @@ public class Species{
        this.acentricFactor == other.acentricFactor) return true;
     else return false;
   }
+  
+  // Clone method
+  public Species clone() {
+    return new Species(this);
+  }
+  
 }

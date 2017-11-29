@@ -374,7 +374,7 @@ public class Test_Enthalpy extends TestCase {
     outlet.getFlowSpecies().get(0).setVapourMoleFraction(0.375);
     outlet.getFlowSpecies().get(1).setVapourMoleFraction(0.625);
     outlet.setVapourFraction(0.265);
-    outlet.setTemperature(365.5571094); // LearnChemE finds 365.0 as the adiabatic solution, but we have this Â¯\_(ãƒ„)_/Â¯ (found with Solver)
+    outlet.setTemperature(365.5571094); // LearnChemE finds 365.0 as the adiabatic solution, but we have this ¯\_(?)_/¯ (found with Solver)
     double theEnthalpy = new Enthalpy(inlet, outlet).calc();
     double theReverseEnthalpy = new Enthalpy(outlet, inlet).calc();
     

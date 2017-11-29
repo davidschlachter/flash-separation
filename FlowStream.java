@@ -15,20 +15,13 @@ public class FlowStream {
   private double temperature = 0.0;
   private double pressure = 0.0;
   private double vapourFraction = 0.0;
-  private double smallAX = 0.0;  
-  private double smallBX = 0.0;
-  private double largeAX = 0.0;
-  private double largeBX = 0.0;
-  private double smallAY = 0.0;
-  private double smallBY = 0.0;
-  private double largeAY = 0.0;
-  private double largeBY = 0.0;
   private double zL = 0.0;
   private double zV = 0.0;
   private boolean isIdeal = true;
-  private double streamA = 0.0;
-  private double streamB = 0.0;
-  
+  private double streamAX = 0.0;
+  private double streamBX = 0.0;
+  private double streamAY = 0.0;
+  private double streamBY= 0.0;
   // Default constructor
   public FlowStream() {
     flowSpecies = new ArrayList<FlowSpecies>();
@@ -107,38 +100,6 @@ public class FlowStream {
     }
   }
   
-  public void setSmallAX(double smallAX){
-    this.smallAX = smallAX;
-  }
-  
-  public void setSmallBX(double smallBX){
-    this.smallBX = smallBX;
-  }
-  
-  public void setLargeAX(double largeAX){
-    this.largeAX = largeAX;
-  }
-  
-  public void setLargeBX(double largeBX){
-    this.largeBX = largeBX;
-  }
-  
-  public void setSmallAY(double smallAY){
-    this.smallAY = smallAY;
-  }
-  
-  public void setSmallBY(double smallBY){
-    this.smallBY = smallBY;
-  }
-  
-  public void setLargeAY(double largeAY){
-    this.largeAY = largeAY;
-  }
-  
-  public void setLargeBY(double largeBY){
-    this.largeBY = largeBY;
-  }
-  
   public void setZL(double zL){
     this.zL = zL;
   }
@@ -151,12 +112,20 @@ public class FlowStream {
     this.isIdeal=isIdeal;
   }
   
-  public void setStreamA(double streamA){
-    this.streamA = streamA;
+  public void setStreamAX(double streamAX){
+    this.streamAX = streamAX;
   }
   
-  public void setStreamB(double streamB){
-    this.streamB = streamB;
+  public void setStreamBX(double streamBX){
+    this.streamBX = streamBX;
+  }
+  
+  public void setStreamAY(double streamAY){
+    this.streamAY = streamAY;
+  }
+  
+  public void setStreamBY(double streamBY){
+    this.streamBY = streamBY;
   }
   
   
@@ -181,38 +150,6 @@ public class FlowStream {
     return this.vapourFraction;
   }
   
-  public double getSmallAX(){
-    return this.smallAX;
-  }
-  
-  public double getSmallBX(){
-    return this.smallBX;
-  }
-  
-  public double getLargeAX(){
-    return this.largeAX;
-  }
-  
-  public double getLargeBX(){
-    return this.largeBX;
-  }
-  
-  public double getSmallAY(){
-    return this.smallAY;
-  }
-  
-  public double getSmallBY(){
-    return this.smallBY;
-  }
-  
-  public double getLargeAY(){
-    return this.largeAY;
-  }
-  
-  public double getLargeBY(){
-    return this.largeBY;
-  }
-  
   public double getZL(){
     return this.zL;
   }
@@ -221,12 +158,20 @@ public class FlowStream {
     return this.zV;
   }
   
-  public double getStreamA(){
-    return this.streamA;
+  public double getStreamAX(){
+    return this.streamAX;
   }
   
-  public double getStreamB(){
-    return this.streamB;
+  public double getStreamAY(){
+    return this.streamAY;
+  }
+  
+  public double getStreamBX(){
+    return this.streamBX;
+  }
+  
+  public double getStreamBY(){
+    return this.streamBY;
   }
   
   public boolean getIsIdeal(){
