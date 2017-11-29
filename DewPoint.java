@@ -1,3 +1,5 @@
+import java.lang.IllegalArgumentException;
+
 /**
  * Class that returns the dew point of a stream of given composition at a given pressure
  */
@@ -49,7 +51,9 @@ public class DewPoint implements Function {
   
   
   // Test function for the root finder
-  public double testFunction(double temperature) {
+  public double testFunction(double temperature) throws IllegalArgumentException {
+    if(temperature < 0) throw new IllegalArgumentException("Error! "+
+                                                           "Dew point calculation input temperature is below zero.");
     int i;
     double result = 0.0;
     

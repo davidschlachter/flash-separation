@@ -1,3 +1,5 @@
+import java.lang.IllegalArgumentException;
+
 //import java.util.Scanner;
 //import java.io.PrintWriter;
 
@@ -26,7 +28,8 @@ public class Enthalpy implements Function {
   }
   
   // For the root finder!
-  public double testFunction(double testTemp) {
+  public double testFunction(double testTemp) throws IllegalArgumentException {
+    if(testTemp < 0) throw new IllegalArgumentException("Error! Enthalpy calculation input temperature is below zero.");
     boolean inletSpecified;
     // Determine and set missing temperature
     FlowStream unspecifiedStream, specifiedStream;
