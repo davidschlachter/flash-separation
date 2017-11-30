@@ -174,10 +174,10 @@ public class Test_PengRobinson extends TestCase {
     System.out.println("pentane vapour fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(1).getVapourFugacity());
     System.out.println("pentane liquid fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity());
     
-    assertTrue(pentaneVap < 0.969 && pentaneVap > 0.963);
-    assertTrue(pentaneLiq < 1.49 && pentaneLiq > 1.41);
+    assertTrue(pentaneVap < 0.989 && pentaneVap > 0.985);
+    assertTrue(pentaneLiq < 12.4 && pentaneLiq > 12.2);
     assertTrue(hexaneVap < 0.959 && hexaneVap > 0.948);
-    assertTrue(hexaneLiq < 0.55 && hexaneLiq > 0.45);
+    assertTrue(hexaneLiq < 0.105 && hexaneLiq > 0.090);
     
     
   }
