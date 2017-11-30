@@ -29,13 +29,27 @@ public class Test_BubblePoint extends TestCase {
     testStream.addFlowSpecies(water);
     testStream.addFlowSpecies(ethanol);
     testStream.setPressure(101325.0);
-    double temperature = 400.0;
     
     BubblePoint testBubblePoint = new BubblePoint(testStream);
-    double testFunction = testBubblePoint.testFunction(temperature);
     
-    assertTrue("BubblePoint.testFunction()", testFunction > 2.80 && testFunction < 2.82);
+    // Test that testFunction is throwing the exception appropriately
+    double[] testFunction = {0.0, 0.0};
+    double[] T = {-400.0, 400.0};
+    boolean[] isThrown = {false, false};
     
+    for(int i=0; i<isThrown.length; i++) {
+      try {
+        testFunction[i] = testBubblePoint.testFunction(T[i]);
+      }
+      catch(IllegalArgumentException e) {
+        isThrown[i] = true;
+      }
+    }
+    
+    assertTrue("BubblePoint.testFunction(illegalT).exception", isThrown[0]);
+    assertEquals("BubblePoint.testFunction(illegalT).value", testFunction[0], 0.0);
+    assertFalse("BubblePoint.testFunction(legalT).exception", isThrown[1]);
+    assertTrue("BubblePoint.testFunction(legalT).value", testFunction[1] > 2.80 && testFunction[1] < 2.82);
   }
   
   // Test an ideal bubble point calculation. Source is a manual calculation in Excel.

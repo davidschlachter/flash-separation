@@ -39,11 +39,26 @@ public class Test_RachfordRice extends TestCase {
     testStream.setPressure(101325.0);
     testStream.setTemperature(368.0);
     
-    // Test for a guessed V/F of 0.5
     RachfordRice testRachfordRice = new RachfordRice(testStream);
-    double testFunction = testRachfordRice.testFunction(0.5);
     
-    assertTrue("RachfordRice.testFunction()", testFunction > 0.207 && testFunction < 0.209);
+    // Test that testFunction is throwing the exception appropriately
+    double[] testFunction = {0.0, 0.0, 0.0};
+    double[] vOverF = {-1.0, 0.5, 2.0}; // Test for a guessed V/F of 0.5
+    boolean[] isThrown = {false, false, false};
+    
+    for(int i=0; i<isThrown.length; i++) {
+      try {
+        testFunction[i] = testRachfordRice.testFunction(vOverF[i]);
+      }
+      catch(IllegalArgumentException e) {
+        isThrown[i] = true;
+      }
+    }
+    
+    assertTrue("RachfordRice.testFunction(illegalVOverF).exception", isThrown[0]);
+    assertEquals("RachfordRice.testFunction(illegalVOverF).value", testFunction[0], 0.0);
+    assertFalse("RachfordRice.testFunction(legalVOverF).exception", isThrown[1]);
+    assertTrue("RachfordRice.testFunction(legalVOverF).value", testFunction[1] > 0.207 && testFunction[1] < 0.209);
   }
   
   // Test the ideal Rachford Rice solution against this example from LearnChemE:

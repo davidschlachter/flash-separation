@@ -12,6 +12,51 @@ public class Test_Enthalpy extends TestCase {
     assertFalse("new Enthalpy(inlet, outlet)", enthalpy == null);
   }
   
+  // Test that testFunction is throwing an IllegalArgumentException appropriately
+  public void testTestFunction() {
+    
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    
+    FlowStream inletStream = new FlowStream();
+    FlowStream outletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
+    inletStream.getFlowSpecies().get(0).setVapourMoleFraction(1.0);
+    inletStream.setMolarFlowRate(1.0); // 1 mol/s = 3.6 kgmol/h
+    //inletStream.setTemperature(125.0 + 273.15);
+    inletStream.setPressure(101325.0);
+    inletStream.setVapourFraction(1.0);
+    
+    outletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(4))); // Water
+    outletStream.getFlowSpecies().get(0).setOverallMoleFraction(1.0);
+    outletStream.getFlowSpecies().get(0).setVapourMoleFraction(1.0);
+    outletStream.setMolarFlowRate(1.0);
+    outletStream.setTemperature(150.0 + 273.15);
+    outletStream.setPressure(101325.0);
+    outletStream.setVapourFraction(1.0);
+    
+    Enthalpy enthalpy = new Enthalpy(inletStream, outletStream);
+    
+    double[] testFunction = {0.0, 0.0};
+    double[] T = {-400.0, 400.0};
+    boolean[] isThrown = {false, false};
+    
+    for(int i=0; i<isThrown.length; i++) {
+      try {
+        testFunction[i] = enthalpy.testFunction(T[i]);
+      }
+      catch(IllegalArgumentException e) {
+        isThrown[i] = true;
+      }
+    }
+    
+    assertTrue("Enthalpy.testFunction(illegalT).exception", isThrown[0]);
+    assertEquals("Enthalpy.testFunction(illegalT).value", testFunction[0], 0.0);
+    assertFalse("Enthalpy.testFunction(legalT).exception", isThrown[1]);
+    assertTrue("Enthalpy.testFunction(legalT).vallue", testFunction[1] != 0.0);
+  }
+  
   // Test a pure species enthalpy calculation within the supercooled vapour range of temperatures
   // Reference values are from the steam tables
   public void testPureSpeciesVapourEnthalpyCalculation() {

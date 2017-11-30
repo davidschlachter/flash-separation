@@ -29,13 +29,27 @@ public class Test_DewPoint extends TestCase {
     testStream.addFlowSpecies(water);
     testStream.addFlowSpecies(ethanol);
     testStream.setPressure(101325.0);
-    double temperature = 400.0;
     
     DewPoint testDewPoint = new DewPoint(testStream);
-    double testFunction = testDewPoint.testFunction(temperature);
     
-    assertTrue("DewPoint.testFunction()", testFunction > -0.700 && testFunction < -0.690);
+    // Test that testFunction is throwing the exception appropriately
+    double[] testFunction = {0.0, 0.0};
+    double[] T = {-400.0, 400.0};
+    boolean[] isThrown = {false, false};
     
+    for(int i=0; i<isThrown.length; i++) {
+      try {
+        testFunction[i] = testDewPoint.testFunction(T[i]);
+      }
+      catch(IllegalArgumentException e) {
+        isThrown[i] = true;
+      }
+    }
+    
+    assertTrue("DewPoint.testFunction(illegalT).exception", isThrown[0]);
+    assertEquals("DewPoint.testFunction(illegalT).value", testFunction[0], 0.0);
+    assertFalse("DewPoint.testFunction(legalT).exception", isThrown[1]);
+    assertTrue("DewPoint.testFunction(legalT).value", testFunction[1] > -0.700 && testFunction[1] < -0.690);
   }
   
   // Test an ideal dew point calculation. Source is a manual calculation in Excel
