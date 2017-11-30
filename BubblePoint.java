@@ -18,10 +18,18 @@ public class BubblePoint implements Function {
   }
   
   // Return the bubble point for the given flowStream components at the given pressure
-  public double calc() {
+  public double calc() throws IllegalArgumentException {
+    // Determine if any of the species is likely to be non-condensable, and if so, ignore it
+    int i;
+    for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
+      if (this.flowStream.getFlowSpecies().get(i).getCriticalTemperature() == 0.0) throw new IllegalArgumentException("ERROR: Critical temperature is not specified for species "+this.flowStream.getFlowSpecies().get(i).getSpeciesName());
+      if (flowStream.getTemperature() > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
+        this.flowStream.getFlowSpecies().get(i).setOverallMoleFraction(0.0);
+    }
+    
     double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 1.0);
     double result =  RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
-    int i = 0;
+    i = 0;
     while (Double.isNaN(result)) {
       bounds = RootFinder.getBounds(this, bounds[1], 1.0, 1.0);
       result =  RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
@@ -32,7 +40,7 @@ public class BubblePoint implements Function {
   
   // Test function for the root finder
   public double testFunction(double x) throws IllegalArgumentException {
-    if(x < 0) throw new IllegalArgumentException("Error! Bubble point calculation input temperature is below zero.");
+    if(x < 0) throw new IllegalArgumentException("Error! Bubble point calculation input temperature is below zero: "+x);
     int i;
     double result = 0.0;
     

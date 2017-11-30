@@ -24,14 +24,11 @@ public class DewPoint implements Function {
   
   
   // Return the dew point for the given flowStream components at the given pressure
-  public double calc() {
+  public double calc() throws IllegalArgumentException {
     // Determine if any of the species is likely to be non-condensable, and if so, ignore it
     int i;
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
-      if (this.flowStream.getFlowSpecies().get(i).getCriticalTemperature() == 0.0) {
-        System.out.println("ERROR: Critical temperature is not specified for species "+this.flowStream.getFlowSpecies().get(i).getSpeciesName());
-        System.exit(1);
-      }
+      if (this.flowStream.getFlowSpecies().get(i).getCriticalTemperature() == 0.0) throw new IllegalArgumentException("ERROR: Critical temperature is not specified for species "+this.flowStream.getFlowSpecies().get(i).getSpeciesName());
       if (flowStream.getTemperature() > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
         this.flowStream.getFlowSpecies().get(i).setOverallMoleFraction(0.0);
     }
