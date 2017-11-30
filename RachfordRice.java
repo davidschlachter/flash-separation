@@ -30,8 +30,8 @@ public class RachfordRice implements DifferentiableFunction {
     double dewPointTemperature = new DewPoint(this.flowStream).calc();
     double bubblePointTemperature = new BubblePoint(this.flowStream).calc();
     //System.out.println("Got dewpoint "+dewPointTemperature+" and bubblepoint "+bubblePointTemperature);
-    //double vOverF = RiddersMethod.calc(this, 0.0, 1.0, 0.001, false);
-    double vOverF = Incremental.calc(this, 0.6, 0.8, 20);
+    double vOverF = RiddersMethod.calc(this, 0.0, 1.0, 0.001, false);
+    //double vOverF = Incremental.calc(this, 0.6, 0.8, 20);
     
     if (this.flowStream.getTemperature() > dewPointTemperature) {
       for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
@@ -145,8 +145,12 @@ public class RachfordRice implements DifferentiableFunction {
     double criticalPressure, criticalTemperature, acentricFactor, optemperature, oppressure;
     double liquidMoleFraction, vapourMoleFraction;
     
+    for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
+      this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(0.0);
+      this.flowStream.getFlowSpecies().get(i).setVapourMoleFraction(0.0);
+    }
+    
     for (int k = 0; k < 10; k++) {
-      
       result = 0.0;
       for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
         
