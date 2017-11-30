@@ -1,6 +1,3 @@
-/**
- * Auto Generated Java Class.
- */
 public class SaturationPressure {
   
   public static double calc(Species species, double temperature) {

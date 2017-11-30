@@ -18,7 +18,7 @@ public class FlowSpecies extends Species {
     this.overallMoleFraction = source.overallMoleFraction;
     this.liquidMoleFraction = source.liquidMoleFraction;
     this.vapourMoleFraction = source.vapourMoleFraction;
-   }
+  }
   
   // Setters
   public boolean setOverallMoleFraction(double overallMoleFraction) {
@@ -48,7 +48,6 @@ public class FlowSpecies extends Species {
   public boolean setLiquidMoleFraction(double liquidMoleFraction) {
     boolean restrict = true;
     return setLiquidMoleFraction(liquidMoleFraction, restrict);
-    //return true; //will returning output of above method still set liquid mole fraction?
   }
   
   public boolean setVapourMoleFraction(double vapourMoleFraction) {

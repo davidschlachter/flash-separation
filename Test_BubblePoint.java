@@ -130,7 +130,6 @@ public class Test_BubblePoint extends TestCase {
     // Antoine coefficients converted with http://www.envmodels.com/freetools.php?menu=antoine
     component1.setAntoineConstants(new AntoineCoefficients(9.21041, 1278.99725, -49.15));
     component2.setAntoineConstants(new AntoineCoefficients(9.16698, 1278.12866, -64.15));
-    // So that calculations work!
     component1.setCriticalTemperature(1000.0);
     component2.setCriticalTemperature(1000.0);
     component1.setOverallMoleFraction(0.40);

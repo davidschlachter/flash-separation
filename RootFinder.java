@@ -37,7 +37,7 @@ public class RootFinder {
     }
     
     if (verbose == true) System.out.println("WARNING: Exceeded maximum number of iterations.");
-    return highBounds; // have to figure out what a good idea to do here is
+    return highBounds;
   }
   
   public static double[] getBounds(Function func, double initialGuess, double step, double direction) {
@@ -74,7 +74,7 @@ public class RootFinder {
     }
     
     if (verbose == true) System.out.println("WARNING: Exceeded maximum number of iterations.");
-    return bounds; // have to figure out what a good idea to do here is
+    return bounds;
   }
   
 }

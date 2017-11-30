@@ -9,6 +9,7 @@ public class Controller {
     
     double unknownTemperature;
     // First problem type: both inlet and outlet temperatures are specified
+    //
     if (outlet.getTemperature() > 0.0000001 && inlet.getTemperature() > 0.0000001) {
       RachfordRice rachfordRice = new RachfordRice(outlet);
       outlet = rachfordRice.solve();
@@ -16,7 +17,7 @@ public class Controller {
     } else {
       // Second and third problem types: one of the temperatures is missing, and the
       // flash is adiabatic
-      
+      //
       // Determine missing temperature for initial guess
       FlowStream unspecifiedStream, specifiedStream;
       boolean inletSpecified;
@@ -43,7 +44,6 @@ public class Controller {
       Enthalpy enthalpy = new Enthalpy(inlet, outlet);
       double[] bounds = RootFinder.getBounds(enthalpy, specifiedStream.getTemperature(), 10.0, 0.0);
       double solvedFinalTemperaure = RiddersMethod.calc(enthalpy, bounds[0], bounds[1], error, false);
-      //double solvedFinalTemperaure = Incremental.calc(enthalpy, bounds[0], bounds[1], 0.0001);
       
       if (inletSpecified == true) enthalpy.getOutlet().setTemperature(solvedFinalTemperaure);
       else enthalpy.getInlet().setTemperature(solvedFinalTemperaure);

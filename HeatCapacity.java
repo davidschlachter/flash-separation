@@ -1,6 +1,6 @@
 public class HeatCapacity {
   
-  public static double integrate(Species species, double initialTemperature, double finalTemperature, String state) {
+  public static double integrate(Species species, double initialTemperature, double finalTemperature, String state) throws IllegalArgumentException {
     
     double[] constants;
     
@@ -17,13 +17,8 @@ public class HeatCapacity {
     // Check if all the constants for integration are empty
     boolean areEmpty = true;
     int i;
-    for (i = 0; i < constants.length; i++) {
-      if (constants[0] != 0.0) areEmpty = false;
-    }
-    if (areEmpty) {
-      System.out.println("ERROR: No constants available to perform integration!");
-      System.exit(1);
-    }
+    for (i = 0; i < constants.length; i++) {if (constants[0] != 0.0) areEmpty = false;}
+    if(areEmpty) throw new IllegalArgumentException("Error! No constants available to perform integration!");
     
     double result = 0.0;
     

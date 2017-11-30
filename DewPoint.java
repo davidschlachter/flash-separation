@@ -52,8 +52,7 @@ public class DewPoint implements Function {
   
   // Test function for the root finder
   public double testFunction(double temperature) throws IllegalArgumentException {
-    if(temperature < 0) throw new IllegalArgumentException("Error! "+
-                                                           "Dew point calculation input temperature is below zero.");
+    if(temperature < 0) throw new IllegalArgumentException("Error! Dew point calculation input temperature is below zero.");
     int i;
     double result = 0.0;
     

@@ -155,7 +155,7 @@ public class Species{
     
   }
   
-  public void setKappa(double kappa){    // TODO: develop restrictions on setters for PR
+  public void setKappa(double kappa){
     this.kappa = kappa;
   }
   
