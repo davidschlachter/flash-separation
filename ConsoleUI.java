@@ -44,24 +44,24 @@ public class ConsoleUI {
       
       choice = getAChar("Select an action: [a]dd species   [r]emove species   [d]one\n", scan, output);
       
-      if (choice == 'a') this.addSpecies(scan, output);
-      if (choice == 'r') {
+      if (choice == 'a') {
+        this.addSpecies(scan, output);
+      } else if (choice == 'r') {
         if (this.theseSpecies.size() != 0) this.removeSpecies(scan, output);
         else {
           output.println("There are no species to remove.\n");
           continue;
         }
-      }
-      if (choice == 'q') return true;  // Exit option for testing
-      if (choice == 'd') {
+      } else if (choice == 'q') {
+        return true;  // Exit option for testing
+      } else if (choice == 'd') {
         if (this.theseSpecies.size() == 0) {
           output.println("ERROR: Must select at least one species to continue.\n");
           continue;
         } else {
           break;
         }
-      }
-      else output.println("Invalid entry. Please try again.\n");
+      } else output.println("Invalid entry:\""+choice+"\". Please try again.\n");
     }
     
     FlowStream inletStream  = new FlowStream();
