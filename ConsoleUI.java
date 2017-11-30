@@ -197,6 +197,7 @@ public class ConsoleUI {
     }
     
     
+    
     //
     // Check that the flash is possible! (outlet temperature is between dew and bubble point)
     //
@@ -422,7 +423,7 @@ public class ConsoleUI {
       liquidMoleFraction = inletStream.getFlowSpecies().get(i).getLiquidMoleFraction();
       vapourMoleFraction = inletStream.getFlowSpecies().get(i).getVapourMoleFraction();
       overallMoleFraction = inletStream.getFlowSpecies().get(i).getOverallMoleFraction();
-      output.printf("    %15s  %.3f  %.3f  %.3f%n", speciesName, liquidMoleFraction, vapourMoleFraction, overallMoleFraction);
+      output.printf("    %15s  %.4f  %.4f  %.4f%n", speciesName, liquidMoleFraction, vapourMoleFraction, overallMoleFraction);
     }
     output.println("Outlet:");
     output.println("  Temperature: " + outletStream.getTemperature());
@@ -437,7 +438,7 @@ public class ConsoleUI {
       liquidMoleFraction = outletStream.getFlowSpecies().get(i).getLiquidMoleFraction();
       vapourMoleFraction = outletStream.getFlowSpecies().get(i).getVapourMoleFraction();
       overallMoleFraction = outletStream.getFlowSpecies().get(i).getOverallMoleFraction();
-      output.printf("    %15s  %.3f  %.3f  %.3f%n", speciesName, liquidMoleFraction, vapourMoleFraction, overallMoleFraction);
+      output.printf("    %15s  %.4f  %.4f  %.4aaf%n", speciesName, liquidMoleFraction, vapourMoleFraction, overallMoleFraction);
     }
   }
   
