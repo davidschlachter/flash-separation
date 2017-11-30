@@ -241,8 +241,8 @@ public class Test_PengRobinson extends TestCase {
     System.out.println("ethane vapour fugacity: "+ethaneVap);
     System.out.println("pentane vapour fugacity: "+pentaneVap);
     
-    assertTrue(Math.abs(ethaneVap  - 0.987348685) < 0.0005);
-    assertTrue(Math.abs(pentaneVap - 0.953596213) < 0.0005);
+    assertTrue(Math.abs(ethaneVap  - 0.987348685)/ethaneVap < 0.0005);
+    assertTrue(Math.abs(pentaneVap - 0.953596213)/pentaneVap < 0.0005);
 
   }
   
@@ -274,8 +274,8 @@ public class Test_PengRobinson extends TestCase {
     System.out.println("ethane liquid fugacity: "+ethaneLiq);
     System.out.println("pentane liquid fugacity: "+pentaneLiq);
     
-    assertTrue(Math.abs(ethaneLiq  - 12.41099827) < 0.0005);
-    assertTrue(Math.abs(pentaneLiq - 0.096024869) < 0.0005);
+    assertTrue(Math.abs(ethaneLiq  - 12.41099827)/ethaneLiq < 0.0005);
+    assertTrue(Math.abs(pentaneLiq - 0.096024869)/pentaneLiq < 0.0005);
 
   }
   
