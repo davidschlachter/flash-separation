@@ -239,8 +239,8 @@ public class ConsoleUI {
     this.printStreams(scan, output, inletStream, outletStream);
     
     // Heat required to maintain operating temperature
-    output.println("Heat required to maintain operating temperature: \n");
-    output.println(new Enthalpy(inletStream, outletStream).calc());
+    output.print("\nHeat required to maintain operating temperature: ");
+    output.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
     
     scan.close();
     return true;
@@ -438,7 +438,7 @@ public class ConsoleUI {
       liquidMoleFraction = outletStream.getFlowSpecies().get(i).getLiquidMoleFraction();
       vapourMoleFraction = outletStream.getFlowSpecies().get(i).getVapourMoleFraction();
       overallMoleFraction = outletStream.getFlowSpecies().get(i).getOverallMoleFraction();
-      output.printf("    %15s  %.4f  %.4f  %.4aaf%n", speciesName, liquidMoleFraction, vapourMoleFraction, overallMoleFraction);
+      output.printf("    %15s  %.4f  %.4f  %.4f%n", speciesName, liquidMoleFraction, vapourMoleFraction, overallMoleFraction);
     }
   }
   
