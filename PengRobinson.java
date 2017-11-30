@@ -116,8 +116,8 @@ public class PengRobinson{
   public void streamAX(){
     
     double[][] aij = aij();
-        int n = flowStream.getFlowSpecies().size();
-
+    int n = flowStream.getFlowSpecies().size();
+    
     double[] intermediate = new double[n];
     double z;
     for(int i = 0; i<n; i++){
@@ -317,10 +317,8 @@ public class PengRobinson{
     double vapourSum=0.0;
     double pressure = this.flowStream.getPressure();
     double sumTerm=0.0;
-    // double bx = flowStream.getStreamBX();
-    double bx = 0.0041001;
-    double ax = 0.061451;
-    // double ax = flowStream.getStreamAX();
+    double bx = flowStream.getStreamBX();
+    double ax = flowStream.getStreamAX();
     double c0 = Math.pow(bx,3.0)+Math.pow(bx,2.0)-(ax*bx);
     double c1 = ax-3*Math.pow(bx,2.0)-2.0*bx;
     double c2 = bx-1;
@@ -385,13 +383,13 @@ public class PengRobinson{
              this.flowStream.getFlowSpecies().get(i).getVapourMoleFraction() == 0 &&
              this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction() != 0){
             sumTerm+=this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction() * aij[j][i];
-          //  System.out.println("x_i="+this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction()+" aij[j][i]="+aij[j][i]);
+            //  System.out.println("x_i="+this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction()+" aij[j][i]="+aij[j][i]);
           }else{
             sumTerm+=this.flowStream.getFlowSpecies().get(j).getLiquidMoleFraction() * aij[j][i];
-          //  System.out.println("x_i="+this.flowStream.getFlowSpecies().get(j).getLiquidMoleFraction()+" aij[j][i]="+aij[j][i]);
+            //  System.out.println("x_i="+this.flowStream.getFlowSpecies().get(j).getLiquidMoleFraction()+" aij[j][i]="+aij[j][i]);
           }
         }
-       // System.out.println("Sumterm for liquid species"+i+" is: "+sumTerm);
+        // System.out.println("Sumterm for liquid species"+i+" is: "+sumTerm);
         liquidSum-=(ax/2.8284/bx)*Math.log((zmin+2.4142*bx)/(zmin-0.4142*bx))*((2.0*sumTerm/ax)-(bi/bx));
         sumTerm=0.0;
         this.flowStream.getFlowSpecies().get(i).setLiquidFugacity(Math.exp(liquidSum));
@@ -408,12 +406,8 @@ public class PengRobinson{
     double vapourSum=0.0;
     double pressure = this.flowStream.getPressure();
     double sumTerm=0.0;
-    /* double by = flowStream.getStreamBY();
-     double ay = flowStream.getStreamAY();
-     System.out.println("AY is :"+ay+" **************************************************************************");
-     System.out.println("BY is :"+by+" **************************************************************************"); */
-    double ay = 0.018135;
-    double by = 0.0024102;
+    double by = flowStream.getStreamBY();
+    double ay = flowStream.getStreamAY();
     double c0 = Math.pow(by,3.0)+Math.pow(by,2.0)-(ay*by);
     double c1 = ay-3*Math.pow(by,2.0)-2.0*by;
     double c2 = by-1;
