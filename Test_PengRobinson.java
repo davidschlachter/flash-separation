@@ -213,8 +213,40 @@ public class Test_PengRobinson extends TestCase {
     
   }
   
-  public void testSolveFugacities(){
+  public void testSolveVapourFugacities(){
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    FlowStream inletStream = new FlowStream();
     
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(0)));  // Ethane
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.7);
+    inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.0721212);
+    inletStream.getFlowSpecies().get(0).setVapourMoleFraction(0.9065648);
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(1)));  // Pentane
+    inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.3);
+    inletStream.getFlowSpecies().get(1).setLiquidMoleFraction(0.9278788);
+    inletStream.getFlowSpecies().get(1).setVapourMoleFraction(0.0934352);
+    
+    inletStream.setIsIdeal(false);
+    inletStream.setMolarFlowRate(1.0);
+    inletStream.setPressure(100000.0);
+    inletStream.setTemperature(254.0);
+    inletStream.setVapourFraction(0.75245204);
+    
+    PengRobinson testPeng = new PengRobinson(inletStream);
+    testPeng.nonIdealCalcs();
+    
+    double ethaneVap = testPeng.getFlowStream().getFlowSpecies().get(0).getVapourFugacity();
+    double pentaneVap = testPeng.getFlowStream().getFlowSpecies().get(1).getVapourFugacity();
+    
+    System.out.println("ethane vapour fugacity: "+ethaneVap);
+    System.out.println("pentane vapour fugacity: "+pentaneVap);
+    
+    assertTrue(Math.abs(ethaneVap  - 0.987348685) < 0.0005);
+    assertTrue(Math.abs(pentaneVap - 0.953596213) < 0.0005);
+
+  }
+  
+  public void testSolveLiquidFugacities(){
     List<FlowSpecies> presetSpecies = PresetSpecies.get();
     FlowStream inletStream = new FlowStream();
     
@@ -236,20 +268,14 @@ public class Test_PengRobinson extends TestCase {
     PengRobinson testPeng = new PengRobinson(inletStream);
     testPeng.nonIdealCalcs();
     
-    double pentaneVap = testPeng.getFlowStream().getFlowSpecies().get(0).getVapourFugacity();
-    double pentaneLiq = testPeng.getFlowStream().getFlowSpecies().get(0).getLiquidFugacity(); //ethane
-    double hexaneVap = testPeng.getFlowStream().getFlowSpecies().get(1).getVapourFugacity();
-    double hexaneLiq = testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity(); //pentane
+    double ethaneLiq = testPeng.getFlowStream().getFlowSpecies().get(0).getLiquidFugacity(); //ethane
+    double pentaneLiq = testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity(); //pentane
     
-    System.out.println("ethane vapour fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(0).getVapourFugacity());
-    System.out.println("ethane liquid fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(0).getLiquidFugacity());
-    System.out.println("pentane vapour fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(1).getVapourFugacity());
-    System.out.println("pentane liquid fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity());
+    System.out.println("ethane liquid fugacity: "+ethaneLiq);
+    System.out.println("pentane liquid fugacity: "+pentaneLiq);
     
-    assertTrue(Math.abs(pentaneVap - 0.987348685) < 0.0005);
-    assertTrue(Math.abs(hexaneVap - 0.953596213) < 0.0005);
-    assertTrue(Math.abs(pentaneLiq - 12.41099827) < 0.0005);
-    assertTrue(Math.abs(hexaneLiq - 0.096024869) < 0.0005);
+    assertTrue(Math.abs(ethaneLiq  - 12.41099827) < 0.0005);
+    assertTrue(Math.abs(pentaneLiq - 0.096024869) < 0.0005);
 
   }
   
