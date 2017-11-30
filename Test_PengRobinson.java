@@ -117,27 +117,99 @@ public class Test_PengRobinson extends TestCase {
     
   }
   
-  public void testStreamA(){
+  public void testStreamAX(){
     
-    PengRobinson testPeng = createTestPeng();
+     List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    FlowStream inletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(0)));  // Ethane
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.7);
+    inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.072257);
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(1)));  // Pentane
+    inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.3);
+    inletStream.getFlowSpecies().get(1).setLiquidMoleFraction(0.927743);
+    inletStream.setTemperature(254.);
+    inletStream.setPressure(100000.0);
+    
+    PengRobinson testPeng = new PengRobinson(inletStream);
     testPeng.kappaI();
     testPeng.alphaI();
     testPeng.individualA();
     testPeng.speciesA();
     testPeng.streamAX();
-    assertTrue(testPeng.getFlowStream().getStreamAX() < 0.045 && testPeng.getFlowStream().getStreamAX() > 0.035);
+    assertTrue(testPeng.getFlowStream().getStreamAX() < 0.0617 && testPeng.getFlowStream().getStreamAX() > 0.0612);
     
   }
   
-  public void testStreamB(){
+    public void testStreamAY(){
     
-    PengRobinson testPeng = createTestPeng();
+     List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    FlowStream inletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(0)));  // Ethane
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.7);
+    inletStream.getFlowSpecies().get(0).setVapourMoleFraction(0.905077);
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(1)));  // Pentane
+    inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.3);
+    inletStream.getFlowSpecies().get(1).setVapourMoleFraction(0.094923);
+    inletStream.setTemperature(254.);
+    inletStream.setPressure(100000.0);
+    
+    PengRobinson testPeng = new PengRobinson(inletStream);
+    testPeng.kappaI();
+    testPeng.alphaI();
+    testPeng.individualA();
+    testPeng.speciesA();
+    testPeng.streamAY();
+    assertTrue(testPeng.getFlowStream().getStreamAY() < 0.0185 && testPeng.getFlowStream().getStreamAY() > 0.0175);
+    
+  }
+    
+      public void testStreamBX(){
+    
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    FlowStream inletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(0)));  // Ethane
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.7);
+    inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.072257);
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(1)));  // Pentane
+    inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.3);
+    inletStream.getFlowSpecies().get(1).setLiquidMoleFraction(0.927743);
+    inletStream.setTemperature(254.);
+    inletStream.setPressure(100000.0);
+    
+    PengRobinson testPeng = new PengRobinson(inletStream);
     testPeng.kappaI();
     testPeng.alphaI();
     testPeng.individualB();
     testPeng.speciesB();
     testPeng.streamBX();
-    assertTrue(testPeng.getFlowStream().getStreamBX() < 0.0037 && testPeng.getFlowStream().getStreamBX() > 0.0033);
+    assertTrue(testPeng.getFlowStream().getStreamBX() < 0.0042 && testPeng.getFlowStream().getStreamBX() > 0.0040);
+    
+  }
+  
+  public void testStreamBY(){
+    
+    List<FlowSpecies> presetSpecies = PresetSpecies.get();
+    FlowStream inletStream = new FlowStream();
+    
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(0)));  // Ethane
+    inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.7);
+    inletStream.getFlowSpecies().get(0).setVapourMoleFraction(0.905077);
+    inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(1)));  // Pentane
+    inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.3);
+    inletStream.getFlowSpecies().get(1).setVapourMoleFraction(0.094923);
+    inletStream.setTemperature(254.);
+    inletStream.setPressure(100000.0);
+    
+    PengRobinson testPeng = new PengRobinson(inletStream);
+    testPeng.kappaI();
+    testPeng.alphaI();
+    testPeng.individualB();
+    testPeng.speciesB();
+    testPeng.streamBY();
+    assertTrue(testPeng.getFlowStream().getStreamBY() < 0.00221 && testPeng.getFlowStream().getStreamBY() > 0.001975);
     
   }
   

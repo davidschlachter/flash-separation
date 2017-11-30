@@ -116,19 +116,20 @@ public class PengRobinson{
   public void streamAX(){
     
     double[][] aij = aij();
-    int n = flowStream.getFlowSpecies().size();
+        int n = flowStream.getFlowSpecies().size();
+
     double[] intermediate = new double[n];
     double z;
     for(int i = 0; i<n; i++){
       for(int j = 0; j<n; j++){
-        if(this.flowStream.getFlowSpecies().get(i).getLiquidMoleFraction() == 0 &&
-           this.flowStream.getFlowSpecies().get(i).getVapourMoleFraction() == 0 &&
-           this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction() != 0){
-          z=this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
+        if(this.flowStream.getFlowSpecies().get(j).getLiquidMoleFraction() == 0 &&
+           this.flowStream.getFlowSpecies().get(j).getVapourMoleFraction() == 0 &&
+           this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction() != 0){
+          z=this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction();
         }else{
-          z=this.flowStream.getFlowSpecies().get(i).getLiquidMoleFraction();
+          z=this.flowStream.getFlowSpecies().get(j).getLiquidMoleFraction();
         }
-        intermediate[i] += z*aij[i][j];
+        intermediate[i] += z*aij[j][i];
       }
     }
     double result = 0.0;
@@ -172,14 +173,14 @@ public class PengRobinson{
     double z;
     for(int i = 0; i<n; i++){
       for(int j = 0; j<n; j++){
-        if(this.flowStream.getFlowSpecies().get(i).getLiquidMoleFraction() == 0 &&
-           this.flowStream.getFlowSpecies().get(i).getVapourMoleFraction() == 0 &&
-           this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction() != 0){
-          z=this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
+        if(this.flowStream.getFlowSpecies().get(j).getLiquidMoleFraction() == 0 &&
+           this.flowStream.getFlowSpecies().get(j).getVapourMoleFraction() == 0 &&
+           this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction() != 0){
+          z=this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction();
         }else{
-          z=this.flowStream.getFlowSpecies().get(i).getVapourMoleFraction();
+          z=this.flowStream.getFlowSpecies().get(j).getVapourMoleFraction();
         }
-        intermediate[i] += z*aij[i][j];
+        intermediate[i] += z*aij[j][i];
       }
     }
     double result = 0.0;
@@ -384,13 +385,13 @@ public class PengRobinson{
              this.flowStream.getFlowSpecies().get(i).getVapourMoleFraction() == 0 &&
              this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction() != 0){
             sumTerm+=this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction() * aij[j][i];
-            System.out.println("x_i="+this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction()+" aij[j][i]="+aij[j][i]);
+          //  System.out.println("x_i="+this.flowStream.getFlowSpecies().get(j).getOverallMoleFraction()+" aij[j][i]="+aij[j][i]);
           }else{
             sumTerm+=this.flowStream.getFlowSpecies().get(j).getLiquidMoleFraction() * aij[j][i];
-            System.out.println("x_i="+this.flowStream.getFlowSpecies().get(j).getLiquidMoleFraction()+" aij[j][i]="+aij[j][i]);
+          //  System.out.println("x_i="+this.flowStream.getFlowSpecies().get(j).getLiquidMoleFraction()+" aij[j][i]="+aij[j][i]);
           }
         }
-        System.out.println("Sumterm for liquid species"+i+" is: "+sumTerm);
+       // System.out.println("Sumterm for liquid species"+i+" is: "+sumTerm);
         liquidSum-=(ax/2.8284/bx)*Math.log((zmin+2.4142*bx)/(zmin-0.4142*bx))*((2.0*sumTerm/ax)-(bi/bx));
         sumTerm=0.0;
         this.flowStream.getFlowSpecies().get(i).setLiquidFugacity(Math.exp(liquidSum));
