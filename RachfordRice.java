@@ -126,7 +126,7 @@ public class RachfordRice implements DifferentiableFunction {
     }
     if (Math.abs(((liquidFlow+vapourFlow)-this.flowStream.getMolarFlowRate())/this.flowStream.getMolarFlowRate()) > 0.01) {
       System.out.println("\nERROR: Flow rates are inconsistent!!\nvOverF was found to be: " + vOverF+"\nHad this system: ");
-      ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), this.flowStream, null);
+      ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), this.flowStream, this.flowStream);
     }
     
     return new FlowStream(this.flowStream);

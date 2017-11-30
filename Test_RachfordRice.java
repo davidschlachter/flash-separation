@@ -182,9 +182,9 @@ public class Test_RachfordRice extends TestCase {
     FlowStream idealStream = new FlowStream(inletStream);
     idealStream.setIsIdeal(true);
     
-    FlowStream solvedNonIdealStream = new RachfordRice(inletStream).solve();
     /*System.out.println("********************* NON-IDEAL RESULTS ****************************");
     ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), solvedNonIdealStream, solvedNonIdealStream);*/
+    FlowStream solvedNonIdealStream = new RachfordRice(new FlowStream(inletStream)).solve();
     
     FlowStream solvedIdealStream = new RachfordRice(new FlowStream(idealStream)).solve();
     /*System.out.println("*********************   IDEAL RESULTS   ****************************");
@@ -225,7 +225,7 @@ public class Test_RachfordRice extends TestCase {
     FlowStream idealStream = new FlowStream(inletStream);
     idealStream.setIsIdeal(true);
     
-    FlowStream solvedNonIdealStream = new RachfordRice(inletStream).solve();
+    FlowStream solvedNonIdealStream = new RachfordRice(new FlowStream(inletStream)).solve();
     /*System.out.println("********************* NON-IDEAL RESULTS ****************************");
     ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), solvedNonIdealStream, solvedNonIdealStream);*/
     

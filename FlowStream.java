@@ -38,6 +38,7 @@ public class FlowStream {
     this.temperature = source.temperature;
     this.pressure = source.pressure;
     this.vapourFraction = source.vapourFraction;
+    this.isIdeal = source.isIdeal;
   }
   
   // Setters
