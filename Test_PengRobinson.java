@@ -148,18 +148,18 @@ public class Test_PengRobinson extends TestCase {
     
     inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(0)));  // Ethane
     inletStream.getFlowSpecies().get(0).setOverallMoleFraction(0.7);
-    inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.072121);
-    inletStream.getFlowSpecies().get(0).setVapourMoleFraction(0.906565);
+    inletStream.getFlowSpecies().get(0).setLiquidMoleFraction(0.0721212);
+    inletStream.getFlowSpecies().get(0).setVapourMoleFraction(0.9065648);
     inletStream.addFlowSpecies(new FlowSpecies(presetSpecies.get(1)));  // Pentane
     inletStream.getFlowSpecies().get(1).setOverallMoleFraction(0.3);
-    inletStream.getFlowSpecies().get(1).setLiquidMoleFraction(0.927879);
-    inletStream.getFlowSpecies().get(1).setVapourMoleFraction(0.093435);
+    inletStream.getFlowSpecies().get(1).setLiquidMoleFraction(0.9278788);
+    inletStream.getFlowSpecies().get(1).setVapourMoleFraction(0.0934352);
     
     inletStream.setIsIdeal(false);
     inletStream.setMolarFlowRate(1.0);
     inletStream.setPressure(100000.0); // 1 bar
     inletStream.setTemperature(254.0);
-    inletStream.setVapourFraction(0.752452039);
+    inletStream.setVapourFraction(0.75245204);
     
     PengRobinson testPeng = new PengRobinson(inletStream);
     testPeng.nonIdealCalcs();
@@ -174,12 +174,11 @@ public class Test_PengRobinson extends TestCase {
     System.out.println("pentane vapour fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(1).getVapourFugacity());
     System.out.println("pentane liquid fugacity: "+testPeng.getFlowStream().getFlowSpecies().get(1).getLiquidFugacity());
     
-    assertTrue(pentaneVap < 0.989 && pentaneVap > 0.985);
-    assertTrue(pentaneLiq < 12.4 && pentaneLiq > 12.2);
-    assertTrue(hexaneVap < 0.959 && hexaneVap > 0.948);
-    assertTrue(hexaneLiq < 0.105 && hexaneLiq > 0.090);
-    
-    
+    assertTrue(Math.abs(pentaneVap - 0.987348685) < 0.0001);
+    assertTrue(Math.abs(hexaneVap - 0.953596213) < 0.0001);
+    assertTrue(Math.abs(pentaneLiq - 12.41099827) < 0.0001);
+    assertTrue(Math.abs(hexaneLiq - 0.096024869) < 0.0001);
+
   }
   
   private PengRobinson createTestPeng(){
