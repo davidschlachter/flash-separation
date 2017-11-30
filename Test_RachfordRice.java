@@ -20,47 +20,6 @@ public class Test_RachfordRice extends TestCase {
     assertFalse("new RachfordRice(testStream)", testRachfordRice == null);
   }
   
-  // Test that the testFunction returns expected values (source: manual calculation in Excel)
-  public void testTestFunction() {
-    FlowStream testStream = new FlowStream();
-    
-    // Test function result for water and ethanol at 1 atm, 368 K
-    FlowSpecies water = new FlowSpecies();
-    water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
-    water.setOverallMoleFraction(0.5);
-    testStream.setTemperature(368.0);
-    
-    FlowSpecies ethanol = new FlowSpecies();
-    ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
-    ethanol.setOverallMoleFraction(0.5);
-    
-    testStream.addFlowSpecies(water);
-    testStream.addFlowSpecies(ethanol);
-    testStream.setPressure(101325.0);
-    testStream.setTemperature(368.0);
-    
-    RachfordRice testRachfordRice = new RachfordRice(testStream);
-    
-    // Test that testFunction is throwing the exception appropriately
-    double[] testFunction = {0.0, 0.0, 0.0};
-    double[] vOverF = {-1.0, 0.5, 2.0}; // Test for a guessed V/F of 0.5
-    boolean[] isThrown = {false, false, false};
-    
-    for(int i=0; i<isThrown.length; i++) {
-      try {
-        testFunction[i] = testRachfordRice.testFunction(vOverF[i]);
-      }
-      catch(IllegalArgumentException e) {
-        isThrown[i] = true;
-      }
-    }
-    
-    assertTrue("RachfordRice.testFunction(illegalVOverF).exception", isThrown[0]);
-    assertEquals("RachfordRice.testFunction(illegalVOverF).value", testFunction[0], 0.0);
-    assertFalse("RachfordRice.testFunction(legalVOverF).exception", isThrown[1]);
-    assertTrue("RachfordRice.testFunction(legalVOverF).value", testFunction[1] > 0.207 && testFunction[1] < 0.209);
-  }
-  
   // Test the ideal Rachford Rice solution against this example from LearnChemE:
   // https://www.youtube.com/watch?v=bs2T5oCfRak
   public void testIdealLearnChemEFlash() {
