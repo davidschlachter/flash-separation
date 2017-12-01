@@ -213,62 +213,21 @@ public class ConsoleUI {
         isAllSuperCriticalTemperature = false;
     }
     
-    
-    //check that system is subcritical, if not print streams and end program
-    if (isAllSuperCriticalTemperature == true && isAllSuperCriticalPressure == false) {
-      for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
-        outletStream.getFlowSpecies().get(i).setLiquidMoleFraction(0.0);
-        outletStream.getFlowSpecies().get(i).setVapourMoleFraction(outletStream.getFlowSpecies().get(i).getOverallMoleFraction());
-      }
-        outletStream.setVapourFraction(1.0);
-        // Print the final results
-    output.println("Composition of the inlet and solved outlet streams: \n");
-    ConsoleUI.printStreams(scan, output, inletStream, outletStream);
-    
-    // Heat required to maintain operating temperature
-    output.print("\nHeat required to maintain operating temperature: ");
-    output.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
-    
-    //Ask user if they want results output into a .txt file
-    while(true) {
-      choice = getAChar("\nWould you like to save your results as a .txt file?\n  [y]es   [n]o\n", scan, output);
-      if(choice == 'y' || choice == 'n') break;
-      else {
-        output.println("That is an invalid choice. Please try again.\n");
-      }
+    if (isAllSuperCriticalPressure == true && isAllSuperCriticalTemperature == false) {
+      output.println("ERROR: The specified outlet pressure is above all species critical pressures -- no separation will occur!");
+      return true;
     }
     
-    switch(choice) {
-      case 'y': 
-        String fileName;
-        PrintWriter outputStream = null;
-        Scanner sc = new Scanner(System.in);
-          output.println("Enter a filename. Do not us spaces or special characters (such as #, &, _, -, etc).\n");
-          fileName = sc.nextLine();
-          try{
-            outputStream = new PrintWriter(new FileOutputStream(fileName+".txt"));
-          }
-          catch (FileNotFoundException e){
-            System.out.println("Invalid filename. Try again.");
-          }
-      output.println("now writing data!");
-    // Print the final results
-    outputStream.println("Composition of the inlet and solved outlet streams: \n");
-    ConsoleUI.printStreams(scan, outputStream, inletStream, outletStream);
-    
-    // Heat required to maintain operating temperature
-    outputStream.print("\nHeat required to maintain operating temperature: ");
-    outputStream.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
-    outputStream.close();
-        break;
-      case 'n': 
-        break; 
+    if (isAllSuperCriticalPressure == true && isAllSuperCriticalPressure == false) {
+      output.println("ERROR: The specified outlet temperature is above all species critical temperatures -- no separation will occur!");
+      return true;
     }
-    scan.close();
-    return true;  
-  }
-        
-      
+    
+    if (isAllSuperCriticalPressure == true && isAllSuperCriticalPressure == true) {
+      output.println("ERROR: The specified outlet system is a super-critical fluid -- no separation will occur!");
+      return true;
+    }
+    
     
     //
     // Check that the flash is possible! (outlet temperature is between dew and bubble point)
@@ -318,26 +277,10 @@ public class ConsoleUI {
     
     switch(choice) {
       case 'y': 
-        String fileName;
+        
         PrintWriter outputStream = null;
         Scanner sc = new Scanner(System.in);
-          output.println("Enter a filename. Do not us spaces or special characters (such as #, &, _, -, etc).\n");
-          fileName = sc.nextLine();
-          try{
-            outputStream = new PrintWriter(new FileOutputStream(fileName+".txt"));
-          }
-          catch (FileNotFoundException e){
-            System.out.println("Invalid filename. Try again.");
-          }
-      output.println("now writing data!");
-    // Print the final results
-    outputStream.println("Composition of the inlet and solved outlet streams: \n");
-    ConsoleUI.printStreams(scan, outputStream, inletStream, outletStream);
-    
-    // Heat required to maintain operating temperature
-    outputStream.print("\nHeat required to maintain operating temperature: ");
-    outputStream.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
-    outputStream.close();
+        fileIO(outputStream, sc, inletStream, outletStream);
         break;
       case 'n': 
         break; 
@@ -542,6 +485,28 @@ public class ConsoleUI {
       overallMoleFraction = outletStream.getFlowSpecies().get(i).getOverallMoleFraction();
       output.printf("    %15s  %.4f  %.4f  %.4f%n", speciesName, liquidMoleFraction, vapourMoleFraction, overallMoleFraction);
     }
+  }
+  
+  private static void fileIO(PrintWriter outputStream, Scanner sc, FlowStream inletStream, FlowStream outletStream){
+    
+    String fileName;
+    System.out.println("Enter a filename. Do not us spaces or special characters (such as #, &, _, -, etc).\n");
+    fileName = sc.nextLine();
+    try{
+      outputStream = new PrintWriter(new FileOutputStream(fileName+".txt"));
+    }
+    catch (FileNotFoundException e){
+      System.out.println("Invalid filename. Try again.");
+    }
+    // Print the final results
+    outputStream.println("Composition of the inlet and solved outlet streams: \n");
+    ConsoleUI.printStreams(sc, outputStream, inletStream, outletStream);
+    
+    // Heat required to maintain operating temperature
+    outputStream.print("\nHeat required to maintain operating temperature: ");
+    outputStream.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
+    outputStream.close();
+    
   }
   
   private double getADouble(String message, double lowerBound, double upperBound, Scanner scan, PrintWriter output) {

@@ -23,7 +23,7 @@ public class RachfordRice implements Function {
   }
   
   // Solve the composition of the given flow stream
-  public FlowStream solve() {
+  public FlowStream solve() throws IllegalArgumentException {
     
     int i;
     double dewPointTemperature = new DewPoint(this.flowStream).calc();
@@ -61,8 +61,7 @@ public class RachfordRice implements Function {
     }
     
     if (Double.isNaN(vOverF)) {
-      System.out.println("WARNING: The value of V/F for the RachfordRice equation could not be determined.");
-      return this.flowStream;
+      throw new IllegalArgumentException("ERROR: The value of V/F for the RachfordRice equation could not be determined (system may be approaching super-critical state).");
     }
     
     
