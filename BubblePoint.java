@@ -25,7 +25,7 @@ public class BubblePoint implements Function {
       if (this.flowStream.getFlowSpecies().get(i).getCriticalTemperature() == 0.0) throw new IllegalArgumentException("ERROR: Critical temperature is not specified for species "+this.flowStream.getFlowSpecies().get(i).getSpeciesName());
     }
     
-    double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 50.0);
+    double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 10.0);
     double result =  RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
     i = 0;
     while (Double.isNaN(result)) {
