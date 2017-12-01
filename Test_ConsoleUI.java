@@ -127,10 +127,26 @@ public class Test_ConsoleUI extends TestCase {
       + "341.37\n" //Upper T
       + "469.6\n" //Critical T
       + "y\n" //Ideal?
-      + "y\n" //Check
+      + "n\n" //Check --> Properties are INCORRECT
+      + "testSpecies1\n" //testSpecies1
+      + "20.49\n" //Vapour heat capacities
+      + "0.377\n"
+      + "-0.000117\n"
+      + "0.0\n"
+      + "168.6\n" //Liquid heat capacities
+      + "0.0\n"
+      + "0.0\n"
+      + "0.0\n"
+      + "8.99\n" //Antoine Coefficients
+      + "1070.617\n"
+      + "-40.454\n"
+      + "268.6\n" //Lower T
+      + "341.37\n" //Upper T
+      + "469.6\n" //Critical T
+      + "y\n" //Ideal?
+      + "n\n" //Check --> Properties are CORRECT11
       + "a\n" // "Add species"
       + "6\n"
-      + "\n" //No input
       + "testSpecies2\n" //testSpecies2
       + "20.49\n" //Vapour heat capacities
       + "0.377\n"
