@@ -47,7 +47,6 @@ public class BubblePoint implements Function {
     double temperature = x;
     double pressure = this.flowStream.getPressure();
     double overallMoleFraction, saturationPressure;
-    double activityCoefficient, largePhi;
     
     for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
       
