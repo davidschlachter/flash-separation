@@ -147,14 +147,19 @@ public class ConsoleUI {
     output.println("\nFor the input stream, enter the following properties if known:");
     nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
     inletStream.setTemperature(nextDouble);
-    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, true);
+    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output);
     inletStream.setPressure(nextDouble);
-    nextDouble = getADouble("  Mass flow rate (kg/s): ", 0.0, Double.MAX_VALUE, scan, output, true);
+    nextDouble = getADouble("  Mass flow rate (kg/s): ", 0.0, Double.MAX_VALUE, scan, output);
     inletStream.setMolarFlowRate(nextDouble);
     output.println("\nFor the outlet stream, enter the following properties if known:");
-    nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
-    outletStream.setTemperature(nextDouble);
-    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, true);
+    if (inletStream.getTemperature() > 0.0) {
+      nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
+      outletStream.setTemperature(nextDouble);
+    } else { // If inlet stream temperature is unspecified, outlet temperature is mandatory
+      nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output);
+      outletStream.setTemperature(nextDouble);
+    }
+    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output);
     outletStream.setPressure(nextDouble);
     outletStream.setMolarFlowRate(inletStream.getMolarFlowRate()); // Assume no reaction
     
