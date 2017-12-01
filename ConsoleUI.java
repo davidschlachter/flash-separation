@@ -212,12 +212,12 @@ public class ConsoleUI {
         output.println("(Bubble point is: " + bubblePointTemperature + ")");
       }
     } else if (outletStream.getTemperature() > 0.0) {
-      if (inletStream.getTemperature() > bubblePointTemperature) {
+      if (inletStream.getTemperature() < bubblePointTemperature) {
         output.println("WARNING: The specified inlet temperature is below the bubble point -- no separation will occur!");
         output.println("(Bubble point is: " + bubblePointTemperature + ")");
       }
     } else if (inletStream.getTemperature() > 0.0) {
-      if (outletStream.getTemperature() < dewPointTemperature) {
+      if (outletStream.getTemperature() > dewPointTemperature) {
         output.println("WARNING: The specified outlet temperature is above the dew point -- no separation will occur!");
         output.println("(Dew point is: " + dewPointTemperature + ")");
       }
