@@ -143,6 +143,7 @@ public class Test_ConsoleUI extends TestCase {
       + "91.33\n" //Lower T
       + "144.13\n" //Upper T
       + "305.3\n" //Critical T
+      + "4900000\n" //Critical P
       + "y\n" //Ideal?
       + "y\n" //Check --> Properties are CORRECT
       + "a\n"
@@ -181,6 +182,8 @@ public class Test_ConsoleUI extends TestCase {
     
     String output = stringWriter.toString();
     
-    assertTrue("ConsoleUI add species", output.contains("testSpecies1" + newline + "  testSpecies2" + newline)); //test Ideal case!
+    assertTrue("ConsoleUI add species", output.contains("testSpecies" + newline + "  Pentane"
+                                                          + newline +"   Hexane" + newline + "  Cyclohexane"
+                                                          + newline + "  Water" + newline + "  Nitrogen"));
   }
 }
