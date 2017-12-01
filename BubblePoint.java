@@ -35,12 +35,12 @@ public class BubblePoint implements Function {
       result =  RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
       if (i > 10) break;
     }
+    if (result < 0.0) throw new IllegalArgumentException("Error! Bubble point calculation gave a temperature is below zero K: "+result);
     return result;
   }
   
   // Test function for the root finder
-  public double testFunction(double x) throws IllegalArgumentException {
-    if(x < 0) throw new IllegalArgumentException("Error! Bubble point calculation input temperature is below zero: "+x);
+  public double testFunction(double x) {
     int i;
     double result = 0.0;
     

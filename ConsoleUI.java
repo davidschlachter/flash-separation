@@ -200,25 +200,16 @@ public class ConsoleUI {
     //
     // Check that the flash is possible! (outlet temperature is between dew and bubble point)
     //
-    double dewPointTemperature = new DewPoint(outletStream).calc();
-    double bubblePointTemperature = new BubblePoint(outletStream).calc();
-    if (outletStream.getTemperature() > 0.0 && inletStream.getTemperature() > 0.0) {
+    double dewPointTemperature, bubblePointTemperature;
+    if (outletStream.getTemperature() > 0.0) {
+      dewPointTemperature = new DewPoint(outletStream).calc();
+      bubblePointTemperature = new BubblePoint(outletStream).calc();
       if (outletStream.getTemperature() > dewPointTemperature) {
         output.println("WARNING: The specified outlet temperature is above the dew point -- no separation will occur!");
         output.println("(Dew point is: " + dewPointTemperature + ")");
       } else if (outletStream.getTemperature() < bubblePointTemperature) {
         output.println("WARNING: The specified outlet temperature is below the bubble point -- no separation will occur!");
         output.println("(Bubble point is: " + bubblePointTemperature + ")");
-      }
-    } else if (outletStream.getTemperature() > 0.0) {
-      if (inletStream.getTemperature() < bubblePointTemperature) {
-        output.println("WARNING: The specified inlet temperature is below the bubble point -- no separation will occur!");
-        output.println("(Bubble point is: " + bubblePointTemperature + ")");
-      }
-    } else if (inletStream.getTemperature() > 0.0) {
-      if (outletStream.getTemperature() > dewPointTemperature) {
-        output.println("WARNING: The specified outlet temperature is above the dew point -- no separation will occur!");
-        output.println("(Dew point is: " + dewPointTemperature + ")");
       }
     }
     

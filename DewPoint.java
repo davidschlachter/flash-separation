@@ -42,14 +42,13 @@ public class DewPoint implements Function {
       result =  RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
       if (i > 10) break;
     }
+    if (result < 0.0) throw new IllegalArgumentException("Error! Dew point calculation gave a temperature is below zero K: "+result);
     return result;
-    
   }
   
   
   // Test function for the root finder
-  public double testFunction(double temperature) throws IllegalArgumentException {
-    if(temperature < 0) throw new IllegalArgumentException("Error! Dew point calculation input temperature is below zero.");
+  public double testFunction(double temperature) {
     int i;
     double result = 0.0;
     
