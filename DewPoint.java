@@ -32,7 +32,7 @@ public class DewPoint implements Function {
     }
     
     // Calculate the dew point
-    double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 50.0);
+    double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 10.0);
     double result =  RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
     i = 0;
     while (Double.isNaN(result)) {
