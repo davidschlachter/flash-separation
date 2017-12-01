@@ -83,18 +83,18 @@ public class Test_ConsoleUI extends TestCase {
     
     assertTrue("ConsoleUI inlet stream properties", output.contains("Inlet:" + newline + "  Temperature: 0.0" +
                                                                     newline + "  Pressure: 101325.0" + newline +
-                                                                    "  Mass flow rate: 10.0" + newline +
+                                                                    "  Molar flow rate: 10.0" + newline +
                                                                     "  Total vapour fraction: 0.5"));
     assertTrue("ConsoleUI set mole fractions", output.contains("Ethane  0.400  0.333  0.367" + newline +
                                                                "            Pentane  0.600  0.667  0.633"));
     assertTrue("ConsoleUI outlet stream properties", output.contains("Outlet:" + newline + "  Temperature: 333.0" +
                                                                      newline + "  Pressure: 101325.0" + newline +
-                                                                     "  Mass flow rate: 10.0" + newline +
+                                                                     "  Molar flow rate: 10.0" + newline +
                                                                      "  Total vapour fraction: 0.0"));
     assertTrue("ConsoleUI outlet mole fractions", output.contains("Ethane  0.000  0.000  0.367" + newline +
                                                                   "            Pentane  0.000  0.000  0.633"));
     assertTrue("ConsoleUI properties prompt", output.contains("  Temperature (K): " + newline + "  Pressure (Pa): " +
-                                                              newline + "  Mass flow rate (kg/s): " + newline + "" +
+                                                              newline + "  Molar flow rate (mol/s): " + newline + "" +
                                                               newline + "For the outlet stream, enter the following " + 
                                                               "properties if known:" + newline + "  Temperature (K): "
                                                                 + newline + "  Pressure (Pa):"));

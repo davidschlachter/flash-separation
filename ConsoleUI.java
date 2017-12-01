@@ -149,7 +149,7 @@ public class ConsoleUI {
     inletStream.setTemperature(nextDouble);
     nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output);
     inletStream.setPressure(nextDouble);
-    nextDouble = getADouble("  Mass flow rate (kg/s): ", 0.0, Double.MAX_VALUE, scan, output);
+    nextDouble = getADouble("  Molar flow rate (mol/s): ", 0.0, Double.MAX_VALUE, scan, output);
     inletStream.setMolarFlowRate(nextDouble);
     output.println("\nFor the outlet stream, enter the following properties if known:");
     if (inletStream.getTemperature() > 0.0) {
@@ -448,7 +448,7 @@ public class ConsoleUI {
     output.println("Inlet:");
     output.println("  Temperature: " + inletStream.getTemperature());
     output.println("  Pressure: " + inletStream.getPressure());
-    output.println("  Mass flow rate: " + inletStream.getMolarFlowRate());
+    output.println("  Molar flow rate: " + inletStream.getMolarFlowRate());
     output.printf("  Total vapour fraction: %.4f\n",inletStream.getVapourFraction());
     output.println("  Species and mole fractions: ");
     output.printf("    %15s  %5s  %5s  %5s%n", "Name", " liq ", " vap ", "total");
@@ -463,7 +463,7 @@ public class ConsoleUI {
     output.println("Outlet:");
     output.println("  Temperature: " + outletStream.getTemperature());
     output.println("  Pressure: " + outletStream.getPressure());
-    output.println("  Mass flow rate: " + outletStream.getMolarFlowRate());
+    output.println("  Molar flow rate: " + outletStream.getMolarFlowRate());
     output.printf("  Total vapour fraction: %.4f\n",outletStream.getVapourFraction());
     output.println("  Species and mole fractions: ");
     output.printf("    %15s  %5s  %5s  %5s%n", "Name", "liq", "vap", "total");
