@@ -217,11 +217,9 @@ public class PengRobinson{
   }
   
   public void solveLiquidFugacities() {
-    double p, q, m, root, root0, root1, root2, qpm, tripleTheta, theta, z, z0, z1, z2, zmin, zmax;
-    double liquidMixtureFugacity, vapourMixtureFugacity, bi, ai;
+    double p, q, m, root, root0, root1, root2, qpm, tripleTheta, theta, z, z0, z1, z2, zmin;
+    double bi;
     double liquidSum=0.0;
-    double vapourSum=0.0;
-    double pressure = this.flowStream.getPressure();
     double sumTerm=0.0;
     double bx = flowStream.getStreamBX();
     double ax = flowStream.getStreamAX();
@@ -241,7 +239,6 @@ public class PengRobinson{
       q=Math.pow(((-0.5*q1)-Math.sqrt(d)), 1.0/3.0);
       root = p+q;
       z=root-c2/3.0;
-      liquidMixtureFugacity = pressure*1e-6*Math.exp(z-1-Math.log(z-bx)-ax/bx/2.8284*Math.log((z+2.4142*bx)/(z-0.4142*bx)));
       for (int i=0;i<n;i++) {  
         bi=flowStream.getFlowSpecies().get(i).getSpeciesB();
         liquidSum+=(bi/bx)*(z-1);
@@ -271,9 +268,7 @@ public class PengRobinson{
       z0=root0-c2/3.0;
       z1=root1-c2/3.0;
       z2=root2-c2/3.0;
-      zmax=Math.max(z0, Math.max(z1, z2));
       zmin=Math.min(z0, Math.min(z1, z2));
-      liquidMixtureFugacity = pressure*1e-6*Math.exp(zmax-1-Math.log(zmin-bx)-ax/bx/2.8284*Math.log((zmin+2.4142*bx)/(zmin-0.4142*bx)));
       for (int i=0;i<n;i++) {  
         bi=flowStream.getFlowSpecies().get(i).getSpeciesB();
         liquidSum+=(bi/bx)*(zmin-1);
@@ -297,10 +292,9 @@ public class PengRobinson{
   }
   
   public void solveVapourFugacities() {
-    double p, q, m, root, root0, root1, root2, qpm, tripleTheta, theta, z, z0, z1, z2, zmin, zmax;
-    double vapourMixtureFugacity, bi, ai;
+    double p, q, m, root, root0, root1, root2, qpm, tripleTheta, theta, z, z0, z1, z2, zmax;
+    double bi;
     double vapourSum=0.0;
-    double pressure = this.flowStream.getPressure();
     double sumTerm=0.0;
     double by = flowStream.getStreamBY();
     double ay = flowStream.getStreamAY();
@@ -321,7 +315,6 @@ public class PengRobinson{
       q=Math.pow(((-0.5*q1)-Math.sqrt(d)), 1.0/3.0);
       root = p+q;
       z=root-c2/3.0;
-      vapourMixtureFugacity = pressure*1e-6*Math.exp(z-1-Math.log(z-by)-ay/by/2.8284*Math.log((z+2.4142*by)/(z-0.4142*by)));
       for (int i=0;i<n;i++) {  
         bi=flowStream.getFlowSpecies().get(i).getSpeciesB();
         vapourSum+=(bi/by)*(z-1);
@@ -346,8 +339,6 @@ public class PengRobinson{
       z1=root1-c2/3.0;
       z2=root2-c2/3.0;
       zmax=Math.max(z0, Math.max(z1, z2));
-      zmin=Math.min(z0, Math.min(z1, z2));
-      vapourMixtureFugacity = pressure*1e-6*Math.exp(zmax-1-Math.log(zmax-by)-ay/by/2.8284*Math.log((zmax+2.4142*by)/(zmax-0.4142*by))); 
       for (int i=0;i<n;i++) {
         bi=flowStream.getFlowSpecies().get(i).getSpeciesB();
         vapourSum+=(bi/by)*(zmax-1);

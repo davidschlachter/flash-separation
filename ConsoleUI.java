@@ -24,7 +24,6 @@ public class ConsoleUI {
     int i;
     char choice;
     double nextDouble;
-    boolean isIdeal;
     
     //
     // Get the list of species that will be simulated
@@ -147,20 +146,19 @@ public class ConsoleUI {
     output.println("\nFor the input stream, enter the following properties if known:");
     nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
     inletStream.setTemperature(nextDouble);
-    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output);
+    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, false);
     inletStream.setPressure(nextDouble);
-    nextDouble = getADouble("  Molar flow rate (mol/s): ", 0.0, Double.MAX_VALUE, scan, output);
+    nextDouble = getADouble("  Molar flow rate (mol/s): ", 0.0, Double.MAX_VALUE, scan, output, false);
     inletStream.setMolarFlowRate(nextDouble);
     output.println("\nFor the outlet stream, enter the following properties if known:");
     if (inletStream.getTemperature() > 0.0) {
       nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
       outletStream.setTemperature(nextDouble);
     } else { // If inlet stream temperature is unspecified, outlet temperature is mandatory
-      scan.nextLine();
-      nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output);
+      nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, false);
       outletStream.setTemperature(nextDouble);
     }
-    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output);
+    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, false);
     outletStream.setPressure(nextDouble);
     outletStream.setMolarFlowRate(inletStream.getMolarFlowRate()); // Assume no reaction
     
@@ -168,7 +166,7 @@ public class ConsoleUI {
     // Show the summary of the stream properties, and confirm if they are okay!
     //
     output.println("\nSummary of stream properties entered:");
-    this.printStreams(scan, output, inletStream, outletStream);
+    ConsoleUI.printStreams(scan, output, inletStream, outletStream);
     
     choice = ' ';
     while (choice != 'y' && choice != 'n' && choice != 'q') {
@@ -201,8 +199,6 @@ public class ConsoleUI {
         return true; //for testing
     }
     
-    
-    
     //
     // Check that the flash is possible! (outlet temperature is between dew and bubble point)
     //
@@ -234,7 +230,7 @@ public class ConsoleUI {
     
     // Print the final results
     output.println("Composition of the inlet and solved outlet streams: \n");
-    this.printStreams(scan, output, inletStream, outletStream);
+    ConsoleUI.printStreams(scan, output, inletStream, outletStream);
     
     // Heat required to maintain operating temperature
     output.print("\nHeat required to maintain operating temperature: ");
@@ -252,24 +248,20 @@ public class ConsoleUI {
     switch(choice) {
       case 'y': 
         String fileName;
-        boolean badFileName = true;
         PrintWriter outputStream = null;
         Scanner sc = new Scanner(System.in);
-       //a while(bad2FileName){
           output.println("Enter a filename. Do not us spaces or special characters (such as #, &, _, -, etc).\n");
           fileName = sc.nextLine();
           try{
             outputStream = new PrintWriter(new FileOutputStream(fileName+".txt"));
-            badFileName = false;
           }
           catch (FileNotFoundException e){
             System.out.println("Invalid filename. Try again.");
           }
-       // }
       output.println("now writing data!");
     // Print the final results
     outputStream.println("Composition of the inlet and solved outlet streams: \n");
-    this.printStreams(scan, outputStream, inletStream, outletStream);
+    ConsoleUI.printStreams(scan, outputStream, inletStream, outletStream);
     
     // Heat required to maintain operating temperature
     outputStream.print("\nHeat required to maintain operating temperature: ");
@@ -486,7 +478,6 @@ public class ConsoleUI {
   private double getADouble(String message, double lowerBound, double upperBound, Scanner scan, PrintWriter output) {
     
     double userInput = 0.0;
-    String nextString;
     
     while (true) {
       try {
@@ -515,9 +506,11 @@ public class ConsoleUI {
         output.println(message);
         nextString = scan.nextLine();
         
-        if (nextString.isEmpty()) {
+        if (nextString.isEmpty() && permitEmpty == true) {
           userInput = 0.0;
           break;
+        } else if (nextString.isEmpty() && permitEmpty == false) {
+          continue;
         }
         else {
           userInput = Double.parseDouble(nextString);

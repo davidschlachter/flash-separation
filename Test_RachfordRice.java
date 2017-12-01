@@ -1,8 +1,6 @@
 import junit.framework.TestCase;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.io.PrintWriter;
 
 public class Test_RachfordRice extends TestCase {
   

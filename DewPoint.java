@@ -53,7 +53,7 @@ public class DewPoint implements Function {
     double result = 0.0;
     
     double pressure = this.flowStream.getPressure();
-    double activityCoefficient, overallMoleFraction, saturationPressure, largePhi;
+    double overallMoleFraction, saturationPressure;
     
     this.flowStream.setTemperature(temperature);
     

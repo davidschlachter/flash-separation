@@ -32,7 +32,7 @@ public class Test_RootFinder extends TestCase {
     // Test RiddersMethod.calc() method
     double riddersRoot1 = RiddersMethod.calc(testQuadratic, bounds1[0], bounds1[1], error);
     double riddersRoot2 = RiddersMethod.calc(testQuadratic, bounds2[0], bounds2[1], error);
-    assertTrue("RiddersMethod.calc()", newtonRoot1 > -1.2081 && newtonRoot1 < -1.2080);
-    assertTrue("RiddersMethod.calc()", newtonRoot2 > 6.2080 && newtonRoot2 < 6.2081);
+    assertTrue("RiddersMethod.calc()", riddersRoot1 > -1.2081 && riddersRoot1 < -1.2080);
+    assertTrue("RiddersMethod.calc()", riddersRoot2 > 6.2080 && riddersRoot2 < 6.2081);
   }
 }

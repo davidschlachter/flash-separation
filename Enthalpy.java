@@ -51,7 +51,7 @@ public class Enthalpy implements Function {
     // Calculate the enthalpy difference!
     unspecifiedStream.setTemperature(testTemp);
     unspecifiedStream = new RachfordRice(unspecifiedStream).solve();
-    specifiedStream = new RachfordRice(specifiedStream).solve(); // TODO this is probably too slow!
+    specifiedStream = new RachfordRice(specifiedStream).solve();
     if (inletSpecified == true) {
       this.outlet = unspecifiedStream;
       this.inlet = specifiedStream;
@@ -69,9 +69,8 @@ public class Enthalpy implements Function {
     int i;
     double initialTemperature = -1.0;
     double finalTemperature = -1.0;
-    double outletBubbleTemperature = -1.0, inletBubbleTemperature = -1.0;
     
-    double vapourMoleFraction, liquidMoleFraction, heatofVapourization, result = 0.0;
+    double heatofVapourization, result = 0.0;
     
     double inletVapourFraction, outletVapourFraction, inletFlowRate, outletFlowRate, inletVapourMoleFraction;
     double inletLiquidMoleFraction, inletLiquidFlowRate, inletVapourFlowRate, outletVapourMoleFraction;
@@ -104,9 +103,6 @@ public class Enthalpy implements Function {
         result = result + outletVapourFlowRate * HeatCapacity.integrate(this.outlet.getFlowSpecies().get(i), initialTemperature, finalTemperature, "vapour");
       }
     } else {
-      outletBubbleTemperature = new BubblePoint(this.outlet).calc();
-      inletBubbleTemperature = new BubblePoint(this.inlet).calc();
-      
       for (i = 0; i < this.outlet.getFlowSpecies().size(); i++) {
         inletVapourMoleFraction = this.inlet.getFlowSpecies().get(i).getVapourMoleFraction();
         inletLiquidMoleFraction = this.inlet.getFlowSpecies().get(i).getLiquidMoleFraction();
