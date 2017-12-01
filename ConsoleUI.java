@@ -433,7 +433,10 @@ public class ConsoleUI {
             choice = getAChar("\nAre the custom species properties correct?\n  [y]es   [n]o\n", scan, output);
           }
           if (choice == 'y') break;
-          if (choice == 'n') this.theseSpecies.remove(customSpecies) ;
+          if (choice == 'n') {
+            this.theseSpecies.remove(customSpecies);
+            scan.nextLine();
+          }
         }
         
       }
