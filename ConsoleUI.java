@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.InputMismatchException;
 import java.lang.NumberFormatException;
 import java.lang.StringIndexOutOfBoundsException;
+import java.text.DecimalFormat;
 import java.io.*;
 
 public class ConsoleUI {
@@ -60,7 +61,7 @@ public class ConsoleUI {
         } else {
           break;
         }
-      } else output.println("Invalid entry:\""+choice+"\". Please try again.\n");
+      } else output.println("Invalid entry: \""+choice+"\". Please try again.\n");
     }
     
     FlowStream inletStream  = new FlowStream();
@@ -166,7 +167,7 @@ public class ConsoleUI {
     // Show the summary of the stream properties, and confirm if they are okay!
     //
     output.println("\nSummary of stream properties entered:");
-    ConsoleUI.printStreams(scan, output, inletStream, outletStream);
+    this.printStreams(scan, output, inletStream, outletStream);
     
     choice = ' ';
     while (choice != 'y' && choice != 'n' && choice != 'q') {
@@ -232,17 +233,18 @@ public class ConsoleUI {
     //
     // Check that the flash is possible! (outlet temperature is between dew and bubble point)
     //
+    DecimalFormat df = new DecimalFormat("###,###,##0.00");
     double dewPointTemperature, bubblePointTemperature;
     if (outletStream.getTemperature() > 0.0) {
       dewPointTemperature = new DewPoint(outletStream).calc();
       bubblePointTemperature = new BubblePoint(outletStream).calc();
       if (outletStream.getTemperature() > dewPointTemperature) {
         output.println("ERROR: The specified outlet temperature is above the dew point -- no separation will occur!");
-        output.println("(Dew point is: " + dewPointTemperature + ")");
+        output.println("(Dew point is: " + df.format(dewPointTemperature) + " K)");
         return true;
       } else if (outletStream.getTemperature() < bubblePointTemperature) {
         output.println("ERROR: The specified outlet temperature is below the bubble point -- no separation will occur!");
-        output.println("(Bubble point is: " + bubblePointTemperature + ")");
+        output.println("(Bubble point is: " + df.format(bubblePointTemperature) + " K)");
         return true;
       }
     }
@@ -260,7 +262,7 @@ public class ConsoleUI {
     
     // Print the final results
     output.println("Composition of the inlet and solved outlet streams: \n");
-    ConsoleUI.printStreams(scan, output, inletStream, outletStream);
+    this.printStreams(scan, output, inletStream, outletStream);
     
     // Heat required to maintain operating temperature
     output.print("\nHeat required to maintain operating temperature: ");
@@ -448,8 +450,7 @@ public class ConsoleUI {
     }
   }
   
-  
-  public static void printStreams(Scanner scan, PrintWriter output, FlowStream inletStream, FlowStream outletStream) {
+  private void printStreams(Scanner scan, PrintWriter output, FlowStream inletStream, FlowStream outletStream) {
     int i;
     String speciesName;
     double liquidMoleFraction, vapourMoleFraction, overallMoleFraction;
@@ -487,7 +488,7 @@ public class ConsoleUI {
     }
   }
   
-  private static void fileIO(PrintWriter outputStream, Scanner sc, FlowStream inletStream, FlowStream outletStream){
+  private void fileIO(PrintWriter outputStream, Scanner sc, FlowStream inletStream, FlowStream outletStream){
     
     String fileName;
     System.out.println("Enter a filename. Do not us spaces or special characters (such as #, &, _, -, etc).\n");
@@ -500,7 +501,7 @@ public class ConsoleUI {
     }
     // Print the final results
     outputStream.println("Composition of the inlet and solved outlet streams: \n");
-    ConsoleUI.printStreams(sc, outputStream, inletStream, outletStream);
+    this.printStreams(sc, outputStream, inletStream, outletStream);
     
     // Heat required to maintain operating temperature
     outputStream.print("\nHeat required to maintain operating temperature: ");

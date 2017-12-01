@@ -1,6 +1,3 @@
-import java.util.Scanner;
-import java.io.PrintWriter;
-
 public class RachfordRice implements Function {
   
   private FlowStream flowStream;
@@ -133,8 +130,7 @@ public class RachfordRice implements Function {
       vapourFlow += this.flowStream.getFlowSpecies().get(i).getVapourMoleFraction()*vOverF*this.flowStream.getMolarFlowRate();
     }
     if (Math.abs(((liquidFlow+vapourFlow)-this.flowStream.getMolarFlowRate())/this.flowStream.getMolarFlowRate()) > 0.01) {
-      System.out.println("\nERROR: Flow rates are inconsistent!!\nvOverF was found to be: " + vOverF+"\nHad this system: ");
-      ConsoleUI.printStreams(new Scanner(System.in), new PrintWriter(System.out, true), this.flowStream, this.flowStream);
+      System.out.println("\nERROR: Flow rates are inconsistent!!\nvOverF was found to be: " + vOverF);
     }
     
     return new FlowStream(this.flowStream);
