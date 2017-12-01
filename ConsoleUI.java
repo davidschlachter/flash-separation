@@ -156,6 +156,7 @@ public class ConsoleUI {
       nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
       outletStream.setTemperature(nextDouble);
     } else { // If inlet stream temperature is unspecified, outlet temperature is mandatory
+      scan.nextLine();
       nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output);
       outletStream.setTemperature(nextDouble);
     }
