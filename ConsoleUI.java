@@ -147,20 +147,19 @@ public class ConsoleUI {
     output.println("\nFor the input stream, enter the following properties if known:");
     nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
     inletStream.setTemperature(nextDouble);
-    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output);
+    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, false);
     inletStream.setPressure(nextDouble);
-    nextDouble = getADouble("  Molar flow rate (mol/s): ", 0.0, Double.MAX_VALUE, scan, output);
+    nextDouble = getADouble("  Molar flow rate (mol/s): ", 0.0, Double.MAX_VALUE, scan, output, false);
     inletStream.setMolarFlowRate(nextDouble);
     output.println("\nFor the outlet stream, enter the following properties if known:");
     if (inletStream.getTemperature() > 0.0) {
       nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, true);
       outletStream.setTemperature(nextDouble);
     } else { // If inlet stream temperature is unspecified, outlet temperature is mandatory
-      scan.nextLine();
-      nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output);
+      nextDouble = getADouble("  Temperature (K): ", 0.0, Double.MAX_VALUE, scan, output, false);
       outletStream.setTemperature(nextDouble);
     }
-    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output);
+    nextDouble = getADouble("  Pressure (Pa): ", 0.0, Double.MAX_VALUE, scan, output, false);
     outletStream.setPressure(nextDouble);
     outletStream.setMolarFlowRate(inletStream.getMolarFlowRate()); // Assume no reaction
     
@@ -512,9 +511,11 @@ public class ConsoleUI {
         output.println(message);
         nextString = scan.nextLine();
         
-        if (nextString.isEmpty()) {
+        if (nextString.isEmpty() && permitEmpty == true) {
           userInput = 0.0;
           break;
+        } else if (nextString.isEmpty() && permitEmpty == false) {
+          continue;
         }
         else {
           userInput = Double.parseDouble(nextString);
