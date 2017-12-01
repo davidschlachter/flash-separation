@@ -19,15 +19,13 @@ public class BubblePoint implements Function {
   
   // Return the bubble point for the given flowStream components at the given pressure
   public double calc() throws IllegalArgumentException {
-    // Determine if any of the species is likely to be non-condensable, and if so, ignore it
     int i;
-    for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
+    // Determine if any of the species is likely to be non-condensable, and if so, ignore it
+    for (i = 0; i < this.flowStream.getFlowSpecies().size(); i++) {
       if (this.flowStream.getFlowSpecies().get(i).getCriticalTemperature() == 0.0) throw new IllegalArgumentException("ERROR: Critical temperature is not specified for species "+this.flowStream.getFlowSpecies().get(i).getSpeciesName());
-      if (flowStream.getTemperature() > this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
-        this.flowStream.getFlowSpecies().get(i).setOverallMoleFraction(0.0);
     }
     
-    double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 1.0);
+    double[] bounds = RootFinder.getBounds(this, flowStream.getTemperature(), 50.0);
     double result =  RiddersMethod.calc(this, bounds[0], bounds[1], 0.001);
     i = 0;
     while (Double.isNaN(result)) {
@@ -44,14 +42,22 @@ public class BubblePoint implements Function {
     int i;
     double result = 0.0;
     
+    FlowStream testStream = new FlowStream(this.flowStream);
+    
+    // Determine if any of the species is likely to be non-condensable, and if so, ignore it
+    for (i = 0; i < testStream.getFlowSpecies().size(); i++) {
+      if (testStream.getTemperature() > testStream.getFlowSpecies().get(i).getCriticalTemperature())
+        testStream.getFlowSpecies().get(i).setOverallMoleFraction(0.0);
+    }
+    
     double temperature = x;
-    double pressure = this.flowStream.getPressure();
+    double pressure = testStream.getPressure();
     double overallMoleFraction, saturationPressure;
     
-    for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
+    for (i = 0; i < testStream.getFlowSpecies().size(); i++) {
       
-      overallMoleFraction = this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction();
-      saturationPressure = SaturationPressure.calc(this.flowStream.getFlowSpecies().get(i), temperature);
+      overallMoleFraction = testStream.getFlowSpecies().get(i).getOverallMoleFraction();
+      saturationPressure = SaturationPressure.calc(testStream.getFlowSpecies().get(i), temperature);
       
       result = result + (saturationPressure *overallMoleFraction / (pressure));
       
