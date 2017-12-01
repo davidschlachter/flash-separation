@@ -172,7 +172,10 @@ public class ConsoleUI {
     while (choice != 'y' && choice != 'n' && choice != 'q') {
       choice = getAChar("\nAre the stream properties correct?\n  [y]es   [n]o\n", scan, output);
     }
-    if (choice == 'n') return false;
+    if (choice == 'n') {
+      output.println("\nPlease re-enter the stream properties:\n");
+      return false;
+    }
     if (choice == 'q') return true;  // Exit option for testing
     
     //
@@ -287,7 +290,7 @@ public class ConsoleUI {
     }
     catch (IllegalArgumentException e) {
       System.out.println(e.getMessage());
-      return false;
+      return true;
     }
     
     // Print the final results
