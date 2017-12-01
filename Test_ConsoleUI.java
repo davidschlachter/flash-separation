@@ -111,69 +111,65 @@ public class Test_ConsoleUI extends TestCase {
     String input = "a\n" // "Add species"
       + "6\n"
       + "\n" //No input
-      + "testSpecies1\n" //testSpecies1
-      + "20.49\n" //Vapour heat capacities
-      + "0.377\n"
-      + "-0.000117\n"
-      + "0.0\n"
-      + "168.6\n" //Liquid heat capacities
-      + "0.0\n"
-      + "0.0\n"
-      + "0.0\n"
-      + "8.99\n" //Antoine Coefficients
-      + "1070.617\n"
-      + "-40.454\n"
-      + "268.6\n" //Lower T
-      + "341.37\n" //Upper T
-      + "469.6\n" //Critical T
+      + "testSpecies\n" //testSpecies
+      + "1\n" //Vapour heat capacities
+      + "1\n"
+      + "1\n"
+      + "1\n"
+      + "1\n" //Liquid heat capacities
+      + "1\n"
+      + "1\n"
+      + "1\n"
+      + "1\n" //Antoine Coefficients
+      + "1\n"
+      + "1\n"
+      + "1\n" //Lower T
+      + "500\n" //Upper T
+      + "100000\n" //Critical T
       + "y\n" //Ideal?
       + "n\n" //Check --> Properties are INCORRECT
-      + "testSpecies1\n" //testSpecies1
-      + "20.49\n" //Vapour heat capacities
-      + "0.377\n"
-      + "-0.000117\n"
+      + "testSpecies\n" //testSpecies
+      + "9.4\n" //Vapour heat capacities
+      + "0.16\n"
+      + "-0.000046\n"
       + "0.0\n"
-      + "168.6\n" //Liquid heat capacities
-      + "0.0\n"
-      + "0.0\n"
-      + "0.0\n"
-      + "8.99\n" //Antoine Coefficients
-      + "1070.617\n"
-      + "-40.454\n"
-      + "268.6\n" //Lower T
-      + "341.37\n" //Upper T
-      + "469.6\n" //Critical T
+      + "84.24\n" //Liquid heat capacities
+      + "-0.21\n"
+      + "0.00093\n"
+      + "0.0000261\n"
+      + "9.5\n" //Antoine Coefficients
+      + "791.3\n"
+      + "-6.422\n"
+      + "91.33\n" //Lower T
+      + "144.13\n" //Upper T
+      + "305.3\n" //Critical T
       + "y\n" //Ideal?
-      + "n\n" //Check --> Properties are CORRECT11
-      + "a\n" // "Add species"
-      + "6\n"
-      + "testSpecies2\n" //testSpecies2
-      + "20.49\n" //Vapour heat capacities
-      + "0.377\n"
-      + "-0.000117\n"
-      + "0.0\n"
-      + "168.6\n" //Liquid heat capacities
-      + "0.0\n"
-      + "0.0\n"
-      + "0.0\n"
-      + "8.99\n" //Antoine Coefficients
-      + "1070.617\n"
-      + "-40.454\n"
-      + "268.6\n" //Lower T
-      + "341.37\n" //Upper T
-      + "469.6\n" //Critical T
-      + "y\n" //Ideal?
-      + "y\n" //Check
+      + "y\n" //Check --> Properties are CORRECT
+      + "a\n"
+      + "1\n"
+      + "a\n"
+      + "2\n"
+      + "a\n"
+      + "3\n"
+      + "a\n"
+      + "4\n"
+      + "a\n"
+      + "5\n"
       + "d\n"
-      + "0.4\n" //Mole fraction testSpecies1
-      + "0.6\n" //Mole fraction testSpecies2
-      + "y\n" //Liquid phase?
-      + "\n" // Feed conditions
+      + "0.2\n"
+      + "0.2\n"
+      + "0.2\n"
+      + "0.2\n"
+      + "0.1\n"
+      + "0.1\n"
+      + "y\n"
+      + "\n"
       + "101325\n"
       + "10\n"
-      + "333\n" //Outlet conditions
+      + "333\n"
       + "101325\n"
-      + "y\n"
+      + "y\n" //Stream properties correct?
+      + "y\n" //Ideal assumptions?
       + "q\n"; // Quit
     
     StringWriter stringWriter = new StringWriter();
