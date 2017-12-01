@@ -199,6 +199,68 @@ public class ConsoleUI {
         return true; //for testing
     }
     
+    //check that system is subcritical, if not print streams and end program
+    
+    boolean isAllSuperCritical = true;
+    for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
+      if (outletStream.getTemperature() < outletStream.getFlowSpecies().get(i).getCriticalTemperature())
+        isAllSuperCritical = false;
+    }
+    if (isAllSuperCritical == true) {
+      for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
+        outletStream.getFlowSpecies().get(i).setLiquidMoleFraction(0.0);
+        outletStream.getFlowSpecies().get(i).setVapourMoleFraction(outletStream.getFlowSpecies().get(i).getOverallMoleFraction());
+      }
+        outletStream.setVapourFraction(1.0);
+        // Print the final results
+    output.println("Composition of the inlet and solved outlet streams: \n");
+    ConsoleUI.printStreams(scan, output, inletStream, outletStream);
+    
+    // Heat required to maintain operating temperature
+    output.print("\nHeat required to maintain operating temperature: ");
+    output.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
+    
+    //Ask user if they want results output into a .txt file
+    while(true) {
+      choice = getAChar("\nWould you like to save your results as a .txt file?\n  [y]es   [n]o\n", scan, output);
+      if(choice == 'y' || choice == 'n') break;
+      else {
+        output.println("That is an invalid choice. Please try again.\n");
+      }
+    }
+    
+    switch(choice) {
+      case 'y': 
+        String fileName;
+        PrintWriter outputStream = null;
+        Scanner sc = new Scanner(System.in);
+          output.println("Enter a filename. Do not us spaces or special characters (such as #, &, _, -, etc).\n");
+          fileName = sc.nextLine();
+          try{
+            outputStream = new PrintWriter(new FileOutputStream(fileName+".txt"));
+          }
+          catch (FileNotFoundException e){
+            System.out.println("Invalid filename. Try again.");
+          }
+      output.println("now writing data!");
+    // Print the final results
+    outputStream.println("Composition of the inlet and solved outlet streams: \n");
+    ConsoleUI.printStreams(scan, outputStream, inletStream, outletStream);
+    
+    // Heat required to maintain operating temperature
+    outputStream.print("\nHeat required to maintain operating temperature: ");
+    outputStream.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
+    outputStream.close();
+        break;
+      case 'n': 
+        break; 
+    }
+    scan.close();
+    return true;  
+  }
+        
+      
+    
     //
     // Check that the flash is possible! (outlet temperature is between dew and bubble point)
     //
