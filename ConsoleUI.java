@@ -24,7 +24,6 @@ public class ConsoleUI {
     int i;
     char choice;
     double nextDouble;
-  //  String nextString; //DEBUG
     boolean isIdeal;
     
     //
@@ -130,7 +129,6 @@ public class ConsoleUI {
           + inletStream.getFlowSpecies().get(i).getVapourMoleFraction() * inletStream.getVapourFraction();
         inletStream.getFlowSpecies().get(i).setOverallMoleFraction(moleFraction);
       }
-     // nextString = scan.nextLine(); //DEBUG
     }
     
     //

@@ -96,35 +96,6 @@ public class Test_BubblePoint extends TestCase {
     assertTrue("pentaneBub.calc()",answer > 334.5 && answer < 335.0);
   }
   
-  // Test a non-ideal bubble point calculation
-  public void testNonIdealCalc(){
-    
-    FlowStream testStream = new FlowStream();
-    
-    // Test function result for water and ethanol at 1 atm, 300 K under NONIDEAL CONDITIONS!
-    FlowSpecies water = new FlowSpecies();
-    water.setAntoineConstants(new AntoineCoefficients(10.19621302, 1730.63, -39.724, 304.0, 333.0));
-    water.setOverallMoleFraction(0.75);
-    water.setCriticalTemperature(647.0);
-    
-    FlowSpecies ethanol = new FlowSpecies();
-    ethanol.setAntoineConstants(new AntoineCoefficients(9.80607302, 1332.04, -73.95, 364.8, 513.91));
-    ethanol.setOverallMoleFraction(0.25);
-    ethanol.setCriticalTemperature(514.0);
-    
-    testStream.addFlowSpecies(water);
-    testStream.addFlowSpecies(ethanol);
-    testStream.setPressure(101325.0);
-    testStream.setTemperature(300.);
-    
-    BubblePoint testBubblePoint = new BubblePoint(testStream);
-    double bubblePoint = testBubblePoint.calc();
-    System.out.println("BUBBLE POINT IS: "+bubblePoint);
-    
-    assertTrue(bubblePoint > 367.3 && bubblePoint < 367.7);
-    
-  }
-  
   // Test the ideal bubble point against this example from LearnChemE:
   // https://www.youtube.com/watch?v=0nOPZQHPpyk
   public void testIdealLearnChemEBubblePoint() {
