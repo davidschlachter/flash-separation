@@ -7,7 +7,6 @@ public class Controller {
     
     double error = 0.0001;
     
-    double unknownTemperature;
     // First problem type: both inlet and outlet temperatures are specified
     //
     if (outlet.getTemperature() > 0.0000001 && inlet.getTemperature() > 0.0000001) {
@@ -19,21 +18,16 @@ public class Controller {
       // flash is adiabatic
       //
       // Determine missing temperature for initial guess
-      FlowStream unspecifiedStream, specifiedStream;
+      FlowStream specifiedStream;
       boolean inletSpecified;
       if (outlet.getTemperature() > 0.0 && inlet.getTemperature() == 0.0) {
-        unspecifiedStream = inlet;
         specifiedStream = outlet;
         inletSpecified = false;
-        //System.out.println("Controller: Unspecified stream is the inlet.");
       } else if (inlet.getTemperature() > 0.0 && outlet.getTemperature() == 0.0) {
-        unspecifiedStream = outlet;
         specifiedStream = inlet;
         inletSpecified = true;
-        //System.out.println("Controller: Unspecified stream is the outlet.");
       } else {
-        // Satisfy the compiler re initializing all variables  :)
-        unspecifiedStream = outlet;
+        // Satisfy the compiler re initializing all variables :)
         specifiedStream = inlet;
         inletSpecified = true;
         // Print an error... the problem here isn't anything we're expecting!
@@ -47,7 +41,6 @@ public class Controller {
       
       if (inletSpecified == true) enthalpy.getOutlet().setTemperature(solvedFinalTemperaure);
       else enthalpy.getInlet().setTemperature(solvedFinalTemperaure);
-      
       
       return new FlowStream[] {new FlowStream(enthalpy.getInlet()), new FlowStream(enthalpy.getOutlet())};
     }

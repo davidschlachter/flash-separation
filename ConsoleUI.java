@@ -24,7 +24,6 @@ public class ConsoleUI {
     int i;
     char choice;
     double nextDouble;
-    boolean isIdeal;
     
     //
     // Get the list of species that will be simulated
@@ -167,7 +166,7 @@ public class ConsoleUI {
     // Show the summary of the stream properties, and confirm if they are okay!
     //
     output.println("\nSummary of stream properties entered:");
-    this.printStreams(scan, output, inletStream, outletStream);
+    ConsoleUI.printStreams(scan, output, inletStream, outletStream);
     
     choice = ' ';
     while (choice != 'y' && choice != 'n' && choice != 'q') {
@@ -200,8 +199,6 @@ public class ConsoleUI {
         return true; //for testing
     }
     
-    
-    
     //
     // Check that the flash is possible! (outlet temperature is between dew and bubble point)
     //
@@ -233,7 +230,7 @@ public class ConsoleUI {
     
     // Print the final results
     output.println("Composition of the inlet and solved outlet streams: \n");
-    this.printStreams(scan, output, inletStream, outletStream);
+    ConsoleUI.printStreams(scan, output, inletStream, outletStream);
     
     // Heat required to maintain operating temperature
     output.print("\nHeat required to maintain operating temperature: ");
@@ -251,24 +248,20 @@ public class ConsoleUI {
     switch(choice) {
       case 'y': 
         String fileName;
-        boolean badFileName = true;
         PrintWriter outputStream = null;
         Scanner sc = new Scanner(System.in);
-       //a while(bad2FileName){
           output.println("Enter a filename. Do not us spaces or special characters (such as #, &, _, -, etc).\n");
           fileName = sc.nextLine();
           try{
             outputStream = new PrintWriter(new FileOutputStream(fileName+".txt"));
-            badFileName = false;
           }
           catch (FileNotFoundException e){
             System.out.println("Invalid filename. Try again.");
           }
-       // }
       output.println("now writing data!");
     // Print the final results
     outputStream.println("Composition of the inlet and solved outlet streams: \n");
-    this.printStreams(scan, outputStream, inletStream, outletStream);
+    ConsoleUI.printStreams(scan, outputStream, inletStream, outletStream);
     
     // Heat required to maintain operating temperature
     outputStream.print("\nHeat required to maintain operating temperature: ");
@@ -482,7 +475,6 @@ public class ConsoleUI {
   private double getADouble(String message, double lowerBound, double upperBound, Scanner scan, PrintWriter output) {
     
     double userInput = 0.0;
-    String nextString;
     
     while (true) {
       try {

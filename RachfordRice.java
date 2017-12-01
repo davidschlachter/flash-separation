@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.io.PrintWriter;
-import java.lang.IllegalArgumentException;
 
 public class RachfordRice implements Function {
   

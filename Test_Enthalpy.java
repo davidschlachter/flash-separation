@@ -1,6 +1,5 @@
 import junit.framework.TestCase;
 import java.util.List;
-import java.util.ArrayList;
 
 public class Test_Enthalpy extends TestCase {
   
@@ -388,7 +387,6 @@ public class Test_Enthalpy extends TestCase {
     methanol.setOverallMoleFraction(0.30);
     ethanol.setOverallMoleFraction(0.70);
     // Antoine
-    List<AntoineCoefficients> methanolAntoine = new ArrayList<AntoineCoefficients>();
     methanol.setAntoineConstants(new AntoineCoefficients(10.2049, 1582, -33.15));
     ethanol.setAntoineConstants(new AntoineCoefficients(10.2349, 1593, -47.15));
     // Heat capacities
