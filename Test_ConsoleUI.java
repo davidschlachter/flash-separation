@@ -179,8 +179,6 @@ public class Test_ConsoleUI extends TestCase {
     ConsoleUI console = new ConsoleUI();
     console.run(new Scanner(input), new PrintWriter(stringWriter));
     
-    String newline = System.getProperty("line.separator");
-    
     String output = stringWriter.toString();
     System.out.println(output);
     
