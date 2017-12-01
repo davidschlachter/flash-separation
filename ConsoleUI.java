@@ -210,11 +210,13 @@ public class ConsoleUI {
       dewPointTemperature = new DewPoint(outletStream).calc();
       bubblePointTemperature = new BubblePoint(outletStream).calc();
       if (outletStream.getTemperature() > dewPointTemperature) {
-        output.println("WARNING: The specified outlet temperature is above the dew point -- no separation will occur!");
+        output.println("ERROR: The specified outlet temperature is above the dew point -- no separation will occur!");
         output.println("(Dew point is: " + dewPointTemperature + ")");
+        return true;
       } else if (outletStream.getTemperature() < bubblePointTemperature) {
-        output.println("WARNING: The specified outlet temperature is below the bubble point -- no separation will occur!");
+        output.println("ERROR: The specified outlet temperature is below the bubble point -- no separation will occur!");
         output.println("(Bubble point is: " + bubblePointTemperature + ")");
+        return true;
       }
     }
     
