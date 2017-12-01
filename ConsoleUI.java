@@ -172,7 +172,10 @@ public class ConsoleUI {
     while (choice != 'y' && choice != 'n' && choice != 'q') {
       choice = getAChar("\nAre the stream properties correct?\n  [y]es   [n]o\n", scan, output);
     }
-    if (choice == 'n') return false;
+    if (choice == 'n') {
+      output.println("\nPlease re-enter the stream properties:\n");
+      return false;
+    }
     if (choice == 'q') return true;  // Exit option for testing
     
     //
@@ -198,6 +201,74 @@ public class ConsoleUI {
       case 'q': 
         return true; //for testing
     }
+    
+    boolean isAllSuperCriticalPressure = true;
+    for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
+      if (outletStream.getPressure() < outletStream.getFlowSpecies().get(i).getCriticalPressure())
+        isAllSuperCriticalPressure = false;
+    }
+    boolean isAllSuperCriticalTemperature = true;
+    for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
+      if (outletStream.getTemperature() < outletStream.getFlowSpecies().get(i).getCriticalTemperature())
+        isAllSuperCriticalTemperature = false;
+    }
+    
+    
+    //check that system is subcritical, if not print streams and end program
+    if (isAllSuperCriticalTemperature == true && isAllSuperCriticalPressure == false) {
+      for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
+        outletStream.getFlowSpecies().get(i).setLiquidMoleFraction(0.0);
+        outletStream.getFlowSpecies().get(i).setVapourMoleFraction(outletStream.getFlowSpecies().get(i).getOverallMoleFraction());
+      }
+        outletStream.setVapourFraction(1.0);
+        // Print the final results
+    output.println("Composition of the inlet and solved outlet streams: \n");
+    ConsoleUI.printStreams(scan, output, inletStream, outletStream);
+    
+    // Heat required to maintain operating temperature
+    output.print("\nHeat required to maintain operating temperature: ");
+    output.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
+    
+    //Ask user if they want results output into a .txt file
+    while(true) {
+      choice = getAChar("\nWould you like to save your results as a .txt file?\n  [y]es   [n]o\n", scan, output);
+      if(choice == 'y' || choice == 'n') break;
+      else {
+        output.println("That is an invalid choice. Please try again.\n");
+      }
+    }
+    
+    switch(choice) {
+      case 'y': 
+        String fileName;
+        PrintWriter outputStream = null;
+        Scanner sc = new Scanner(System.in);
+          output.println("Enter a filename. Do not us spaces or special characters (such as #, &, _, -, etc).\n");
+          fileName = sc.nextLine();
+          try{
+            outputStream = new PrintWriter(new FileOutputStream(fileName+".txt"));
+          }
+          catch (FileNotFoundException e){
+            System.out.println("Invalid filename. Try again.");
+          }
+      output.println("now writing data!");
+    // Print the final results
+    outputStream.println("Composition of the inlet and solved outlet streams: \n");
+    ConsoleUI.printStreams(scan, outputStream, inletStream, outletStream);
+    
+    // Heat required to maintain operating temperature
+    outputStream.print("\nHeat required to maintain operating temperature: ");
+    outputStream.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
+    outputStream.close();
+        break;
+      case 'n': 
+        break; 
+    }
+    scan.close();
+    return true;  
+  }
+        
+      
     
     //
     // Check that the flash is possible! (outlet temperature is between dew and bubble point)
@@ -225,7 +296,7 @@ public class ConsoleUI {
     }
     catch (IllegalArgumentException e) {
       System.out.println(e.getMessage());
-      return false;
+      return true;
     }
     
     // Print the final results
@@ -380,19 +451,17 @@ public class ConsoleUI {
           nextConstant1 = getADouble(" Critical temperature for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
           customSpecies.setCriticalTemperature(nextConstant1);
           
+          output.println("Enter the critical pressure: ");
+          nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
+          customSpecies.setCriticalPressure(nextConstant1);
+          
           ideal = ' ';
           while (ideal != 'y' && ideal != 'n') {          
             ideal = getAChar("\nWill the simulation be run in ideal-gas mode?\n  [y]es   [n]o\n", scan, output);
           }
           
           if (ideal == 'n') {
-            
             scan.nextLine();
-            
-            output.println("Enter the critical pressure: ");
-            nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
-            customSpecies.setCriticalPressure(nextConstant1);
-            
             
             output.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
             nextConstant1 = getADouble("Acentric factor for "+customSpecies.getSpeciesName()+":", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);

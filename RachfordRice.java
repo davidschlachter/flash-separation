@@ -30,6 +30,20 @@ public class RachfordRice implements Function {
     double bubblePointTemperature = new BubblePoint(this.flowStream).calc();
     double vOverF = RiddersMethod.calc(this, 0.0, 1.0, 0.0001, false);
     
+    boolean isAllSuperCritical = true;
+    for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
+      if (flowStream.getTemperature() < this.flowStream.getFlowSpecies().get(i).getCriticalTemperature())
+        isAllSuperCritical = false;
+    }
+    if (isAllSuperCritical == true) {
+      for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
+        this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(0.0);
+        this.flowStream.getFlowSpecies().get(i).setVapourMoleFraction(this.flowStream.getFlowSpecies().get(i).getOverallMoleFraction());
+      }
+      this.flowStream.setVapourFraction(1.0);
+      return this.flowStream;
+    }
+    
     if (this.flowStream.getTemperature() > dewPointTemperature) {
       for (i = 0; i < flowStream.getFlowSpecies().size(); i++) {
         this.flowStream.getFlowSpecies().get(i).setLiquidMoleFraction(0.0);
