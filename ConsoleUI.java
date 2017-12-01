@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.InputMismatchException;
 import java.lang.NumberFormatException;
 import java.lang.StringIndexOutOfBoundsException;
+import java.io.*;
 
 public class ConsoleUI {
   
@@ -241,6 +242,46 @@ public class ConsoleUI {
     // Heat required to maintain operating temperature
     output.print("\nHeat required to maintain operating temperature: ");
     output.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
+    
+    //Ask user if they want results output into a .txt file
+    while(true) {
+      choice = getAChar("\nWould you like to save your results as a .txt file?\n  [y]es   [n]o\n", scan, output);
+      if(choice == 'y' || choice == 'n') break;
+      else {
+        output.println("That is an invalid choice. Please try again.\n");
+      }
+    }
+    
+    switch(choice) {
+      case 'y': 
+        String fileName;
+        boolean badFileName = true;
+        PrintWriter outputStream = null;
+        Scanner sc = new Scanner(System.in);
+       //a while(bad2FileName){
+          output.println("Enter a filename. Do not us spaces or special characters (such as #, &, _, -, etc).\n");
+          fileName = sc.nextLine();
+          try{
+            outputStream = new PrintWriter(new FileOutputStream(fileName+".txt"));
+            badFileName = false;
+          }
+          catch (FileNotFoundException e){
+            System.out.println("Invalid filename. Try again.");
+          }
+       // }
+      output.println("now writing data!");
+    // Print the final results
+    outputStream.println("Composition of the inlet and solved outlet streams: \n");
+    this.printStreams(scan, outputStream, inletStream, outletStream);
+    
+    // Heat required to maintain operating temperature
+    outputStream.print("\nHeat required to maintain operating temperature: ");
+    outputStream.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
+    outputStream.close();
+        break;
+      case 'n': 
+        break; 
+    }
     
     scan.close();
     return true;
