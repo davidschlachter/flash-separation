@@ -112,20 +112,21 @@ public class Test_ConsoleUI extends TestCase {
       + "6\n"
       + "\n" //No input
       + "testSpecies\n" //testSpecies
-      + "1\n" //Vapour heat capacities
+      + "1\n" //Vapour heat capacities --> Dummy variables
       + "1\n"
       + "1\n"
       + "1\n"
-      + "1\n" //Liquid heat capacities
+      + "1\n" //Liquid heat capacities --> Dummy variables
       + "1\n"
       + "1\n"
       + "1\n"
-      + "1\n" //Antoine Coefficients
+      + "1\n" //Antoine Coefficients --> Dummy variables
       + "1\n"
       + "1\n"
       + "1\n" //Lower T
       + "500\n" //Upper T
       + "100000\n" //Critical T
+      + "100000000\n" //Critical P
       + "y\n" //Ideal?
       + "n\n" //Check --> Properties are INCORRECT
       + "testSpecies\n" //testSpecies
@@ -181,9 +182,13 @@ public class Test_ConsoleUI extends TestCase {
     String newline = System.getProperty("line.separator");
     
     String output = stringWriter.toString();
+    System.out.println(output);
     
-    assertTrue("ConsoleUI add species", output.contains("testSpecies" + newline + "  Pentane"
-                                                          + newline +"   Hexane" + newline + "  Cyclohexane"
-                                                          + newline + "  Water" + newline + "  Nitrogen"));
+    assertTrue(output.contains("Vapour heat capacity coefficients: A=1.0 B=1.0 C=1.0 D=1.0"));
+    assertTrue(output.contains("Liquid heat capacity coefficients: A=1.0 B=1.0 C=1.0 D=1.0"));
+    assertTrue(output.contains("Antoine equation constants:        A=1.0 B=1.0 C=1.0"));
+    assertTrue(output.contains("Vapour heat capacity coefficients: A=9.4 B=0.16 C=-4.6E-5 D=0.0"));
+    assertTrue(output.contains("Liquid heat capacity coefficients: A=84.24 B=-0.21 C=9.3E-4 D=2.61E-5"));
+    assertTrue(output.contains("Antoine equation constants:        A=9.5 B=791.3 C=-6.422"));
   }
 }
