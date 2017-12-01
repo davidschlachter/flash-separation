@@ -213,31 +213,12 @@ public class ConsoleUI {
         isAllSuperCriticalTemperature = false;
     }
     
-    
-    //check that system is subcritical, if not print streams and end program
-    if (isAllSuperCriticalTemperature == true && isAllSuperCriticalPressure == false) {
-      for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
-        outletStream.getFlowSpecies().get(i).setLiquidMoleFraction(0.0);
-        outletStream.getFlowSpecies().get(i).setVapourMoleFraction(outletStream.getFlowSpecies().get(i).getOverallMoleFraction());
-      }
-        outletStream.setVapourFraction(1.0);
-        // Print the final results
-    output.println("Composition of the inlet and solved outlet streams: \n");
-    ConsoleUI.printStreams(scan, output, inletStream, outletStream);
-    
-    // Heat required to maintain operating temperature
-    output.print("\nHeat required to maintain operating temperature: ");
-    output.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
-    
-    //Ask user if they want results output into a .txt file
-    while(true) {
-      choice = getAChar("\nWould you like to save your results as a .txt file?\n  [y]es   [n]o\n", scan, output);
-      if(choice == 'y' || choice == 'n') break;
-      else {
-        output.println("That is an invalid choice. Please try again.\n");
-      }
+    if (isAllSuperCriticalPressure == true && isAllSuperCriticalTemperature == false) {
+      output.println("ERROR: The specified outlet pressure is above all species critical pressures -- no separation will occur!");
+      return true;
     }
     
+<<<<<<< HEAD
     switch(choice) {
       case 'y': 
         PrintWriter outputStream = null;
@@ -246,12 +227,18 @@ public class ConsoleUI {
         break;
       case 'n': 
         break; 
+=======
+    if (isAllSuperCriticalPressure == true && isAllSuperCriticalPressure == false) {
+      output.println("ERROR: The specified outlet temperature is above all species critical temperatures -- no separation will occur!");
+      return true;
     }
-    scan.close();
-    return true;  
-  }
-        
-      
+    
+    if (isAllSuperCriticalPressure == true && isAllSuperCriticalPressure == true) {
+      output.println("ERROR: The specified outlet system is a super-critical fluid -- no separation will occur!");
+      return true;
+>>>>>>> 8360158e382f0ec6824cbcfff3d5f63d98b23335
+    }
+    
     
     //
     // Check that the flash is possible! (outlet temperature is between dew and bubble point)
@@ -418,19 +405,17 @@ public class ConsoleUI {
           nextConstant1 = getADouble(" Critical temperature for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
           customSpecies.setCriticalTemperature(nextConstant1);
           
+          output.println("Enter the critical pressure: ");
+          nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
+          customSpecies.setCriticalPressure(nextConstant1);
+          
           ideal = ' ';
           while (ideal != 'y' && ideal != 'n') {          
             ideal = getAChar("\nWill the simulation be run in ideal-gas mode?\n  [y]es   [n]o\n", scan, output);
           }
           
           if (ideal == 'n') {
-            
             scan.nextLine();
-            
-            output.println("Enter the critical pressure: ");
-            nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
-            customSpecies.setCriticalPressure(nextConstant1);
-            
             
             output.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
             nextConstant1 = getADouble("Acentric factor for "+customSpecies.getSpeciesName()+":", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
