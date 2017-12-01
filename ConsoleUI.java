@@ -451,19 +451,17 @@ public class ConsoleUI {
           nextConstant1 = getADouble(" Critical temperature for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
           customSpecies.setCriticalTemperature(nextConstant1);
           
+          output.println("Enter the critical pressure: ");
+          nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
+          customSpecies.setCriticalPressure(nextConstant1);
+          
           ideal = ' ';
           while (ideal != 'y' && ideal != 'n') {          
             ideal = getAChar("\nWill the simulation be run in ideal-gas mode?\n  [y]es   [n]o\n", scan, output);
           }
           
           if (ideal == 'n') {
-            
             scan.nextLine();
-            
-            output.println("Enter the critical pressure: ");
-            nextConstant1 = getADouble("Critical pressure for "+customSpecies.getSpeciesName()+":", 0.0, Double.MAX_VALUE, scan, output, true);
-            customSpecies.setCriticalPressure(nextConstant1);
-            
             
             output.println("Enter the acentric factor for "+customSpecies.getSpeciesName()+":");
             nextConstant1 = getADouble("Acentric factor for "+customSpecies.getSpeciesName()+":", -Double.MAX_VALUE, Double.MAX_VALUE, scan, output, true);
