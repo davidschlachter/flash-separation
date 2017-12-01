@@ -202,14 +202,20 @@ public class ConsoleUI {
         return true; //for testing
     }
     
-    //check that system is subcritical, if not print streams and end program
-    
-    boolean isAllSuperCritical = true;
+    boolean isAllSuperCriticalPressure = true;
+    for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
+      if (outletStream.getPressure() < outletStream.getFlowSpecies().get(i).getCriticalPressure())
+        isAllSuperCriticalPressure = false;
+    }
+    boolean isAllSuperCriticalTemperature = true;
     for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
       if (outletStream.getTemperature() < outletStream.getFlowSpecies().get(i).getCriticalTemperature())
-        isAllSuperCritical = false;
+        isAllSuperCriticalTemperature = false;
     }
-    if (isAllSuperCritical == true) {
+    
+    
+    //check that system is subcritical, if not print streams and end program
+    if (isAllSuperCriticalTemperature == true && isAllSuperCriticalPressure == false) {
       for (i = 0; i < outletStream.getFlowSpecies().size(); i++) {
         outletStream.getFlowSpecies().get(i).setLiquidMoleFraction(0.0);
         outletStream.getFlowSpecies().get(i).setVapourMoleFraction(outletStream.getFlowSpecies().get(i).getOverallMoleFraction());
