@@ -218,16 +218,6 @@ public class ConsoleUI {
       return true;
     }
     
-<<<<<<< HEAD
-    switch(choice) {
-      case 'y': 
-        PrintWriter outputStream = null;
-        Scanner sc = new Scanner(System.in);
-        fileIO(outputStream, sc, inletStream, outletStream);
-        break;
-      case 'n': 
-        break; 
-=======
     if (isAllSuperCriticalPressure == true && isAllSuperCriticalPressure == false) {
       output.println("ERROR: The specified outlet temperature is above all species critical temperatures -- no separation will occur!");
       return true;
@@ -236,7 +226,6 @@ public class ConsoleUI {
     if (isAllSuperCriticalPressure == true && isAllSuperCriticalPressure == true) {
       output.println("ERROR: The specified outlet system is a super-critical fluid -- no separation will occur!");
       return true;
->>>>>>> 8360158e382f0ec6824cbcfff3d5f63d98b23335
     }
     
     
@@ -499,16 +488,16 @@ public class ConsoleUI {
   }
   
   private static void fileIO(PrintWriter outputStream, Scanner sc, FlowStream inletStream, FlowStream outletStream){
-  
-  String fileName;
-          System.out.println("Enter a filename. Do not us spaces or special characters (such as #, &, _, -, etc).\n");
-          fileName = sc.nextLine();
-          try{
-            outputStream = new PrintWriter(new FileOutputStream(fileName+".txt"));
-          }
-          catch (FileNotFoundException e){
-            System.out.println("Invalid filename. Try again.");
-          }
+    
+    String fileName;
+    System.out.println("Enter a filename. Do not us spaces or special characters (such as #, &, _, -, etc).\n");
+    fileName = sc.nextLine();
+    try{
+      outputStream = new PrintWriter(new FileOutputStream(fileName+".txt"));
+    }
+    catch (FileNotFoundException e){
+      System.out.println("Invalid filename. Try again.");
+    }
     // Print the final results
     outputStream.println("Composition of the inlet and solved outlet streams: \n");
     ConsoleUI.printStreams(sc, outputStream, inletStream, outletStream);
@@ -517,7 +506,7 @@ public class ConsoleUI {
     outputStream.print("\nHeat required to maintain operating temperature: ");
     outputStream.printf("%.2f J\n",new Enthalpy(inletStream, outletStream).calc());
     outputStream.close();
-  
+    
   }
   
   private double getADouble(String message, double lowerBound, double upperBound, Scanner scan, PrintWriter output) {
