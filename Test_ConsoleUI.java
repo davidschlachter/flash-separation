@@ -106,7 +106,7 @@ public class Test_ConsoleUI extends TestCase {
                                                                   "  Mole fraction of Ethane: " + newline +
                                                                   "  Mole fraction of Pentane:"));
   }
-  /*
+  
   public void testAddCustomSpecies() {
     String input = "a\n" // "Add species"
       + "6\n"
@@ -185,5 +185,5 @@ public class Test_ConsoleUI extends TestCase {
     assertTrue("ConsoleUI add species", output.contains("testSpecies" + newline + "  Pentane"
                                                           + newline +"   Hexane" + newline + "  Cyclohexane"
                                                           + newline + "  Water" + newline + "  Nitrogen"));
-  }*/
+  }
 }
