@@ -2,17 +2,17 @@
 
 [Flash distillation](https://en.wikipedia.org/wiki/Flash_evaporation) is a process where a mixture of liquids is partially vaporized by a reduction in pressure. Volatile components will be preferentially vaporized, allowing the mixture to be separated. (Flash distillation is analogous to a single tray of a distillation tower.)
 
-![Simple diagram of flash distillation](flash-distillation-diagram.png)
+![Simple diagram of flash distillation](doc/flash-distillation-diagram.png)
 
 This tool calculates the composition of the output streams of a flash distillation, using either the ideal gas law or the [Peng-Robinson equation of state](https://en.wikipedia.org/wiki/Equation_of_state#Peng%E2%80%93Robinson_equation_of_state). The composition of the inlet streams, as well as the desired temperature and pressure of the outlet, are input, with the outlet compositions output:
 
-![Simulator output](simulator-screenshot.png)
+![Simulator output](doc/simulator-screenshot.png)
 
 # Background
 
 The simulator was written as a project for the course CHG 4343 (Computer-Aided Design in Chemical Engineering) by Nick Boileau, Stephanie Lanctot, Joshua Rico, David Schlachter, and Natalie Woszewska. Detailed thermodynamics calculations are implemented, and results have been validated against external implementations.
 
-![Simulator output](code-screenshot.png)
+![Simulator output](doc/code-screenshot.png)
 
 To run: download 'flash-separation.jar' from Releases tab, and open with Java Runtime at a command line (e.g. `java -jar flash-separation.jar`).
 
