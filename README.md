@@ -14,6 +14,8 @@ The simulator was written as a project for the course CHG 4343 (Computer-Aided D
 
 ![Simulator output](code-screenshot.png)
 
-To run: using the Dr. Java IDE, download the project, and open 'flash-separation.drjava' using 'Project' > 'Open...'. Compile the project, and press 'Run Project' to start the simulation.
+To run: download 'flash-separation.jar' from Releases tab, and open with Java Runtime at a command line (e.g. `java -jar flash-separation.jar`).
+
+Development environment: download the project and open 'flash-separation.drjava' in the Dr. Java IDE using 'Project' > 'Open...'. Compile the project, and press 'Run Project' to start the simulation.
 
 Many test cases have been included. These are the classes starting with 'Test_', and their 'test' methods are run when by pressing 'Test Project' in the Dr. Java menubar. If all the tests pass (i.e. assertTrue boolean statements return `true`), then all the tests will appear in green in the 'Test Output' tab. Test cases cover all aspects of the program, including validated solutions to the thermodynamics equations.
